@@ -9,34 +9,36 @@ They may or may not work on others. Requires razor enhanced 0.8.2.242
 
 ### Setup
 
-Create a folder called *fm_core* in your RazorEnhanced/Scripts directory. Download all the files from this repo's *fm_core* folder into your directory. This is core stuff. You'll need it all. Next, pick the scripts you'd like from this repo's *fm_tools* or *fm_train* folders. You can download these anywhere in your RazorEnhanced/Scripts directory. See the 
+Easy way is to clone this repo into your scripts directory.
+
+```bash
+cd <razor_install_dir>/Scripts
+git clone https://github.com/GloriousRedLeader/omgarturo.git
+```
+
+That will create the **omgarturo** folder in your /Scripts folder and download all files from this repo into it. If you don't have git or don't care for it, you'll still need to create the directory structure *exactly* as it is below. All files in **omgarturo/fm_core** are required. The rest of the files you can just pick and choose what you want.
 
 ```bash
 └── RazorInstallDirectory
     └── Scripts
-        ├── fm_core                # Core framework stuff, don't touch. You need all of these.
-        |   ├── core_items.py
-        |   ├── core_mobiles.py
-        |   └── ...
-        ├── fm_tools               # Edit these, bind them to keys. Only pick what you want. Can be placed anywhere.
-        |   ├── CasterLoop.py
+        └── omgarturo                      # This repo
+        |   ├── fm_core                    # Core framework stuff, don't touch. You need all of these.
+        |   |   ├── core_items.py
+        |   |   ├── core_mobiles.py
+        |   |   └── ...
+        |   ├── CasterLoop.py              # Use, modify, bind to hotkeys
         |   ├── DexLoop.py
         |   ├── MiningLoop.py
         |   ├── BODBuilder.py
-        |   └── ...
-        ├── fm_train               # Standalone scripts for training skills. Only pick what you want. Can be placed anywhere.
         |   ├── TrainMagery.py
         |   ├── TrainHiding.py
         |   └── ...
-        ├── your_other_scripts.py  # Your normal collection of razor scripts
+        ├── your_other_scripts.py          # Your normal collection of razor scripts
         └── ...
 ```
 
+* *<root>* -> This is the stuff you'll use. Modify these. Configure them. Bind them to keys. Covers training skills and powerful loops for gathering, attacking, crafting, etc.
 * *fm_core* -> This is framework stuff I've written (for the most part). These don't do anything on their own. You'll need to make a script that calls these functions (see fm_tools for examples).
-* *fm_tools* -> This is the stuff you'll use. Modify these. Configure them. Bind them to keys.
-* *fm_train* -> Standalone scripts used for training skills.
-
-So basically look through *fm_tools* and modify those scripts. You can store your scripts in whatever folder you like.
 
 ### Usage
 
