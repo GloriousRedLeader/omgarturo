@@ -37,10 +37,10 @@ That will create the **omgarturo** folder in your /Scripts folder and download a
         └── ...
 ```
 
-* *<root>* -> This is the stuff you'll use. Modify these. Configure them. Bind them to keys. Covers training skills and powerful loops for gathering, attacking, crafting, etc.
-* *fm_core* -> This is framework stuff I've written (for the most part). These don't do anything on their own.
+* *omgarturo* -> The scripts directly in this root folder are what you'll use. Modify these. Configure them. Bind them to keys. Covers training skills and powerful loops for gathering, attacking, crafting, etc.
+* *fm_core* -> This is framework stuff I've written. All the main business logic resides here. No need to touch unless you're insane.
 
-**Note**: You do NOT need to add **fm_core** scripts into Razor Enhanced. They just need to be present. You can use the command "git pull" inside the **omgarturo** folder to get the latest changes. 
+**Note**: You do NOT need to add the scripts in **fm_core** into Razor Enhanced. They just need to be present in the directory structure outlined above. You can use the command "git pull" inside the **omgarturo** folder to get the latest changes. 
 
 ### Usage
 
