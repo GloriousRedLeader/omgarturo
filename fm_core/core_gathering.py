@@ -367,9 +367,12 @@ def get_tile_in_front_serial():
             return item.Serial, tileX, tileY, tileZ 
     return None, tileX, tileY, tileZ 
 
-# Mines an area then steps forward to mine again in a straight line.
-# Attempts to smelt ores if you have a fire beetle (provide parameter)
-# Attempts to move smelted ore to pack animal (provide parameter)
+# Mines in a straight line. Perfect for cave floors. Your character will mine
+# a vein until it runs out and then step forward numTilesToMove tiles.
+# You can provide a mobile ID for a pack animal and a forge animal
+# so you can smelt and store smelted ore in your pack animal. Note: This is the
+# mobile ID (NOT the Serial of your pack / forge animals). I have constants for these
+# for commone ones like fire beetle and blue beetle.
 def run_mining_loop(
 
     # (Optional) After a vein runs out, how many tiles forward to move.
@@ -381,10 +384,10 @@ def run_mining_loop(
     # want special ingots.
     keepItemHues = [RESOURCE_HUE_DULL_COPPER, RESOURCE_HUE_SHADOW_IRON, RESOURCE_HUE_COPPER, RESOURCE_HUE_BRONZE, RESOURCE_HUE_GOLD, RESOURCE_HUE_AGAPITE, RESOURCE_HUE_VERITE, RESOURCE_HUE_VALORITE],
 
-    # (Optional) The mobile ID of your pack animal. Defaults to blue beetle.
+    # (Optional) The mobile ID of your pack animal. NOT the Serial. Defaults to blue beetle.
     packAnimalMobileId = BLUE_BEETLE_MOBILE_ID,       
     
-    # (Optional) The mobile ID of your forge animal. Defaults to fire beetle.
+    # (Optional) The mobile ID of your forge animal. NOT the serial. Defaults to fire beetle.
     forgeAnimalMobileId = FIRE_BEETLE_MOBILE_ID,
     
     # (Optional) Number of miliseconds between item moves typically from one pack to another.
@@ -422,7 +425,7 @@ def run_mining_loop(
         
 TRUE_NORTH_DIRECTION_MAP = ["Forward One", "Right One", "Back One", "Left One"]
 
-# Auto fishes in all the lands. Works on a boat. Works on a dock.
+# Auto fishes. Works on a boat. Works on a dock.
 # Works if youre on a rock. Take advantage of the moveTiles param to move boat after 
 # each fishing attempt. It will say forward one X number of times.
 # Can automatically cut fish. Can automatically store fish in hold.
@@ -445,7 +448,7 @@ def run_fishing_loop(
     fishHandling = 0,
     
     # (Optional) String name of fish you want to keep safe. Will not do any fishHandling operations on this fish. 
-    # Leaves it in backpack. Useful for fishing quests. Useful if you are doing fish monger quests. 
+    # Leaves it in backpack. Useful if you are doing fish monger quests. 
     # Default is none.
     fishToKeep = None,
     
