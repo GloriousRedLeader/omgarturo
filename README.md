@@ -38,7 +38,9 @@ That will create the **omgarturo** folder in your /Scripts folder and download a
 ```
 
 * *<root>* -> This is the stuff you'll use. Modify these. Configure them. Bind them to keys. Covers training skills and powerful loops for gathering, attacking, crafting, etc.
-* *fm_core* -> This is framework stuff I've written (for the most part). These don't do anything on their own. You'll need to make a script that calls these functions (see fm_tools for examples).
+* *fm_core* -> This is framework stuff I've written (for the most part). These don't do anything on their own.
+
+**Note**: You do NOT need to add **fm_core** scripts into Razor Enhanced. They just need to be present. You can use the command "git pull" inside the **omgarturo** folder to get the latest changes. 
 
 ### Usage
 
@@ -69,8 +71,6 @@ A couple of **resource gathering** scripts. Use with caution. Don't break any ru
 
 A script that **scans journal entries and alerts** with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
 
-**Character Stats** is a standalone tool that will have some details on character stats from item properties. Just bind it to a key and run it when you want to see all your properties like resists, HCI, SDI, etc. Note that it does get a little wonkie sometimes and you'll have to close and re-open your paperdoll. This script will tell you when it needs to be done (has something to do with item caching in the client / razor). You can find this at *fm_tools/CharacterStats.py*. 
-
 **Shadowguard** script from Dorana. Just keeping a copy. This thing is amazing. Dear god.
 
 **Lootmaster** script from Dorana. Just keeping a copy for posterity.
@@ -78,6 +78,8 @@ A script that **scans journal entries and alerts** with obnoxious sounds and ove
 A script that **opens Messages in a bottle and sorts them** into 3 chests, one for each section of the map (west, central, east). This makes fishing MiBs much more efficient since you aren't hunting all over the map, just 1/3 of it with more condensed spots. I usually take about 100 of them with me.
 
 An **IDOC Scanner** script. This thing is awesome. Written by someone else (can't track down author). Just storing for safe keeping. 
+
+**Character Stats** is a standalone tool that will have some details on character stats from item properties. Just bind it to a key and run it when you want to see all your properties like resists, HCI, SDI, etc. Note that it does get a little wonkie sometimes and you'll have to close and re-open your paperdoll. This script will tell you when it needs to be done (has something to do with item caching in the client / razor).
 
 ### Credits
 
