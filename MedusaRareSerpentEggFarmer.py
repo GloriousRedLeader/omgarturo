@@ -57,14 +57,16 @@ while True:
         closestMobile = None
         closestMobileDistance = None
         for mobile in mobiles:
+            
             distance = Misc.Distance(nest.Position.X, nest.Position.Y, mobile.Position.X, mobile.Position.Y)
             if closestMobile == None or (closestMobileDistance > distance):
                 closestMobile = mobile
                 closestMobileDistance = distance
-           #print(mobile.Name, "distance", distance)
+            #print(mobile.Name, "distance", distance)
         
         #print("CLOSEST MOBILE", closestMobile.Name, "distance", closestMobileDistance)    
-        if closestMobile is not None and Timer.Check("snakeCharmTimer") == False and Player.Hits / Player.HitsMax > 0.90:
+        #if closestMobile is not None and Timer.Check("snakeCharmTimer") == False and Player.Hits / Player.HitsMax > 0.90:
+        if closestMobile is not None and Timer.Check("snakeCharmTimer") == False:
             Items.UseItem(flute)
             Target.WaitForTarget(1000)
             Target.TargetExecute(mobile)
