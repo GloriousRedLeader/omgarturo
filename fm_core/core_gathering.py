@@ -325,12 +325,13 @@ def smelt_ore(forgeAnimalMobileId, itemMoveDelayMs):
                 Target.WaitForTarget(5000, True)
                 Target.TargetExecute(forgeAnimals[0])
                 Misc.Pause(itemMoveDelayMs)
-                #if Journal.Search("There is not enough metal-bearing ore in this pile to make an ingot."):
-                #    print(ore)
-                #    print(ore.Serial)
-                #    tileX, tileY, tileZ = get_tile_in_front()
-                #    Items.MoveOnGround(ore, 0, tileX, tileY , 0)
-                #    Misc.Pause(itemMoveDelayMs)
+                if Journal.Search("There is not enough metal-bearing ore in this pile to make an ingot."):
+                    print(ore)
+                    print(ore.Serial)
+                    #tileX, tileY, tileZ = get_tile_in_front()
+                    tileX, tileY, tileZ = get_tile_behind(2)
+                    Items.MoveOnGround(ore, 0, tileX, tileY , 0)
+                    Misc.Pause(itemMoveDelayMs)
         Misc.Pause(itemMoveDelayMs)     
     else:
         print("No forge animal found")
