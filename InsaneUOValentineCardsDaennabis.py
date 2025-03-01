@@ -1,3 +1,6 @@
+from System.Collections.Generic import List
+from System import Byte
+
 def findDaniel():
     danielFilter = Mobiles.Filter()
     danielFilter.RangeMax = 2
@@ -9,14 +12,8 @@ def findDaniel():
    
 def findValCard():
     cards = Items.FindAllByID(0x9C14,0x0490,Player.Backpack.Serial, 0)
-    #for card in cards:
-    #    print("Card", card.Name, "Color", card.Color)
     if len(cards) > 0:
-        #print(cards[0].Color)
         return cards[0]
-    #for card in cards:
-    #    print("Card", card.Name, "Color", card.Color)
-    #return Items.FindByID(0x9C14, 0x04EA, Player.Backpack.Serial, 0)
 
 def findValCard_ORIGINAL():
     valcardFilter = Items.Filter()
@@ -36,6 +33,7 @@ def countValCard():
     valcardCount = 0
     valcardCount = Items.BackpackCount(0x9C14, 0x0490)
     return valcardCount
+
 # Completed (orange) 1258
 def countValCardQuest():
     valcardquestCount = 0
@@ -52,6 +50,22 @@ def findQuestStatus():
     Gumps.SendAction(Gumps.CurrentGump(), 0)
     return False
     
+# Dont convert cards if character is possibly in combat
+# No real way to determine this, but we can check hits
+# to make sure we are at a reasonable health and check
+# if bad buys are nearby. The reason this is here is
+# potential conflict with other scripts casting spell
+# and confusing the reticle.
+def isPlayerInCombat():
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = 6
+    fil.Notorieties = List[Byte](bytes([3,4,5,6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = False
+    mobs = Mobiles.ApplyFilter(fil)    
+    return len(mobs) > 0 or Player.Hits / Player.HitsMax < 0.90
 
 ##################################################
 ######            In-Game Gump              ######
@@ -60,20 +74,20 @@ Misc.Pause(1000)
 setX = 25 
 setY = 50
 
-def sendgump(count):
+def sendgump(countquest, countcard):
     
     status = ""
     color = 0x555
-    if count >= 10:
+    if countquest >= 10:
         status = " Turn In!"
         color = 1370
-    scripts = ["Valentines Event","---------------","Cards = " + str(count) + status]
+    scripts = ["Valentines Event","-------------------------","Cards = " + str(countcard), "Ready for turn in = " + str(countquest)]
     others = []
-    sizeY = (len(scripts)+len(others))*30
+    sizeY = (len(scripts)+len(others))*35
     gd = Gumps.CreateGump(movable=True) 
     Gumps.AddPage(gd, 0)
-    Gumps.AddBackground(gd, 0, 0, 150, sizeY, 30546)
-    Gumps.AddAlphaRegion(gd,0, 0, 150, sizeY)
+    Gumps.AddBackground(gd, 0, 0, 225, sizeY, 30546)
+    Gumps.AddAlphaRegion(gd,0, 0, 225, sizeY)
     for i in range(len(scripts)):
         Gumps.AddLabel(gd,25,5+i*30,color,scripts[i])
     for i in range(len(others)):
@@ -89,12 +103,10 @@ while True:
     daniel = findDaniel()
     countcard = countValCard()
     countquest = countValCardQuest()
-    
-    #sendgump(countquest)
+    sendgump(countquest, countcard)
     
     if daniel:
         if queststatus and countquest >= 10:
-            
             Mobiles.UseMobile(daniel)
             gumpid = Gumps.CurrentGump()
             Gumps.WaitForGump(gumpid, 10000)
@@ -109,42 +121,17 @@ while True:
             Gumps.WaitForGump(gumpid, 10000)
             Gumps.SendAction(gumpid, 4)
             queststatus = True
-
         Gumps.SendAction(0x4c4c6db0, 0)
-    else:
-        print("Quitting. Stand closer to daniel!")
-        break        
     
-    if queststatus and (countcard > 0) and (countquest < 10) and (countcard + countquest >= 10):
-        print("Quest progress {} / {} ({} cards remaining)".format(countquest, 10, countcard))
+    if queststatus and (countcard > 0) and (countquest < 10) and not isPlayerInCombat(): # and (countcard + countquest >= 10):
         card = findValCard()
-        if card is None:
-            print("Quitting. Out of cards and you dont have enough to complete quest ({}/{})".format(countquest, 10))
-            break
-            
-        Misc.WaitForContext(Player.Serial, 10000)
-        Misc.ContextReply(Player.Serial, 'toggle quest item')
-        
-        Target.WaitForTarget(4000, False)
-        Target.TargetExecute(card)
-        Misc.Pause(300)
-        
-        
-        
-        #for card in range(0, min(countcard - countquest, 10)):
-        #    print("CARD", card)
-        #    #c = findValCard()
-        #    #print("HOOHAW", c.Name, c.Color)
-        #    Target.WaitForTarget(4000, False)
-        #    Target.TargetExecute(findValCard())
-        #    Misc.Pause(300)
-        #    #sendgump(countValCardQuest())
-        Target.Cancel()
-    elif countcard + countquest < 10:
-        print("Quitting. Get more cards! ({}/{})".format(countquest + countcard, 10))
-        break
-    
-        
-    
+        if card is not None:
+            Misc.WaitForContext(Player.Serial, 10000)
+            Misc.ContextReply(Player.Serial, 'toggle quest item')
+            Target.WaitForTarget(4000, False)
+            Target.TargetExecute(card)
+            Misc.Pause(300)
+            Target.Cancel()
+            continue
+
     Misc.Pause(500)
-    continue
