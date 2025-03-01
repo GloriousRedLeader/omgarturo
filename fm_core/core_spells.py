@@ -254,24 +254,48 @@ def check_summon_familiar(
             pets = get_pets(range = 15, checkLineOfSight = False)
             petNames = [pet.Name.replace(Player.Name + " ", "") for pet in pets]    
             goodPetCount = 0
+            connectionTooTenuous = False # Rare error where we need to reset all pets completely, dunno
             for petName in petButtonMap:
-                #print("{} -> {}".format(petName, petButtonMap[petName]))
+                
+                # Summon a pet
                 if petButtonMap[petName] < 6:
+                    Journal.Clear()
                     Gumps.SendAction(SUMMON_FAMILIAR_GUMP_ID, petButtonMap[petName])
                     Misc.Pause(get_fc_delay (baseDelayMs = SUMMON_FAMILIAR_DELAY, fcCap = FC_CAP_NECROMANCY, latencyMs = latencyMs))
                     Misc.Pause(250) # Extra pause for create to appear in world or we get stuck in an infinite loop
+
+                    # Summon failed. Need to unsummon all pets (below)
+                    if Journal.Search("Your connection to the netherworld") == True:
+                        connectionTooTenuous = True
+                        break
                     return True
-                    #break
+                    
+                # Unsummon pet if it is out of range
                 elif petName not in petNames:
                     Gumps.SendAction(SUMMON_FAMILIAR_GUMP_ID, petButtonMap[petName])
                     Misc.Pause(250)    
+                    
+                # Dont do anything, we have this pet and it is in range
                 else:
                     goodPetCount = goodPetCount + 1
                     
+                # We have all 4 pets and they are nearby. Dont call again
+                # for this many seconds                    
                 if goodPetCount == 4:
-                    # We have all 4 pets and they are nearby. Dont call again
-                    # for this many seconds
                     Timer.Create("checkSummonFamiliarTimer", 3000)
+
+            # Special case where we got an error that says our connection is too tenous.
+            # So, unsummon all existing pets. The thing above that unsummons just does it on
+            # a per pet basis if they are out of range.
+            if connectionTooTenuous:
+                for petName in petButtonMap:
+                    if petButtonMap[petName] > 6:
+                        if not Gumps.HasGump(SUMMON_FAMILIAR_GUMP_ID):
+                            Spells.CastNecro("Summon Familiar")
+                            Gumps.WaitForGump(SUMMON_FAMILIAR_GUMP_ID, 1000)                        
+                        Gumps.SendAction(SUMMON_FAMILIAR_GUMP_ID, petButtonMap[petName])
+                        Misc.Pause(250)    
+                        
     return False
 
 # Make sure a spell gets cast
