@@ -18,6 +18,8 @@ git clone https://github.com/GloriousRedLeader/omgarturo.git
 
 That will create the **omgarturo** folder in your /Scripts folder and download all files from this repo into it. If you don't have git or don't care for it, you'll still need to create the directory structure *exactly* as it is below. All files in **omgarturo/fm_core** are required. The rest of the files you can just pick and choose what you want.
 
+Also, if this file doesn't exist, create it: /Scripts/\_\_init\_\_.py. This is in the root /Scripts folder. It is an empty file. It just needs to be present. You might already have it.
+
 ```bash
 └── RazorInstallDirectory
     └── Scripts
@@ -33,6 +35,7 @@ That will create the **omgarturo** folder in your /Scripts folder and download a
         |   ├── TrainMagery.py
         |   ├── TrainHiding.py
         |   └── ...
+        ├── __init__.py                    # 100% needed. If this file doesn't exist, create it. It is empty. 2 underscores on either side.
         ├── your_other_scripts.py          # Your normal collection of razor scripts
         └── ...
 ```
