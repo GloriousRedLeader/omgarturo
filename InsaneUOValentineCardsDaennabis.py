@@ -115,13 +115,14 @@ while True:
             Misc.Pause(1000) #pause is important here, otherwise you won't get reward
             Gumps.SendAction(gumpid, 5)
             queststatus = False
+            Gumps.SendAction(0x4c4c6db0, 0)
         if not queststatus:
             Mobiles.UseMobile(daniel)
             gumpid = Gumps.CurrentGump()
             Gumps.WaitForGump(gumpid, 10000)
             Gumps.SendAction(gumpid, 4)
             queststatus = True
-        Gumps.SendAction(0x4c4c6db0, 0)
+            Gumps.SendAction(0x4c4c6db0, 0)
     
     if queststatus and (countcard > 0) and (countquest < 10) and not isPlayerInCombat(): # and (countcard + countquest >= 10):
         card = findValCard()
