@@ -1,5 +1,11 @@
+# By Daennabis
+# Just storing at this repo for safe keeping
+# https://github.com/GloriousRedLeader/omgarturo/blob/master/InsaneUOValentineCardsDaennabis.py
+
 from System.Collections.Generic import List
 from System import Byte
+
+# This beautiful thing is useful on the InsaneUO shard during the valentine event.
 
 def findDaniel():
     danielFilter = Mobiles.Filter()
