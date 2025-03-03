@@ -15,46 +15,38 @@ def findDaniel():
     if danielList:
         return danielList[0]
     return None
-   
+
 def findValCard():
-    cards = Items.FindAllByID(0x9C14,0x0490,Player.Backpack.Serial, 0)
+    cards = Items.FindAllByID(0x9C14, 0x0490, Player.Backpack.Serial, 0)
     if len(cards) > 0:
         return cards[0]
 
-def findValCard_ORIGINAL():
-    valcardFilter = Items.Filter()
-    valcardFilter.OnGround = 0
-    valcardFilter.Name = "Lost Valentines Card"
-    valcardList = Items.ApplyFilter(valcardFilter)
-    #Hue filtering doesnt work here, not sure why
-    if valcardList:
-        for item in valcardList:
-            if Items.GetPropValueString(item.Serial,"Quest Item"):
-                continue
-            return item
-    return None
-
-# Not Completed (purple) 1168
+    
 def countValCard():
     valcardCount = 0
     valcardCount = Items.BackpackCount(0x9C14, 0x0490)
     return valcardCount
 
-# Completed (orange) 1258
 def countValCardQuest():
     valcardquestCount = 0
     valcardquestCount = Items.BackpackCount(0x9C14, 0x04EA)
     return valcardquestCount
-    
-def findQuestStatus():
-    #try to limit calls to this function
-    Player.QuestButton()
-    Misc.Pause(500)
-    if Gumps.LastGumpTextExist("Lost Valentine Cards"):
-        Gumps.SendAction(Gumps.CurrentGump(), 0)
-        return True
-    Gumps.SendAction(Gumps.CurrentGump(), 0)
-    return False
+
+def countArrows():
+    arrowsCount = 0
+    arrowsCount = Items.FindByID(0x4F7A, 0x0490, Player.Backpack.Serial, True, False)
+    return arrowsCount.Weight
+
+def findQuestStatus(NPC):
+    Mobiles.UseMobile(NPC)
+    gumpid = Gumps.CurrentGump()
+    Gumps.WaitForGump(gumpid, 10000)
+    if Gumps.LastGumpTextExist("Quest Offer"):
+        Gumps.SendAction(gumpid, 0)
+        return False #quest not accepted
+    else:
+        Gumps.SendAction(gumpid, 0)
+        return True #quest accepted
     
 # Dont convert cards if character is possibly in combat
 # No real way to determine this, but we can check hits
@@ -73,6 +65,8 @@ def isPlayerInCombat():
     mobs = Mobiles.ApplyFilter(fil)    
     return len(mobs) > 0 or Player.Hits / Player.HitsMax < 0.90
 
+
+
 ##################################################
 ######            In-Game Gump              ######
 
@@ -80,39 +74,47 @@ Misc.Pause(1000)
 setX = 25 
 setY = 50
 
-def sendgump(countquest, countcard):
+def sendgump(cards,arrows):
     
-    status = ""
-    color = 0x555
-    if countquest >= 10:
-        status = " Turn In!"
-        color = 1370
-    scripts = ["Valentines Event","-------------------------","Cards = " + str(countcard), "Ready for turn in = " + str(countquest)]
-    others = []
-    sizeY = (len(scripts)+len(others))*35
+    status = [""]*2
+    color = [0x555]*2
+    if cards >= 10:
+        status[0] = " Turn In!"
+        color[0] = 1370
+    if arrows >= 100:
+        status[1] = " Turn In!"
+        color[1] = 1370
+    scripts = ["Valentines Event","---------------"]
+    others = ["Cards = " + str(cards) + status[0],
+              "Arrows = " + str(arrows) + status[1]]
+    sizeY = 10 + (len(scripts)+len(others))*20
     gd = Gumps.CreateGump(movable=True) 
     Gumps.AddPage(gd, 0)
-    Gumps.AddBackground(gd, 0, 0, 225, sizeY, 30546)
-    Gumps.AddAlphaRegion(gd,0, 0, 225, sizeY)
+    Gumps.AddBackground(gd, 0, 0, 150, sizeY, 30546)
+    Gumps.AddAlphaRegion(gd,0, 0, 150, sizeY)
     for i in range(len(scripts)):
-        Gumps.AddLabel(gd,25,5+i*30,color,scripts[i])
+        Gumps.AddLabel(gd,25,5+i*20,0x555,scripts[i])
     for i in range(len(others)):
-        Gumps.AddLabel(gd,25,5+(i+len(scripts))*30,0x555,others[i])
+        Gumps.AddLabel(gd,25,5+(i+len(scripts))*20,color[i],others[i])
 
     #Send Gump#
-    Gumps.SendGump(987655, Player.Serial, setX, setY, gd.gumpDefinition, gd.gumpStrings)
+    Gumps.SendGump(987666, Player.Serial, setX, setY, gd.gumpDefinition, gd.gumpStrings)
 
 ##################################################
-queststatus = findQuestStatus()    
-print(queststatus)
+queststatusd = 0
 while True:
     daniel = findDaniel()
     countcard = countValCard()
     countquest = countValCardQuest()
-    sendgump(countquest, countcard)
+    countarrow = countArrows()
     
+    sendgump(countquest+countcard,countarrow)
+#DANIEL PART
     if daniel:
-        if queststatus and countquest >= 10:
+        if queststatusd == 0:
+            queststatusd = findQuestStatus(daniel)
+            print(queststatusd)
+        if queststatusd and countquest >= 10:
             Mobiles.UseMobile(daniel)
             gumpid = Gumps.CurrentGump()
             Gumps.WaitForGump(gumpid, 10000)
@@ -120,25 +122,25 @@ while True:
             Gumps.SendAction(gumpid, 8)
             Misc.Pause(1000) #pause is important here, otherwise you won't get reward
             Gumps.SendAction(gumpid, 5)
-            queststatus = False
-            Gumps.SendAction(0x4c4c6db0, 0)
-        if not queststatus:
+            Gumps.SendAction(gumpid, 0)
+            queststatusd = False
+        if not queststatusd:
             Mobiles.UseMobile(daniel)
             gumpid = Gumps.CurrentGump()
             Gumps.WaitForGump(gumpid, 10000)
             Gumps.SendAction(gumpid, 4)
-            queststatus = True
-            Gumps.SendAction(0x4c4c6db0, 0)
+            Gumps.SendAction(gumpid, 0)
+            queststatusd = True
     
-    if queststatus and (countcard > 0) and (countquest < 10) and not isPlayerInCombat(): # and (countcard + countquest >= 10):
-        card = findValCard()
-        if card is not None:
-            Misc.WaitForContext(Player.Serial, 10000)
-            Misc.ContextReply(Player.Serial, 'toggle quest item')
+    if queststatusd and (countcard > 0) and (countquest < 10) and not isPlayerInCombat(): 
+        Misc.WaitForContext(Player.Serial, 10000)
+        Misc.ContextReply(Player.Serial, 'toggle quest item')
+        for card in range(min(countcard, 10)):
             Target.WaitForTarget(4000, False)
-            Target.TargetExecute(card)
+            Target.TargetExecute(findValCard())
             Misc.Pause(300)
-            Target.Cancel()
-            continue
-
+        Target.Cancel()
+    
+    
     Misc.Pause(500)
+    continue
