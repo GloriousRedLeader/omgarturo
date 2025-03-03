@@ -42,7 +42,8 @@ run_fishing_loop(
     
     # (Optional) String name of fish you want to keep safe. Will not do any fishHandling operations on this fish. 
     # Leaves it in backpack. Useful if you are doing fish monger quests. Just type the fish name
-    # you want to keep in your backpack (lower case). Default is none.
+    # you want to keep in your backpack (lower case). Default is none, but you could enter
+    # something like "gray snapper"
     fishToKeep = None,
     
     # (Optional) The item id (not serial) of the tool you want to use to cut fish. Default is dagger but other
