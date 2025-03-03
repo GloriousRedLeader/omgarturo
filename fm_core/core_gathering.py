@@ -26,6 +26,7 @@ from Scripts.omgarturo.fm_core.core_items import AXE_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_items import LOG_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_items import TREE_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_items import DAGGER_STATIC_IDS
+from Scripts.omgarturo.fm_core.core_items import DAGGER_STATIC_ID
 from Scripts.omgarturo.fm_core.core_items import BOARD_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_items import MINER_TOOLS_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_items import ORE_STATIC_IDS
@@ -426,10 +427,22 @@ def run_mining_loop(
         
 TRUE_NORTH_DIRECTION_MAP = ["Forward One", "Right One", "Back One", "Left One"]
 
-# Auto fishes. Works on a boat. Works on a dock.
-# Works if youre on a rock. Take advantage of the moveTiles param to move boat after 
+# Global cache for the useCorpseScanner function so we dont sail to the same corpses repeatadly.
+corpseScannerCache = []
+
+# Auto fishes. Works on a boat. Works on a dock. Works if youre on a rock. 
+# Take advantage of the moveTiles param to move boat after 
 # each fishing attempt. It will say forward one X number of times.
 # Can automatically cut fish. Can automatically store fish in hold.
+# Can automatically move to nearby corpses so you can loot (this script does not
+# loot though).
+#
+# Setup:
+# 1) Read the parameters below and configure as needed.
+# 2) If you want to automatically cut fish, you will need a basic dagger in your pack (or provide your own tool).
+# 3) If you want to put fish directly in your hold, you will need to stand right on top of it.
+# 4) You will need a fishing pole of course.
+# 5) The useCorpseScanner feature will sail to nearby corpses so  you dont miss MiBs.
 def run_fishing_loop(
 
     # (Optional) How many tiles in front of character to cast. Defaults to 4 tiles
@@ -444,19 +457,39 @@ def run_fishing_loop(
     fishDelayMs = 9000,
     
     # 0 = Do nothing, leave in backpack (default)
-    # 1 = cut fish with dagger to reduce weight, makes lots of fish steaks
+    # 1 = cut fish with a tool of your choice to reduce weight, makes lots of fish steaks (see cutToolItemId)
     # 2 = place fish in cargo hold of ship, have to be standing near cargo hold
     fishHandling = 0,
     
     # (Optional) String name of fish you want to keep safe. Will not do any fishHandling operations on this fish. 
-    # Leaves it in backpack. Useful if you are doing fish monger quests. 
-    # Default is none.
+    # Leaves it in backpack. Useful if you are doing fish monger quests. Just type the fish name
+    # you want to keep in your backpack (lower case). Default is none.
     fishToKeep = None,
     
-    # (Optional) function to call after each fishing attempt, e.g. auto looter (see below)
-    # You can call some misc. logic to do whatever you want after each cast
-    callback = None
+    # (Optional) The item id (not serial) of the tool you want to use to cut fish. Default is dagger but other
+    # shards may have more optimized tools with bonuses. This tool can be in your backpack OR in a container in your
+    # backpack, but it wont search any more nested containers after that.
+    cutToolItemId = DAGGER_STATIC_ID,
+    
+    # (Optional) Enable this and you will sail to nearby corpses that match those in corpseNames below. This
+    # is useful if you want to look sea serpents for MiBs and such. At present there is no support for auto loot.
+    # You need to enable what you want in your auto looter (tazuo or doranas lootmaster).
+    # This is very crude. It just sails one tile at a time until it finds a corpse. Then, it pauses for a bit
+    # while your autolooter does what it needs to do. It will do this for all nearby corpses before returning to
+    # where you started and resume fishing. There are several more options below to customize this behavior.
+    useCorpseScanner = False,
+    
+    # (Optional) Time delay in miliseconds between issuing commands to move boat. Adjust based on your servers latency.
+    corpseScannerMoveCommandDelayMs = 650,
+    
+    # (Optional) Set the number of miliseconds to wait at a corpse once reaching it so your auto looter can do the business.
+    corpseScannerPauseDelayMs = 2000,
+    
+    # (Optional) Array of corpse names. Only sail to loot these. Useful for message in a bottle enemies.
+    corpseNames = ["a deep sea serpents corpse", "a sea serpents corpse"],
 ):
+    global corpseScannerCache
+    
     fishingPole = find_first_in_hands_by_ids(FISHING_POLE_STATIC_IDS)
     if fishingPole == None:
         fishingPole = find_first_in_container_by_ids(FISHING_POLE_STATIC_IDS)
@@ -469,15 +502,16 @@ def run_fishing_loop(
     while Player.Weight < Player.MaxWeight - 40:
         # Cut fish they are heavy
         if fishHandling == 1:
-            dagger = find_first_in_container_by_ids(DAGGER_STATIC_IDS)
-            if dagger is not None:
+            cutTool = Items.FindByID(cutToolItemId, -1, Player.Backpack.Serial, 1)
+            #dagger = find_first_in_container_by_ids(DAGGER_STATIC_IDS)
+            if cutTool is not None:
                 fishies = find_all_in_container_by_ids(FISH_STATIC_IDS)
                 for fish in fishies:
                     if fishToKeep is not None and fish.Name.lower().find(fishToKeep.lower()) > -1:
                         Player.HeadMessage(28, "Keeping fish {} item id {}".format(fish.Name, fish.ItemID))
                         continue
                     print("Cutting fish {} item id {}".format(fish.Name, fish.ItemID))
-                    Items.UseItem(dagger)
+                    Items.UseItem(cutTool)
                     Target.WaitForTarget(1000, False)
                     Target.TargetExecute(fish)
             else:
@@ -530,8 +564,26 @@ def run_fishing_loop(
                 else:
                     print("This tile is not wet")
 
-        if callback is not None:
-            callback()
+        if useCorpseScanner:
+            items = get_corpses(range = 10)
+            
+            if len(items) > 0:
+                playerX = Player.Position.X
+                playerY = Player.Position.Y
+                corpses = List[type(items[0])]([item for item in items if item.Name in corpseNames and item.Serial not in corpseScannerCache])
+
+                if len(corpses) > 0:
+                    boatDirection = get_boat_direction()
+                    for corpse in corpses:
+                        print(corpse.Name, corpse.Position.X, corpse.Position.Y)
+                        sail_to_tile(corpse.Position.X, corpse.Position.Y, boatDirection, corpseScannerMoveCommandDelayMs)
+                        Misc.Pause(corpseScannerPauseDelayMs)
+                        print("cacheLooted size = {}".format(len(corpseScannerCache)))
+                        if len(corpseScannerCache) >= 30:
+                            corpseScannerCache.pop(0)
+                            print("cacheLooted popping one off {}".format(len(corpseScannerCache)))
+                        corpseScannerCache.append(corpse.Serial)
+                    sail_to_tile(playerX, playerY, boatDirection, corpseScannerMoveCommandDelayMs)               
 
         for i in range(0, moveTiles):
             Player.ChatSay("forward one")
@@ -773,45 +825,4 @@ def sail_to_tile(
         elif Player.Position.Y > y:
             Player.ChatSay(directionMap[0])
         Misc.Pause(1000)
-
-# Global cache for the ocean_looter_callback function
-# so we dont sail to the same corpses repeatadly.
-cacheLooted = []
-
-# Meant to be a callback function provided to run_fishing_loop. This will
-# look for corpses in the ocean, sail to them, pauses for your autolooter
-# then returns to the original spot. Useful if you dont want to miss
-# message in a bottle
-def ocean_looter_callback(
-
-    # Time to delay between issuing commands to move boat. This is slow.
-    moveCmdLatencyMs = 650,
-    
-    # Only sail to loot these. Useful for message in a bottle enemies.
-    corpseNames = ["a deep sea serpents corpse", "a sea serpents corpse"]
-):
-    # Store recent corpses so we dont waste time.
-    global cacheLooted
-
-    items = get_corpses(range = 10)
-    
-    if len(items) > 0:
-        playerX = Player.Position.X
-        playerY = Player.Position.Y
-
-        #for item in items:
-        #    print(item.Name)
-        corpses = List[type(items[0])]([item for item in items if item.Name in corpseNames and item.Serial not in cacheLooted])
-
-        if len(corpses) > 0:
-            boatDirection = get_boat_direction()
-            for corpse in corpses:
-                print(corpse.Name, corpse.Position.X, corpse.Position.Y)
-                sail_to_tile(corpse.Position.X, corpse.Position.Y, boatDirection, moveCmdLatencyMs)
-                Misc.Pause(2000)
-                print("cacheLooted size = {}".format(len(cacheLooted)))
-                if len(cacheLooted) >= 30:
-                    cacheLooted.pop(0)
-                    print("cacheLooted popping one off {}".format(len(cacheLooted)))
-                cacheLooted.append(corpse.Serial)
-            sail_to_tile(playerX, playerY, boatDirection, moveCmdLatencyMs)            
+        

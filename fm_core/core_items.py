@@ -10,6 +10,14 @@ DEADLY_POISON_POT_IDS = [0x0F0A]
 
 DAGGER_STATIC_IDS = [0x0F52]
 
+DAGGER_STATIC_ID = 0x0F52
+
+# This might be UO Alive specific. Allows some bonus to harvesting, perhaps fish.
+BUTCHERS_WAR_CLEAVER_STATIC_ID = 0x2D2F
+
+# This might be Insane UO specific. Lets you do someting special when skinning i guess.
+HARVESTERS_BLADE_STATIC_ID = 0x2D20
+
 AXE_STATIC_IDS = [0x0F49, 0x0F47]
 
 LOG_STATIC_IDS = [0x1BDD]
