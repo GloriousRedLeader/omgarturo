@@ -5,8 +5,9 @@
 # Use at your own risk. 
 
 # This is a very basic single target heal loop script. 
-# Use case is despise boss.
-# Works with magery and chivalry.
+# Use case is despise boss. Works with magery and chivalry.
+# WHen it starts, you select all the mobiles you want to heal.
+# Works with chiv healing and magery healing.
 
 isMage = True if Player.GetSkillValue("Magery") > 75 else False
 
@@ -20,8 +21,18 @@ while True:
 #petSerial = Target.PromptTarget("Select your pet", 38)
 
 while True:
+    
+    if Timer.Check( 'singleTargetPingTimer' ) == False:
+        Player.HeadMessage( 99, "Single Target Healing Running..." )
+        Timer.Create( 'singleTargetPingTimer', 3000 )
+    
     for petSerial in petSerials:
         pet = Mobiles.FindBySerial(petSerial)
+        
+        if pet is None or pet.Hits is None or pet.Hits == 0 or pet.HitsMax is None or pet.HitsMax == 0 or Player.DistanceTo(pet) > 10:
+            Misc.Pause(500)
+            continue
+            
         if pet.Poisoned:
             if isMage:
                 Spells.CastMagery("Arch Cure")
