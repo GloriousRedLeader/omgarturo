@@ -1,6 +1,6 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2024-11-21
 # Use at your own risk. 
 
@@ -33,6 +33,9 @@ from Scripts.omgarturo.fm_core.core_items import BLUE_BEETLE_ITEM_ID
 
 # Will pick up items on the ground and stash them in inventory or giant beetles
 # Will attempt to deploy giant beetles that are in inventory.
+# You can use this for idocs. It isnt great though. Needs work.
+# Basically it launches a bunch of beetles, looks for things on the ground
+# and tries to stash as much crap as it finds in the beetles and your inventory.
 
 deployGiantBeetle = True
 

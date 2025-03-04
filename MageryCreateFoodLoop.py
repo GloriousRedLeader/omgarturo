@@ -1,6 +1,6 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2024-03-26
 # Use at your own risk. 
 
@@ -20,6 +20,6 @@ Player.HeadMessage(455, "start")
 
 AMOUNT_TO_MAKE = 100
 
-for i in range(0, 100):
+for i in range(0, AMOUNT_TO_MAKE):
     Spells.CastMagery("Create Food")    
     Misc.Pause(3000)

@@ -1,24 +1,24 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2024-03-26
 # Use at your own risk. 
 
 # This is a very basic single target heal loop script. 
 # Use case is despise boss. Works with magery and chivalry.
-# WHen it starts, you select all the mobiles you want to heal.
+# WHen it starts, you select all the mobiles you want to heal. Hit escape when done
+# selecting mobiles. Mobiles can be yourself, other players, and pets.
 # Works with chiv healing and magery healing.
 
 isMage = True if Player.GetSkillValue("Magery") > 75 else False
 
 petSerials = []
 while True:
-    petSerial = Target.PromptTarget("Select your pet", 38)
+    petSerial = Target.PromptTarget("Select a target to heal (hit escape when done)", 38)
     if petSerial > -1:
         petSerials.append(petSerial)
     else:
         break
-#petSerial = Target.PromptTarget("Select your pet", 38)
 
 while True:
     

@@ -1,6 +1,6 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2024-03-26
 # Use at your own risk. 
 
@@ -9,7 +9,7 @@ from System.Collections.Generic import List
 from System import Byte, Int32
 
 # Scans nearby items on ground and moves them to a container.
-# Will prompt for destination container
+# Prompts for destination container.
 
 destinationSerial = Target.PromptTarget("Pick destination container", 38)
 

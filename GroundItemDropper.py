@@ -1,7 +1,7 @@
 
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2025-02-07
 # Use at your own risk. 
 
@@ -18,7 +18,7 @@ from System import Byte, Int32
 import time
 
 # Drops everything in the list below to the ground so it doesnt clutter your bags.
-# Its like and inverse auto looter.
+# Its like and inverse auto looter. Use this for all those pesky bag drops you dont want.
 
 TRASH_NAMES = [
     "Helm of Swiftness",

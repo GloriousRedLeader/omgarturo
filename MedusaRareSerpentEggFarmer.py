@@ -1,6 +1,6 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2025-01-11
 # Use at your own risk. 
 
@@ -11,7 +11,6 @@ from Scripts.omgarturo.fm_core.core_items import SERPENT_NEST_STATIC_ID
 from Scripts.omgarturo.fm_core.core_items import SNAKE_CHARMER_FLUTE_STATIC_ID
 from Scripts.omgarturo.fm_core.core_mobiles import SILVER_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
-
 
 # Run this in the background and it will direct snakes to egg nests.
 # This is to get the eggs for the Peerless boss Medusa. I think you need
@@ -62,10 +61,7 @@ while True:
             if closestMobile == None or (closestMobileDistance > distance):
                 closestMobile = mobile
                 closestMobileDistance = distance
-            #print(mobile.Name, "distance", distance)
         
-        #print("CLOSEST MOBILE", closestMobile.Name, "distance", closestMobileDistance)    
-        #if closestMobile is not None and Timer.Check("snakeCharmTimer") == False and Player.Hits / Player.HitsMax > 0.90:
         if closestMobile is not None and Timer.Check("snakeCharmTimer") == False:
             Items.UseItem(flute)
             Target.WaitForTarget(1000)
@@ -81,7 +77,7 @@ while True:
     filter.RangeMax = 10
     filter.Graphics = List[Int32]([RARE_SERPENT_EGG_STATIC_ID]) 
     eggs = Items.ApplyFilter(filter)
-    #egg = Items.Select(eggs, "Nearest")
+
     for egg in eggs:
         if Timer.Check("eggPingTimer") == False:
             Items.Message(egg, 38, "^ egg ^")
@@ -90,8 +86,5 @@ while True:
         if Player.DistanceTo(egg) < 3:
             Items.Move(egg, Player.Backpack.Serial, 1)
             Misc.Pause(800)
-        
-    #if egg is not None:
-        
         
     Misc.Pause(500)

@@ -1,10 +1,9 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
-#   https://github.com/GloriousRedLeader/uo-razor-enhanced
+#   https://github.com/GloriousRedLeader/omgarturo
 #   2024-03-26
 # Use at your own risk. 
 
-#from Scripts.omgarturo.fm_core.core_player import move_number_of_items_from_container
 from Scripts.omgarturo.fm_core.core_player import move_item_to_container
 from System.Collections.Generic import List
 from System import Byte, Int32
@@ -14,7 +13,6 @@ from System import Byte, Int32
 # Prompt for source container
 # Prompt for destination container
 # Moves that number of items from source to destination
-#move_number_of_items_from_container()
 
 print("How many items?")
 Journal.Clear()
