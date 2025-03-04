@@ -31,6 +31,7 @@ ANIMATE_DEAD_MOBILE_NAMES = [
     "a hellsteed",
     "a skeletal steed",
     "an Undead Gargoyle",
+    "a skeletal drake"
 ]
 
 # This was taken from the lumberjack script written by Credzba
