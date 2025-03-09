@@ -748,7 +748,7 @@ RECIPES = [
     SmallBodRecipe(True, "tunic", CAT_TAILORING_SHIRTS_AND_PANTS, 23, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
     SmallBodRecipe(True, "surcoat", CAT_TAILORING_SHIRTS_AND_PANTS, 30, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
     SmallBodRecipe(True, "plain dress", CAT_TAILORING_SHIRTS_AND_PANTS, 37, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
-    SmallBodRecipe(False, "fancy dress", CAT_TAILORING_SHIRTS_AND_PANTS, 44, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
+    SmallBodRecipe(True, "fancy dress", CAT_TAILORING_SHIRTS_AND_PANTS, 44, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
     SmallBodRecipe(True, "cloak", CAT_TAILORING_SHIRTS_AND_PANTS, 51, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
     SmallBodRecipe(True, "robe", CAT_TAILORING_SHIRTS_AND_PANTS, 58, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
     SmallBodRecipe(True, "jester suit", CAT_TAILORING_SHIRTS_AND_PANTS, 65, TAILORING_TOOL_STATIC_ID, [SmallBodResource(CLOTH_STATIC_ID)] ),
