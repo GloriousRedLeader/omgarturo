@@ -85,12 +85,12 @@ run_bod_builder(
 
     # Array of serials for containers to put your bods in to start things off (both small and large).
     # You put your brand new or partially complete bods in here.
-    incompleteBodContainers = [0x40251A02, 0x402519AE, 0x4025193E],
+    incompleteBodContainers = [0x40251A02, 0x402519AE, 0x4025193E, 0x40F71F41],
     
     # Array of serials for containers to store completed small bods
     # that are part of a large bod. This can take time. So store them here
     # until the can be combined.
-    smallBodWaitingForLargeBodContainers = [0x40251A68, 0x4042D758, 0x4042D779],
+    smallBodWaitingForLargeBodContainers = [0x40251A68, 0x4042D758, 0x4042D779, 0x40E996FD],
     
     # Serial of container to put completed SOLO small bods. These
     # are small bods that do not have a corresponding large bod. They are ready

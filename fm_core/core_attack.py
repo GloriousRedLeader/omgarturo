@@ -81,6 +81,10 @@ def run_dex_loop(
     
     # Paladin spell for curing poisons, only works on self.
     useCleanseByFire = 0,
+    
+    # Whether to honor a nearby enemy to gain the perfection buff.
+    # Will try to find an enemy at full health when the buff doesnt exist on player.
+    useHonor = 0,
    
     # how many tiles to look for enemies and attack them
     attackRange = 6,
@@ -113,40 +117,39 @@ def run_dex_loop(
         if len(eligible) > 0:   
             nearestMob = Mobiles.Select(eligible, 'Nearest')
             
-            if True:            
-                if useEnemyOfOne == 1 and not Player.BuffsExist("Enemy Of One") and Player.Mana > 20:
-                    cast_spell("Enemy of One", None, latencyMs)
-                elif useConsecrateWeapon == 1 and not Player.BuffsExist("Consecrate Weapon") and Player.Mana > 12:
-                    cast_spell("Consecrate Weapon", None, latencyMs)
-                elif useDivineFury == 1 and not Player.BuffsExist("Divine Fury") and Player.Mana > 20:
-                    cast_spell("Divine Fury", None, latencyMs)
-                elif useCurseWeapon == 1 and not Player.BuffsExist("Curse Weapon") and Player.Mana > 20:
-                    cast_spell("Curse Weapon", None, latencyMs)
-           
-                if useShieldBash == 1 and not Player.BuffsExist("Shield Bash") and Player.Mana > 35:
-                    cast_spell("Shield Bash", None, latencyMs)
-                    Player.HeadMessage(38, "Shield Bash")
-                if (useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist("Shield Bash"))) and Player.Mana > 20:
-                    if specialAbilityType == 1:
-                        if not Player.HasPrimarySpecial:
-                            Player.WeaponPrimarySA()
-                    elif specialAbilityType == 2:
-                        if not Player.HasSecondarySpecial:
-                            Player.HeadMessage(38, "Armor Ignore")
-                            Player.WeaponSecondarySA()
-                    elif specialAbilityType == 3:
-                        if not Player.BuffsExist("Lightning Strike"):
-                            Spells.CastBushido("Lightning Strike", True)
-                    elif specialAbilityType == 4:
-                        print("This needs work, there is no buff for focus attack. TODO")
-                        if not Player.BuffsExist("Focus Attack"):
-                            Spells.CastNinjitsu("Focus Attack", True)
-                    elif specialAbilityType == 5:
-                        print("This needs work, there is no buff for momentum strike. TODO")
-                        if not Player.BuffsExist("Momentum Strike"):
-                            Spells.CastBushido("Momentum Strike", True)
+            if useEnemyOfOne == 1 and not Player.BuffsExist("Enemy Of One") and Player.Mana > 20:
+                cast_spell("Enemy of One", None, latencyMs)
+            elif useConsecrateWeapon == 1 and not Player.BuffsExist("Consecrate Weapon") and Player.Mana > 12:
+                cast_spell("Consecrate Weapon", None, latencyMs)
+            elif useDivineFury == 1 and not Player.BuffsExist("Divine Fury") and Player.Mana > 20:
+                cast_spell("Divine Fury", None, latencyMs)
+            elif useCurseWeapon == 1 and not Player.BuffsExist("Curse Weapon") and Player.Mana > 20:
+                cast_spell("Curse Weapon", None, latencyMs)
+       
+            if useShieldBash == 1 and not Player.BuffsExist("Shield Bash") and Player.Mana > 35:
+                cast_spell("Shield Bash", None, latencyMs)
+                Player.HeadMessage(38, "Shield Bash")
+            if (useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist("Shield Bash"))) and Player.Mana > 20:
+                if specialAbilityType == 1:
+                    if not Player.HasPrimarySpecial:
+                        Player.WeaponPrimarySA()
+                elif specialAbilityType == 2:
+                    if not Player.HasSecondarySpecial:
+                        Player.HeadMessage(38, "Armor Ignore")
+                        Player.WeaponSecondarySA()
+                elif specialAbilityType == 3:
+                    if not Player.BuffsExist("Lightning Strike"):
+                        Spells.CastBushido("Lightning Strike", True)
+                elif specialAbilityType == 4:
+                    print("This needs work, there is no buff for focus attack. TODO")
+                    if not Player.BuffsExist("Focus Attack"):
+                        Spells.CastNinjitsu("Focus Attack", True)
+                elif specialAbilityType == 5:
+                    print("This needs work, there is no buff for momentum strike. TODO")
+                    if not Player.BuffsExist("Momentum Strike"):
+                        Spells.CastBushido("Momentum Strike", True)
 
-                Player.Attack(nearestMob)
+            Player.Attack(nearestMob)
             
         Misc.Pause(100)
 
