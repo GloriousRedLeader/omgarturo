@@ -10,6 +10,7 @@ from Scripts.omgarturo.fm_core.core_mobiles import get_blues_in_range
 from Scripts.omgarturo.fm_core.core_mobiles import get_mobile_percent_hp
 from Scripts.omgarturo.fm_core.core_mobiles import get_pets
 from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
+from Scripts.omgarturo.fm_core.core_mobiles import get_honor_target
 from Scripts.omgarturo.fm_core.core_player import find_instrument
 from Scripts.omgarturo.fm_core.core_player import use_bag_of_sending
 from Scripts.omgarturo.fm_core.core_spells import cast_until_works
@@ -81,7 +82,8 @@ def run_dex_loop(
     
     # Paladin spell for curing poisons, only works on self.
     useCleanseByFire = 0,
-    
+
+    # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
     # Will try to find an enemy at full health when the buff doesnt exist on player.
     useHonor = 0,
@@ -116,8 +118,13 @@ def run_dex_loop(
         eligible = get_enemies(attackRange)
         if len(eligible) > 0:   
             nearestMob = Mobiles.Select(eligible, 'Nearest')
+            honorMob = get_honor_target() if useHonor == 1 and not Player.BuffsExist("Perfection") else None
             
-            if useEnemyOfOne == 1 and not Player.BuffsExist("Enemy Of One") and Player.Mana > 20:
+            if honorMob is not None:
+                Player.InvokeVirtue("Honor")
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(honorMob)
+            elif useEnemyOfOne == 1 and not Player.BuffsExist("Enemy Of One") and Player.Mana > 20:
                 cast_spell("Enemy of One", None, latencyMs)
             elif useConsecrateWeapon == 1 and not Player.BuffsExist("Consecrate Weapon") and Player.Mana > 12:
                 cast_spell("Consecrate Weapon", None, latencyMs)

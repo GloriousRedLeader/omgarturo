@@ -183,6 +183,12 @@ def get_enemies(range = 10, serialsToExclude = []):
 
     return mobs
 
+# Gets an enemy at full health within 10 paces of tile and is within line of sight.    
+def get_honor_target():
+    for mob in get_enemies(10):
+        if mob.Hits == mob.HitsMax:
+            return mob
+
 # Gets your pets as mobiles    
 def get_pets(range = 10, checkLineOfSight = True, mobileId = None):
     pets = []
