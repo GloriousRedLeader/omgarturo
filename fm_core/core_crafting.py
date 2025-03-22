@@ -687,7 +687,7 @@ RECIPES = [
     SmallBodRecipe(True, "key ring", CAT_TINKERING_MISCELLANEOUS, 2, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 2)] ),
     SmallBodRecipe(False, "candelabra", CAT_TINKERING_MISCELLANEOUS, 9, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "scales", CAT_TINKERING_MISCELLANEOUS, 16, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
-    SmallBodRecipe(False, "iron key", CAT_TINKERING_MISCELLANEOUS, 23, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 3)] ),
+    SmallBodRecipe(True, "iron key", CAT_TINKERING_MISCELLANEOUS, 23, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 3)] ),
     SmallBodRecipe(True, "globe", CAT_TINKERING_MISCELLANEOUS, 30, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "spyglass", CAT_TINKERING_MISCELLANEOUS, 37, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "lantern", CAT_TINKERING_MISCELLANEOUS, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 2)] ),
