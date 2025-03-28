@@ -1893,6 +1893,8 @@ def run_craft_loop(
     recipe = element = next((r for r in RECIPES if r.recipeName == recipeName), None)
     print(f"Found Recipe {recipe}")
     craftGumpSet = False
+    totalCrafted = 0
+    totalKept = 0
     while True:
         tool = get_tool(craftContainer, recipe.toolId, toolContainer, itemMoveDelayMs)
         if tool is None:
@@ -1970,7 +1972,10 @@ def run_craft_loop(
                 if maxEnergyResist is not None and Items.GetPropValue(item, "energy resist") > maxEnergyResist:
                     keepItem = False  
 
+                totalCrafted = totalCrafted + 1
+                
                 if keepItem:
+                    totalKept = totalKept + 1
                     print("Keeping item")
                     for keepContainer in keepContainers:
                         container = Items.FindBySerial(keepContainer)
@@ -1982,5 +1987,5 @@ def run_craft_loop(
                     print("Trashing item")
                     Items.Move(item, trashContainer, 1)
                     Misc.Pause(itemMoveDelayMs)       
-
+        print(f"Crafted: {totalCrafted}\tKept: {totalKept}")
         Misc.Pause(50)

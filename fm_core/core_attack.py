@@ -42,7 +42,8 @@ import sys
 Timer.Create("cloakOfGraveMistsTimer", 1)
 
 # Basic dexer loop that attacks nearby monsters using the abilities listed below.
-# Configure as needed.
+# Can automatically use bag of sending if you enable it. 
+# Works well in conjunction with the auto bandage feature in RE.
 def run_dex_loop(
 
     # Give it a fun name in case you have different versions, e.g.
