@@ -51,11 +51,13 @@ Useful things you'll find:
 
 A highly configurable **Dexer Attack Loop** that supports some chiv, necro and shield bash stuff. More to come later, I just don't really play other builds.
 
-A rather inefficient **Caster Attack Loop**. Good for mage tamer and InsaneUO specific focused necro caster.
+A versatile **Caster Attack Loop**. Good for mage tamer and InsaneUO specific focused necro caster. Also can heal pets / players. Can copy this file with different configurations like AoE spells for champ spawns, single target spells for bosses, heals for pets/players - or, lump them all into one configuration.
 
 A couple of **resource gathering** scripts. Use with caution. Don't break any rules. Includes fishing on a boat (also crab fishing), lumberjacking, and mining.
 
 **Restocker** is InsaneUO specific. It moves items from resource boxes (miner's storage box, reagent box, etc.) to a real container. No more clicking a million times and letting resources pile up at your feet. Useful in conjunction with bod builder. 
+
+There are some quality of life scripts for simple things like **mounting/dismounting pets**, **leashing pets**, and **recalling** from a runebook.
 
 **BOD Builder** script to automate crafting and filling small and large bods. Seriously, this does 100% of the work for you. Highly configurable. Current support for
 * Alchemy
