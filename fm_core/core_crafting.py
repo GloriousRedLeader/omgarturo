@@ -1055,6 +1055,11 @@ PROP_ID_AMOUNT_TO_MAKE = 1060656
 PROP_ID_BOD_EXCEPTIONAL = 1045141
 PROP_ID_ITEM_TEXT = 1060658
 
+# GUMPS
+CRAFTING_GUMP_ID = 0x38920abd
+SMALL_BOD_GUMP_ID = 0x5afbd742
+LARGE_BOD_GUMP_ID = 0xa125b54a
+
 # This goes prop.Number -> { gump button id, special resource hue, item name }
 # ServUO\Scripts\Services\BulkOrders\SmallBODs\SmallBODGump.cs
 # Tried doing a regex by special material name, e.g. All items must be made
@@ -1144,10 +1149,10 @@ def parse_large_bod(bod):
 
 # Helper method to get a tool from the toolContainer. You dont need to worry about this.  
 # Also puts away unused tools.
-def get_tool(craftContainer, smallBod, toolContainer, itemMoveDelayMs):
-    tool = Items.FindByID(smallBod.recipe.toolId, RESOURCE_HUE_DEFAULT, craftContainer, -1)
+def get_tool(craftContainer, toolId, toolContainer, itemMoveDelayMs):
+    tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, craftContainer, -1)
     if tool is None:
-        tool = Items.FindByID(smallBod.recipe.toolId, RESOURCE_HUE_DEFAULT, toolContainer, -1)
+        tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, toolContainer, -1)
         if tool is not None:
             Items.Move(tool, craftContainer, 1)
             Misc.Pause(itemMoveDelayMs)
@@ -1162,10 +1167,11 @@ def get_tool(craftContainer, smallBod, toolContainer, itemMoveDelayMs):
     return tool
     
 # Helper method to get resources from the resourceContainer. Ignore me.
-def check_resources(craftContainer, smallBod, resourceContainer, itemMoveDelayMs):
+#def check_resources(craftContainer, smallBod, resourceContainer, itemMoveDelayMs):
+def check_resources(craftContainer, smallBodResources, resourceContainer, itemMoveDelayMs, specialMaterialHue = None):
     itemsToMove = []
-    for resource in smallBod.recipe.resources:
-        hue = smallBod.specialMaterialHue if resource.canOverrideHue() and smallBod.specialMaterialHue is not None else RESOURCE_HUE_DEFAULT    
+    for resource in smallBodResources:
+        hue = specialMaterialHue if resource.canOverrideHue() and specialMaterialHue is not None else RESOURCE_HUE_DEFAULT    
         items = Items.FindAllByID(resource.resourceId, hue, craftContainer, 0)
         amountBackpack = sum(item.Amount for item in items)
         
@@ -1552,9 +1558,9 @@ def run_bod_builder(
     Items.UseItem(craftContainer)
     Misc.Pause(itemMoveDelayMs)    
     
-    CRAFTING_GUMP_ID = 0x38920abd
-    SMALL_BOD_GUMP_ID = 0x5afbd742
-    LARGE_BOD_GUMP_ID = 0xa125b54a
+    #CRAFTING_GUMP_ID = 0x38920abd
+    #SMALL_BOD_GUMP_ID = 0x5afbd742
+    #LARGE_BOD_GUMP_ID = 0xa125b54a
     
     # Turn this array into a dictionary keyed on item name. Its just easier that way.
     # So instead of [SmallBodRecipe, SmallBodRecipe...] we get:
@@ -1658,7 +1664,8 @@ def run_bod_builder(
                             
                             cleanup(craftContainer, salvageBag, trashContainer, resourceContainer, itemMoveDelayMs, smallBod)
                             
-                            if not check_resources(craftContainer, smallBod, resourceContainer, itemMoveDelayMs):
+                            if not check_resources(craftContainer, smallBod.recipe.resources, resourceContainer, itemMoveDelayMs, smallBod.specialMaterialHue):
+                            #if not check_resources(craftContainer, smallBod, resourceContainer, itemMoveDelayMs):
                                 print("Warning: Out of resources, skipping {}".format(smallBod.getCraftedItemName()))
                                 reports[freshBod.Color].incrementNumMissingResources()
                                 if freshBod.Container != incompleteBodContainer:
@@ -1666,7 +1673,7 @@ def run_bod_builder(
                                     Misc.Pause(itemMoveDelayMs)
                                 break
                             
-                            tool = get_tool(craftContainer, smallBod, toolContainer, itemMoveDelayMs)
+                            tool = get_tool(craftContainer, smallBod.recipe.toolId, toolContainer, itemMoveDelayMs)
                             if tool is None:
                                 print("Error: Cannot find tool")
                                 sys.exit()
