@@ -64,6 +64,8 @@ A couple of **resource gathering** scripts. Use with caution. Don't break any ru
 * Blacksmithy
 * Tinkering
 
+A **CraftItems** script. This might seem silly but I find it invaluable for min/maxing suits. This will craft a particular item (specified in script) repeatedly and discard any items that don't pass your filter requirements (also configured in script). For example, if you are an advanced crafter looking for a specific set of resists on leather leggings, e.g. 3 physical, 10 fire, 11 cold - then this script is for you. It will discard all the rubbish. Reforging is a painful process, and this helps make it easier by providing a large pool of potential items. But really, even if  you aren't reforging and just imbuing, it is still helpful. Makes life easier.
+
 **Move Items** scripts to put things in various containers. Lots of different flavors and uses. They all present with a target reticle so no need for hard coding anything. Different flavors include:
 * Move x number of items from one container to another (type number of items in chat, target source container, target destination container)
 * Move all items of a type from their current container to another container (target item, target destination container)
