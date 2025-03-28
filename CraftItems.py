@@ -14,7 +14,7 @@ from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
 #
 # This will only stop if you run out of resources or tools. Otherwise, it goes forever.
 #
-# WARNING: IF  YOU SET craftContainer AS YOUR BACKPACK IT YOU RISK LOSING ITEMS.
+# WARNING: IF YOU SET craftContainer AS YOUR BACKPACK, YOU RISK LOSING ITEMS.
 #
 # Requirements:
 #   - Provide the recipe name
@@ -71,7 +71,7 @@ run_craft_loop(
     # catastrophic. God save the queen.
     gumpDelayMs = 750,
     
-    # Use these filters to only keep very specific items.Items. This is the main
+    # Use these filters to only keep very specific items. This is the main
     # point of this script. Will keep things that match these filters. If not set,
     # will default to None which means that filter isnt considered. Values expected are 
     # numeric unless documented otherwise. Default is None which means ignore the fitler.
