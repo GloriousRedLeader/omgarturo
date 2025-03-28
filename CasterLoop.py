@@ -6,21 +6,31 @@
 
 from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
 
-# Very basic caster loop. Configurable to meet needs of purse casters, and tamers. 
 # Can cast spellweaving, magery, necro spells. Can heal player, friends, pets, etc.
-# Set the values you need and go. 
-# Ideally make separate scripts for each specific task, e.g. AOE loop, single target 
-# loop, or maybe just a heal only loop.
-run_mage_loop(
+# Set the values you need and go. I run 3 separate versions of this:
+#
+#   1. Mage Tamer AoE = This will heal me, my pet and cast wildfire every 10 seconds.
+#   2. Mage Tamer Heal Only = This heals me, my pet and a select few friends (no offense)
+#   3. Focused Necro AoE = This will heal with spirit speak and spam whither
+#   4. Focused Necro Single Target = Heals with spirit speak and uses evil omen, corpse skin, 
+#       strangle every 30 seconds, and spams poison strike in between
+#
+# There is currently no logic that switches between AOE and single taret attacks. Instead,
+# there is just a basic spell cast order. Some spells have a cast delay configured below
+# (things like wildfire, strangle), while other spells just get spammed. Note that heals always get
+# prioritized. As an added bonus, this will also work with bag of sending and automatically bank gold.
+def run_mage_loop(
 
     # Give it a fun name in case you have different versions, e.g.
     # Mage AOE Loop or Mage Single Target Loop
     loopName = "Mage Loop",
-    
-    # 0 = Heal only names in friendNames, 1 = heal any blue in range, 2 = my pets only
+
+    # Applicable when heal spells are enabled (Greater Heal, etc.) which are configured
+    # down below. This governs how you want to heal allies. By default your character is always healed.
+    # 0 = Heal only names in friendNames array (below), 1 = heal any blue in range, 2 = my pets only
     friendSelectMethod = 0,
     
-    # Names of pets or blue characters you want to heal, cure if they are in range.
+    # Names of pets or blue characters you want to heal / cure if they are in range.
     # Note that you still need to enable useCure / useGreaterHeal etc.
     friendNames = [],
     
