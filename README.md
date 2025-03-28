@@ -51,42 +51,42 @@ Useful things you'll find:
 
 A highly configurable [Dexer Attack Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/DexLoop.py) that supports some chiv, necro and shield bash stuff. More to come later, I just don't really play other builds.
 
-A versatile **Caster Attack Loop**. Good for mage tamer and InsaneUO specific focused necro caster. Also can heal pets / players. Can copy this file with different configurations like AoE spells for champ spawns, single target spells for bosses, heals for pets/players - or, lump them all into one configuration.
+A versatile [Caster Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/CasterLoop.py). Good for mage tamer and InsaneUO specific focused necro caster. Also can heal pets / players. Can copy this file with different configurations like AoE spells for champ spawns, single target spells for bosses, heals for pets/players - or, lump them all into one configuration.
 
-A couple of **resource gathering** scripts. Use with caution. Don't break any rules. Includes fishing on a boat (also crab fishing), lumberjacking, and mining.
+A couple of resource gathering scripts. Use with caution. Don't break any rules. Includes [fishing on a boat](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopBoat.py), [crab fishing](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopCrab.py), [lumberjacking](https://github.com/GloriousRedLeader/omgarturo/blob/master/LumberjackingLoop.py), and [mining](https://github.com/GloriousRedLeader/omgarturo/blob/master/MiningLoop.py).
 
-**Restocker** is InsaneUO specific. It moves items from resource boxes (miner's storage box, reagent box, etc.) to a real container. No more clicking a million times and letting resources pile up at your feet. Useful in conjunction with bod builder. 
+[Restocker](https://github.com/GloriousRedLeader/omgarturo/blob/master/Restocker.py) is InsaneUO specific. It moves items from resource boxes (miner's storage box, reagent box, etc.) to a real container. No more clicking a million times and letting resources pile up at your feet. Useful in conjunction with bod builder. 
 
-There are some quality of life scripts for simple things like **mounting/dismounting pets**, **leashing pets**, and **recalling** from a runebook.
+There are some quality of life scripts for simple things like [mounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetMount.py) and [dismounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetDismount.py) pets, [leashing](https://github.com/GloriousRedLeader/omgarturo/blob/master/LeashPets.py) pets, and [recalling / sacred journey](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) from a rulebook.
 
-**BOD Builder** script to automate crafting and filling small and large bods. Seriously, this does 100% of the work for you. Highly configurable. Current support for
+[BOD Builder](https://github.com/GloriousRedLeader/omgarturo/blob/master/BODBuilder.py) script to automate crafting and filling small and large bods. Seriously, this does 100% of the work for you. Highly configurable. Current support for
 * Alchemy
 * Tailoring
 * Inscription
 * Blacksmithy
 * Tinkering
 
-A **CraftItems** script. This might seem silly but I find it invaluable for min/maxing suits. This will craft a particular item (specified in script) repeatedly and discard any items that don't pass your filter requirements (also configured in script). For example, if you are an advanced crafter looking for a specific set of resists on leather leggings, e.g. 3 physical, 10 fire, 11 cold - then this script is for you. It will discard all the rubbish. Reforging is a painful process, and this helps make it easier by providing a large pool of potential items. But really, even if  you aren't reforging and just imbuing, it is still helpful. Makes life easier.
+A [CraftItems](https://github.com/GloriousRedLeader/omgarturo/blob/master/CraftItems.py) script. This might seem silly but I find it invaluable for min/maxing suits. This will craft a particular item (specified in script) repeatedly and discard any items that don't pass your filter requirements (also configured in script). For example, if you are an advanced crafter looking for a specific set of resists on leather leggings, e.g. 3 physical, 10 fire, 11 cold - then this script is for you. It will discard all the rubbish. Reforging is a painful process, and this helps make it easier by providing a large pool of potential items. But really, even if  you aren't reforging and just imbuing, it is still helpful. Makes life easier.
 
 **Move Items** scripts to put things in various containers. Lots of different flavors and uses. They all present with a target reticle so no need for hard coding anything. Different flavors include:
-* Move x number of items from one container to another (type number of items in chat, target source container, target destination container)
-* Move all items of a type from their current container to another container (target item, target destination container)
-* Move all items of a type **and color** from their current container to another container, you can use this turn in bods (target item, target destination container)
-* Move all items from container to another container (target source container, target destination container)
+* [Move number of items](https://github.com/GloriousRedLeader/omgarturo/blob/master/MoveNumberOfItems.py) from one container to another (type number of items in chat, target source container, target destination container)
+* [Move all items by type](https://github.com/GloriousRedLeader/omgarturo/blob/master/MoveItemsByID.py) from their current container to another container (target item, target destination container)
+* [Move all items by type and color](https://github.com/GloriousRedLeader/omgarturo/blob/master/MoveItemsByIDAndColor.py) from their current container to another container, you can use this turn in bods (target item, target destination container)
+* [Move all items](https://github.com/GloriousRedLeader/omgarturo/blob/master/MoveAllItemsFromContainer.py) from one container to another container (target source container, target destination container)
 
-**Automated character movement** script that uses the rails framework. Several default routes already established. You can easily add your own, it's just a list of x, y coordinates. Use this in conjunction with dexer / caster loops for maximum farming. For the love of all that is holy, use while you're at your machine supervising. You will get banned.
+[Automated character movement](https://github.com/GloriousRedLeader/omgarturo/blob/master/RailLoop.py) script that uses the rails framework. Several default routes already established. You can easily add your own, it's just a list of x, y coordinates. Use this in conjunction with dexer / caster loops for maximum farming. For the love of all that is holy, use while you're at your machine supervising. You will get banned.
 
-A script that **scans journal entries and alerts** with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
+A script that [scans journal entries and alerts](https://github.com/GloriousRedLeader/omgarturo/blob/master/JournalAlert.py) with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
 
-**Shadowguard** script from Dorana. Just keeping a copy. This thing is amazing. Dear god.
+[Shadowguard](https://github.com/GloriousRedLeader/omgarturo/blob/master/Shadowguard2.cs) script from Dorana. Just keeping a copy. This thing is amazing. Dear god.
 
-**Lootmaster** script from Dorana. Just keeping a copy for posterity.
+[Lootmaster](https://github.com/GloriousRedLeader/omgarturo/blob/master/Lootmaster-1-8-0.cs) script from Dorana. Just keeping a copy for posterity.
 
-A script that **opens Messages in a bottle and sorts them** into 3 chests, one for each section of the map (west, central, east). This makes fishing MiBs much more efficient since you aren't hunting all over the map, just 1/3 of it with more condensed spots. I usually take about 100 of them with me.
+A script that [opens Messages in a bottle and sorts them](https://github.com/GloriousRedLeader/omgarturo/blob/master/MIBSorter.py) into 3 chests, one for each section of the map (west, central, east). This makes fishing MiBs much more efficient since you aren't hunting all over the map, just 1/3 of it with more condensed spots. I usually take about 100 of them with me.
 
-An **IDOC Scanner** script. This thing is awesome. Written by someone else (can't track down author). Just storing for safe keeping. 
+An [IDOC Scanner](https://github.com/GloriousRedLeader/omgarturo/blob/master/IDOCAlert.py) script. This thing is awesome. Written by someone else (can't track down author). Just storing for safe keeping. 
 
-**Character Stats** is a standalone tool that will have some details on character stats from item properties. Just bind it to a key and run it when you want to see all your properties like resists, HCI, SDI, etc. Note that it does get a little wonkie sometimes and you'll have to close and re-open your paperdoll. This script will tell you when it needs to be done (has something to do with item caching in the client / razor).
+[Character Stats](https://github.com/GloriousRedLeader/omgarturo/blob/master/CharacterStats.py) is fairly worthless now. Just use [mystats in game. This WILL show you overcapped resists though which is nice. Note that it does get a little wonkie sometimes and you'll have to close and re-open your paperdoll. This script will tell you when it needs to be done (has something to do with item caching in the client / razor).
 
 ### Credits
 
