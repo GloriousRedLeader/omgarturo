@@ -6,6 +6,8 @@
 
 from Scripts.omgarturo.fm_core.core_crafting import *
 
+# WARNING: THIS IS IN DEVELOPMENT AND DOESNT WORK YET
+
 # Crafts an item in a loop. Useful for crafters who are looking for
 # very specific pieces of gear like armor with 2 or fewer physical resist.
 # Can be used to automate any recipe found in omgarturo.fm_core.core_crafting.RECIPES.
@@ -96,13 +98,6 @@ def run_craft_loop(
     Items.UseItem(craftContainer)
     Misc.Pause(itemMoveDelayMs)
 
-    #PROP_ID_PHYSICAL_RESIST = "1060448"
-    #PROP_ID_FIRE_RESIST_= 1060447
-    #PROP_ID_COLD_RESIST = 1060445
-    #ROP_ID_POISON_RESIST = 1060449
-    #ROP_ID_ENERGY_RESIST = 1060446
-     
-
     recipe = element = next((r for r in RECIPES if r.recipeName == recipeName), None)
     print(f"Found Recipe {recipe}")
     craftGumpSet = False
@@ -124,6 +119,7 @@ def run_craft_loop(
             continue            
         
         if not craftGumpSet:
+            # WARNING: Special materials not implemented
             #if smallBod.specialMaterialButton > 0:
             #    # The menu button to select material
             #    Gumps.SendAction(CRAFTING_GUMP_ID, 7)
@@ -131,7 +127,6 @@ def run_craft_loop(
             #    Misc.Pause(gumpDelayMs)#1000 before
             #    if not Gumps.HasGump(CRAFTING_GUMP_ID):
             #        continue                    
-                    
                 # The actual special material button
             #    Gumps.SendAction(CRAFTING_GUMP_ID, smallBod.specialMaterialButton)
             #    Gumps.WaitForGump(CRAFTING_GUMP_ID, 5000)
@@ -195,13 +190,7 @@ def run_craft_loop(
                     print("Trashing item")
                     Items.Move(item, trashContainer, 1)
                     Misc.Pause(itemMoveDelayMs)       
-                    
-                
 
-        #print("OMG ")
         Misc.Pause(50)
         
 run_craft_loop()
-#item = Items.FindBySerial(0x40645465)
-#for prop in item.Properties:
-    #print(prop, prop.ToString().lower(), prop.Args, prop.Number)
