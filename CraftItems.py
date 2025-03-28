@@ -36,8 +36,8 @@ run_craft_loop(
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
-    # things when combining items into large bods (your spellbook for example when crafting spellbooks). 
-    # The script will move all tools, bods, and materials to this container. Crafted items will appear here.
+    # things when filtering out unwanted items.
+    # The script will move all tools and materials to this container. Crafted items will appear here.
     craftContainer = 0x406766F0,
     
     # Stash a bunch of tools in here and let it rip. Serial of container.
@@ -77,9 +77,9 @@ run_craft_loop(
     # numeric unless documented otherwise. Default is None which means ignore the fitler.
     minPhysicalResist = None,
     maxPhysicalResist = None,
-    minFireResist = 10,
+    minFireResist = 11,
     maxFireResist = None,
-    minColdResist = 10,
+    minColdResist = 9,
     maxColdResist = None,
     minPoisonResist = None,
     maxPoisonResist = None,

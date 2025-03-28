@@ -1827,8 +1827,8 @@ def run_craft_loop(
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
-    # things when combining items into large bods (your spellbook for example when crafting spellbooks). 
-    # The script will move all tools, bods, and materials to this container. Crafted items will appear here.
+    # things when filtering out unwanted items.
+    # The script will move all tools and materials to this container. Crafted items will appear here.
     craftContainer,
     
     # Stash a bunch of tools in here and let it rip. Serial of container.
