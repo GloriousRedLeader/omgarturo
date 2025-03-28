@@ -674,7 +674,7 @@ def run_ss_loop (
 ####################################################################################################
 
 # Can cast spellweaving, magery, necro spells. Can heal player, friends, pets, etc.
-# Set the values you need and go. I run 3 separate versions of this:
+# Set the values you need and go. I run a few different versions of this:
 #
 #   1. Mage Tamer AoE = This will heal me, my pet and cast wildfire every 10 seconds.
 #   2. Mage Tamer Heal Only = This heals me, my pet and a select few friends (no offense)
