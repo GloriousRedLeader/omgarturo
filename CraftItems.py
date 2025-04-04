@@ -12,7 +12,8 @@ from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
 # But I find it most useful for crafters looking for very specific armor pieces
 # before reforging. Sometimes it takes a lot of crafts to get the pieces you want.
 #
-# This will only stop if you run out of resources or tools. Otherwise, it goes forever.
+# This will by default loop forever. You can set the maxCraftedItems to a number if you
+# want it to stop after a certain point. Read the parameters below to configure.
 #
 # WARNING: IF YOU SET craftContainer AS YOUR BACKPACK, YOU RISK LOSING ITEMS.
 #
@@ -24,8 +25,8 @@ from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
 #   - You may need a forge and anvil nearby
 #   - You need a container for items to keep
 #   - You need a container for items to discard
+#   - Optionally set the max number of items to craft
 #   - Set options for filters to keep only equipment you want
-#
 run_craft_loop(
 
     # A string for the item name you want to craft like "leather sleeves" or "Recall" (note the caps). 
