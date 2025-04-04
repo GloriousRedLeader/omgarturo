@@ -28,11 +28,12 @@ from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
 #
 run_craft_loop(
 
-    # A string for the item name you want to craft like "leather sleeves". You can
-    # find the complete list of implemented recipes in the omgarturo.fm_core.core_crafting.RECIPES
+    # A string for the item name you want to craft like "leather sleeves" or "Recall" (note the caps). 
+    # You can find the complete list of implemented recipes in the omgarturo.fm_core.core_crafting.RECIPES
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
-    recipeName = "leather leggings",
+    #recipeName = "leather leggings",
+    recipeName = "Earthquake",
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
@@ -49,13 +50,20 @@ run_craft_loop(
     
     # An array of serials for containers where the items you want to keep will be stored.
     # Plop a container down, secure it, grab the serial, and plug it into this array.
-    keepContainers = [0x406FD576],
+    # Script will attempt to move items that DO meet filters after every craft attempt.
+    # This is slow and should be optimized later based on weight.
+    keepContainers = [0x410FC126],
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
+    # Script will attempt to move items that do not meet filters after every craft attempt.
     trashContainer = 0x406766F3,
+    
+    # (Optional) A number that marks the upper limit on crafted items.
+    # Default is None which means keep crafting forever.
+    maxItemsToCraft = 20,
     
     # NOTE: NOT IMPLEMENTED. ONLY WORKS WITH DEFAULT MATERIALS LIKE IRON AND LEATHER
     # (Optional) Specific a material to use like Shadow Iron or Barbed Leather.
@@ -75,14 +83,15 @@ run_craft_loop(
     # point of this script. Will keep things that match these filters. If not set,
     # will default to None which means that filter isnt considered. Values expected are 
     # numeric unless documented otherwise. Default is None which means ignore the fitler.
+    # Set all of these to None if you just want 500 Recall scrolls.
     minPhysicalResist = None,
     maxPhysicalResist = None,
-    minFireResist = 11,
+    minFireResist = None,
     maxFireResist = None,
-    minColdResist = 9,
+    minColdResist = None,
     maxColdResist = None,
     minPoisonResist = None,
     maxPoisonResist = None,
-    minEnergyResist = 5,
+    minEnergyResist = None,
     maxEnergyResist = None
 )

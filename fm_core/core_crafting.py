@@ -1819,8 +1819,8 @@ def run_bod_builder(
 #
 def run_craft_loop(
 
-    # A string for the item name you want to craft like "leather sleeves". You can
-    # find the complete list of implemented recipes in the omgarturo.fm_core.core_crafting.RECIPES
+    # A string for the item name you want to craft like "leather sleeves" or "Recall" (note the caps). 
+    # You can find the complete list of implemented recipes in the omgarturo.fm_core.core_crafting.RECIPES
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
     recipeName,
@@ -1840,13 +1840,20 @@ def run_craft_loop(
     
     # An array of serials for containers where the items you want to keep will be stored.
     # Plop a container down, secure it, grab the serial, and plug it into this array.
+    # Script will attempt to move items that DO meet filters after every craft attempt.
+    # This is slow and should be optimized later based on weight.
     keepContainers,
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
+    # Script will attempt to move items that do not meet filters after every craft attempt.
     trashContainer,
+    
+    # (Optional) A number that marks the upper limit on crafted items.
+    # Default is None which means keep crafting forever.
+    maxItemsToCraft = None,
     
     # NOTE: NOT IMPLEMENTED. ONLY WORKS WITH DEFAULT MATERIALS LIKE IRON AND LEATHER
     # (Optional) Specific a material to use like Shadow Iron or Barbed Leather.
@@ -1904,6 +1911,14 @@ def run_craft_loop(
         if not check_resources(craftContainer, recipe.resources, resourceContainer, itemMoveDelayMs, specialMaterialHue):            
             print("Error: Out of resources")
             sys.exit()
+            
+        # Meditation for inscription crafting
+        while Player.Mana < Player.ManaMax * 0.5:
+            if Timer.Check("meditationTimer") == False and not Player.BuffsExist("Meditation"):
+                print("Mana is low, attempting meditation")
+                Player.UseSkill("Meditation")
+                Timer.Create("meditationTimer", 10000)
+            Misc.Pause(500)            
             
         Items.UseItem(tool)
         Gumps.WaitForGump(CRAFTING_GUMP_ID, 5000)
@@ -1987,5 +2002,10 @@ def run_craft_loop(
                     print("Trashing item")
                     Items.Move(item, trashContainer, 1)
                     Misc.Pause(itemMoveDelayMs)       
+                    
+        if maxItemsToCraft is not None and totalKept >= maxItemsToCraft:
+            print("All done. Crafted {} items".format(totalKept))
+            sys.exit()
+            
         print(f"Crafted: {totalCrafted}\tKept: {totalKept}")
         Misc.Pause(50)

@@ -39,7 +39,7 @@ import sys
 # 455 - white   PLAYER / ITEMS
 
 # Global Timers
-Timer.Create("cloakOfGraveMistsTimer", 1)
+#Timer.Create("cloakOfGraveMistsTimer", 1)
 
 # Basic dexer loop that attacks nearby monsters using the abilities listed below.
 # Can automatically use bag of sending if you enable it. 
@@ -839,7 +839,8 @@ def run_mage_loop(
         if minGold > 0 and Player.Gold >= minGold:
             use_bag_of_sending(minGold)            
             
-        if is_player_moving() or Player.BuffsExist("Meditation"):
+        #if is_player_moving() or Player.BuffsExist("Meditation"):
+        if is_player_moving():
             Misc.Pause(250)
             continue
 
@@ -847,6 +848,10 @@ def run_mage_loop(
         if heal_player_and_friends(friendSelectMethod = friendSelectMethod, friendNames = friendNames, range = range, healThreshold = healThreshold, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = useCloakOfGraveMists) == True:
             if useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)
+            continue
+            
+        if Player.BuffsExist("Meditation") and Player.Mana / Player.ManaMax < 0.65:
+            Misc.Pause(250)
             continue
             
         if useWraithForm == 1 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Wraith Form") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
@@ -910,6 +915,14 @@ def run_mage_loop(
                 cast_spell("Thunderstorm", None, latencyMs)
             elif useWither == 1 and Player.DistanceTo(nearestMob) < 5 and Player.Mana > 20:
                 cast_spell("Wither", None, latencyMs)
+            elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 1:
+                Player.HeadMessage(58, "Stand still - going to meditate!")
+                Misc.Pause(1500)
+                use_skill("Meditation")
+                Player.HeadMessage(58, "Meditating!")
+                Timer.Create( 'meditationTimer', 10000)                                
+                
+                
         #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
         #    check_summon_familiar()
         elif Player.Hits / Player.HitsMax < 0.95 and Player.Mana > 20 and (useGreaterHeal == 1 or useSpiritSpeak == 1 or useCure == 1):
