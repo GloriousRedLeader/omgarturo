@@ -5,6 +5,8 @@
 # Use at your own risk. 
 
 # Find an npc and go for it.
+# This may or may not work. I think you may need high karma. 
+# Never got around to raising this skill.
 
 MSG = "Pick an NPC to beg from"
 Player.HeadMessage(128, MSG)

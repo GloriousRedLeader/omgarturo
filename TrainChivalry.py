@@ -1,10 +1,16 @@
-# GRL DID NOT WRITE THIS SCRIPT!
-# Not written by me. Credit goes to wherever this came from. 
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
+
+# I DID NOT WRITE THIS SCRIPT!
+# Credit goes to wherever this came from. 
 # Im hosting for safekeeping.
+# Also, it may or may not work. I forget. Good luck.
 
 Misc.SendMessage("Training Chiv")
 
-#while Player.GetRealSkillValue("Chivalry") < Player.GetSkillCap('Chivalry'):
 while Player.GetRealSkillValue("Chivalry") < 85:
     skillValue = Player.GetRealSkillValue("Chivalry")
     

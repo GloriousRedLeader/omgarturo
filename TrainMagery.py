@@ -4,7 +4,8 @@
 #   2024-03-26
 # Use at your own risk. 
 
-# I am just storing this here for safekeeping. This script is from on UO Alive Discord
+# I am just storing this here for safekeeping. This script is from on UO Alive Discord.
+# Whoever made this, thank you.
 # Dec 18, 2023 Magery 0 - 120
 
 #30 - 45: Cast Fireball

@@ -1,8 +1,16 @@
-# GRL DID NOT WRITE THIS SCRIPT!
-# Not written by me. Credit goes to wherever this came from. 
-# Im hosting for safekeeping.
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
 
-import sys # buy upto 40 in newhaven 3495, 2414
+import sys 
+
+# I DID NOT WRITE THIS SCRIPT!
+# Credit goes to wherever this came from. 
+# Im hosting for safekeeping.
+# Buy as much skill as you can in newhaven, may need 40.
+# Also, it may or may not work. I forget. Good luck.
 
 while Player.GetSkillValue('Bushido') < 100:
     Misc.Pause(1)

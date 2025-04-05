@@ -1,3 +1,19 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
+
+from Scripts.omgarturo.fm_core.core_items import INSTRUMENT_STATIC_IDS
+from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
+from System.Collections.Generic import List
+
+# I DID NOT WRITE THIS SCRIPT! I did make it worse though.
+# Credit goes to wherever this came from. 
+# Im hosting for safekeeping.
+# Also, it may or may not work. I forget. Good luck.
+
+
 '''
 Author: TheWarDoctor95
 Other Contributors:
@@ -6,19 +22,11 @@ Last Contribution By: TheWarDoctor95 - March 23, 2019
 Description: Uses the Peacemaking skill on the player to train Peacemaking to GM
 '''
 
-from Scripts.omgarturo.fm_core.core_items import INSTRUMENT_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
-
 Player.HeadMessage(38, "Training Peacemaking")
 
 peacemakingTimerMilliseconds = 10200
 journalEntryDelayMilliseconds = 200
 targetClearDelayMilliseconds = 200
-
-from System.Collections.Generic import List
-#from Scripts.glossary.items import FindInstrument
-#from Scripts.glossary.enemies import GetEnemyNotorieties, GetEnemies
-#from Scripts import config
 
 def TrainPeacemaking():
     '''

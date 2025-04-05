@@ -4,11 +4,13 @@
 #   2024-10-16
 # Use at your own risk. 
 
-
 # This one was taken from here:
 # https://razorenhanced.net/dokuwiki/doku.php?id=inscription
 # I removed the tinkering part. Just put a bunch of pens in your
-# bag and set your reagents in a chest and stand by it.
+# bag and set your reagents in a chest and stand by it. 
+# For raising this or any other crafting skill, you can also use the
+# CraftItems script. It will create an item in a loop. Once your skill
+# gets high enough, change to another recipe.
 
 #Inscription Trainer by Frank Castle
 #

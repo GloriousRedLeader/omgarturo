@@ -1,3 +1,14 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2025-02-04
+# Use at your own risk. 
+
+# This script was written by Aga. I am just storing for safekeeping.
+# I would however recommend getting your taming to 90 and then
+# cheesing 90 - 120 using the mastery. Takes like 10 minutes on most
+# free shards.
+
 '''
 Author: Aga - original author of the uosteam script
 Other Contributors: TheWarDoctor95 - converted to Razor Enhanced script

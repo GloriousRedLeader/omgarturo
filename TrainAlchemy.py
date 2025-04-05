@@ -1,4 +1,15 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2025-02-04
+# Use at your own risk. 
+
 import sys
+
+# This script may or may not have been written by me.
+# All credit goes to original author. I am just storing
+# it here for safekeeping. Also not sure if it actually works.
+# I may have done terrible things to it. Good luck.
 
 #keg = Target.PromptTarget('Select keg')
 

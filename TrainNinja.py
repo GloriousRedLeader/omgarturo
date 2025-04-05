@@ -1,10 +1,18 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
+
 import sys
+
+# I DID NOT WRITE THIS SCRIPT!
+# Credit goes to wherever this came from. 
+# Im hosting for safekeeping.
+# Also, it may or may not work. I forget. Good luck.
+
 print("Training Ninjitsu")
 
-
-# At 50 do this
-#while not Player.IsGhost:  
-MAX_LEVEL = 100
 while Player.GetSkillValue("Ninjitsu") < Player.GetSkillCap('Ninjitsu'): 
 
     if Player.GetSkillValue("Ninjitsu") < 50:
@@ -21,8 +29,6 @@ while Player.GetSkillValue("Ninjitsu") < Player.GetSkillCap('Ninjitsu'):
         elif not Player.Visible: 
             Spells.CastNinjitsu("Shadowjump")
             Target.WaitForTarget(3000, False)
-            #Target.TargetExecuteRelative(Player.Serial,-1)
-            #Target.TargetExecuteRelative(Player.Serial,-1)
             print(Player.Position)
             Target.TargetExecute(Player.Position.X, Player.Position.Y + 1, Player.Position.Z, 1307)
             
@@ -45,11 +51,6 @@ while Player.GetSkillValue("Ninjitsu") < Player.GetSkillCap('Ninjitsu'):
     Misc.Pause(400)
 
 sys.exit()
-
-
-
-
-
 
 Spells.CastNinjitsu("Shadowjump")
 Target.WaitForTarget(10000, False)

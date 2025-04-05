@@ -1,9 +1,17 @@
-# I did not write this. Just storing for safe keeping.
-# Shared on IUO discord by Theavis on 8/2/2024.
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
 
 import sys
 from datetime import datetime, timedelta
 
+# I DID NOT WRITE THIS SCRIPT!
+# Credit goes to wherever this came from. 
+# Im hosting for safekeeping.
+# Also, it may or may not work. I forget. Good luck.
+# Shared on IUO discord by Theavis on 8/2/2024.
 
 class Puzzle:
     def __init__(self, timeout=400):

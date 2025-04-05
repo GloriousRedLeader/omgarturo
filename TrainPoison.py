@@ -4,6 +4,11 @@
 #   2024-11-14
 # Use at your own risk. 
 
+from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_id
+from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_ids
+from Scripts.omgarturo.fm_core.core_items import KEG_STATIC_IDS
+from Scripts.omgarturo.fm_core.core_items import POISON_POTION_STATIC_ID
+
 # I am just storing this here for safekeeping. This script is from on UO Alive Discord
 # Original Author may be Firebottle, posted on 3/17/2023
 
@@ -17,12 +22,6 @@
 #40 - 70: Apply Poison
 #70 - 92: Apply Greater Poison
 #92 - 100: Apply Deadly Poison
-
-from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_ids
-from Scripts.omgarturo.fm_core.core_items import KEG_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import POISON_POTION_STATIC_ID
-
 
 #POISON_KEG_SERIALS = [0x407FC64D]
 MAX_LEVEL = 120
@@ -44,8 +43,6 @@ while Player.GetSkillValue("Poisoning") < MAX_LEVEL:
             #Items.UseItem(kegSerial)
             Items.UseItem(keg)
             Misc.Pause(1000)
-#0x0F0E - empty
-# 0x0F0A - poison
         poison = Items.FindByID( POISON_POTION_STATIC_ID, -1, Player.Backpack.Serial )
         if poison == None:
             Player.HeadMessage(38, "No more poisons, hopefully theres another keg")
@@ -80,4 +77,3 @@ while Player.GetSkillValue("Poisoning") < MAX_LEVEL:
             Target.TargetExecute(weapon)
             Misc.Pause(8000)
         
-

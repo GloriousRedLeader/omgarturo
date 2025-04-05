@@ -1,3 +1,16 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
+
+# I DID NOT WRITE THIS SCRIPT!
+# Credit goes to wherever this came from. 
+# Im hosting for safekeeping.
+# I think remove trap does not work, at least when I tried. There is 
+# a dedicated script for that anyway. This will level a lot of free secondary skills.
+# It does it quite well. Just enable the ones you want in the order variable below.
+
 #------Vars
 
 # Note remove trap doesnt work. Use the dedicated script.
