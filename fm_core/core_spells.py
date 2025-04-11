@@ -34,6 +34,7 @@ WORD_OF_DEATH_DELAY = 3500
 # Magery (these are all +500ms that are listed on the uo wiki)
 POISON_DELAY = 1500
 CURSE_DELAY = 1750
+FIRE_FIELD_DELAY = 1750
 GREATER_HEAL_DELAY = 1750
 ARCH_CURE_DELAY = 1750
 POISON_FIELD_DELAY = 2000
@@ -53,7 +54,7 @@ SHIELD_BASH_DELAY = 1000
 
 # Skills
 SPIRIT_SPEAK_DELAY = 999
-MEDITATION_DELAY = 250
+MEDITATION_DELAY = 1250
 
 # Adds delay to skill usage so we can loop it
 def use_skill(
@@ -132,6 +133,9 @@ def cast_spell(
     elif spellName == "Poison Field":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(POISON_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == "Fire Field":
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(FIRE_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
     elif spellName == "Poison":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(POISON_DELAY, FC_CAP_MAGERY, latencyMs))

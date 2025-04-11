@@ -748,6 +748,12 @@ def run_mage_loop(
     # How often to cast this spell in milliseconds
     poisonFieldDelayMs = 10000,
     
+    # Magery fire field spell 0 = disabled, 1 = enabled.
+    useFireField = 0,
+    
+    # How often to cast this spell in milliseconds
+    fireFieldDelayMs = 10000,
+    
     # Toggles death ray. Requires magery mastery. There is no timer because this remains
     # active until you move or you are interrupted or the creature dies. It will attempt to
     # reapply immediately. 0 = disabled, 1 = enabled
@@ -819,6 +825,7 @@ def run_mage_loop(
     Timer.Create( 'curseTimer', 1 )
     Timer.Create( 'poisonTimer', 1 )
     Timer.Create( 'poisonFieldTimer', 1 )
+    Timer.Create( 'fireFieldTimer', 1 )
     Timer.Create( 'meditationTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
@@ -908,6 +915,9 @@ def run_mage_loop(
             elif usePoisonField == 1 and Timer.Check( 'poisonFieldTimer' ) == False and nonPoisonedMob is not None:
                 cast_spell("Poison Field", nonPoisonedMob, latencyMs)
                 Timer.Create( 'poisonFieldTimer', poisonFieldDelayMs)                 
+            elif useFireField == 1 and Timer.Check( 'fireFieldTimer' ) == False:
+                cast_spell("Fire Field", nearestMob, latencyMs)
+                Timer.Create( 'fireFieldTimer', fireFieldDelayMs)                
             elif usePoisonStrike == 1  and Timer.Check( 'poisonStrikeTimer' ) == False:
                 cast_spell("Poison Strike", nearestMob, latencyMs)
                 Timer.Create( 'poisonStrikeTimer', poisonStrikeDelayMs )                
@@ -915,12 +925,12 @@ def run_mage_loop(
                 cast_spell("Thunderstorm", None, latencyMs)
             elif useWither == 1 and Player.DistanceTo(nearestMob) < 5 and Player.Mana > 20:
                 cast_spell("Wither", None, latencyMs)
-            elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 1:
+            elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
                 Player.HeadMessage(58, "Stand still - going to meditate!")
-                Misc.Pause(1500)
+                Misc.Pause(500)
                 use_skill("Meditation")
                 Player.HeadMessage(58, "Meditating!")
-                Timer.Create( 'meditationTimer', 10000)                                
+                Timer.Create( 'meditationTimer', 10000)    
                 
                 
         #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
@@ -931,10 +941,10 @@ def run_mage_loop(
             
         elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.83 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False:
             Player.HeadMessage(58, "Stand still - going to meditate!")
-            Misc.Pause(1500)
+            Misc.Pause(500)
             use_skill("Meditation")
             Player.HeadMessage(58, "Meditating!")
-            Timer.Create( 'meditationTimer', 10000)                
+            Timer.Create( 'meditationTimer', 10000) 
                 
         Misc.Pause(100)
 

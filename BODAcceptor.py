@@ -18,7 +18,7 @@ from Scripts.omgarturo.fm_core.core_items import BOD_BOOK_STATIC_ID
 # You can use this in conjunction with the run_bod_builder tool for
 # maximum boddage.
 
-placeInBodBook = True
+placeInBodBook = False
 
 NPC_BOD_GUMP_ID =  0x9bade6ea
 BOD_BOOK_GUMP_ID =  0x54f555df
