@@ -16,6 +16,7 @@ FC_CAP_SHIELD_BASH = 4
 # Necro (taken from ServUO files)
 CURSE_WEAPON_DELAY = 1000
 EVIL_OMEN_DELAY = 1000
+PAIN_SPIKE_DELAY = 1250
 CORPSE_SKIN_DELAY = 1750
 ANIMATE_DEAD_DELAY = 1750
 POISON_STRIKE_DELAY = 2000
@@ -109,6 +110,9 @@ def cast_spell(
     elif spellName == "Corpse Skin":
         Spells.CastNecro(spellName)
         Target.WaitForTarget(get_fc_delay(CORPSE_SKIN_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == "Pain Spike":
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(PAIN_SPIKE_DELAY, FC_CAP_NECROMANCY, latencyMs))        
     elif spellName == "Evil Omen":
         Spells.CastNecro(spellName)
         Target.WaitForTarget(get_fc_delay(EVIL_OMEN_DELAY, FC_CAP_NECROMANCY, latencyMs))

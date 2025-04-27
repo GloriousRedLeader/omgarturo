@@ -775,6 +775,9 @@ def run_mage_loop(
     # Whether to use this spell 0 = disabled, 1 = enabled. There is no delay here. Just spam.
     useWither = 0,
     
+    # Use necromancy pain spike every 10 seconds. On some servers this might be good.
+    usePainSpike = 0,
+    
     # This is Insane UO Specific. That means there is no target reticle. Wont work
     # on other servers.
     useAnimateDead = 0,
@@ -827,6 +830,7 @@ def run_mage_loop(
     Timer.Create( 'poisonFieldTimer', 1 )
     Timer.Create( 'fireFieldTimer', 1 )
     Timer.Create( 'meditationTimer', 1 )
+    Timer.Create( 'painSpikeTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
     if Player.Visible:
@@ -884,6 +888,9 @@ def run_mage_loop(
                 cast_spell("Death Ray", nearestMob, latencyMs)                                
             elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3:
                 cast_spell("Word of Death", nearestMob, latencyMs)                
+            elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False:
+                cast_spell("Pain Spike", nearestMob, latencyMs)
+                Timer.Create( 'painSpikeTimer', 10500 )
             #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
             #    check_summon_familiar()                
             elif useCorpseSkin == 1 and Timer.Check( 'corpseSkinTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.5:
