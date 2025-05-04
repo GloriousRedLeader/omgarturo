@@ -813,6 +813,11 @@ def run_mage_loop(
     # Looks for item on Cloak layer and uses it. Timer for this is created in the main core_attack script.
     useCloakOfGraveMists = 0,
     
+    # EXPERIMENTAL: Does not work great. Would recommend not using this.
+    # Whether to honor a nearby enemy to gain the perfection buff.
+    # Will try to find an enemy at full health when the buff doesnt exist on player.
+    useHonor = 0,
+    
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 0,
     
@@ -880,9 +885,16 @@ def run_mage_loop(
             nearestMob = Mobiles.Select(eligible, 'Nearest')
             nonPoisonedMob = next((mob for mob in eligible if not mob.Poisoned and get_mobile_percent_hp(mob) > 0.5), None)
             
-            if useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
+            
+            # Experimental
+            honorMob = get_honor_target() if useHonor == 1 and not Player.BuffsExist("Perfection") else None
+            if honorMob is not None:
+                Player.InvokeVirtue("Honor")
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(honorMob)
+            elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
-            elif useConduit == 1 and not Player.BuffsExist("Condit") and len(eligible) > 3 and Player.DistanceTo(nearestMob) > 4:
+            elif useConduit == 1 and not Player.BuffsExist("Condit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
                 cast_spell("Conduit", nearestMob, latencyMs)
             elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 100:
                 cast_spell("Death Ray", nearestMob, latencyMs)                                
@@ -930,7 +942,7 @@ def run_mage_loop(
                 Timer.Create( 'poisonStrikeTimer', poisonStrikeDelayMs )                
             elif useThunderstorm == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 30:
                 cast_spell("Thunderstorm", None, latencyMs)
-            elif useWither == 1 and Player.DistanceTo(nearestMob) < 5 and Player.Mana > 20:
+            elif useWither == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 20:
                 cast_spell("Wither", None, latencyMs)
             elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
                 Player.HeadMessage(58, "Stand still - going to meditate!")
