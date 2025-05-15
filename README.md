@@ -82,7 +82,7 @@ A script that [scans journal entries and alerts](https://github.com/GloriousRedL
 
 [Lootmaster](https://github.com/GloriousRedLeader/omgarturo/blob/master/Lootmaster-1-8-0.cs) script from Dorana. Just keeping a copy for posterity.
 
-A script that [opens Messages in a bottle and sorts them](https://github.com/GloriousRedLeader/omgarturo/blob/master/MIBSorter.py) into 3 chests, one for each section of the map (west, central, east). This makes fishing MiBs much more efficient since you aren't hunting all over the map, just 1/3 of it with more condensed spots. I usually take about 100 of them with me.
+A script that [opens Messages in a bottle and sorts them](https://github.com/GloriousRedLeader/omgarturo/blob/master/MIBSorter.py) into 3 chests, one for each section of the map (west, central, east). This makes fishing MiBs much more efficient since you aren't hunting all over the map, just 1/3 of it with more condensed spots. I usually take about 100 of them with me. The second part to this is a [script by foobarvar](https://github.com/GloriousRedLeader/omgarturo/blob/master/SOSCharter.cs) that will add the mibs in your pack as coordinates on the map. This is truly amazing. You will of course need to manually remove the coordinates after you fish the location, but thats easy.
 
 An [IDOC Scanner](https://github.com/GloriousRedLeader/omgarturo/blob/master/IDOCAlert.py) script. This thing is awesome. Written by someone else (can't track down author). Just storing for safe keeping. 
 
