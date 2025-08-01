@@ -24,6 +24,7 @@ STRANGLE_DELAY = 2250
 WITHER_DELAY = 2250
 SUMMON_FAMILIAR_DELAY = 2250
 WRAITH_FORM_DELAY = 2250
+VAMPIRIC_EMBRACE_DELAY = 2250
 
 # Spellweaving (taken from ServUO files)
 THUNDERSTORM_DELAY = 1500
@@ -130,7 +131,10 @@ def cast_spell(
         Misc.Pause(get_fc_delay(ANIMATE_DEAD_DELAY, FC_CAP_NECROMANCY, latencyMs))        
     elif spellName == "Wraith Form":
         Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(WRAITH_FORM_DELAY, FC_CAP_NECROMANCY, latencyMs))        
+        Misc.Pause(get_fc_delay(WRAITH_FORM_DELAY, FC_CAP_NECROMANCY, latencyMs))  
+    elif spellName == "Vampiric Embrace":
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(VAMPIRIC_EMBRACE_DELAY, FC_CAP_NECROMANCY, latencyMs))       
     #elif spellName == "Spirit Speak":
         #Player.UseSkill("Spirit Speak")
         #Misc.Pause(get_fc_delay(SPIRIT_SPEAK_DELAY))

@@ -789,7 +789,10 @@ def run_mage_loop(
     useSummonFamiliar = 0,
     
     # Make sure we are in wraith form when it is safe to cast.
-    useWraithForm = 0,
+    # 0 = Do not force any form.
+    # 1 = Make sure we are in wraith form.
+    # 2 = Make sure we are in vampire form.
+    useForm = 0,
     
     # Whether to cure yourself or your pet
     useCure = 0,
@@ -801,7 +804,13 @@ def run_mage_loop(
     useSpiritSpeak = 0,
     
     # Necro mastery for aoe damage, looks for buff. If no buff, casts it.
+    # 0 = Do not use
+    # 1 = Cast only when buff is not present in buff bar (kind of unreliable)
+    # 2 = Cast every conduitDelayMs milliseconds
     useConduit = 0,
+    
+    # Recast conduit after this many milliseconds. Only applicablewhen useConduit = 2.
+    conduitDelayMs = 15000,
     
     # When standing still, no mobes in range, not bleeding, strangled, or poisoned, will start meditating.
     useMeditation = 0,
@@ -836,6 +845,7 @@ def run_mage_loop(
     Timer.Create( 'fireFieldTimer', 1 )
     Timer.Create( 'meditationTimer', 1 )
     Timer.Create( 'painSpikeTimer', 1 )
+    Timer.Create( 'conduitTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
     if Player.Visible:
@@ -870,8 +880,11 @@ def run_mage_loop(
             Misc.Pause(250)
             continue
             
-        if useWraithForm == 1 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Wraith Form") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
+        if useForm == 1 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Wraith Form") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
             cast_spell("Wraith Form", None, latencyMs)
+            continue
+        elif useForm == 2 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Vampiric Embrace") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
+            cast_spell("Vampiric Embrace", None, latencyMs)
             continue
             
         if useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
@@ -885,7 +898,6 @@ def run_mage_loop(
             nearestMob = Mobiles.Select(eligible, 'Nearest')
             nonPoisonedMob = next((mob for mob in eligible if not mob.Poisoned and get_mobile_percent_hp(mob) > 0.5), None)
             
-            
             # Experimental
             honorMob = get_honor_target() if useHonor == 1 and not Player.BuffsExist("Perfection") else None
             if honorMob is not None:
@@ -894,8 +906,11 @@ def run_mage_loop(
                 Target.TargetExecute(honorMob)
             elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
-            elif useConduit == 1 and not Player.BuffsExist("Condit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
+            elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
                 cast_spell("Conduit", nearestMob, latencyMs)
+            elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
+                cast_spell("Conduit", nearestMob, latencyMs)
+                Timer.Create( 'conduitTimer', conduitDelayMs ) 
             elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 100:
                 cast_spell("Death Ray", nearestMob, latencyMs)                                
             elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3:
