@@ -727,8 +727,14 @@ def run_mage_loop(
     # Change to an appropriate value, number of MS in between usages
     corpseSkinDelayMs = 60000,
     
-    # Whether to use this spell before applying each dot and curse 0 = disabled, 1 = enabled
-    useEvilOmenBeforeDotsAndCurses = 0,
+    # Couple of different modes:
+    # 0 = Disabled
+    # 1 = Use before dots and curses (e.g. strangle and corpse skin)
+    # 2 = Use based on the delay variable below
+    useEvilOmen = 0,
+    
+    # Adding this option because it is wild on InsaneUO. It is a pretty cool dot.
+    evilOmenDelayMs = 15000,
     
     # Whether to use the magery curse spell, 0 = disabled, 1 = enabled
     useCurse = 0,
@@ -846,6 +852,7 @@ def run_mage_loop(
     Timer.Create( 'meditationTimer', 1 )
     Timer.Create( 'painSpikeTimer', 1 )
     Timer.Create( 'conduitTimer', 1 )
+    Timer.Create( 'evilOmenTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
     if Player.Visible:
@@ -906,9 +913,9 @@ def run_mage_loop(
                 Target.TargetExecute(honorMob)
             elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
-            elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
+            elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
                 cast_spell("Conduit", nearestMob, latencyMs)
-            elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 2:
+            elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
                 cast_spell("Conduit", nearestMob, latencyMs)
                 Timer.Create( 'conduitTimer', conduitDelayMs ) 
             elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 100:
@@ -918,25 +925,28 @@ def run_mage_loop(
             elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False:
                 cast_spell("Pain Spike", nearestMob, latencyMs)
                 Timer.Create( 'painSpikeTimer', 10500 )
+            elif useEvilOmen == 2 and Timer.Check( 'evilOmenTimer' ) == False:
+                cast_spell("Evil Omen", nearestMob, latencyMs)
+                Timer.Create( 'evilOmenTimer', evilOmenDelayMs )
             #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
             #    check_summon_familiar()                
             elif useCorpseSkin == 1 and Timer.Check( 'corpseSkinTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.5:
-                if useEvilOmenBeforeDotsAndCurses == 1:
+                if useEvilOmen == 1:
                     cast_spell("Evil Omen", nearestMob, latencyMs)
                 cast_spell("Corpse Skin", nearestMob, latencyMs)
                 Timer.Create( 'corpseSkinTimer', corpseSkinDelayMs )
             elif useStrangle == 1 and Timer.Check( 'strangleTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.5:
-                if useEvilOmenBeforeDotsAndCurses == 1:
+                if useEvilOmen == 1:
                     cast_spell("Evil Omen", nearestMob, latencyMs)
                 cast_spell("Strangle", nearestMob, latencyMs)
                 Timer.Create( 'strangleTimer', strangleDelayMs ) 
             elif usePoison == 1 and Timer.Check( 'poisonTimer' ) == False and nonPoisonedMob is not None:
-                if useEvilOmenBeforeDotsAndCurses == 1:
+                if useEvilOmen == 1:
                     cast_spell("Evil Omen", nonPoisonedMob, latencyMs)
                 cast_spell("Poison", nonPoisonedMob, latencyMs)
                 Timer.Create( 'poisonTimer', poisonDelayMs) 
             elif useCurse == 1 and Timer.Check( 'curseTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.75:
-                if useEvilOmenBeforeDotsAndCurses == 1:
+                if useEvilOmen == 1:
                     cast_spell("Evil Omen", nearestMob, latencyMs)
                 cast_spell("Curse", nearestMob, latencyMs)
                 Timer.Create( 'curseTimer', curseDelayMs) 
