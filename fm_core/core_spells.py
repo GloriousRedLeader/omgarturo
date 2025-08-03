@@ -19,6 +19,7 @@ EVIL_OMEN_DELAY = 1000
 PAIN_SPIKE_DELAY = 1250
 CORPSE_SKIN_DELAY = 1750
 ANIMATE_DEAD_DELAY = 1750
+BLOOD_OATH_DELAY = 1750
 POISON_STRIKE_DELAY = 2000
 STRANGLE_DELAY = 2250
 WITHER_DELAY = 2250
@@ -117,6 +118,9 @@ def cast_spell(
     elif spellName == "Evil Omen":
         Spells.CastNecro(spellName)
         Target.WaitForTarget(get_fc_delay(EVIL_OMEN_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == "Blood Oath":
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(BLOOD_OATH_DELAY, FC_CAP_NECROMANCY, latencyMs))
     elif spellName == "Strangle":
         Spells.CastNecro(spellName)
         Target.WaitForTarget(get_fc_delay(STRANGLE_DELAY, FC_CAP_NECROMANCY, latencyMs))

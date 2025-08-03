@@ -734,7 +734,13 @@ def run_mage_loop(
     useEvilOmen = 0,
     
     # Adding this option because it is wild on InsaneUO. It is a pretty cool dot.
-    evilOmenDelayMs = 15000,
+    evilOmenDelayMs = 20000,
+    
+    # Cast blood oath necro spell
+    useBloodOath = 0,
+    
+    # Time between blood oath casts in milliseconds
+    bloodOathDelayMs = 30000,
     
     # Whether to use the magery curse spell, 0 = disabled, 1 = enabled
     useCurse = 0,
@@ -840,19 +846,20 @@ def run_mage_loop(
     latencyMs = 200
 ):
     
-    Timer.Create( 'magePingTimer', 1 )
-    Timer.Create( 'poisonStrikeTimer', 1000 )
-    Timer.Create( 'strangleTimer', 1 )
-    Timer.Create( 'corpseSkinTimer', 1 )
-    Timer.Create( 'wildfireTimer', 1 )
-    Timer.Create( 'curseTimer', 1 )
-    Timer.Create( 'poisonTimer', 1 )
-    Timer.Create( 'poisonFieldTimer', 1 )
-    Timer.Create( 'fireFieldTimer', 1 )
-    Timer.Create( 'meditationTimer', 1 )
-    Timer.Create( 'painSpikeTimer', 1 )
-    Timer.Create( 'conduitTimer', 1 )
-    Timer.Create( 'evilOmenTimer', 1 )
+    #Timer.Create( 'magePingTimer', 1 )
+    #Timer.Create( 'poisonStrikeTimer', 1000 )
+    #Timer.Create( 'strangleTimer', 1 )
+    #Timer.Create( 'corpseSkinTimer', 1 )
+    #Timer.Create( 'wildfireTimer', 1 )
+    #Timer.Create( 'curseTimer', 1 )
+    #Timer.Create( 'poisonTimer', 1 )
+    #Timer.Create( 'poisonFieldTimer', 1 )
+    #Timer.Create( 'fireFieldTimer', 1 )
+    #Timer.Create( 'meditationTimer', 1 )
+    #Timer.Create( 'painSpikeTimer', 1 )
+    #Timer.Create( 'conduitTimer', 1 )
+    #Timer.Create( 'evilOmenTimer', 1 )
+    #Timer.Create( 'bloodOathTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
     if Player.Visible:
@@ -945,6 +952,9 @@ def run_mage_loop(
                     cast_spell("Evil Omen", nonPoisonedMob, latencyMs)
                 cast_spell("Poison", nonPoisonedMob, latencyMs)
                 Timer.Create( 'poisonTimer', poisonDelayMs) 
+            elif useBloodOath == 1 and Timer.Check( 'bloodOathTimer' ) == False:
+                cast_spell("Blood Oath", nearestMob, latencyMs)
+                Timer.Create( 'bloodOathTimer', bloodOathDelayMs )
             elif useCurse == 1 and Timer.Check( 'curseTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.75:
                 if useEvilOmen == 1:
                     cast_spell("Evil Omen", nearestMob, latencyMs)
