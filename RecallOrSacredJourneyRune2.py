@@ -15,17 +15,27 @@ import sys
 # Will use sacred journey if chiv skill is present and higher than magery, otherwise uses recall.
 # Only works with runebooks (not atlas). Picks the first runebook in backpack. If  you have multiple
 # runebooks, good luck. Runebook must be in first layer of backpack.
+# Also will cast wraith form if you are a necor without magery or chivalry.
 RUNEBOOK_GUMP_ID = 0x59
 script_name = os.path.basename(__file__)
 rune = int(re.search(r"RecallOrSacredJourneyRune(\d+)\.py", script_name).group(1))
 magerySkill = Player.GetSkillValue("Magery")
 chivalrySkill = Player.GetSkillValue("Chivalry")
+necroSkill = Player.GetSkillValue("Necromancy")
 
 # Magery Rune 1 = 50
 # Magery Rune 2 = 51
 # Chivalry Rune 1 = 75
 # Chivalry Rune 2 = 76
+# Defaults to magery if both magery and chivalry are 0 (pure necro)
 buttonId = 74 + rune if chivalrySkill > magerySkill else 49 + rune
+
+if magerySkill < 50 and chivalrySkill < 50 and necroSkill > 80:
+    if not Player.BuffsExist("Wraith Form"):
+        Spells.CastNecro("Wraith Form")
+        Misc.Pause(2000)
+
+    
 
 runebook = Items.FindByID(RUNEBOOK, -1, Player.Backpack.Serial, 0)
 if runebook is None:
@@ -36,6 +46,7 @@ print(runebook)
 print(script_name)
 print(f"Magery Skill {magerySkill}")
 print(f"Chivalry Skill {chivalrySkill}")
+print(f"Necromancy Skill {necroSkill}")
 print(f"Rune {rune}")
 print(f"Button ID {buttonId}")
 
