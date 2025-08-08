@@ -41,6 +41,10 @@ FIRE_FIELD_DELAY = 1750
 GREATER_HEAL_DELAY = 1750
 ARCH_CURE_DELAY = 1750
 POISON_FIELD_DELAY = 2000
+#ENERGY_BOLT_DELAY = 1750
+ENERGY_BOLT_DELAY = 2000
+CHAIN_LIGHTNING_DELAY = 2000
+FLAME_STRIKE_DELAY = 2000
 
 # Chivalry (taken from ServUO files)
 CONSECRATE_WEAPON_DELAY = 500
@@ -151,6 +155,19 @@ def cast_spell(
     elif spellName == "Poison":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(POISON_DELAY, FC_CAP_MAGERY, latencyMs))
+        
+    elif spellName == "Energy Bolt":
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(ENERGY_BOLT_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == "Flame Strike":
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(FLAME_STRIKE_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == "Chain Lightning":
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(CHAIN_LIGHTNING_DELAY, FC_CAP_MAGERY, latencyMs))
+        
+        
+        
     elif spellName == "Death Ray":
         Spells.CastMastery(spellName)
         Target.WaitForTarget(get_fc_delay(DEATH_RAY_DELAY, FC_CAP_MAGERY, latencyMs))

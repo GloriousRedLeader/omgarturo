@@ -708,11 +708,42 @@ def run_mage_loop(
     # Use Arcane Empowerment (spell weaving) 0 = disabled, 1 = enabled
     # Will cast every time buff expires automatically AND an enemy is in range.
     useArcaneEmpowerment = 0,
+    
+    # Main spammable nuke. Cast when only 1 - 2 mobs.
+    # 0 = Disabled, no nuke.
+    # 1 = Poison Strike (Necro)
+    # 2 = Energy Bolt (Magery)
+    # 3 = Flame Strike (Magery)
+    mainNukeSpell = 0,
+    
+    # Delay between nuke casts. Timer starts when casting is finished.
+    # By default there is only 100ms delay between casts.
+    mainNukeDelayMs = 100,
+    
+    # Main spammable AoE. Note that wildfire has its own configuration since its a DoT type.
+    # Cast when > 2 mobs.
+    # 0 = Disabled, dont cast any aoe spells.
+    # 1 = Wither (Necro)
+    # 2 = Thunderstorm (Magery)
+    # 3 = Chain Lightning (Magery)
+    mainAoeSpell = 0,
+    
+    # Delay between AoE attacks. Timer starts when casting is finished.
+    # By default there is hardly any delay, 100ms.
+    mainAoeDelayMs = 100,
+    
+    # Threshold count of mobs within aoeRange. If found, will cast mainAoeSpell.
+    aoeMinMobCount = 3,
+    
+    # Counts monsters within this range of tiles from player (inclusive).
+    aoeMaxRange = 7,
 
     # Whether to use this spell 0 = disabled, 1 = enabled
+    # Deprecated.
     usePoisonStrike = 0,
     
     # Lower number like 10 means to spam repeatadly, number of MS in between usages
+    # Deprecated.
     poisonStrikeDelayMs = 8000,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
@@ -782,9 +813,11 @@ def run_mage_loop(
     wildfireDelayMs = 9000,
     
     # Whether to use the thunderstorm spellweaving spell. There is no delay here. Just spam.
+    # Deprecated.
     useThunderstorm = 0,
     
     # Whether to use this spell 0 = disabled, 1 = enabled. There is no delay here. Just spam.
+    # Deprecated.
     useWither = 0,
     
     # Use necromancy pain spike every 10 seconds. On some servers this might be good.
@@ -911,6 +944,7 @@ def run_mage_loop(
         if len(eligible) > 0:  
             nearestMob = Mobiles.Select(eligible, 'Nearest')
             nonPoisonedMob = next((mob for mob in eligible if not mob.Poisoned and get_mobile_percent_hp(mob) > 0.5), None)
+            countMobsInAoeRange = sum(1 for mob in eligible if Player.DistanceTo(mob) < aoeMaxRange)
             
             # Experimental
             honorMob = get_honor_target() if useHonor == 1 and not Player.BuffsExist("Perfection") else None
@@ -972,13 +1006,35 @@ def run_mage_loop(
             elif useFireField == 1 and Timer.Check( 'fireFieldTimer' ) == False:
                 cast_spell("Fire Field", nearestMob, latencyMs)
                 Timer.Create( 'fireFieldTimer', fireFieldDelayMs)                
-            elif usePoisonStrike == 1  and Timer.Check( 'poisonStrikeTimer' ) == False:
+            #elif usePoisonStrike == 1  and Timer.Check( 'poisonStrikeTimer' ) == False:
+            #    cast_spell("Poison Strike", nearestMob, latencyMs)
+            #    Timer.Create( 'poisonStrikeTimer', poisonStrikeDelayMs )     
+            
+            elif mainNukeSpell == 1  and Timer.Check( 'mainNukeTimer' ) == False and (countMobsInAoeRange < aoeMinMobCount or mainAoeSpell == 0):
                 cast_spell("Poison Strike", nearestMob, latencyMs)
-                Timer.Create( 'poisonStrikeTimer', poisonStrikeDelayMs )                
-            elif useThunderstorm == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 30:
-                cast_spell("Thunderstorm", None, latencyMs)
-            elif useWither == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 20:
+                Timer.Create( 'mainNukeTimer', mainNukeDelayMs )
+            elif mainNukeSpell == 2  and Timer.Check( 'mainNukeTimer' ) == False and (countMobsInAoeRange < aoeMinMobCount or mainAoeSpell == 0):
+                cast_spell("Energy Bolt", nearestMob, latencyMs)
+                Timer.Create( 'mainNukeTimer', mainNukeDelayMs ) 
+            elif mainNukeSpell == 3  and Timer.Check( 'mainNukeTimer' ) == False and (countMobsInAoeRange < aoeMinMobCount or mainAoeSpell == 0):
+                cast_spell("Flame Strike", nearestMob, latencyMs)
+                Timer.Create( 'mainNukeTimer', mainNukeDelayMs ) 
+             
+            elif mainAoeSpell == 1 and Timer.Check( 'mainAoeTimer' ) == False and countMobsInAoeRange >= aoeMinMobCount and Player.Mana > 30:
                 cast_spell("Wither", None, latencyMs)
+                Timer.Create( 'mainAoeTimer', mainAoeDelayMs ) 
+            elif mainAoeSpell == 2 and Timer.Check( 'mainAoeTimer' ) == False and countMobsInAoeRange >= aoeMinMobCount and Player.Mana > 30:
+                cast_spell("Thunderstorm", None, latencyMs)
+                Timer.Create( 'mainAoeTimer', mainAoeDelayMs ) 
+            elif mainAoeSpell == 3  and Timer.Check( 'mainAoeTimer' ) == False and countMobsInAoeRange >= aoeMinMobCount and Player.Mana > 30:
+                cast_spell("Chain Lightning", nearestMob, latencyMs)
+                Timer.Create( 'mainAoeTimer', mainAoeDelayMs )
+                
+                
+            #elif useThunderstorm == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 30:
+            #    cast_spell("Thunderstorm", None, latencyMs)
+            #elif useWither == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 20:
+            #    cast_spell("Wither", None, latencyMs)
             elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
                 Player.HeadMessage(58, "Stand still - going to meditate!")
                 Misc.Pause(500)

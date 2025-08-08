@@ -16,12 +16,16 @@ import sys
 # Only works with runebooks (not atlas). Picks the first runebook in backpack. If  you have multiple
 # runebooks, good luck. Runebook must be in first layer of backpack.
 # Also will cast wraith form if you are a necor without magery or chivalry.
+# If player needs to cast wraith form, will automatically retun to whatever form they
+# were in before enering wraith form (vampiric embrace /no form)
 RUNEBOOK_GUMP_ID = 0x59
 script_name = os.path.basename(__file__)
 rune = int(re.search(r"RecallOrSacredJourneyRune(\d+)\.py", script_name).group(1))
 magerySkill = Player.GetSkillValue("Magery")
 chivalrySkill = Player.GetSkillValue("Chivalry")
 necroSkill = Player.GetSkillValue("Necromancy")
+hasWraith = Player.BuffsExist("Wraith Form")
+hasVampire = Player.BuffsExist("Vampiric Embrace")
 
 # Magery Rune 1 = 50
 # Magery Rune 2 = 51
@@ -34,8 +38,6 @@ if magerySkill < 50 and chivalrySkill < 50 and necroSkill > 80:
     if not Player.BuffsExist("Wraith Form"):
         Spells.CastNecro("Wraith Form")
         Misc.Pause(2000)
-
-    
 
 runebook = Items.FindByID(RUNEBOOK, -1, Player.Backpack.Serial, 0)
 if runebook is None:
@@ -53,3 +55,10 @@ print(f"Button ID {buttonId}")
 Items.UseItem(runebook)
 Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 10000)
 Gumps.SendAction(RUNEBOOK_GUMP_ID, buttonId) 
+
+Misc.Pause(2000)
+
+if hasVampire and Player.BuffsExist("Wraith Form"):
+    Spells.CastNecro("Vampiric Embrace")
+if not hasVampire and not hasWraith and Player.BuffsExist("Wraith Form"):
+    Spells.CastNecro("Wraith Form")
