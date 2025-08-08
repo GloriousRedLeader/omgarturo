@@ -959,10 +959,11 @@ def run_mage_loop(
             elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
                 cast_spell("Conduit", nearestMob, latencyMs)
                 Timer.Create( 'conduitTimer', conduitDelayMs ) 
-            elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 100:
-                cast_spell("Death Ray", nearestMob, latencyMs)                                
             elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3:
-                cast_spell("Word of Death", nearestMob, latencyMs)                
+                cast_spell("Word of Death", nearestMob, latencyMs)   
+            elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 125:
+                cast_spell("Death Ray", nearestMob, latencyMs)                                
+                         
             elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False:
                 cast_spell("Pain Spike", nearestMob, latencyMs)
                 Timer.Create( 'painSpikeTimer', 10500 )
@@ -1035,7 +1036,8 @@ def run_mage_loop(
             #    cast_spell("Thunderstorm", None, latencyMs)
             #elif useWither == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 20:
             #    cast_spell("Wither", None, latencyMs)
-            elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
+            #elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
+            elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False:
                 Player.HeadMessage(58, "Stand still - going to meditate!")
                 Misc.Pause(500)
                 use_skill("Meditation")
