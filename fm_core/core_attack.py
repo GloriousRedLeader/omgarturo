@@ -1135,7 +1135,7 @@ def heal_player_and_friends(
     elif useCleanseByFire == 1 and Player.Poisoned and Player.Mana > 15:
         cast_spell("Cleanse by Fire", None, latencyMs)
         return False # Doing this on purpose, this isnt superimportant for melee.
-    elif useRemoveCurse == 1 and Player.BuffsExist("Curse") and Player.Mana > 15:
+    elif useRemoveCurse == 1 and (Player.BuffsExist("Curse") or Player.BuffsExist("Feeblemind") or Player.BuffsExist("Clumsy") or Player.BuffsExist("Mind Rot") or Player.BuffsExist("Weaken")) and Player.Mana > 15:
         cast_spell("Remove Curse", Player.Serial, latencyMs)
         return False # Doing this on purpose, this isnt super important for melee.
         
