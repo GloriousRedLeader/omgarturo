@@ -49,7 +49,7 @@ Also, if this file doesn't exist, create it: /Scripts/\_\_init\_\_.py. This is i
 
 Useful things you'll find:
 
-A highly configurable [Dexer Attack Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/DexLoop.py) that supports some chiv, necro and shield bash stuff. More to come later, I just don't really play other builds.
+A highly configurable basic [Dexer Attack Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/DexLoop.py) that supports some chiv and necro stuff, and a [Basher AttackLoop](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherLoop.py) that does the chiv + shield bashing stuff!
 
 A versatile [Caster Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/CasterLoop.py). Good for mage tamer and InsaneUO specific focused necro caster. Also can heal pets / players. Can copy this file with different configurations like AoE spells for champ spawns, single target spells for bosses, heals for pets/players - or, lump them all into one configuration.
 

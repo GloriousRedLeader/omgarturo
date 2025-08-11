@@ -78,7 +78,8 @@ def run_dex_loop(
     # Checks for the buff, if it doesnt exist, casts it.
     useEnemyOfOne = 0,
     
-    # Chiv spell
+    # Removes less troublesome things like Curse, Feeblemind, Mind Rot, etc. every 10 seconds.
+    # Uses remove curse when blood oath is detected IMMEDIATELY.
     useRemoveCurse = 0,
     
     # Paladin spell for curing poisons, only works on self.
@@ -136,14 +137,14 @@ def run_dex_loop(
        
             if useShieldBash == 1 and not Player.BuffsExist("Shield Bash") and Player.Mana > 35:
                 cast_spell("Shield Bash", None, latencyMs)
-                Player.HeadMessage(38, "Shield Bash")
+                #Player.HeadMessage(38, "Shield Bash")
             if (useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist("Shield Bash"))) and Player.Mana > 20:
                 if specialAbilityType == 1:
                     if not Player.HasPrimarySpecial:
                         Player.WeaponPrimarySA()
                 elif specialAbilityType == 2:
                     if not Player.HasSecondarySpecial:
-                        Player.HeadMessage(38, "Armor Ignore")
+                        #Player.HeadMessage(38, "Armor Ignore")
                         Player.WeaponSecondarySA()
                 elif specialAbilityType == 3:
                     if not Player.BuffsExist("Lightning Strike"):
@@ -961,7 +962,7 @@ def run_mage_loop(
                 Timer.Create( 'conduitTimer', conduitDelayMs ) 
             elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3:
                 cast_spell("Word of Death", nearestMob, latencyMs)   
-            elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and Player.Mana > 125:
+            elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and (not Player.BuffsExist("Poison") and not Player.BuffsExist("Strangle")) and Player.Mana > 125:
                 cast_spell("Death Ray", nearestMob, latencyMs)                                
                          
             elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False:
