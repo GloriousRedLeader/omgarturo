@@ -1138,7 +1138,7 @@ def heal_player_and_friends(
         return False # Doing this on purpose, this isnt superimportant for melee.
         
     # Not super important, attempt to remove every x seconds instead of every tick becauase it is wasteful. You need to use mana to attack.
-    elif useRemoveCurse == 1 and (Player.BuffsExist("Curse") or Player.BuffsExist("Feeblemind") or Player.BuffsExist("Clumsy") or Player.BuffsExist("Mind Rot") or Player.BuffsExist("Weaken")) and Player.Mana > 15 and Timer.Check("useRemoveCurseNonCriticalTimer") == False:
+    elif useRemoveCurse == 1 and (Player.BuffsExist("Curse") or Player.BuffsExist("Feeblemind") or Player.BuffsExist("Corpse Skin") or Player.BuffsExist("Clumsy") or Player.BuffsExist("Mind Rot") or Player.BuffsExist("Weaken")) and Player.Mana > 15 and Timer.Check("useRemoveCurseNonCriticalTimer") == False:
         cast_spell("Remove Curse", Player.Serial, latencyMs)
         Timer.Create("useRemoveCurseNonCriticalTimer", 10000)
         return False # Doing this on purpose, this isnt super important for melee.
