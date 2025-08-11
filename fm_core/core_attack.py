@@ -1135,7 +1135,14 @@ def heal_player_and_friends(
     elif useCleanseByFire == 1 and Player.Poisoned and Player.Mana > 15:
         cast_spell("Cleanse by Fire", None, latencyMs)
         return False # Doing this on purpose, this isnt superimportant for melee.
-    elif useRemoveCurse == 1 and (Player.BuffsExist("Curse") or Player.BuffsExist("Feeblemind") or Player.BuffsExist("Clumsy") or Player.BuffsExist("Mind Rot") or Player.BuffsExist("Weaken") or Player.BuffsExist("Blood Oath")) and Player.Mana > 15:
+        
+    # Not super important, attempt to remove every x seconds instead of every tick becauase it is wasteful. You need to use mana to attack.
+    elif useRemoveCurse == 1 and (Player.BuffsExist("Curse") or Player.BuffsExist("Feeblemind") or Player.BuffsExist("Clumsy") or Player.BuffsExist("Mind Rot") or Player.BuffsExist("Weaken")) and Player.Mana > 15 and Timer.Check("useRemoveCurseNonCriticalTimer") == False:
+        cast_spell("Remove Curse", Player.Serial, latencyMs)
+        Timer.Create("useRemoveCurseNonCriticalTimer", 10000)
+        return False # Doing this on purpose, this isnt super important for melee.
+    # Critical curses, always attempt to remove
+    elif useRemoveCurse == 1 and (Player.BuffsExist("Blood Oath (curse)")) and Player.Mana > 15:
         cast_spell("Remove Curse", Player.Serial, latencyMs)
         return False # Doing this on purpose, this isnt super important for melee.
         
