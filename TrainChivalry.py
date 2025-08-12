@@ -11,7 +11,7 @@
 
 Misc.SendMessage("Training Chiv")
 
-while Player.GetRealSkillValue("Chivalry") < 85:
+while Player.GetRealSkillValue("Chivalry") < 90:
     skillValue = Player.GetRealSkillValue("Chivalry")
     
     if skillValue < 45:
@@ -22,7 +22,7 @@ while Player.GetRealSkillValue("Chivalry") < 85:
         Spells.CastChivalry("Enemy of One")
     elif skillValue < 90:
         Spells.CastChivalry("Holy Light")
-    elif skillValue < 100:
+    elif skillValue < 120:
         Spells.CastChivalry("Nobile Sacrifice")
     else:
         break

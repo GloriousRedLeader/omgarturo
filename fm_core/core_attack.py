@@ -105,7 +105,7 @@ def run_dex_loop(
         
         if Timer.Check( 'dexPingTimer' ) == False:
             Player.HeadMessage( 78, "{} Running...".format(loopName) )
-            Timer.Create( 'dexPingTimer', 3000 )
+            Timer.Create( 'dexPingTimer', 10000 )
             
         if minGold > 0 and Player.Gold >= minGold:
             use_bag_of_sending(minGold)
@@ -903,7 +903,7 @@ def run_mage_loop(
     while not Player.IsGhost:
         
         if Timer.Check( 'magePingTimer' ) == False:
-            Player.HeadMessage( 128, "{} Running...".format(loopName) )
+            Player.HeadMessage( 78, "{} Running...".format(loopName) )
             Timer.Create( 'magePingTimer', 10000 )
 
         if not Player.Visible:

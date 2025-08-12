@@ -25,7 +25,15 @@ STRINGS_TO_LOOK_FOR = [
     "a venom steed",
     "an inferno steed",
     "a blazing steed",
-    "John"
+    "a maelstrom steed", 
+    "a void steed",
+    "a glacial steed",
+    "an ice steed"
+    
+    
+    
+    
+    
 ]
 
 Timer.Create( 'journalAlertPingTimer', 1 )
@@ -41,10 +49,13 @@ while True:
         if Journal.Search(search):
             found = Journal.GetLineText(search,False)
             Journal.Clear()
+            #Player.ChatSay("[ohshit")
             for i in range(0, HOW_MANY_TIMES_TO_BEEP):
                 Misc.Beep()
                 Player.HeadMessage( 28, "^^ Journal Alert: {} ^^".format(found) )
                 Player.HeadMessage( 48, "^^ Journal Alert: {} ^^".format(found) )
                 Misc.Pause(1000) 
+            #sys.exit()
+            
 
     Misc.Pause(1000)      
