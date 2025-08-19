@@ -6,6 +6,8 @@
 
 from Scripts.omgarturo.fm_core.core_attack import run_dex_loop
 
+# Nothing fancy. Uses consecrate weapon and primary ability.
+
 # Basic dexer loop that attacks nearby monsters using the abilities listed below.
 # Can automatically use bag of sending if you enable it. 
 # Works well in conjunction with the auto bandage feature in RE.
@@ -23,7 +25,7 @@ run_dex_loop(
     # 3 - Use lightning strike (bushido)
     # 4 - Use focus attack (ninjitsu)
     # 5 - Momentum strike (bushido)
-    specialAbilityType = 0,
+    specialAbilityType = 1,
     
     # This causes insane damage when combined with weapon specials.
     # Buff lasts for only a few seconds but at least there is a buff.
@@ -31,7 +33,7 @@ run_dex_loop(
 
     # Flag that tells us to use the Chiv consecrate weapon ability. This is the default
     # value (0 = disabled, 1 = enabled)
-    useConsecrateWeapon = 0,
+    useConsecrateWeapon = 1,
     
     # Necro spell. Uses buff for recast tracking.
     useCurseWeapon = 0,

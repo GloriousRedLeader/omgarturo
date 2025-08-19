@@ -5,6 +5,8 @@
 # Use at your own risk. 
 
 from Scripts.omgarturo.fm_core.core_mobiles import get_pets
+from Scripts.omgarturo.fm_core.core_items import INSTRUMENT_STATIC_IDS
+from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
 import re
 
 FC_CAP_MAGERY = 2
@@ -65,15 +67,39 @@ MEDITATION_DELAY = 1250
 
 # Adds delay to skill usage so we can loop it
 def use_skill(
+
     # Meditation, Spirit Speak, etc.
-    skillName
+    skillName,
+    
+    # (Optional) Mobile
+    target = None,
+    
+    # (Optional) 
+    latencyMs = None
 ):
+    
+    if skillName == "Discordance": 
+        Journal.Clear()
+        
     Player.UseSkill(skillName)
     
     if skillName == "Meditation":
         Misc.Pause(MEDITATION_DELAY)
     elif skillName == "Spirit Speak":
         Misc.Pause(SPIRIT_SPEAK_DELAY)
+    elif skillName == "Discordance":
+        Target.WaitForTarget(latencyMs)
+        if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
+            #items = Items.FindAllByID(itemids = INSTRUMENT_STATIC_IDS, color = -1, container = -1, range = 1)
+            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
+            if instrument is not None:
+                Target.TargetExecute(instrument)
+                Target.WaitForTarget(latencyMs)
+            else:
+                Misc.SendMessage("No instruments found to Discord with!")
+        Target.TargetExecute(target)
+        Misc.Pause(latencyMs)
+        
     else:
         Misc.Pause(1000)
 

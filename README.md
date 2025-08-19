@@ -49,9 +49,11 @@ Also, if this file doesn't exist, create it: /Scripts/\_\_init\_\_.py. This is i
 
 Useful things you'll find:
 
-A highly configurable basic [Dexer Attack Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/DexLoop.py) that supports some chiv and necro stuff, and a [Basher AttackLoop](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherLoop.py) that does the chiv + shield bashing stuff!
-
-A versatile [Caster Loop](https://github.com/GloriousRedLeader/omgarturo/blob/master/CasterLoop.py). Good for mage tamer and InsaneUO specific focused necro caster. Also can heal pets / players. Can copy this file with different configurations like AoE spells for champ spawns, single target spells for bosses, heals for pets/players - or, lump them all into one configuration.
+Several combat scripts that are configurable for many uses. I have a few that I use, but do customize them as needed.
+* Basic Dexer: [Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py) that does Consecrate Weapon and uses Primary ability on weapon.
+* Shield Basher: [Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py) | [Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py) These do all the complicated shield bashing stuff for you. It is HIGHLY recommended to run 3/6 FC/FCR for maximum punishment. This whole spec is due to a quirk in servuo code. Lets hope they leave it.
+* Pure Necro: [Conduit](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoop.py) | [Wither](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py) | [Conduit No Pet](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoopNoPet.py) | [Wither No Pet](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherNoPetLoop.py) Exclusive to the Insane UO Shard. Pretty fun. The "No Pet" version are included because all the animate dead and familiars can block hallways and piss people off.
+* Mage Tamer: [Bard Mage Tamer AoE](https://github.com/GloriousRedLeader/omgarturo/blob/master/BardMageTamerLoop.py) | [Bard Mage Tamer Heal Only](https://github.com/GloriousRedLeader/omgarturo/blob/master/BardMageTamerHealOnlyLoop.py) Will Discord targets, do AoE, and heal as needed.
 
 A couple of resource gathering scripts. Use with caution. Don't break any rules. Includes [fishing on a boat](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopBoat.py), [crab fishing](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopCrab.py), [lumberjacking](https://github.com/GloriousRedLeader/omgarturo/blob/master/LumberjackingLoop.py), and [mining](https://github.com/GloriousRedLeader/omgarturo/blob/master/MiningLoop.py).
 

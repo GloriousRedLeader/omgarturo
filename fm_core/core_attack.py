@@ -674,19 +674,19 @@ def run_ss_loop (
 ####################################################################################################
 ####################################################################################################
 
-# Can cast spellweaving, magery, necro spells. Can heal player, friends, pets, etc.
-# Set the values you need and go. I run a few different versions of this:
+#   Can cast Necro, Magery, Spellweaving Spells - and some Bard stuff.
+# 
+#   Run different configurations:
+#   1. Pure Necro 
+#   2. Mage Tamer 
+#   3. Bard SW Tamer
+#   4. Healer Only
+#   5. Big SW AoE 
+#   6. Big Boom Boom Death Ray Mage
 #
-#   1. Mage Tamer AoE = This will heal me, my pet and cast wildfire every 10 seconds.
-#   2. Mage Tamer Heal Only = This heals me, my pet and a select few friends (no offense)
-#   3. Focused Necro AoE = This will heal with spirit speak and spam whither
-#   4. Focused Necro Single Target = Heals with spirit speak and uses evil omen, corpse skin, 
-#       strangle every 30 seconds, and spams poison strike in between
-#
-# There is currently no logic that switches between AOE and single taret attacks. Instead,
-# there is just a basic spell cast order. Some spells have a cast delay configured below
-# (things like wildfire, strangle), while other spells just get spammed. Note that heals always get
-# prioritized. As an added bonus, this will also work with bag of sending and automatically bank gold.
+#   Read the options below and configure as needed. Highlights are just pick a single target nuke
+#   and an AoE. Pick heals you want. Set friends. As an added bonus, this will also work with bag 
+#   of sending and automatically bank gold.
 def run_mage_loop(
 
     # Give it a fun name in case you have different versions, e.g.
@@ -738,14 +738,6 @@ def run_mage_loop(
     
     # Counts monsters within this range of tiles from player (inclusive).
     aoeMaxRange = 7,
-
-    # Whether to use this spell 0 = disabled, 1 = enabled
-    # Deprecated.
-    usePoisonStrike = 0,
-    
-    # Lower number like 10 means to spam repeatadly, number of MS in between usages
-    # Deprecated.
-    poisonStrikeDelayMs = 8000,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
     useStrangle = 0,
@@ -813,14 +805,6 @@ def run_mage_loop(
     # Lower number like 10 means to spam repeatadly, number of MS in between usages
     wildfireDelayMs = 9000,
     
-    # Whether to use the thunderstorm spellweaving spell. There is no delay here. Just spam.
-    # Deprecated.
-    useThunderstorm = 0,
-    
-    # Whether to use this spell 0 = disabled, 1 = enabled. There is no delay here. Just spam.
-    # Deprecated.
-    useWither = 0,
-    
     # Use necromancy pain spike every 10 seconds. On some servers this might be good.
     usePainSpike = 0,
     
@@ -867,6 +851,25 @@ def run_mage_loop(
     # InsaneUO specific. There is a cloak that grants immunity. Looks like 30 second cooldown.
     # Looks for item on Cloak layer and uses it. Timer for this is created in the main core_attack script.
     useCloakOfGraveMists = 0,
+    
+    # Spellweaving spell. Think its 2.5 min cooldown.
+    # 0 = Do not use
+    # 1 = Cast on yourself or anyone in friends list (uses timer to track cooldown so not very reliable on restart)
+    useGiftOfRenewal = 0,
+    
+    # 0 = Do not use
+    # 1 = Cast on yourself and pet (uses your buff to track, not pets, so not very reliable)
+    useGiftOfLife = 0,
+    
+    # Use a bard ability.
+    # 0 = Default, do nothing
+    # 1 = Discord (Yes)
+    # 2 = Peacemaking (notimplemented)
+    # 3 = Provocation (notimplemented)
+    useBardAbility = 0,
+    
+    # Wait this long in milliseconds between bard ability uses
+    bardAbilityDelayMs = 10000,
     
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
@@ -953,6 +956,12 @@ def run_mage_loop(
                 Player.InvokeVirtue("Honor")
                 Target.WaitForTarget(1000, False)
                 Target.TargetExecute(honorMob)
+                
+            elif useBardAbility == 1 and Timer.Check("discordTimer") == False:
+            
+                use_skill("Discordance", nearestMob, latencyMs)
+                Timer.Create("discordTimer", bardAbilityDelayMs)
+                
             elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
             elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
