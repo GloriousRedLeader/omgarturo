@@ -8,6 +8,9 @@
 # Credit goes to wherever this came from. 
 # Im hosting for safekeeping.
 # Also, it may or may not work. I forget. Good luck.
+# I did do some stuff to it, so youll need my fm_core framework unfortunately.
+# The original version targetted player instead of a monster for the secondary
+# target. I changed because "you cannot incite that"
 
 '''
 Author: TheWarDoctor95
@@ -24,9 +27,14 @@ from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
 from System import Byte
 from System.Collections.Generic import List
 
+from System.Collections.Generic import List
+from System import Byte, Int32
+import sys
+import time
+
 Player.HeadMessage(38, "Training Provocation")
 
-autoSelectTarget = False
+autoSelectTarget = True
 provocationTimerMilliseconds = 10200
 journalEntryDelayMilliseconds = 200
 targetClearDelayMilliseconds = 200
@@ -44,12 +52,13 @@ colors = {
 #from Scripts.glossary.colors import colors
 #from Scripts.glossary.enemies import GetEnemies
 
-def GetEnemies( Mobiles, minRange = 0, maxRange = 12, IgnorePartyMembers = False ):
+def GetEnemies( Mobiles, minRange = 0, maxRange = 12, ignoreSerial = None ):
     '''
     Returns a list of the nearby enemies with the specified notorieties
     '''
     
-    notorieties = [Byte(3), Byte(4), Byte(5), Byte(6)]
+    #notorieties = [Byte(3), Byte(4), Byte(5), Byte(6)]
+    notorieties = List[Byte](bytes([3,4,5,6]))
 
     if Mobiles == None:
         raise ValueError( 'Mobiles was not passed to GetEnemies' )
@@ -62,11 +71,11 @@ def GetEnemies( Mobiles, minRange = 0, maxRange = 12, IgnorePartyMembers = False
     enemyFilter.CheckIgnoreObject = True
     enemyFilter.Friend = False
     enemies = Mobiles.ApplyFilter( enemyFilter )
-
-    if IgnorePartyMembers:
-        partyMembers = [ enemy for enemy in enemies if enemy.InParty ]
-        for partyMember in partyMembers:
-            enemies.Remove( partyMember )
+            
+    if ignoreSerial is not None:
+        ignoreEnemies = [ enemy for enemy in enemies if enemy.Serial == ignoreSerial ]
+        for ignoreEnemy in ignoreEnemies:
+            enemies.Remove( ignoreEnemy )
 
     return enemies
 
@@ -80,14 +89,14 @@ def TrainProvocation():
 
     Timer.Create( 'provocationTimer', 1 )
 
-    #instrument = FindInstrument( Player.Backpack )
-    instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS, Player.Backpack)
+    #$instrument = FindInstrument( Player.Backpack )
+    instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS, Player.Backpack.Serial)
     if instrument == None:
         Misc.SendMessage( 'No instruments to train with', colors[ 'red' ] )
         return
     
     provocationTarget = None
-    while instrument != None and Player.GetSkillValue( 'Provocation' ) < 100 and not Player.IsGhost:
+    while instrument != None and Player.GetSkillValue( 'Provocation' ) < 120 and not Player.IsGhost:
         if provocationTarget == None:
             if autoSelectTarget:
                 enemies = GetEnemies( Mobiles, 0, 8 )
@@ -101,9 +110,14 @@ def TrainProvocation():
         else:
             provocationTarget = Mobiles.FindBySerial( provocationTarget.Serial )
             
+            
+        
         if autoSelectTarget and provocationTarget == None:
             Misc.Pause( 100 )
             continue
+            
+        enemies = GetEnemies( Mobiles, 0, 8,provocationTarget.Serial )
+        provocationTarget2 = Mobiles.Select( enemies, 'Nearest' ) 
 
         if not Timer.Check( 'provocationTimer' ):
             Journal.Clear()
@@ -122,11 +136,15 @@ def TrainProvocation():
                     Target.WaitForTarget( 2000, True )
                     Target.TargetExecute( instrument.Serial )
 
+            print("Main target ", provocationTarget.Name, "(", provocationTarget.Serial,")")
             Target.WaitForTarget( 2000, True )
             Target.TargetExecute( provocationTarget )
+            print("Seco target ", provocationTarget2.Name, "(", provocationTarget2.Serial,")")
             Target.WaitForTarget( 2000, True )
-            Target.TargetExecute( Player.Serial )
-            Target.SetLast( provocationTarget )
+            #Target.TargetExecute( Player.Serial ) 
+            
+            Target.TargetExecute( provocationTarget2)
+            #Target.SetLast( provocationTarget )
 
             Timer.Create( 'provocationTimer', provocationTimerMilliseconds )
 
