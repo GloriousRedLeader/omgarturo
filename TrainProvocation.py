@@ -10,7 +10,7 @@
 # Also, it may or may not work. I forget. Good luck.
 # I did do some stuff to it, so youll need my fm_core framework unfortunately.
 # The original version targetted player instead of a monster for the secondary
-# target. I changed because "you cannot incite that"
+# target. I changed because "you cannot incite that". Also, use autoSelectTarget = true
 
 '''
 Author: TheWarDoctor95
@@ -119,7 +119,7 @@ def TrainProvocation():
         enemies = GetEnemies( Mobiles, 0, 8,provocationTarget.Serial )
         provocationTarget2 = Mobiles.Select( enemies, 'Nearest' ) 
 
-        if not Timer.Check( 'provocationTimer' ):
+        if not Timer.Check( 'provocationTimer' ) and provocationTarget is not None and provocationTarget2 is not None:
             Journal.Clear()
             Player.UseSkill( 'Provocation' )
             Misc.Pause( journalEntryDelayMilliseconds )
@@ -149,7 +149,7 @@ def TrainProvocation():
             Timer.Create( 'provocationTimer', provocationTimerMilliseconds )
 
         # Wait a little bit so that the while loop doesn't consume as much CPU
-        Misc.Pause( 50 )
+        Misc.Pause( 500 )
 
 # Start Training
 TrainProvocation()
