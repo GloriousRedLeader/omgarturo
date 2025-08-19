@@ -26,11 +26,11 @@ from Scripts.omgarturo.fm_core.core_items import INSTRUMENT_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
 from System import Byte
 from System.Collections.Generic import List
-
 from System.Collections.Generic import List
 from System import Byte, Int32
 import sys
 import time
+import math
 
 Player.HeadMessage(38, "Training Provocation")
 
@@ -116,8 +116,36 @@ def TrainProvocation():
             Misc.Pause( 100 )
             continue
             
-        enemies = GetEnemies( Mobiles, 0, 8,provocationTarget.Serial )
-        provocationTarget2 = Mobiles.Select( enemies, 'Nearest' ) 
+        enemies = GetEnemies( Mobiles, 0, 12, provocationTarget.Serial )
+        
+        
+        #def sort_by_closest(x, y):
+        #    if x is None or y is None:
+        #        return False
+        #    if x.HitsMax is None or x.HitsMax == 0 or y.HitsMax is None or y.HitsMax == 0:
+        #        return False
+        #    return x.Hits / x.HitsMax > y.Hits / y.HitsMax 
+        #if len(friendMobiles) > 0:
+        #    friendMobiles.Sort(sort_friends)
+        #    friendMobile = friendMobiles[0]
+            
+        provocationTarget2 = None
+        distanceApart = None
+        for enemy in enemies:
+            
+            if provocationTarget2 is None:
+                distanceApart = -1
+                provocationTarget2 = enemy
+            else:
+                #dist = math.sqrt((provocationTarget2.Position.X - enemy.Position.X)**2 + (provocationTarget2.Position.Y - enemy.Position.Y)**2)
+                dist = math.sqrt((enemy.Position.X - provocationTarget2.Position.X)**2 + (enemy.Position.Y - provocationTarget2.Position.Y)**2)
+                if dist < distanceApart:
+                    distanceApart = dist
+                    provocationTarget2 = enemy
+                
+                
+        
+        #provocationTarget2 = Mobiles.Select( enemies, 'Nearest' ) 
 
         if not Timer.Check( 'provocationTimer' ) and provocationTarget is not None and provocationTarget2 is not None:
             Journal.Clear()
@@ -150,6 +178,8 @@ def TrainProvocation():
 
         # Wait a little bit so that the while loop doesn't consume as much CPU
         Misc.Pause( 500 )
+        
+        provocationTarget = None
 
 # Start Training
 TrainProvocation()
