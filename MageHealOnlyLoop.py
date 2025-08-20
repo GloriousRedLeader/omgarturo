@@ -9,6 +9,8 @@ from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
 #   This one is configured for a Mage SpellWeaver Tamer Bard
 #   It doesnt cast any AoE or damage spells. Purely focused
 #   on healing.
+#   Uses the Provo Bard songs.
+
 
 #   Can cast Necro, Magery, Spellweaving Spells - and some Bard stuff.
 # 
@@ -196,13 +198,20 @@ run_mage_loop(
     
     # Use a bard ability.
     # 0 = Default, do nothing
-    # 1 = Discord (Yes)
-    # 2 = Peacemaking (notimplemented)
-    # 3 = Provocation (notimplemented)
+    # 1 = Peacemaking (notimplemented)
+    # 2 = Provocation (notimplemented)
+    # 3 = Discord (Yes)
     useBardAbility = 0,
     
     # Wait this long in milliseconds between bard ability uses
-    bardAbilityDelayMs = 10000,
+    bardAbilityDelayMs = 8000,
+    
+    # List the bard songs you wish to use. 
+    # 0 = Default, do nothing
+    # 1 = Peacemaking (Resilience, Perseverance)
+    # 2 = Provocation (Inspire, Invigorate)
+    # 3 = Discord (does nothing)
+    useBardSongs = 2,
     
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.

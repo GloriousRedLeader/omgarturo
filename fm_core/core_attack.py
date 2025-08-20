@@ -162,301 +162,7 @@ def run_dex_loop(
             
         Misc.Pause(100)
 
-def run_dex_loop_old_do_not_use(
 
-    # Give it a fun name in case you have different versions, e.g.
-    # DexLoop Single Targert, DexLoop AOE, etc.
-    loopName = "DexLoop OLD!",
-
-    # This is my special convention. It represents abilities that are toggled and
-    # activated by next auto attack. These are what the possible values are:
-    # 0 - Disabled, dont do anything
-    # 1 - Use primary ability whatever it may be
-    # 2 - Use secondary ability whatever it may be
-    # 3 - Use lightning strike (bushido)
-    # 4 - Use focus attack (ninjitsu)
-    # 5 - Momentum strike (bushido)
-    specialAbilityType = 0,
-
-    # Time between special ability activations. Make smaller when youve got the mana to attack
-    # more frequently. This is the default value. 
-    specialAbilityDelayMs = 1000,
-    
-    # This causes insane damage when combined with weapon specials.
-    # Buff lasts for only a few seconds but at least there is a buff.
-    useShieldBash = 0,
-    
-    # The warrior mastery. Gives a resist debuff according to weapon type.
-    # Looks like it lasts about 7 seconds at least in pvp. The debuff said
-    # "-10% physical resist" when I used my physical damage sword.
-    useOnslaught = 0,
-    
-    # May need to adjust. Cant tell if this is higher in pvm.
-    onslaughtDelayMs = 8000,
-    
-    # Whether to use a bard ability.  When set this will search for
-    # a random instrument in your pack and use that. No guarantees.
-    # 0 = No ability
-    # 1 = Discord the target
-    # 2 = Peacemake self (aoe peacemake)
-    bardAbility = 0,
-    
-    # The time in miliseconds to wait between discord attempts. Probably a more dynamic
-    # way of doing this but I dont care. This is the default value. 
-    bardDelayMs = 10000,
-
-    # Flag that tells us to use the Chiv consecrate weapon ability. This is the default
-    # value (0 = disabled, 1 = enabled)
-    useConsecrateWeapon = 0,
-
-    # Delay in miliseconds before recasting consecrate weapon. This is the default value.
-    consecrateWeaponDelayMs = 10000,
-    
-    # Necro spell. Uses buff for recast tracking.
-    useCurseWeapon = 0,
-
-    # Flag with a value of 1 means to periodically cast divine fury, otherwise it is
-    # disabled. This is the default value.
-    useDivineFury = 0,
-
-    # Time in miliseconds between activations of divine fury. This is the default value.
-    divineFuryDelayMs = 10000,
-    
-    # Checks for the buff, if it doesnt exist, casts it.
-    useEnemyOfOne = 0,
-    
-    # Whether to enable the Bushido skill Confidence. Typically lasts ~5 seconds
-    # and lets us restore health and stamina maybe.
-    #useConfidence = 0,
-    # Whether to use a bushido skill. These are the mutually exclusive stances only.
-    # 0 = No stance, do nothing
-    # 1 = Confidence, restores stats when parry
-    # 2 = Evasion, can parry magic, good
-    # 3 = Counter Attack, more dps
-    bushidoStance = 0,
-    
-    # Recast confidence after this many miliseconds
-    #confidenceDelayMs = 5000,
-    # Recast whatever stance above after this many miliseconds
-    bushidoStanceDelayMs = 5000,
-
-    # Whether we should invoke the honor virtue before attacking something. I think
-    # the target needs to be at full health for this to work. Maybe not all servers
-    # are up to date with this. Default value is 0 which means dont honor target.
-    # Useful for Bushido I think, who knows.
-    # Refer to the dex_loop_use_honor shared variable.
-    useHonor = 0,
-    
-    # Periodically tell your pets to guard you. This will also tell your pets to follow
-    # you when there are no bad guys around.
-    usePets = 0,
-    
-    # Limits pet commands since it spams the world.
-    petCommandDelayMs = 5000,
-    
-    # Whether we should use mirror images. This is a nice defnese move you can
-    # use instealth to absorb a hit when you miss on a shadow strike
-    useMirrorImage = 0,
-    
-    # Cast mirror images this often. They disappear something like every 30 - 60 seconds.
-    mirrorImageDelayMs = 10000,   
-    
-    # Chiv spell
-    useRemoveCurse = 0,
-    
-    # Paladin spell for curing poisons, only works on self.
-    useCleanseByFire = 0,
-   
-    # how many tiles to look for enemies and attack them
-    attackRange = 6,
-    
-    # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
-    minGold = 0,
-    
-    # This will stop character from auto attacking if disabled.
-    # Adding this while I level my vet skill so I dont kill things
-    # too quickly.
-    shouldAttack = True):
-
-    # These are fairly static controls. Adjust as needed based on latency.
-
-    journalEntryDelayMilliseconds = 200
-    actionDelayMs = 1000
-    #actionDelayMs = 250
-    lastHonoredSerial = None
-    onslaughtActive = False
-
-    # Initial timer creation, not super important.
-
-    Timer.Create( 'dexPingTimer', 1 )
-    Timer.Create( 'dexSpecialAbilityDelayTimer', 1000 )
-    Timer.Create( 'dexOnslaughtTimer', 1 )
-    Timer.Create( 'dexBardTimer', 1 )
-    Timer.Create( 'dexConsecrateWeaponTimer', 2000 )
-    Timer.Create( 'dexDivineFuryTimer', 3000 )
-    Timer.Create( 'dexBushidoStanceTimer', 1 )
-    Timer.Create( 'petCommandTimer', 1500 )
-    Timer.Create( 'dexMirrorImageTimer', 8000 )
-    
-    while not Player.IsGhost:
-        
-        if Timer.Check( 'dexPingTimer' ) == False:
-            Player.HeadMessage( 78, "{} Running...".format(loopName) )
-            Timer.Create( 'dexPingTimer', 3000 )
-            
-        if minGold > 0 and Player.Gold >= minGold:
-            use_bag_of_sending(minGold)
-
-        if not Player.Visible:
-            Misc.Pause(500)
-            continue
-
-        if heal_player_and_friends(useCleanseByFire = useCleanseByFire, useRemoveCurse = useRemoveCurse) == True:
-            continue
-            
-        eligible = get_enemies(attackRange)
-        if len(eligible) > 0:   
-            nearest = Mobiles.Select(eligible, 'Nearest')
-            if Mobiles.FindBySerial(nearest.Serial) is not None and Player.DistanceTo(nearest)<=10:            
-                Target.SetLast(nearest)
-            
-                if useEnemyOfOne == 1 and not Player.BuffsExist("Enemy Of One"):
-                    Spells.CastChivalry("Enemy Of One")
-                    Misc.Pause(actionDelayMs)            
-                elif useConsecrateWeapon == 1 and Timer.Check( 'dexConsecrateWeaponTimer' ) == False:
-                    cast_until_works(lambda: Spells.CastChivalry("Consecrate Weapon"))
-                    Timer.Create( 'dexConsecrateWeaponTimer', consecrateWeaponDelayMs )
-                    Misc.Pause(actionDelayMs)
-                elif useDivineFury == 1 and Timer.Check( 'dexDivineFuryTimer' ) == False:
-                    cast_until_works(lambda: Spells.CastChivalry("Divine Fury"))
-                    Timer.Create( 'dexDivineFuryTimer', divineFuryDelayMs )
-                    Misc.Pause(actionDelayMs)
-                elif useMirrorImage == 1 and Timer.Check( 'dexMirrorImageTimer' ) == False:
-                    cast_until_works(lambda: Spells.CastNinjitsu("Mirror Image"))
-                    Timer.Create( 'dexMirrorImageTimer', mirrorImageDelayMs )
-                    Misc.Pause(actionDelayMs)
-                elif useCurseWeapon == 1 and not Player.BuffsExist("Curse Weapon"):
-                    cast_until_works(lambda: Spells.CastNecro("Curse Weapon"))
-                    Misc.Pause(actionDelayMs)            
-                    
-                if bushidoStance == 1 and Timer.Check( 'dexBushidoStanceTimer' ) == False:
-                    cast_until_works(lambda: Spells.CastBushido("Confidence", True))
-                    Timer.Create( 'dexBushidoStanceTimer', bushidoStanceDelayMs )
-                    Misc.Pause(actionDelayMs)
-                elif bushidoStance == 2 and Timer.Check( 'dexBushidoStanceTimer' ) == False:
-                    cast_until_works(lambda: Spells.CastBushido("Evasion", True))
-                    Timer.Create( 'dexBushidoStanceTimer', bushidoStanceDelayMs )
-                    Misc.Pause(actionDelayMs)
-                elif bushidoStance == 3 and Timer.Check( 'dexBushidoStanceTimer' ) == False:
-                    Timer.Create( 'dexBushidoStanceTimer', bushidoStanceDelayMs )
-                    Spells.CastBushido("Counter Attack", True)
-                    Misc.Pause(actionDelayMs)
-                    
-                if onslaughtActive == True:
-                    if Journal.Search("You deliver an onslaught of sword strikes"):
-                        onslaughtActive = False
-                        
-                # Weapon abilities, only one allowed at a time.
-                if onslaughtActive == False and useOnslaught == 1 and Timer.Check( 'dexOnslaughtTimer' ) == False:
-                    Journal.Clear()
-                    Spells.CastMastery("Onslaught")
-                    Misc.Pause(100)
-                    if Journal.Search("You ready an onslaught"):
-                        onslaughtActive = True
-                        Timer.Create( 'dexOnslaughtTimer', onslaughtDelayMs )   
-                        
-                elif onslaughtActive == False and Timer.Check( 'dexSpecialAbilityDelayTimer' ) == False:
-                
-                    if useShieldBash == 1 and not Player.BuffsExist("Shield Bash") and Player.Mana > 22:
-                        Spells.CastMastery("Shield Bash")
-                        Misc.Pause(1000)
-                        
-                    if useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist("Shield Bash")):
-                    #if True:
-                        if specialAbilityType == 1:
-                            if not Player.HasPrimarySpecial:
-                                Player.WeaponPrimarySA()
-                        elif specialAbilityType == 2:
-                            if not Player.HasSecondarySpecial:
-                                Player.WeaponSecondarySA()
-                        elif specialAbilityType == 3:
-                            if not Player.BuffsExist("Lightning Strike"):
-                                Spells.CastBushido("Lightning Strike", True)
-                        elif specialAbilityType == 4:
-                            print("This needs work, there is no buff for focus attack. TODO")
-                            print(Player.BuffsExist("Focus Attack"))
-                            if not Player.BuffsExist("Focus Attack"):
-                                Spells.CastNinjitsu("Focus Attack", True)
-                        elif specialAbilityType == 5:
-                            print("This needs work, there is no buff for momentum strike. TODO")
-                            if not Player.BuffsExist("Momentum Strike"):
-                                Spells.CastBushido("Momentum Strike", True)
-                        else:
-                            pass
-                            #Player.HeadMessage( 78, 'No weapon special selected' )
-                        Timer.Create( 'dexSpecialAbilityDelayTimer', specialAbilityDelayMs )   
-            
-        #eligible = get_mobs_exclude_serials(attackRange, namesToExclude = ["a horde minion"])
-        #if len(eligible) > 0:   
-        #    nearest = Mobiles.Select(eligible, 'Nearest')
-            #if Mobiles.FindBySerial(nearest.Serial) is not None and Player.DistanceTo(nearest)<=12:            
-                #Target.SetLast(nearest)
-                
-                if useHonor == 1 and nearest.Serial != lastHonoredSerial:
-                    Player.HeadMessage(78, "Honoring {}".format(nearest.Name))
-                    Player.InvokeVirtue("Honor");
-                    Target.WaitForTarget(3000, True);
-                    Target.TargetExecute(nearest);
-                    lastHonoredSerial = nearest.Serial
-                
-                if bardAbility == 1 and Timer.Check( 'dexBardTimer' ) == False:
-                    Player.UseSkill("Discordance")
-                    Misc.Pause(journalEntryDelayMilliseconds) 
-                    if Journal.SearchByType( 'What instrument shall you play?', 'System' ):
-                        instrument = find_instrument( Player.Backpack )
-                        if instrument == None:
-                            Misc.SendMessage( 'No instrument to discord with!', 38 )
-                            sys.exit()
-                        Target.WaitForTarget( 2000, True )
-                        Target.TargetExecute( instrument )
-                    Target.WaitForTarget( 2000, True )
-                    Target.TargetExecute( nearest )
-                    Timer.Create( 'dexDiscordTimer', bardDelayMs )
-                    Player.HeadMessage(78, "Discorded {}".format(nearest.Name))
-                    
-                elif bardAbility == 2 and Timer.Check( 'dexBardTimer' ) == False:
-                    Player.UseSkill("Peacemaking")
-                    Misc.Pause(journalEntryDelayMilliseconds) 
-                    if Journal.SearchByType( 'What instrument shall you play?', 'System' ):
-                        instrument = find_instrument( Player.Backpack )
-                        if instrument == None:
-                            Misc.SendMessage( 'No instrument to discord with!', 38 )
-                            sys.exit()
-                        Target.WaitForTarget( 2000, True )
-                        Target.TargetExecute( instrument )
-                    Target.WaitForTarget( 2000, True )
-                    Target.TargetExecute( nearest )
-                    #Target.Self()
-                    Timer.Create( 'dexBardTimer', bardDelayMs )
-                    Player.HeadMessage(78, "Peacemaking {}".format(nearest.Name))
-                    
-                if usePets == 1 and Timer.Check('petCommandTimer') == False:
-                    if Player.DistanceTo(nearest)<=6:
-                        Player.ChatSay("All Kill")
-                        Target.WaitForTarget( 2000, True )
-                        Target.TargetExecute( nearest )
-                    else:
-                        Player.ChatSay("All Follow Me")
-                    Timer.Create( 'petCommandTimer', petCommandDelayMs )
-
-                if shouldAttack == True:
-                    Player.Attack(nearest)
-        else:
-            if usePets == 1 and Timer.Check('petCommandTimer') == False:
-                Player.ChatSay("All Follow Me")
-                Timer.Create( 'petCommandTimer', petCommandDelayMs )                                
-            
-        Misc.Pause(500)
         
 # Use this if you want to shadowstrike things all day
 # Probably a good idea to be in wraith form
@@ -863,13 +569,20 @@ def run_mage_loop(
     
     # Use a bard ability.
     # 0 = Default, do nothing
-    # 1 = Discord (Yes)
-    # 2 = Peacemaking (notimplemented)
-    # 3 = Provocation (notimplemented)
+    # 1 = Peacemaking (notimplemented)
+    # 2 = Provocation (notimplemented)
+    # 3 = Discord (Yes)
     useBardAbility = 0,
     
     # Wait this long in milliseconds between bard ability uses
     bardAbilityDelayMs = 10000,
+    
+    # List the bard songs you wish to use. 
+    # 0 = Default, do nothing
+    # 1 = Peacemaking (Resilience, Perseverance)
+    # 2 = Provocation (Inspire, Invigorate)
+    # 3 = Discord (does nothing)
+    useBardSongs = 0,
     
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
@@ -882,21 +595,6 @@ def run_mage_loop(
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
     latencyMs = 200
 ):
-    
-    #Timer.Create( 'magePingTimer', 1 )
-    #Timer.Create( 'poisonStrikeTimer', 1000 )
-    #Timer.Create( 'strangleTimer', 1 )
-    #Timer.Create( 'corpseSkinTimer', 1 )
-    #Timer.Create( 'wildfireTimer', 1 )
-    #Timer.Create( 'curseTimer', 1 )
-    #Timer.Create( 'poisonTimer', 1 )
-    #Timer.Create( 'poisonFieldTimer', 1 )
-    #Timer.Create( 'fireFieldTimer', 1 )
-    #Timer.Create( 'meditationTimer', 1 )
-    #Timer.Create( 'painSpikeTimer', 1 )
-    #Timer.Create( 'conduitTimer', 1 )
-    #Timer.Create( 'evilOmenTimer', 1 )
-    #Timer.Create( 'bloodOathTimer', 1 )
     Timer.Create( 'animateDeadTimer', animateDeadDelayMs )
 
     if Player.Visible:
@@ -916,7 +614,6 @@ def run_mage_loop(
         if minGold > 0 and Player.Gold >= minGold:
             use_bag_of_sending(minGold)            
             
-        #if is_player_moving() or Player.BuffsExist("Meditation"):
         if is_player_moving():
             Misc.Pause(250)
             continue
@@ -942,8 +639,7 @@ def run_mage_loop(
             if check_summon_familiar(latencyMs):
                 #Misc.Pause(250)
                 continue
-        
-        #eligible = get_mobs_exclude_serials(range, checkLineOfSight = True, namesToExclude = [Player.Name])
+
         eligible = get_enemies(range)
         if len(eligible) > 0:  
             nearestMob = Mobiles.Select(eligible, 'Nearest')
@@ -956,12 +652,9 @@ def run_mage_loop(
                 Player.InvokeVirtue("Honor")
                 Target.WaitForTarget(1000, False)
                 Target.TargetExecute(honorMob)
-                
-            elif useBardAbility == 1 and Timer.Check("discordTimer") == False:
-            
+            elif useBardAbility == 3 and Timer.Check("discordTimer") == False:
                 use_skill("Discordance", nearestMob, latencyMs)
                 Timer.Create("discordTimer", bardAbilityDelayMs)
-                
             elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
             elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
@@ -980,8 +673,6 @@ def run_mage_loop(
             elif useEvilOmen == 2 and Timer.Check( 'evilOmenTimer' ) == False:
                 cast_spell("Evil Omen", nearestMob, latencyMs)
                 Timer.Create( 'evilOmenTimer', evilOmenDelayMs )
-            #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
-            #    check_summon_familiar()                
             elif useCorpseSkin == 1 and Timer.Check( 'corpseSkinTimer' ) == False and get_mobile_percent_hp(nearestMob) > 0.5:
                 if useEvilOmen == 1:
                     cast_spell("Evil Omen", nearestMob, latencyMs)
@@ -1016,11 +707,7 @@ def run_mage_loop(
                 Timer.Create( 'poisonFieldTimer', poisonFieldDelayMs)                 
             elif useFireField == 1 and Timer.Check( 'fireFieldTimer' ) == False:
                 cast_spell("Fire Field", nearestMob, latencyMs)
-                Timer.Create( 'fireFieldTimer', fireFieldDelayMs)                
-            #elif usePoisonStrike == 1  and Timer.Check( 'poisonStrikeTimer' ) == False:
-            #    cast_spell("Poison Strike", nearestMob, latencyMs)
-            #    Timer.Create( 'poisonStrikeTimer', poisonStrikeDelayMs )     
-            
+                Timer.Create( 'fireFieldTimer', fireFieldDelayMs)                 
             elif mainNukeSpell == 1  and Timer.Check( 'mainNukeTimer' ) == False and (countMobsInAoeRange < aoeMinMobCount or mainAoeSpell == 0):
                 cast_spell("Poison Strike", nearestMob, latencyMs)
                 Timer.Create( 'mainNukeTimer', mainNukeDelayMs )
@@ -1030,7 +717,6 @@ def run_mage_loop(
             elif mainNukeSpell == 3  and Timer.Check( 'mainNukeTimer' ) == False and (countMobsInAoeRange < aoeMinMobCount or mainAoeSpell == 0):
                 cast_spell("Flame Strike", nearestMob, latencyMs)
                 Timer.Create( 'mainNukeTimer', mainNukeDelayMs ) 
-             
             elif mainAoeSpell == 1 and Timer.Check( 'mainAoeTimer' ) == False and countMobsInAoeRange >= aoeMinMobCount and Player.Mana > 30:
                 cast_spell("Wither", None, latencyMs)
                 Timer.Create( 'mainAoeTimer', mainAoeDelayMs ) 
@@ -1040,34 +726,30 @@ def run_mage_loop(
             elif mainAoeSpell == 3  and Timer.Check( 'mainAoeTimer' ) == False and countMobsInAoeRange >= aoeMinMobCount and Player.Mana > 30:
                 cast_spell("Chain Lightning", nearestMob, latencyMs)
                 Timer.Create( 'mainAoeTimer', mainAoeDelayMs )
-                
-                
-            #elif useThunderstorm == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 30:
-            #    cast_spell("Thunderstorm", None, latencyMs)
-            #elif useWither == 1 and Player.DistanceTo(nearestMob) < 7 and Player.Mana > 20:
-            #    cast_spell("Wither", None, latencyMs)
-            #elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False and Player.DistanceTo(nearestMob) > 4:
             elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.35 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False:
                 Player.HeadMessage(58, "Stand still - going to meditate!")
                 Misc.Pause(500)
                 use_skill("Meditation")
                 Player.HeadMessage(58, "Meditating!")
                 Timer.Create( 'meditationTimer', 10000)    
-                
-                
-        #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
-        #    check_summon_familiar()
-        
-        elif Player.Hits / Player.HitsMax < 0.95 and Player.Mana > 20 and (useGreaterHeal == 1 or useSpiritSpeak == 1 or useCure == 1):
-            # Top player off if no one is around and its safe.
+
+        elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Invigorate"):
+            cast_spell("Invigorate", None, latencyMs)
+        elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Inspire"):
+            cast_spell("Inspire", None, latencyMs)
+        elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Resilience"):
+            cast_spell("Resilience", None, latencyMs)
+        elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Perseverance"):
+            cast_spell("Perseverance", None, latencyMs) 
+            
+        elif Player.Hits / Player.HitsMax < 0.95 and Player.Mana > 20 and (useGreaterHeal == 1 or useSpiritSpeak == 1 or useCure == 1) and not Player.BuffsExist("Invigorate") and not Player.BuffsExist("Gift of Renewal"):
+            # Top player off if no one is around and its safe (and only if player doesnt have any Heal over time)
             heal_player_and_friends(friendSelectMethod = 0, friendNames = [], range = range, healThreshold = 0.95, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = 0)
             
         elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
-        
             # This is a not so great way of doing this. When player loses debuff, we
             # re-apply to Pet and Player. Pet may not need it. And there may be times
             # when we dont need  it but pet does.
-            
             pets = get_pets()
             if len(pets) > 0:
                 # Just cast on first pet, this spell is expensive.
@@ -1083,9 +765,6 @@ def run_mage_loop(
             Timer.Create( 'meditationTimer', 10000) 
                 
         Misc.Pause(100)
-
-
-
 
 # An internal function but it can be used as a main heal loop if desired.  
 # casts cure on player and pet, also heals with greater heal

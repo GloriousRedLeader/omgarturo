@@ -14,6 +14,7 @@ FC_CAP_NECROMANCY = 3 if (Player.GetSkillValue("Necromancy") == 120 and Player.G
 FC_CAP_CHIVALRY = 4
 FC_CAP_SPELLWEAVING = 4
 FC_CAP_SHIELD_BASH = 4
+FC_CAP_BARD_SONG = 4
 
 # Necro (taken from ServUO files)
 CURSE_WEAPON_DELAY = 1000
@@ -61,6 +62,7 @@ REMOVE_CURSE_DELAY = 1500
 CONDUIT_DELAY = 2250
 DEATH_RAY_DELAY = 2250
 SHIELD_BASH_DELAY = 1000
+BARD_SONG_DELAY = 2000
 
 # Skills
 SPIRIT_SPEAK_DELAY = 999
@@ -231,6 +233,9 @@ def cast_spell(
     elif spellName == "Shield Bash":
         Spells.CastMastery(spellName)
         Misc.Pause(get_fc_delay(SHIELD_BASH_DELAY, FC_CAP_SHIELD_BASH, latencyMs))            
+    elif spellName == "Inspire" or spellName == "Invigorate" or spellName == "Resilience" or spellName == "Perseverance":
+        Spells.CastMastery(spellName)
+        Misc.Pause(get_fc_delay(BARD_SONG_DELAY, FC_CAP_BARD_SONG, latencyMs))            
     else:
         Player.HeadMessage(28, "That spell is not supported! Pausing.")
         Misc.Pause(1000)

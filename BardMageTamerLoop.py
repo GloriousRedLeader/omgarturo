@@ -7,6 +7,7 @@
 from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
 
 #   This one is configured for a Mage SpellWeaver Tamer Bard
+#   Uses the Provo Bard songs.
 
 #   Can cast Necro, Magery, Spellweaving Spells - and some Bard stuff.
 # 
@@ -25,7 +26,7 @@ run_mage_loop(
 
     # Give it a fun name in case you have different versions, e.g.
     # Mage AOE Loop or Mage Single Target Loop
-    loopName = "Bard Mage",
+    loopName = "Bard Mage AoE",
 
     # Applicable when heal spells are enabled (Greater Heal, etc.) which are configured
     # down below. This governs how you want to heal allies. By default your character is always healed.
@@ -34,7 +35,7 @@ run_mage_loop(
     
     # Names of pets or blue characters you want to heal / cure if they are in range.
     # Note that you still need to enable useCure / useGreaterHeal etc.
-    friendNames = ["MyPetName"],
+    friendNames = ["omg arturo", "omg arthur", "badhorsey", "omg art", "omg artus", "omg artie", "goodhorsey"],
     
     # Only look for mobs and pets/friends inside of this range. IF they are farther, then
     # dont heal them / dont attack them.
@@ -156,10 +157,10 @@ run_mage_loop(
     useForm = 0,
     
     # Whether to cure yourself or your pet
-    useCure = 0,
+    useCure = 1,
     
     # Whether to heal yourself or your pet
-    useGreaterHeal = 0,
+    useGreaterHeal = 1,
     
     # Necro heal
     useSpiritSpeak = 0,
@@ -174,7 +175,7 @@ run_mage_loop(
     conduitDelayMs = 15000,
     
     # When standing still, no mobes in range, not bleeding, strangled, or poisoned, will start meditating.
-    useMeditation = 0,
+    useMeditation = 1,
     
     # Only heal things that are below this percent HP
     healThreshold = 0.70,
@@ -186,7 +187,7 @@ run_mage_loop(
     # Spellweaving spell. Think its 2.5 min cooldown.
     # 0 = Do not use
     # 1 = Cast on yourself or anyone in friends list (uses timer to track cooldown so not very reliable on restart)
-    useGiftOfRenewal = 0,
+    useGiftOfRenewal = 1,
     
     # 0 = Do not use
     # 1 = Cast on yourself and pet (uses your buff to track, not pets, so not very reliable)
@@ -194,13 +195,20 @@ run_mage_loop(
     
     # Use a bard ability.
     # 0 = Default, do nothing
-    # 1 = Discord (Yes)
-    # 2 = Peacemaking (notimplemented)
-    # 3 = Provocation (notimplemented)
-    useBardAbility = 0,
+    # 1 = Peacemaking (notimplemented)
+    # 2 = Provocation (notimplemented)
+    # 3 = Discord (Yes)
+    useBardAbility = 3,
     
     # Wait this long in milliseconds between bard ability uses
-    bardAbilityDelayMs = 10000,
+    bardAbilityDelayMs = 8000,
+    
+    # List the bard songs you wish to use. 
+    # 0 = Default, do nothing
+    # 1 = Peacemaking (Resilience, Perseverance)
+    # 2 = Provocation (Inspire, Invigorate)
+    # 3 = Discord (does nothing)
+    useBardSongs = 2,
     
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
