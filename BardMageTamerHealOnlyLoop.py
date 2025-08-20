@@ -136,7 +136,7 @@ run_mage_loop(
     useWordOfDeath = 0,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
-    useWildfire = 0,
+    useWildfire = 1,
     
     # Use necromancy pain spike every 10 seconds. On some servers this might be good.
     usePainSpike = 0,
@@ -220,5 +220,5 @@ run_mage_loop(
     minGold = 45000,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
-    latencyMs = 200
+    latencyMs = 250
 )

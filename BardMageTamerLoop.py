@@ -219,5 +219,5 @@ run_mage_loop(
     minGold = 0,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
-    latencyMs = 200
+    latencyMs = 250
 )
