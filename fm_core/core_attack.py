@@ -922,7 +922,7 @@ def run_mage_loop(
             continue
 
         # Continue loop before doing harmul actions, focus on healing/curing.
-        if heal_player_and_friends(friendSelectMethod = friendSelectMethod, friendNames = friendNames, range = range, healThreshold = healThreshold, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = useCloakOfGraveMists) == True:
+        if heal_player_and_friends(friendSelectMethod = friendSelectMethod, friendNames = friendNames, range = range, healThreshold = healThreshold, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = useCloakOfGraveMists, useGiftOfRenewal = useGiftOfRenewal) == True:
             if useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)
             continue
@@ -1057,9 +1057,23 @@ def run_mage_loop(
                 
         #elif useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
         #    check_summon_familiar()
+        
         elif Player.Hits / Player.HitsMax < 0.95 and Player.Mana > 20 and (useGreaterHeal == 1 or useSpiritSpeak == 1 or useCure == 1):
             # Top player off if no one is around and its safe.
             heal_player_and_friends(friendSelectMethod = 0, friendNames = [], range = range, healThreshold = 0.95, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = 0)
+            
+        elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
+        
+            # This is a not so great way of doing this. When player loses debuff, we
+            # re-apply to Pet and Player. Pet may not need it. And there may be times
+            # when we dont need  it but pet does.
+            
+            pets = get_pets()
+            if len(pets) > 0:
+                # Just cast on first pet, this spell is expensive.
+                cast_spell("Gift of Life", pets[0], latencyMs)
+            # Cast on self
+            cast_spell("Gift of Life", Player.Serial, latencyMs)
             
         elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.83 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False:
             Player.HeadMessage(58, "Stand still - going to meditate!")
@@ -1115,20 +1129,29 @@ def heal_player_and_friends(
     # Looks for item on Cloak layer and uses it. Timer for this is created in the main core_attack script.
     useCloakOfGraveMists = 0,
     
+    # Spellweaving spell. Think its 2.5 min cooldown.
+    # 0 = Do not use
+    # 1 = Cast on yourself or anyone in friends list (uses timer to track cooldown so not very reliable on restart)
+    useGiftOfRenewal = 0,
+    
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
     latencyMs = 100
 ):
     
-    if useCure == 0 and useGreaterHeal == 0 and useCloseWounds == 0 and useCleanseByFire == 0 and useRemoveCurse == 0 and useSpiritSpeak == 0 and useCloakOfGraveMists == 0:
+    if useCure == 0 and useGreaterHeal == 0 and useCloseWounds == 0 and useCleanseByFire == 0 and useRemoveCurse == 0 and useSpiritSpeak == 0 and useCloakOfGraveMists == 0 and useGiftOfRenewal == 0:
         return False
 
-    if useCloakOfGraveMists == 1 and Timer.Check("cloakOfGraveMistsTimer") == False and Player.Hits / Player.HitsMax <= 0.50:
+    if useCloakOfGraveMists == 1 and Timer.Check("cloakOfGraveMistsTimer") == False and Player.Hits / Player.HitsMax <= 0.25:
         cloak = Player.GetItemOnLayer("Cloak")    
         Items.UseItem(cloak)
         Target.WaitForTarget(1000)
         Target.Cancel()
         Timer.Create( 'cloakOfGraveMistsTimer', 30000 )
         Misc.Pause(100)
+        return True
+    elif useGiftOfRenewal == 1 and Timer.Check("useGiftOfRenewalTimer") == False and Player.Hits / Player.HitsMax < healThreshold:
+        cast_spell("Gift of Renewal", Player.Serial)
+        Timer.Create("useGiftOfRenewalTimer", 60 * 2500)
         return True
     elif useCure == 1 and Player.Poisoned:
         cast_spell("Arch Cure", Player.Serial)
@@ -1175,11 +1198,15 @@ def heal_player_and_friends(
         friendMobiles.Sort(sort_friends)
         friendMobile = friendMobiles[0]
         
-        if not (useCure == 1 and friendMobile.Poisoned) and not (useGreaterHeal == 1 and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0) and Player.Mana < 15:
+        if not (useCure == 1 and friendMobile.Poisoned) and not ((useGreaterHeal == 1 or useGiftOfRenewal == 1) and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0) and Player.Mana < 15:
             return False
         
         if useCure == 1 and friendMobile.Poisoned:
             cast_spell("Arch Cure", friendMobile, latencyMs)
+            return True
+        elif useGiftOfRenewal == 1 and Timer.Check("useGiftOfRenewalTimer") == False and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0:
+            cast_spell("Gift of Renewal", Player.Serial)
+            Timer.Create("useGiftOfRenewalTimer", 60 * 2500)
             return True
         elif useGreaterHeal == 1 and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0:
             cast_spell("Greater Heal", friendMobile, latencyMs)

@@ -7,7 +7,8 @@
 from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
 
 #   This one is configured for a Mage SpellWeaver Tamer Bard
-#   It doesnt cast any AoE or damage spells, just Discordance.
+#   It doesnt cast any AoE or damage spells. Purely focused
+#   on healing.
 
 #   Can cast Necro, Magery, Spellweaving Spells - and some Bard stuff.
 # 
@@ -26,7 +27,7 @@ run_mage_loop(
 
     # Give it a fun name in case you have different versions, e.g.
     # Mage AOE Loop or Mage Single Target Loop
-    loopName = "Bard Mage (heal only)",
+    loopName = "Mage (heal only)",
 
     # Applicable when heal spells are enabled (Greater Heal, etc.) which are configured
     # down below. This governs how you want to heal allies. By default your character is always healed.
@@ -198,7 +199,7 @@ run_mage_loop(
     # 1 = Discord (Yes)
     # 2 = Peacemaking (notimplemented)
     # 3 = Provocation (notimplemented)
-    useBardAbility = 1,
+    useBardAbility = 0,
     
     # Wait this long in milliseconds between bard ability uses
     bardAbilityDelayMs = 10000,

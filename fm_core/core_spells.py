@@ -35,6 +35,7 @@ WILDFIRE_DELAY = 2500
 ARCANE_EMPOWERMENT_DELAY = 3000
 GIFT_OF_RENEWAL_DELAY = 3000
 WORD_OF_DEATH_DELAY = 3500
+GIFT_OF_LIFE_DELAY = 4000
 
 # Magery (these are all +500ms that are listed on the uo wiki)
 POISON_DELAY = 1500
@@ -133,6 +134,14 @@ def cast_spell(
     elif spellName == "Arcane Empowerment":
         Spells.CastSpellweaving(spellName)    
         Target.WaitForTarget(get_fc_delay(ARCANE_EMPOWERMENT_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+        
+    elif spellName == "Gift of Life":
+        Spells.CastSpellweaving(spellName)    
+        Target.WaitForTarget(get_fc_delay(GIFT_OF_LIFE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == "Gift of Renewal":
+        Spells.CastSpellweaving(spellName)    
+        Target.WaitForTarget(get_fc_delay(GIFT_OF_RENEWAL_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+
     elif spellName == "Wither":
         Spells.CastNecro(spellName)
         Misc.Pause(get_fc_delay(WITHER_DELAY, FC_CAP_NECROMANCY, latencyMs)) 
@@ -169,9 +178,6 @@ def cast_spell(
     elif spellName == "Vampiric Embrace":
         Spells.CastNecro(spellName)
         Misc.Pause(get_fc_delay(VAMPIRIC_EMBRACE_DELAY, FC_CAP_NECROMANCY, latencyMs))       
-    #elif spellName == "Spirit Speak":
-        #Player.UseSkill("Spirit Speak")
-        #Misc.Pause(get_fc_delay(SPIRIT_SPEAK_DELAY))
     elif spellName == "Poison Field":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(POISON_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
@@ -191,9 +197,7 @@ def cast_spell(
     elif spellName == "Chain Lightning":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(CHAIN_LIGHTNING_DELAY, FC_CAP_MAGERY, latencyMs))
-        
-        
-        
+
     elif spellName == "Death Ray":
         Spells.CastMastery(spellName)
         Target.WaitForTarget(get_fc_delay(DEATH_RAY_DELAY, FC_CAP_MAGERY, latencyMs))
