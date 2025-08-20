@@ -8,7 +8,7 @@ from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
 
 #   This one is configured for a Mage SpellWeaver Tamer Bard
 #   It doesnt cast any AoE or damage spells, just Discordance.
-#   Uses the Provo Songs.
+#   Uses the Provo Bard songs.
 
 #   Can cast Necro, Magery, Spellweaving Spells - and some Bard stuff.
 # 
