@@ -39,6 +39,7 @@ WORD_OF_DEATH_DELAY = 3500
 GIFT_OF_LIFE_DELAY = 4000
 
 # Magery (these are all +500ms that are listed on the uo wiki)
+PROTECTION_DELAY = 750
 POISON_DELAY = 1500
 CURSE_DELAY = 1750
 FIRE_FIELD_DELAY = 1750
@@ -92,8 +93,8 @@ def use_skill(
         Misc.Pause(SPIRIT_SPEAK_DELAY)
     elif skillName == "Discordance":
         Target.WaitForTarget(latencyMs)
-        if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
-            #items = Items.FindAllByID(itemids = INSTRUMENT_STATIC_IDS, color = -1, container = -1, range = 1)
+        #if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
+        if Journal.Search( 'No instruments found to Discord with!' ):
             instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
             if instrument is not None:
                 Target.TargetExecute(instrument)
@@ -191,6 +192,10 @@ def cast_spell(
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(POISON_DELAY, FC_CAP_MAGERY, latencyMs))
         
+    elif spellName == "Protection":
+        Spells.CastMagery(spellName)
+        Misc.Pause(get_fc_delay(PROTECTION_DELAY, FC_CAP_MAGERY, latencyMs))
+        
     elif spellName == "Energy Bolt":
         Spells.CastMagery(spellName)
         Target.WaitForTarget(get_fc_delay(ENERGY_BOLT_DELAY, FC_CAP_MAGERY, latencyMs))
@@ -235,8 +240,16 @@ def cast_spell(
         Spells.CastMastery(spellName)
         Misc.Pause(get_fc_delay(SHIELD_BASH_DELAY, FC_CAP_SHIELD_BASH, latencyMs))            
     elif spellName == "Inspire" or spellName == "Invigorate" or spellName == "Resilience" or spellName == "Perseverance":
+        Journal.Clear()
         Spells.CastMastery(spellName)
-        Misc.Pause(get_fc_delay(BARD_SONG_DELAY, FC_CAP_BARD_SONG, latencyMs))            
+        Misc.Pause(get_fc_delay(BARD_SONG_DELAY, FC_CAP_BARD_SONG, latencyMs))  
+        if Journal.Search( 'What instrument shall you play?' ):
+            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
+            if instrument is not None:
+                Target.TargetExecute(instrument)
+                Target.WaitForTarget(latencyMs)
+            else:
+                Misc.SendMessage("No instruments found to play bard songs!")        
     else:
         Player.HeadMessage(28, "That spell is not supported! Pausing.")
         Misc.Pause(1000)

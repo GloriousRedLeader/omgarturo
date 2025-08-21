@@ -203,6 +203,9 @@ run_mage_loop(
     # Wait this long in milliseconds between bard ability uses
     bardAbilityDelayMs = 10000,
     
+    # Use the Magery Protection spell. Casts when no nearby enemies.
+    useProtection = 0,
+    
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
     # Will try to find an enemy at full health when the buff doesnt exist on player.

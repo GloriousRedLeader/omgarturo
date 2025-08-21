@@ -584,6 +584,9 @@ def run_mage_loop(
     # 3 = Discord (does nothing)
     useBardSongs = 0,
     
+    # Use the Magery Protection spell. Casts when no nearby enemies.
+    useProtection = 0,
+    
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
     # Will try to find an enemy at full health when the buff doesnt exist on player.
@@ -747,6 +750,8 @@ def run_mage_loop(
             # Top player off if no one is around and its safe (and only if player doesnt have any Heal over time)
             heal_player_and_friends(friendSelectMethod = 0, friendNames = [], range = range, healThreshold = 0.95, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = 0)
             
+        elif useProtection == 1 and Player.Mana > 125 and not Player.BuffsExist("Protection"):
+            cast_spell("Protection", None, latencyMs)
         elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
             # This is a not so great way of doing this. When player loses debuff, we
             # re-apply to Pet and Player. Pet may not need it. And there may be times
