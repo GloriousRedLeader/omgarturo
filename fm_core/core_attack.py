@@ -658,7 +658,7 @@ def run_mage_loop(
             elif useArcaneEmpowerment == 1 and not Player.BuffsExist("Arcane Empowerment") and Player.Mana > 90 and Player.Hits > 50:
                 cast_spell("Arcane Empowerment", None, latencyMs)            
             elif useConduit == 1 and not Player.BuffsExist("Conduit") and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
-                cast_spell("Conduit", nearestMob, latencyMs)
+                cast_spell("Conduit", nearestMob.Position, latencyMs)
             elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
                 cast_spell("Conduit", nearestMob, latencyMs)
                 Timer.Create( 'conduitTimer', conduitDelayMs ) 
