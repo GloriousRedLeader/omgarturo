@@ -54,15 +54,15 @@ Here are some pre-canned versions that are ready for your customization!
 |Script|Single Target|AoE|Heals|Cures|Bard|Pets|Other|
 |------|-------------|---|-----|-----|----|----|-----|
 |[Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py)|Primary Weapon Ability|None|None|None|None|None|Consecrate Weapon|
-|[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Primary Ability|
-|[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Secondary Ability|
+|[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon|
+|[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon|
 |[Pure Necro - Conduit](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoop.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|Summon Familiar + Animated Dead|Cloak of Grave Mists; Vampiric Embrace|
 |[Pure Necro - Conduit (No Pet)](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoopNoPet.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|None|Cloak of Grave Mists; Vampiric Embrace|
 |[Pure Necro - Wither](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py)|Poison Strike|Wither|Spirit Speak|None|None|Summon Familiar + Animate Dead|Cloak of Grave Mists; Vampiric Embrace|
 |[Pure Necro - Wither (No Pet)](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py)|Poison Strike|Wither|Spirit Speak|None|None|None|Cloak of Grave Mists; Vampiric Embrace|
-|[Mage Bard Thunderstorm](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerThunderstormSpamLoop.py) |Word of Death|Thunderstorm + Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
-|[Mage Bard Wildfire](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerHealLoop.py) |Word of Death|Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
-|[Mage Bard Heals](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageHealLoop.py) |None|None|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
+|[Mage Bard Thunderstorm](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerThunderstormSpamLoop.py) |Word of Death|Thunderstorm + Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life; Protection|
+|[Mage Bard Wildfire](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerHealLoop.py) |Word of Death|Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life; Protection|
+|[Mage Bard Heals](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageHealLoop.py) |None|None|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life; Protection|
 
 A couple of resource gathering scripts. Use with caution. Don't break any rules. Includes [fishing on a boat](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopBoat.py), [crab fishing](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopCrab.py), [lumberjacking](https://github.com/GloriousRedLeader/omgarturo/blob/master/LumberjackingLoop.py), and [mining](https://github.com/GloriousRedLeader/omgarturo/blob/master/MiningLoop.py).
 
