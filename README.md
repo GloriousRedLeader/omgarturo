@@ -52,7 +52,7 @@ Useful things you'll find:
 Several combat scripts that are configurable for many uses. They are all based off two main archetypes: caster and dexer. It is recommended to customize these to meet your needs. You'd want to set some healing targets in the caster script if you want to heal your pet for example. 
 Here are some pre-canned versions that are ready for your customization!
 |Script|Single Target|AoE|Heals|Cures|Bard|Pets|Other|
-|------|-------------|---|-----|-----|----|-----|
+|------|-------------|---|-----|-----|----|----|-----|
 |[Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py)|Primary Weapon Ability|None|None|None|None|None|Consecrate Weapon|
 |[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Primary Ability|
 |[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Secondary Ability|
