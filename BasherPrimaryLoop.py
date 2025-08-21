@@ -61,7 +61,7 @@ run_dex_loop (
     attackRange = 6,
     
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
-    minGold = 45000,
+    minGold = 35000,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
     latencyMs = 200   

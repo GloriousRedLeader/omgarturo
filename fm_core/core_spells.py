@@ -116,7 +116,8 @@ def cast_spell(
     # Spell from Magery, Spellweaving, Necromancy, Chivalry
     spellName, 
     
-    # Optional mobile target, otherwise spell specific logic
+    # Optional mobile target, otherwise spell specific logic.
+    # This can be a serial, a mobile, or a Point3D (Position)
     target = None,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
@@ -241,7 +242,10 @@ def cast_spell(
         Misc.Pause(1000)
 
     if target is not None:
-        Target.TargetExecute(target)
+        if type(target).__name__ == "Point3D":
+            Target.TargetExecute(target.X, target.Y, target.Z)
+        else:
+            Target.TargetExecute(target)
     
     Misc.Pause(get_fcr_delay(spellName, latencyMs))
 

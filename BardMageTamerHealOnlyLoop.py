@@ -36,7 +36,7 @@ run_mage_loop(
     
     # Names of pets or blue characters you want to heal / cure if they are in range.
     # Note that you still need to enable useCure / useGreaterHeal etc.
-    friendNames = ["omg arturo", "omg arthur", "badhorsey", "omg art", "omg artus", "omg artie", "goodhorsey"],
+    friendNames = ["Goldberry", "Nymera Getsum", "omg arturo", "omg arthur", "badhorsey", "omg art", "omg artus", "omg artie", "goodhorsey"],
     
     # Only look for mobs and pets/friends inside of this range. IF they are farther, then
     # dont heal them / dont attack them.

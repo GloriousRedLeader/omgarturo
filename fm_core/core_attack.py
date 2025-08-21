@@ -700,7 +700,8 @@ def run_mage_loop(
                 cast_spell("Animate Dead", None, latencyMs)
                 Timer.Create( 'animateDeadTimer', animateDeadDelayMs)
             elif useWildfire == 1 and Timer.Check( 'wildfireTimer' ) == False:
-                cast_spell("Wildfire", nearestMob, latencyMs)
+                #cast_spell("Wildfire", nearestMob, latencyMs)
+                cast_spell("Wildfire", nearestMob.Position, latencyMs)
                 Timer.Create( 'wildfireTimer', wildfireDelayMs )
             elif usePoisonField == 1 and Timer.Check( 'poisonFieldTimer' ) == False and nonPoisonedMob is not None:
                 cast_spell("Poison Field", nonPoisonedMob, latencyMs)

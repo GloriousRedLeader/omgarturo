@@ -216,7 +216,7 @@ run_mage_loop(
     useHonor = 0,
     
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
-    minGold = 0,
+    minGold = 40000,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
     latencyMs = 250
