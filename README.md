@@ -49,12 +49,20 @@ Also, if this file doesn't exist, create it: /Scripts/\_\_init\_\_.py. This is i
 
 Useful things you'll find:
 
-Several combat scripts that are configurable for many uses. I have a few that I use, but do customize them as needed.
-* Basic Dexer: [Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py) that does Consecrate Weapon and uses Primary ability on weapon.
-* Shield Basher: [Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py) | [Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py) These do all the complicated shield bashing stuff for you. It is HIGHLY recommended to run 3/6 FC/FCR for maximum punishment. This whole spec is due to a quirk in servuo code. Lets hope they leave it.
-* Pure Necro: [Conduit](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoop.py) | [Wither](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py) | [Conduit No Pet](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoopNoPet.py) | [Wither No Pet](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherNoPetLoop.py) Exclusive to the Insane UO Shard. Pretty fun. The "No Pet" version are included because all the animate dead and familiars can block hallways and piss people off.
-* Bard Mage: [Bard Mage Tamer AoE](https://github.com/GloriousRedLeader/omgarturo/blob/master/BardMageTamerLoop.py) | [Bard Mage Tamer Heal Only](https://github.com/GloriousRedLeader/omgarturo/blob/master/BardMageTamerHealOnlyLoop.py) Will Discord targets, do AoE, and heal as needed.
-* Mage: [Mage Healer](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageHealOnlyLoop.py) Greater Heals, Cures, Gift of Life, Gift of Renewal. Works on pets and people in your friends list.
+Several combat scripts that are configurable for many uses. They are all based off two main archetypes: caster and dexer. It is recommended to customize these to meet your needs. You'd want to set some healing targets in the caster script if you want to heal your pet for example. 
+Here are some pre-canned versions that are ready for your customization!
+|Script|Single Target|AoE|Heals|Cures|Bard|Pets|Other|
+|------|-------------|---|-----|-----|----|-----|
+|[Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py)|Primary Weapon Ability|None|None|None|None|None|Consecrate Weapon|
+|[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Primary Ability|
+|[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon; Use when AI is Secondary Ability|
+|[Pure Necro - Conduit](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoop.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|Summon Familiar + Animated Dead|Cloak of Grave Mists; Vampiric Embrace|
+|[Pure Necro - Conduit (No Pet)](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoopNoPet.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|None|Cloak of Grave Mists; Vampiric Embrace|
+|[Pure Necro - Wither](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py)|Poison Strike|Wither|Spirit Speak|None|None|Summon Familiar + Animate Dead|Cloak of Grave Mists; Vampiric Embrace|
+|[Pure Necro - Wither (No Pet)](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py)|Poison Strike|Wither|Spirit Speak|None|None|None|Cloak of Grave Mists; Vampiric Embrace|
+|[Mage Bard Thunderstorm](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerThunderstormSpamLoop.py) |None|Thunderstorm + Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
+|[Mage Bard Wildfire](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageBardTamerHealLoop.py) |None|Wildfire|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
+|[Mage Bard Heals](https://github.com/GloriousRedLeader/omgarturo/blob/master/MageHealLoop.py) |None|None|Greater Heal + Gift of Renewal|Arch Cure|Inspire + Invigorate + Discord|None|Gift of Life|
 
 A couple of resource gathering scripts. Use with caution. Don't break any rules. Includes [fishing on a boat](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopBoat.py), [crab fishing](https://github.com/GloriousRedLeader/omgarturo/blob/master/FishLoopCrab.py), [lumberjacking](https://github.com/GloriousRedLeader/omgarturo/blob/master/LumberjackingLoop.py), and [mining](https://github.com/GloriousRedLeader/omgarturo/blob/master/MiningLoop.py).
 
