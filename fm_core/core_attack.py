@@ -631,17 +631,45 @@ def run_mage_loop(
             Misc.Pause(250)
             continue
             
-        if useForm == 1 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Wraith Form") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
-            cast_spell("Wraith Form", None, latencyMs)
-            continue
-        elif useForm == 2 and Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90 and not Player.BuffsExist("Vampiric Embrace") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
-            cast_spell("Vampiric Embrace", None, latencyMs)
-            continue
-            
-        if useSummonFamiliar == 1 and Player.Mana > 40 and Player.Hits / Player.HitsMax > 0.90:
-            if check_summon_familiar(latencyMs):
-                #Misc.Pause(250)
+        # Buffs / Forms
+        if Player.Mana > 30 and Player.Hits / Player.HitsMax > 0.90:
+            if useForm == 1 and Player.Mana > 30 and not Player.BuffsExist("Wraith Form") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
+                cast_spell("Wraith Form", None, latencyMs)
                 continue
+            elif useForm == 2 and Player.Mana > 30 and not Player.BuffsExist("Vampiric Embrace") and Timer.Remaining("cloakOfGraveMistsTimer") < 20000:
+                cast_spell("Vampiric Embrace", None, latencyMs)
+                continue
+            elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Invigorate"):
+                cast_spell("Invigorate", None, latencyMs)
+                continue
+            elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Inspire"):
+                cast_spell("Inspire", None, latencyMs)
+                continue
+            elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Resilience"):
+                cast_spell("Resilience", None, latencyMs)
+                continue
+            elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Perseverance"):
+                cast_spell("Perseverance", None, latencyMs) 
+                continue
+            elif useProtection == 1 and Player.Mana > 125 and not Player.BuffsExist("Protection"):
+                cast_spell("Protection", None, latencyMs)
+                continue
+            elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
+                # This is a not so great way of doing this. When player loses debuff, we
+                # re-apply to Pet and Player. Pet may not need it. And there may be times
+                # when we dont need  it but pet does.
+                pets = get_pets()
+                if len(pets) > 0:
+                    # Just cast on first pet, this spell is expensive.
+                    cast_spell("Gift of Life", pets[0], latencyMs)
+                # Cast on self
+                cast_spell("Gift of Life", Player.Serial, latencyMs)
+                continue
+                
+            if useSummonFamiliar == 1 and Player.Mana > 40:
+                if check_summon_familiar(latencyMs):
+                    #Misc.Pause(250)
+                    continue
 
         eligible = get_enemies(range)
         if len(eligible) > 0:  
@@ -736,32 +764,10 @@ def run_mage_loop(
                 use_skill("Meditation")
                 Player.HeadMessage(58, "Meditating!")
                 Timer.Create( 'meditationTimer', 10000)    
-
-        elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Invigorate"):
-            cast_spell("Invigorate", None, latencyMs)
-        elif useBardSongs == 2 and Player.Mana > 50 and not Player.BuffsExist("Inspire"):
-            cast_spell("Inspire", None, latencyMs)
-        elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Resilience"):
-            cast_spell("Resilience", None, latencyMs)
-        elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Perseverance"):
-            cast_spell("Perseverance", None, latencyMs) 
             
         elif Player.Hits / Player.HitsMax < 0.95 and Player.Mana > 20 and (useGreaterHeal == 1 or useSpiritSpeak == 1 or useCure == 1) and not Player.BuffsExist("Invigorate") and not Player.BuffsExist("Gift of Renewal"):
             # Top player off if no one is around and its safe (and only if player doesnt have any Heal over time)
             heal_player_and_friends(friendSelectMethod = 0, friendNames = [], range = range, healThreshold = 0.95, useCure = useCure, useGreaterHeal = useGreaterHeal, useSpiritSpeak = useSpiritSpeak, useCloakOfGraveMists = 0)
-            
-        elif useProtection == 1 and Player.Mana > 125 and not Player.BuffsExist("Protection"):
-            cast_spell("Protection", None, latencyMs)
-        elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
-            # This is a not so great way of doing this. When player loses debuff, we
-            # re-apply to Pet and Player. Pet may not need it. And there may be times
-            # when we dont need  it but pet does.
-            pets = get_pets()
-            if len(pets) > 0:
-                # Just cast on first pet, this spell is expensive.
-                cast_spell("Gift of Life", pets[0], latencyMs)
-            # Cast on self
-            cast_spell("Gift of Life", Player.Serial, latencyMs)
             
         elif useMeditation == 1 and Player.Mana / Player.ManaMax < 0.83 and not Player.Poisoned and not Player.BuffsExist("Bleeding") and not Player.BuffsExist("Strangle") and Timer.Check( 'meditationTimer' ) == False:
             Player.HeadMessage(58, "Stand still - going to meditate!")
