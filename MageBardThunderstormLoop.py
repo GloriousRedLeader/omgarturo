@@ -26,7 +26,7 @@ run_mage_loop(
 
     # Give it a fun name in case you have different versions, e.g.
     # Mage AOE Loop or Mage Single Target Loop
-    loopName = "Mage Bard AoE",
+    loopName = "Bard Mage Thunderstorm",
 
     # Applicable when heal spells are enabled (Greater Heal, etc.) which are configured
     # down below. This governs how you want to heal allies. By default your character is always healed.
