@@ -93,8 +93,8 @@ def use_skill(
         Misc.Pause(SPIRIT_SPEAK_DELAY)
     elif skillName == "Discordance":
         Target.WaitForTarget(latencyMs)
-        #if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
-        if Journal.Search( 'No instruments found to Discord with!' ):
+        if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
+        #if Journal.Search( 'No instruments found to Discord with!' ):
             instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
             if instrument is not None:
                 Target.TargetExecute(instrument)
