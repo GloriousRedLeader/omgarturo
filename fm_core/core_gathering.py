@@ -722,7 +722,10 @@ def run_crab_fishing_loop(
 
         Player.HeadMessage(28, "Time to collect traps")
         filter = Items.Filter()
-        filter.Graphics = List[Int32]((DEPLOYED_LOBSTER_TRAP_STATIC_ID)) # This filter doesnt work
+        #filter.Graphics = List[Int32]((DEPLOYED_LOBSTER_TRAP_STATIC_ID)) # This filter doesnt work
+        # That filter didnt work because we were creating a list of a certain size (probalby way too big)
+        # Instead, try the below:
+        filter.Graphics = List[Int32](DEPLOYED_LOBSTER_TRAP_STATIC_ID) # 2025-08-24 Untested
         filter.Movable = 0
         filter.OnGround = True
         filter.RangeMax = 7
