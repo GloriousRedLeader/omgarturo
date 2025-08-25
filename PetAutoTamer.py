@@ -38,6 +38,6 @@ while True:
     else:
         break
         
-for i in 30:
+for i in range(1, 30):
     Player.HeadMessage(128, "Finished Taming")
     Misc.Pause(250)
