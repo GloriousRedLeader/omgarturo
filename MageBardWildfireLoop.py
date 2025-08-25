@@ -176,7 +176,7 @@ run_mage_loop(
     conduitDelayMs = 15000,
     
     # When standing still, no mobes in range, not bleeding, strangled, or poisoned, will start meditating.
-    useMeditation = 1,
+    useMeditation = 0,
     
     # Only heal things that are below this percent HP
     healThreshold = 0.70,
