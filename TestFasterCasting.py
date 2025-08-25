@@ -5,11 +5,11 @@
 # Use at your own risk. 
 
 from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
-from Scripts.omgarturo.fm_core.core_player import open_bank_and_resupply
+
 from Scripts.omgarturo.fm_core.core_player import move_all_items_from_container
 from Scripts.omgarturo.fm_core.core_items import AXE_STATIC_IDS, LOG_STATIC_IDS, TREE_STATIC_IDS
 from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import open_bank_and_deposit_items
+
 from Scripts.omgarturo.fm_core.core_player import move_item_to_container
 from Scripts.omgarturo.fm_core.core_spells import get_fc_delay
 from System.Collections.Generic import List
@@ -17,9 +17,64 @@ import sys
 from System import Byte, Int32
 import time
 
+
+Player.HeadMessage(455, "start fc test")
+
+
+HAS_PROTECTION = Player.BuffsExist("Protection")
+FC_VAL = Player.FasterCasting
+for i in range(0 , 10):
+    Target.Cancel()
+    Misc.Pause(2000)
+    
+    start = time.time()
+    Spells.CastMagery("Energy Bolt")
+    Target.WaitForTarget(5000)
+    Target.TargetExecute(0x0001964A)
+    total = time.time() - start
+    
+    print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
+
+
+sys.exit()    
+    
 # This is just me testing faster casting. Nothing to see here.
 
 Player.HeadMessage(455, "start")
+
+
+HAS_PROTECTION = Player.BuffsExist("Protection")
+FC_VAL = Player.FasterCasting
+
+# Energy bolt test
+# 3 FC / 6 FCR
+# 1.75 no prot
+
+
+# 0 FC / 4 FCR
+# 2.25 
+mainStart = time.time()
+for i in range(0 , 5):
+    Target.Cancel()
+    Misc.Pause(2000)
+    
+
+        
+    
+    start = time.time()
+    Spells.CastMagery("Energy Bolt")
+    Target.WaitForTarget(5000)
+    Target.TargetExecute(0x0001964A)
+    total = time.time() - start
+    
+    print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
+    
+    
+mainEnd = time.time() - mainStart
+print(mainEnd / 5)
+sys.exit()
+
+
 
 ###############################################
 # Shield Bash (1000)    UO Alive

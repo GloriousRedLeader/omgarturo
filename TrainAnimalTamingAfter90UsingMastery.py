@@ -9,7 +9,7 @@
 
 Player.HeadMessage(38, "Training Animal Taming Using Mastery")
 
-PET_SERIAL = 0x0007BD6B;
+PET_SERIAL = 0x000EB0F7;
 
 while not Player.IsGhost:
     Spells.CastMastery("Combat Training")
