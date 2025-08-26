@@ -698,7 +698,7 @@ def run_mage_loop(
             elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and (not Player.BuffsExist("Poison") and not Player.BuffsExist("Strangle")) and Player.Mana > 125:
                 cast_spell("Death Ray", nearestMob, latencyMs)                                
                          
-            elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False:
+            elif usePainSpike == 1  and Timer.Check( 'painSpikeTimer' ) == False and not Player.BuffsExist("Conduit"):
                 cast_spell("Pain Spike", nearestMob, latencyMs)
                 Timer.Create( 'painSpikeTimer', 10500 )
             elif useEvilOmen == 2 and Timer.Check( 'evilOmenTimer' ) == False:

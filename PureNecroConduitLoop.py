@@ -78,7 +78,7 @@ run_mage_loop(
     useStrangle = 1,
     
     # Change to an appropriate value for strangle spell, number of MS in between usages
-    strangleDelayMs = 25000,
+    strangleDelayMs = 30000,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
     useCorpseSkin = 1,
@@ -93,7 +93,7 @@ run_mage_loop(
     useEvilOmen = 2,
     
     # Adding this option because it is wild on InsaneUO. It is a pretty cool dot.
-    evilOmenDelayMs = 20000,
+    evilOmenDelayMs = 30000,
     
     # Cast blood oath necro spell
     useBloodOath = 0,
@@ -145,7 +145,7 @@ run_mage_loop(
     useAnimateDead = 1,
     
     # Cast it this often
-    animateDeadDelayMs = 25000,
+    animateDeadDelayMs = 30000,
     
     # InsaneUO specific. Keeps all 4 pets summoned when safe to cast.
     useSummonFamiliar = 1,
