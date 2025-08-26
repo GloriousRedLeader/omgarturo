@@ -16,9 +16,6 @@ from System import Byte, Int32
 while True:
     pets = get_pets()
     if len(pets) < 5:
-        #serialsToExclude = [mob.Serial for mob in mobs])        
-        #serialsToExclude = []
-        #mobs = get_enemies(range = 4, serialsToExclude = serialsToExclude):
         fil = Mobiles.Filter()
         fil.Enabled = True
         fil.RangeMax = 5
@@ -34,10 +31,11 @@ while True:
             Target.WaitForTarget(3000)
             Target.TargetExecute(mobs[0])
             Misc.Pause(3000)
+        elif Timer.Check("tamerPingTimer") == False:
+            Player.HeadMessage(68, "Waiting for critters...")
+            Timer.Create("tamerPingTimer", 30000)
+            
         Misc.Pause(1000)    
     else:
-        break
-        
-for i in range(1, 30):
-    Player.HeadMessage(128, "Finished Taming")
-    Misc.Pause(250)
+        Player.HeadMessage(128, "Finished Taming - No more slots available")
+        Misc.Pause(1500)
