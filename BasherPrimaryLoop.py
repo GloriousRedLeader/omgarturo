@@ -60,6 +60,13 @@ run_dex_loop (
     # how many tiles to look for enemies and attack them
     attackRange = 6,
     
+    # Bandage self. Requires healing skill and bandages in top level of pack.
+    # 0 = Disabled, 1 = Enabled
+    useBandagesOnSelf = 1,
+    
+    # Only heal things that are below this percent HP
+    healThreshold = 0.95,
+    
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 35000,
     

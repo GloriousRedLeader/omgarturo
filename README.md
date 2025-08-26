@@ -54,8 +54,8 @@ Here are some pre-canned versions that are ready for your customization!
 |Script|Single Target|AoE|Heals|Cures|Bard|Pets|Other|
 |------|-------------|---|-----|-----|----|----|-----|
 |[Basic Chiv Dexer](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasicChivDexerLoop.py)|Primary Weapon Ability|None|None|None|None|None|Consecrate Weapon|
-|[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon|
-|[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|None|Remove Curse|None|None|Consecreate Weapon|
+|[Shield Basher Primary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherPrimaryLoop.py)|Shield Bash + Armor Ignore|None|Bandages|Remove Curse; Bandages|None|None|Consecreate Weapon|
+|[Shield Basher Secondary Ability](https://github.com/GloriousRedLeader/omgarturo/blob/master/BasherSecondaryLoop.py)|Shield Bash + Armor Ignore|None|Bandages|Remove Curse; Bandages|None|None|Consecreate Weapon|
 |[Pure Necro - Conduit](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitLoop.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|Summon Familiar + Animated Dead|Cloak of Grave Mists; Vampiric Embrace|
 |[Pure Necro - Conduit (No Pet)](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroConduitNoPetLoop.py)|Poison Strike + Pain Spike + Evil Omen + Strangle + Corpse Skin|Conduit|Spirit Speak|None|None|None|Cloak of Grave Mists; Vampiric Embrace|
 |[Pure Necro - Wither](https://github.com/GloriousRedLeader/omgarturo/blob/master/PureNecroWitherLoop.py)|Poison Strike|Wither|Spirit Speak|None|None|Summon Familiar + Animate Dead|Cloak of Grave Mists; Vampiric Embrace|

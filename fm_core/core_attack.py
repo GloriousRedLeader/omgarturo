@@ -11,6 +11,7 @@ from Scripts.omgarturo.fm_core.core_mobiles import get_mobile_percent_hp
 from Scripts.omgarturo.fm_core.core_mobiles import get_pets
 from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
 from Scripts.omgarturo.fm_core.core_mobiles import get_honor_target
+from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
 from Scripts.omgarturo.fm_core.core_player import find_instrument
 from Scripts.omgarturo.fm_core.core_player import use_bag_of_sending
 from Scripts.omgarturo.fm_core.core_spells import cast_until_works
@@ -18,6 +19,7 @@ from Scripts.omgarturo.fm_core.core_spells import cast_spell
 from Scripts.omgarturo.fm_core.core_spells import check_summon_familiar
 from Scripts.omgarturo.fm_core.core_spells import use_skill
 from Scripts.omgarturo.fm_core.core_rails import is_player_moving
+from Scripts.omgarturo.fm_core.core_items import BANDAGE_STATIC_ID
 import sys
 
 # These are loops that will run on your character that find nearest enemies,
@@ -93,6 +95,13 @@ def run_dex_loop(
     # how many tiles to look for enemies and attack them
     attackRange = 6,
     
+    # Bandage self. Requires healing skill and bandages in top level of pack.
+    # 0 = Disabled, 1 = Enabled
+    useBandagesOnSelf = 0,
+    
+    # Only heal things that are below this percent HP
+    healThreshold = 0.95,
+    
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 0,
     
@@ -114,7 +123,7 @@ def run_dex_loop(
             Misc.Pause(500)
             continue
 
-        if heal_player_and_friends(useCleanseByFire = useCleanseByFire, useRemoveCurse = useRemoveCurse) == True:
+        if heal_player_and_friends(useCleanseByFire = useCleanseByFire, useRemoveCurse = useRemoveCurse, useBandagesOnSelf = useBandagesOnSelf, healThreshold = healThreshold) == True:
             continue
             
         eligible = get_enemies(attackRange)
@@ -825,13 +834,19 @@ def heal_player_and_friends(
     # 1 = Cast on yourself or anyone in friends list (uses timer to track cooldown so not very reliable on restart)
     useGiftOfRenewal = 0,
     
+    # Bandage self. Requires healing skill and bandages in top level of pack.
+    # 0 = Disabled, 1 = Enabled
+    useBandagesOnSelf = 0,
+    
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
     latencyMs = 100
 ):
     
-    if useCure == 0 and useGreaterHeal == 0 and useCloseWounds == 0 and useCleanseByFire == 0 and useRemoveCurse == 0 and useSpiritSpeak == 0 and useCloakOfGraveMists == 0 and useGiftOfRenewal == 0:
+    if useCure == 0 and useGreaterHeal == 0 and useCloseWounds == 0 and useCleanseByFire == 0 and useRemoveCurse == 0 and useSpiritSpeak == 0 and useCloakOfGraveMists == 0 and useGiftOfRenewal == 0 and useBandagesOnSelf == 0:
         return False
-
+        
+    bandage = find_in_container_by_id(BANDAGE_STATIC_ID) if useBandagesOnSelf == 1 else None
+    
     if useCloakOfGraveMists == 1 and Timer.Check("cloakOfGraveMistsTimer") == False and Player.Hits / Player.HitsMax <= 0.25:
         cloak = Player.GetItemOnLayer("Cloak")    
         Items.UseItem(cloak)
@@ -840,6 +855,10 @@ def heal_player_and_friends(
         Timer.Create( 'cloakOfGraveMistsTimer', 30000 )
         Misc.Pause(100)
         return True
+    elif useBandagesOnSelf == 1 and bandage is not None and not Player.BuffsExist("Healing") and (Player.Hits / Player.HitsMax < healThreshold or Player.Poisoned):
+        Items.UseItem(bandage)
+        Target.WaitForTarget(1500)
+        Target.TargetExecute(Player.Serial)
     elif useGiftOfRenewal == 1 and Timer.Check("useGiftOfRenewalTimer") == False and Player.Hits / Player.HitsMax < healThreshold:
         cast_spell("Gift of Renewal", Player.Serial)
         Timer.Create("useGiftOfRenewalTimer", 60 * 2500)
