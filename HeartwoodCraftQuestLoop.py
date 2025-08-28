@@ -72,7 +72,9 @@ QUESTS = [
 # the script knows which NPCs have heartwood quests.
 ALLOWED_SUFFIXES = ["metal weaver", "cloth weaver", "bark weaver", "trinket weaver"]
 
-QUEST_GUMP_ID =  0x4c4c6db0
+QUEST_GUMP_ID = 0x4c4c6db0
+
+QUEST_ITEM_HUE = 0x04EA
 
 # Checks if suffix is in the npcs props
 def is_quest_giver(npc):
@@ -119,20 +121,20 @@ while True:
                 
                 
                 gumpText2 = "".join([str for str in Gumps.GetGumpData(QUEST_GUMP_ID).stringList if str is not None])
-                amountToMake = get_quest_amount(gumpText2)
+                amountNeeded = get_quest_amount(gumpText2)
 
-                if amountToMake is not None:
+                if amountNeeded is not None:
                     #print(match.groups())
                     print("Quest: ", questName)
                     print("Item: ", questItemName)
                     #amountToMake = int(match.groups()[0])
-                    print("Amount: ", amountToMake)
+                    print("Amount: ", amountNeeded)
                     Gumps.SendAction(QUEST_GUMP_ID, 4)
                     
                     Misc.Pause(3000)
                     
                     craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
-                    amountToMake = amountToMake - len(craftedItems)
+                    amountToMake = amountNeeded - len(craftedItems) + 1
                     print("Amount we already have in backpack: ", len(craftedItems))
                     print("Net amount needed: ", amountToMake)
                     if amountToMake > 0:
@@ -143,7 +145,7 @@ while True:
                             resourceContainer = RESOURCE_CONTAINER_SERIAL, 
                             keepContainers = [KEEP_CONTAINER_SERIAL],
                             trashContainer = None,
-                            maxItemsToCraft = amountToMake,
+                            maxItemsToCraft = amountToMake, 
                             specialMaterialHue = None,
                             itemMoveDelayMs = 750,
                             gumpDelayMs = 750,
@@ -167,14 +169,18 @@ while True:
                     for craftedItem in craftedItems:
                         Target.WaitForTarget(10000, False)
                         Target.TargetExecute(craftedItem.Serial)
-                        Misc.Pause(150)
+                        Misc.Pause(250)
                     Target.Cancel()
                     
+                    craftedItems = Items.FindAllByID(questItemGraphic, QUEST_ITEM_HUE, KEEP_CONTAINER_SERIAL, 0)
+                    if len(craftedItems) < amountNeeded:
+                        print("We only have ", len(craftedItems), " but we need ", amountNeeded)
+                        sys.exit()
+                    
                     print("Turning in quest")                
-                    Misc.Pause(1500)
+                    Misc.Pause(3000)
                     Mobiles.UseMobile(npc)
                     Gumps.WaitForGump(QUEST_GUMP_ID, 3000)
-                    
                     
                     Gumps.SendAction(QUEST_GUMP_ID, 8)
                     Gumps.WaitForGump(QUEST_GUMP_ID, 3000)
@@ -192,9 +198,10 @@ while True:
         elif Gumps.LastGumpTextExist("Enjoy my thanks for your service"):
             # I think this is a rare case where someone may already be on a quest
             # AND have their items toggled as quest items.
+          
             Gumps.SendAction(QUEST_GUMP_ID, 8)
             Gumps.WaitForGump(QUEST_GUMP_ID, 3000)
-            Gumps.SendAction(QUEST_GUMP_ID, 4)
+            Gumps.SendAction(QUEST_GUMP_ID, 5)
             Misc.Pause(3000)
             
         elif Gumps.LastGumpTextExist("I will be in your debt"):
