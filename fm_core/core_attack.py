@@ -111,6 +111,7 @@ def run_dex_loop(
     Timer.Create( 'dexPingTimer', 5000 )
     
     while not Player.IsGhost:
+        #Target.Cancel()
         
         if Timer.Check( 'dexPingTimer' ) == False:
             Player.HeadMessage( 78, "{} Running...".format(loopName) )
@@ -614,6 +615,7 @@ def run_mage_loop(
         Misc.Pause(250)
     
     while not Player.IsGhost:
+        #Target.Cancel()
         
         if Timer.Check( 'magePingTimer' ) == False:
             Player.HeadMessage( 78, "{} Running...".format(loopName) )

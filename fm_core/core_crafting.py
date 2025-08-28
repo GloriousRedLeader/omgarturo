@@ -2007,7 +2007,7 @@ def run_craft_loop(
                     
         if maxItemsToCraft is not None and totalKept >= maxItemsToCraft:
             print("All done. Crafted {} items".format(totalKept))
-            sys.exit()
+            return 
             
         print(f"Crafted: {totalCrafted}\tKept: {totalKept}")
         Misc.Pause(50)

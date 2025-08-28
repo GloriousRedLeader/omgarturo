@@ -41,7 +41,7 @@ run_mage_loop(
     
     # Only look for mobs and pets/friends inside of this range. IF they are farther, then
     # dont heal them / dont attack them.
-    range = 10,
+    range = 1,
     
     # Use Arcane Empowerment (spell weaving) 0 = disabled, 1 = enabled
     # Will cast every time buff expires automatically AND an enemy is in range.
@@ -83,7 +83,7 @@ run_mage_loop(
     strangleDelayMs = 25000,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
-    useCorpseSkin = 1,
+    useCorpseSkin = 0,
     
     # Change to an appropriate value, number of MS in between usages
     corpseSkinDelayMs = 30000,
@@ -144,7 +144,7 @@ run_mage_loop(
     
     # This is Insane UO Specific. That means there is no target reticle. Wont work
     # on other servers.
-    useAnimateDead = 1,
+    useAnimateDead = 0,
     
     # Cast it this often
     animateDeadDelayMs = 25000,
