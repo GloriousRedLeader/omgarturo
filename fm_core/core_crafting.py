@@ -1960,8 +1960,8 @@ def run_craft_loop(
             
         for item in Items.FindBySerial(craftContainer).Contains:
             if recipeName.lower() in item.Name.lower():
-                for prop in item.Properties:
-                    print(prop, prop.ToString().lower(), prop.Args, prop.Number)
+                #for prop in item.Properties:
+                #    print(prop, prop.ToString().lower(), prop.Args, prop.Number)
                     
                 keepItem = True
                 if minPhysicalResist is not None and Items.GetPropValue(item, "physical resist") < minPhysicalResist:
