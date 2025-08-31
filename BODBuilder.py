@@ -119,7 +119,7 @@ run_bod_builder(
     # e.g. if you need exceptional footlockers and only get ordinary ones. Dont need that junk.
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
-    trashContainer = 0x406766F3,
+    trashContainer = 0x405E1313,
     
     # (Optional) Array of SmallBodRecipe. If not in this list, the bod will be skipped.
     # Only build bods that want these items. Can be of any profession.

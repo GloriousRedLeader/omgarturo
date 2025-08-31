@@ -196,6 +196,12 @@ run_mage_loop(
     # 1 = Cast on yourself and pet (uses your buff to track, not pets, so not very reliable)
     useGiftOfLife = 1,
     
+    # Attune weapon has a cooldown. Stratics says 2 minues. On IUO it is longer. It might have
+    # something to do with Focus skill. I dont know. So, Im setting this to about 4 minutes.
+    # 0 = Do not use
+    # 1 = Cast on self.
+    useAttuneWeapon = 1,
+    
     # Use a bard ability.
     # 0 = Default, do nothing
     # 1 = Peacemaking (notimplemented)

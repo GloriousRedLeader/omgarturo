@@ -36,6 +36,7 @@ WRAITH_FORM_DELAY = 2250
 VAMPIRIC_EMBRACE_DELAY = 2250
 
 # Spellweaving (taken from ServUO files)
+ATTUNE_WEAPON_DELAY = 1000
 THUNDERSTORM_DELAY = 1500
 WILDFIRE_DELAY = 2500
 ARCANE_EMPOWERMENT_DELAY = 3000
@@ -134,6 +135,9 @@ def cast_spell(
     if spellName == "Wildfire":
         Spells.CastSpellweaving(spellName)
         Target.WaitForTarget(get_fc_delay(WILDFIRE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == "Attune Weapon":
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(ATTUNE_WEAPON_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
     elif spellName == "Thunderstorm":
         Spells.CastSpellweaving(spellName)
         Misc.Pause(get_fc_delay(THUNDERSTORM_DELAY, FC_CAP_SPELLWEAVING, latencyMs)) 

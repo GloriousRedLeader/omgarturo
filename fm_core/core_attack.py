@@ -577,6 +577,12 @@ def run_mage_loop(
     # 1 = Cast on yourself and pet (uses your buff to track, not pets, so not very reliable)
     useGiftOfLife = 0,
     
+    # Attune weapon has a cooldown. Stratics says 2 minues. On IUO it is longer. It might have
+    # something to do with Focus skill. I dont know. So, Im setting this to about 4 minutes.
+    # 0 = Do not use
+    # 1 = Cast on self.
+    useAttuneWeapon = 0,
+    
     # Use a bard ability.
     # 0 = Default, do nothing
     # 1 = Peacemaking (notimplemented)
@@ -675,6 +681,10 @@ def run_mage_loop(
                     cast_spell("Gift of Life", pets[0], latencyMs)
                 # Cast on self
                 cast_spell("Gift of Life", Player.Serial, latencyMs)
+                continue
+            elif useAttuneWeapon == 1 and Player.Mana > 75 and not Player.BuffsExist("Attune Weapon") and Timer.Check("attuneWeaponTimer") == False:
+                cast_spell("Attune Weapon", None, latencyMs)
+                Timer.Create("attuneWeaponTimer", 4 * 60 * 1000)
                 continue
                 
             if useSummonFamiliar == 1 and Player.Mana > 40:
