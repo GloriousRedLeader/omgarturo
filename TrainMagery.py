@@ -33,10 +33,14 @@ def Meditate():
         Misc.Pause(1000)
 
 while Player.GetSkillValue("Magery") < Player.GetSkillCap('Magery'):
+#while Player.GetSkillValue("Magery") < 70:
     if Player.Mana <= 23:
         Meditate()
     else:
-        if Player.GetSkillValue("Magery") < 60:
+        if Player.GetSkillValue("Magery") < 45:
+            SelfCast("Fireball")
+            Misc.Pause(CAST_TIMEOUT)
+        elif Player.GetSkillValue("Magery") < 60:
             SelfCast("Mana Drain")
             Misc.Pause(CAST_TIMEOUT)
         elif Player.GetSkillValue("Magery") < 80:
