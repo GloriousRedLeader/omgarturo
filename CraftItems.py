@@ -34,7 +34,7 @@ run_craft_loop(
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
     #recipeName = "leather leggings",
-    recipeName = "Earthquake",
+    recipeName = "Gate Travel",
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
@@ -53,18 +53,18 @@ run_craft_loop(
     # Plop a container down, secure it, grab the serial, and plug it into this array.
     # Script will attempt to move items that DO meet filters after every craft attempt.
     # This is slow and should be optimized later based on weight.
-    keepContainers = [0x410FC126],
+    keepContainers = [0x401CA8D5],
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
     # Script will attempt to move items that do not meet filters after every craft attempt.
-    trashContainer = 0x406766F3,
+    trashContainer = 0x401DEA04,
     
     # (Optional) A number that marks the upper limit on crafted items.
     # Default is None which means keep crafting forever.
-    maxItemsToCraft = 20,
+    maxItemsToCraft = 5000,
     
     # NOTE: NOT IMPLEMENTED. ONLY WORKS WITH DEFAULT MATERIALS LIKE IRON AND LEATHER
     # (Optional) Specific a material to use like Shadow Iron or Barbed Leather.

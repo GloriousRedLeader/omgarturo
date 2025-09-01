@@ -668,7 +668,7 @@ def run_mage_loop(
             elif useBardSongs == 1 and Player.Mana > 50 and not Player.BuffsExist("Perseverance"):
                 cast_spell("Perseverance", None, latencyMs) 
                 continue
-            elif useProtection == 1 and Player.Mana > 125 and not Player.BuffsExist("Protection"):
+            elif useProtection == 1 and Player.Mana > 25 and not Player.BuffsExist("Protection"):
                 cast_spell("Protection", None, latencyMs)
                 continue
             elif useGiftOfLife == 1 and Player.Mana > 125 and not Player.BuffsExist("Gift of Life"):
@@ -682,7 +682,7 @@ def run_mage_loop(
                 # Cast on self
                 cast_spell("Gift of Life", Player.Serial, latencyMs)
                 continue
-            elif useAttuneWeapon == 1 and Player.Mana > 75 and not Player.BuffsExist("Attune Weapon") and Timer.Check("attuneWeaponTimer") == False:
+            elif useAttuneWeapon == 1 and Player.Mana > 50 and not Player.BuffsExist("Attune Weapon") and Timer.Check("attuneWeaponTimer") == False:
                 cast_spell("Attune Weapon", None, latencyMs)
                 Timer.Create("attuneWeaponTimer", 4 * 60 * 1000)
                 continue
@@ -714,7 +714,7 @@ def run_mage_loop(
             elif useConduit == 2 and  Timer.Check( 'conduitTimer' ) == False and len(eligible) > 2 and Player.DistanceTo(nearestMob) > 0:
                 cast_spell("Conduit", nearestMob, latencyMs)
                 Timer.Create( 'conduitTimer', conduitDelayMs ) 
-            elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3:
+            elif useWordOfDeath == 1 and get_mobile_percent_hp(nearestMob) < 0.3 and len(eligible) <= 3:
                 cast_spell("Word of Death", nearestMob, latencyMs)   
             elif useDeathRay == 1 and not Player.BuffsExist("Death Ray") and Player.BuffsExist("Arcane Empowerment") and (not Player.BuffsExist("Poison") and not Player.BuffsExist("Strangle")) and Player.Mana > 125:
                 cast_spell("Death Ray", nearestMob, latencyMs)                                

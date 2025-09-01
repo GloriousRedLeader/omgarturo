@@ -133,7 +133,7 @@ run_mage_loop(
     
     # Will use shadow word death on eligible targets until they die. This is more of a toggle.
     # 0 = disabled, 1 = enabled
-    useWordOfDeath = 0,
+    useWordOfDeath = 1,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
     useWildfire = 1,
