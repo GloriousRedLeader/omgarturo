@@ -872,7 +872,7 @@ def heal_player_and_friends(
         Target.WaitForTarget(1500)
         Target.TargetExecute(Player.Serial)
     elif useGiftOfRenewal == 1 and Timer.Check("useGiftOfRenewalTimer") == False and Player.Hits / Player.HitsMax < healThreshold:
-        cast_spell("Gift of Renewal", Player.Serial)
+        cast_spell("Gift of Renewal", Player.Serial, latencyMs)
         Timer.Create("useGiftOfRenewalTimer", 60 * 2500)
         return True
     elif useCure == 1 and Player.Poisoned:
@@ -927,7 +927,7 @@ def heal_player_and_friends(
             cast_spell("Arch Cure", friendMobile, latencyMs)
             return True
         elif useGiftOfRenewal == 1 and Timer.Check("useGiftOfRenewalTimer") == False and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0:
-            cast_spell("Gift of Renewal", Player.Serial)
+            cast_spell("Gift of Renewal", friendMobile, latencyMs)
             Timer.Create("useGiftOfRenewalTimer", 60 * 2500)
             return True
         elif useGreaterHeal == 1 and not friendMobile.Poisoned and friendMobile.HitsMax is not None and friendMobile.HitsMax > 0 and friendMobile.Hits / friendMobile.HitsMax < healThreshold and not friendMobile.YellowHits and friendMobile.Hits > 0:
