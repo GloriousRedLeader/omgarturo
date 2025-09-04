@@ -1576,7 +1576,13 @@ def run_bod_builder(
         HUE_INSCRIPTION:    BodReport("Inscription"),
         HUE_TINKERING:      BodReport("Tinkering  ")
     }    
-        
+    
+    print("============================================================")
+    for incompleteBodContainer in [craftContainer] + incompleteBodContainers:
+        print("OMG: " , incompleteBodContainer)
+
+
+    
     print("****************************************** Start Small BOD ******************************************")
     for incompleteBodContainer in [craftContainer] + incompleteBodContainers:
         bods = Items.FindAllByID(BOD_STATIC_ID, -1, incompleteBodContainer, 1)
@@ -1593,15 +1599,21 @@ def run_bod_builder(
                         break
                     
                     if smallBod.isComplete():
-                        print("Filled small BOD!")
+                        print("Filled small BOD! ", smallBod.getCraftedItemName(), " has large bod? ", smallBod.recipe.hasLargeBod)
                         if smallBod.recipe.hasLargeBod:
+                            foundSuitableContainer = False
                             for smallBodWaitingForLargeBodContainer in smallBodWaitingForLargeBodContainers:
                                 container = Items.FindBySerial(smallBodWaitingForLargeBodContainer)
                                 if container.Contains.Count < 125:
+                                    foundSuitableContainer = True
                                     Items.Move(freshBod, smallBodWaitingForLargeBodContainer, 1)
-                                    Misc.Pause(itemMoveDelayMs)                
+                                    Misc.Pause(itemMoveDelayMs)
                                     break
+                            if not foundSuitableContainer:
+                                print("ERROR: No more space to put complete small bods! Add more container serials to smallBodWaitingForLargeBodContainers")
+                                return
                         else:
+                            print("Moving to solo container")
                             Items.Move(freshBod, completeSmallBodContainer, 1)
                             Misc.Pause(itemMoveDelayMs)                
                         break

@@ -38,7 +38,7 @@ run_fishing_loop(
     # 0 = Do nothing, leave in backpack
     # 1 = cut fish with a tool of your choice to reduce weight, makes lots of fish steaks (see cutToolItemId)
     # 2 = place fish in cargo hold of ship, have to be standing near cargo hold
-    fishHandling = 1,
+    fishHandling = 0,
     
     # (Optional) String name of fish you want to keep safe. Will not do any fishHandling operations on this fish. 
     # Leaves it in backpack. Useful if you are doing fish monger quests. Just type the fish name

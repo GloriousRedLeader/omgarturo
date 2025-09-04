@@ -53,7 +53,7 @@ run_craft_loop(
     # Plop a container down, secure it, grab the serial, and plug it into this array.
     # Script will attempt to move items that DO meet filters after every craft attempt.
     # This is slow and should be optimized later based on weight.
-    keepContainers = [0x401CA8D5],
+    keepContainers = [0x4086CA21],
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
