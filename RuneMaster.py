@@ -4,17 +4,7 @@
 #   2025-09-04
 # Use at your own risk. 
 
-import clr
-clr.AddReference ('System.Windows.Forms')
-clr.AddReference('System.Drawing')
-import re
-from System.Drawing import Color, Font, FontStyle, FontFamily
-from System.Drawing import Point
-from System.Windows.Forms import TextBox, Keys, KeyPressEventHandler, DataGridView, DataGridViewHeaderBorderStyle
-from System.Windows.Forms import DataGridViewCellBorderStyle, ColumnStyle, SizeType, RowStyle, GroupBox
-from System.Windows import Forms
 from System.Collections.Generic import List
-
 from math import ceil
 import sys
 
@@ -22,45 +12,34 @@ import sys
 
 RUNIC_ATLAS_SERIAL = 0x4064F6A5
 RUNIC_ATLAS_GUMP_ID = 0x1f2
-
-
 RUNEBOOK_GUMP_ID =  0x59
-
-OUR_GUMP_ID = 1239862390
+RUNIC_ATLAS_GRAPHIC_ID = 0x9C16
+RUNEBOOK_GRAPHIC_ID = 0x22C5
+OUR_GUMP_ID = 0xBADF00D
 
 Gumps.CloseGump(OUR_GUMP_ID)
+
 class Book:
-    def __init__(self, serial, graphic, hue, name):
+    def __init__(self, serial, graphic, hue, name, atlasTravelButton = None):
         self.serial = serial
         self.graphic = graphic
         self.hue = hue
         self.name = name
-        #self.runes = []
+        self.atlasTravelButton = atlasTravelButton
         self.left = []
         self.right = []
         
     def getRuneCountForColumn(self):
         return len(self.left)
         
-    #def getXYCoordsForRuneEntry(self, runeEntry):
-    #    return False
-    
-        
 class Rune:
-    #def __init__(self, buttonid, name, globalindex, localindex, type, bookSerial):
-    #def __init__(self, runeIndex, buttonid, name, bookSerial, bookGraphic, bookHue):
     def __init__(self, runebookButtonId, name, book):
         self.runebookButtonId = runebookButtonId
         self.name = name
         self.book = book
-    
-        
-        
-    #def getPage(self):
-    #    return ceil(self.localindex / 8)
-RUNIC_ATLAS_GRAPHIC_ID = 0x9C16
-RUNEBOOK_GRAPHIC_ID = 0x22C5
 
+# Opens runebooks and atlasses in top level backpack
+# and parses  rune names.
 def get_runes():
     runes = []
     allRunes = []
@@ -71,16 +50,13 @@ def get_runes():
     
     books = Items.FindAllByID(RUNIC_ATLAS_GRAPHIC_ID, -1, Player.Backpack.Serial, 0)
     for book in books:
-    #book = Items.FindBySerial(bookSerial)
-    
         Items.UseItem(book.Serial)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
 
+        bookName =  book.Properties[3].ToString() if len(book.Properties) == 4 else "Unnamed Atlas"
+        
         data = Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:]
-        #data = [gd  for gd in data if "center" not in gd and gd != "Empty"]
-        #for gd in data:
-        #    print("OFFICIAL 1: ", gd)
-            
+        
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 1150)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
         data.AddRange(Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:])
@@ -88,10 +64,11 @@ def get_runes():
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 1150)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
         data.AddRange(Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:])
-
-        runicAtlas = Book( book.Serial, book.Graphics, book.Hue, "fucker")
         
         data = [gd  for gd in data if "center" not in gd and gd != "Empty"]  
+        
+        atlasTravelButton = 7 if chivalrySkill > magerySkill else 4
+        runicAtlas = Book( book.Serial, book.Graphics, book.Hue, bookName, atlasTravelButton)
         
         i = 0
         for gd in data:
@@ -101,15 +78,9 @@ def get_runes():
                 runicAtlas.right.append(rune)
             else:
                 runicAtlas.left.append(rune)
-            #print("OFFICIAL: ", gd)
             i = i + 1
             
         allBooks.append(runicAtlas)
-            
-        #pageCount = ceil(len(gd) / 8)
-        #sectionCount = ceil(pageCount / 2)
-        #print("Pages, ", pageCount)
-        #print("Sections: ", sectionCount)
             
         Gumps.CloseGump(RUNIC_ATLAS_GUMP_ID)        
             
@@ -119,25 +90,23 @@ def get_runes():
         print("Runebook")
         Items.UseItem(book)
         Gumps.WaitForGump(RUNEBOOK_GUMP_ID,3300)
-        #gumpData = Gumps.GetGumpData(RUNEBOOK_GUMP_ID).text[2:]
-        data = Gumps.GetGumpData(RUNEBOOK_GUMP_ID).gumpData[4:20]
         
+        bookName =  book.Properties[3].ToString() if len(book.Properties) == 4 else "Unnamed Runebook"
+        
+        data = Gumps.GetGumpData(RUNEBOOK_GUMP_ID).gumpData[4:20]
         data = [gd  for gd in data if "center" not in gd and gd != "Empty"]  
         
-        runeBook = Book( book.Serial, book.Graphics, book.Hue, "regularcrane")
+        runeBook = Book( book.Serial, book.Graphics, book.Hue, bookName)
         allBooks.append(runeBook)
         i = 0
         for gd in data:
-        
-            #buttonid = 7 if chivalrySkill > magerySkill else 4
             # Magery Rune 1 = 50
             # Magery Rune 2 = 51
             # Chivalry Rune 1 = 75
             # Chivalry Rune 2 = 76
             # Defaults to magery if both magery and chivalry are 0 (pure necro)
             buttonId = 75 + i if chivalrySkill > magerySkill else 50 + i        
-            
-            
+
             rune = Rune(buttonId, gd, runeBook)
             allRunes.append(rune)
             if i + 1 > ceil(len(data) / 2):
@@ -145,36 +114,18 @@ def get_runes():
             else:
                 runeBook.left.append(rune)
             i = i + 1
-        
-        #for gd in gumpData:
-        #    print("HARHAHAR", gd)
-        #print("gumpdata")
-        #for gd in gumpData.gumpData:
-        #    print("GRALLYE", gd)
-            
-        #print("stringlist")
-        #for gd in gumpData.stringList:
-        #    print("PPOOON", gd)
-            
-        #print("text")
-        #for gd in gumpData.text:
-        #    print(gd)
+
         Gumps.CloseGump(RUNEBOOK_GUMP_ID)
+
     return allRunes, allBooks
     
-    
-runes, books = get_runes()
 
-#print(runes, books)
-    
-    
     
 def render_gump(runes, books):
     
     LINE_HEIGHT = 25
     PAGE_WIDTH = 165
     TITLE_PADDING_TOP = 15
-    #TITLE_PADDING_BOTTOM = 15
     LINE_TOP_PADDING = 15
     LINE_LEFT_PADDING = 15
     BOOK_PADDING = 25
@@ -187,118 +138,67 @@ def render_gump(runes, books):
     atlasGump.y        = 100
     
     gumpWidth = (PAGE_WIDTH * 2) + 10
-    #gumpHeight = (LINE_HEIGHT * 8 * sectionCount) + TITLE_PADDING_BOTTOM + 50
-
+    
     gumpHeight = TITLE_PADDING_TOP + 10
     for book in books:
         gumpHeight = gumpHeight + (book.getRuneCountForColumn() * LINE_HEIGHT) +  (BOOK_PADDING * 2)
     
     y = TITLE_PADDING_TOP
-    Gumps.AddBackground(atlasGump, 0, 0, gumpWidth, gumpHeight, 3500)
+    STYLE = 3500
+    Gumps.AddBackground(atlasGump, 0, 0, gumpWidth, gumpHeight, STYLE)
     Gumps.AddLabel(atlasGump, 120, y, 1258, "Runemaster 5000")      
-    #Gumps.AddBackground(atlasGump, 0, 0, gumpWidth, gumpHeight, 3500)
-    #Gumps.AddLabel(atlasGump, 120, 10, 1258, "Runemaster 5000")    
-
     i = 1
-    
-    #gumpWidth = 10
-    #gumpHeight = TITLE_PADDING_BOTTOM + 50
-    #y = y +  TITLE_PADDING_BOTTOM
-    #for gd in data:
+
     y = y + BOOK_PADDING 
     for book in books:
         
-        print("iterating book", book.serial)
-        print("Runes left: ", len(book.left))
-        print("Runes right: ", len(book.right))
-        
-        #y = (book.getRuneCountForColumn() * LINE_HEIGHT) + TITLE_PADDING_BOTTOM
-       # y = y + BOOK_PADDING 
-        
-        
-        #gumpHeight = gumpHeight + (book.getRuneCountForColumn() * LINE_HEIGHT) + TITLE_PADDING_BOTTOM
         Gumps.AddLabel(atlasGump, 55, y, 1258, book.name)  
         Gumps.AddItem( atlasGump, 10, y - 3, book.graphic, book.hue)
         
         y = y + BOOK_PADDING 
         for index, rune in enumerate(book.left):
-            #x = LINE_LEFT_PADDING if page % 2 != 0 else PAGE_WIDTH + LINE_LEFT_PADDING
             x = LINE_LEFT_PADDING
             Gumps.AddButton(atlasGump, x, y + (LINE_HEIGHT * index), 0x4BA, 0x4B9, i, 1, 1)
             Gumps.AddLabel(atlasGump, x + 25, y + (LINE_HEIGHT * index), 77, rune.name[:20])
-            
-            
-            print("x =", x, " y =", y + (LINE_HEIGHT * index), "gd =", rune.name, "buttonid =", i)
+            #print("x =", x, " y =", y + (LINE_HEIGHT * index), "gd =", rune.name, "buttonid =", i)
             i = i + 1
         for index, rune in enumerate(book.right):
-            #x = LINE_LEFT_PADDING if page % 2 != 0 else PAGE_WIDTH + LINE_LEFT_PADDING
             x = LINE_LEFT_PADDING + PAGE_WIDTH
             Gumps.AddButton(atlasGump, x, y + (LINE_HEIGHT * index), 0x4BA, 0x4B9, i, 1, 1)
             Gumps.AddLabel(atlasGump, x + 25, y + (LINE_HEIGHT * index), 77, rune.name[:20])
-            print("x =", x, " y =", y + (LINE_HEIGHT * index), "gd =", rune.name, "buttonid =", i)
+            #print("x =", x, " y =", y + (LINE_HEIGHT * index), "gd =", rune.name, "buttonid =", i)
             i = i + 1
-            
-        #page = ceil(i / 8)
-        #section = ceil(i / 16)
-        
-        #x = LINE_LEFT_PADDING if page % 2 != 0 else PAGE_WIDTH + LINE_LEFT_PADDING
-        #y = i * LINE_HEIGHT
-        #y = (i * LINE_HEIGHT) - (section * LINE_HEIGHT) if page % 2 != 0 else (i * LINE_HEIGHT)
-        #y = (i * LINE_HEIGHT) - (section * 8 * LINE_HEIGHT) + TITLE_PADDING_BOTTOM if page % 2 == 0 else (i * LINE_HEIGHT) + TITLE_PADDING_BOTTOM
-        #print("x =", x, " y =", y, "page =", page, " section =", section, "gd =", gd)
-        
-        
-        #Gumps.AddButton(atlasGump, x, y, 0x4BA, 0x4B9, i, 1, 1)
-        #Gumps.AddLabel(atlasGump, x + 25, y, 77, gd)
         
         y = y + (book.getRuneCountForColumn() * LINE_HEIGHT) + 15
-        #y = y + (book.getRuneCountForColumn() * LINE_HEIGHT) + 15
-        #i = i + 1
-
           
     Gumps.CloseGump(OUR_GUMP_ID)
     Gumps.SendGump(atlasGump, 0, 0)
 
 def recall_or_sacred_journey(runeButtonId, runes, books):
-    
-    
     print("Button is ", runeButtonId)
     print("Rune name is ", runes[runeButtonId - 1].name)
     
-    
     rune = runes[runeButtonId - 1]
-#    RUNIC_ATLAS_GRAPHIC_ID = 0x9C16
-#RUNEBOOK_GRAPHIC_ID = 0x22C5
+
     Items.UseItem(rune.book.serial)
     if rune.book.graphic == RUNEBOOK_GRAPHIC_ID:
-    
-        #magerySkill = Player.GetSkillValue("Magery")
-        #chivalrySkill = Player.GetSkillValue("Chivalry")
-        #buttonid = 7 if chivalrySkill > magerySkill else 4
-        
         Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 3000)
         Gumps.SendAction(RUNEBOOK_GUMP_ID, rune.runebookButtonId)
-        
     else:
-        
-        
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, rune.runebookButtonId)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-        Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 4)
+        Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, rune.book.atlasTravelButton)
 
+        
+runes, books = get_runes()
 
 render_gump(runes, books)
-while True:
-    
 
+while True:
     gd = Gumps.GetGumpData(OUR_GUMP_ID)
     
     if gd is not None and gd.buttonid > 0:
-        # First button is 100
-        # Page 2 first button is 116
-        
-        # Recall is 4
         print("Recall to rune number: ", gd.buttonid)
         
         recall_or_sacred_journey(gd.buttonid,runes,books)
@@ -310,218 +210,9 @@ while True:
         print("Exiting")
         Gumps.CloseGump(RUNEBOOK_GUMP_ID)
         Gumps.CloseGump(RUNIC_ATLAS_GUMP_ID)
+        Gumps.CloseGump(OUR_GUMP_ID)
         Gumps.SendAction(RUNEBOOK_GUMP_ID,0)
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID,0)
         break
     
     Misc.Pause(250)    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-sys.exit()
-
-#OUR_GUMP_ID = 1239862391
-Items.UseItem(RUNIC_ATLAS_SERIAL)
-Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-
-data = Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:]
-#data = [gd  for gd in data if "center" not in gd and gd != "Empty"]
-#for gd in data:
-#    print("OFFICIAL 1: ", gd)
-    
-Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 1150)
-Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-data.AddRange(Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:])
-
-Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 1150)
-Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-data.AddRange(Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:])
-
-data = [gd  for gd in data if "center" not in gd and gd != "Empty"]    
-for gd in data:
-    print("OFFICIAL: ", gd)
-    
-pageCount = ceil(len(gd) / 8)
-sectionCount = ceil(pageCount / 2)
-print("Pages, ", pageCount)
-print("Sections: ", sectionCount)
-    
-Gumps.CloseGump(RUNIC_ATLAS_GUMP_ID)
-    
-#atlasGump = Gumps.CreateGump(True, True, True, False)
-
-#atlasGump.buttonid = -1
-#atlasGump.gumpId   = OUR_GUMP_ID
-#atlasGump.serial   = Player.Serial
-#atlasGump.x        = 600
-#atlasGump.y        = 100
-
-#Gumps.AddBackground(atlasGump, 0, 0, 450, 700, 3500)
-#Gumps.AddLabel(atlasGump, 30, 15, 1258, "fooBasher Status Gump")
-
-#Gumps.AddButton(gd,x,y,normalID,pressedID,buttonID,type,param)
-#Gumps.AddLabel(gd,x,y,hue,text)
-#i = 1
-#for gd in data:
-#    x = 10
-#    y = 30 * i
-#    Gumps.AddButton(atlasGump, x, y, 0x4BA, 0x4B9, i, 1, 1)
-#    Gumps.AddLabel(atlasGump, x + 25, y, 77, gd)
-#    i = i + 1
-
-#Gumps.AddButton(atlasGump, 360, 46, 0x4BA, 0x4B9, 3, 1, 1)
-#Gumps.AddLabel(atlasGump, 380, 45, 77, "Blues?")
-#Gumps.AddButton(atlasGump, 15, 15, normalID,pressedID,buttonID,type,param)
-
-
-
-#print(atlasGump)
-Gumps.CloseGump(OUR_GUMP_ID)
-#Gumps.SendGump(atlasGump, 0, 0)
-
-
-# Uses recall or sacred journey depending on skill
-def recall_or_sacred_journey(runeButtonId):
-    magerySkill = Player.GetSkillValue("Magery")
-    chivalrySkill = Player.GetSkillValue("Chivalry")
-    buttonid = 7 if chivalrySkill > magerySkill else 4
-    
-    Items.UseItem(RUNIC_ATLAS_SERIAL)
-    Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-    Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, runeButtonId)
-    Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
-    Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, buttonid)
-
-def render_gump():
-    
-    LINE_HEIGHT = 25
-    PAGE_WIDTH = 165
-    
-    TITLE_PADDING_BOTTOM = 15
-    
-    LINE_TOP_PADDING = 15
-    LINE_LEFT_PADDING = 15
-    
-    atlasGump = Gumps.CreateGump(True, True, True, False)
-    atlasGump.buttonid = -1
-    atlasGump.gumpId   = OUR_GUMP_ID
-    atlasGump.serial   = Player.Serial
-    atlasGump.x        = 600
-    atlasGump.y        = 100
-    
-    gumpWidth = (PAGE_WIDTH * 2) + 10
-    gumpHeight = (LINE_HEIGHT * 8 * sectionCount) + TITLE_PADDING_BOTTOM + 50
-
-    
-    Gumps.AddBackground(atlasGump, 0, 0, gumpWidth, gumpHeight, 3500)
-    Gumps.AddLabel(atlasGump, 120, 10, 1258, "Runemaster 5000")    
-
-    i = 1
-    for gd in data:
-        
-        page = ceil(i / 8)
-        section = ceil(i / 16)
-        
-        x = LINE_LEFT_PADDING if page % 2 != 0 else PAGE_WIDTH + LINE_LEFT_PADDING
-        #y = i * LINE_HEIGHT
-        #y = (i * LINE_HEIGHT) - (section * LINE_HEIGHT) if page % 2 != 0 else (i * LINE_HEIGHT)
-        y = (i * LINE_HEIGHT) - (section * 8 * LINE_HEIGHT) + TITLE_PADDING_BOTTOM if page % 2 == 0 else (i * LINE_HEIGHT) + TITLE_PADDING_BOTTOM
-        print("x =", x, " y =", y, "page =", page, " section =", section, "gd =", gd)
-        
-        
-        Gumps.AddButton(atlasGump, x, y, 0x4BA, 0x4B9, i, 1, 1)
-        Gumps.AddLabel(atlasGump, x + 25, y, 77, gd)
-        i = i + 1
-
-    Gumps.CloseGump(OUR_GUMP_ID)
-    Gumps.SendGump(atlasGump, 0, 0)
-
-
-
-render_gump()
-while True:
-    
-
-    gd = Gumps.GetGumpData(OUR_GUMP_ID)
-    
-    if gd is not None and gd.buttonid > 0:
-        # First button is 100
-        # Page 2 first button is 116
-        
-        # Recall is 4
-        print("Recall to rune number: ", gd.buttonid)
-        
-        recall_or_sacred_journey(gd.buttonid)
-        
-        # Sets button id back to -1 so we exit this nonsense
-        render_gump()
-        
-    elif gd is not None and gd.buttonid == 0:
-        print("Exiting")
-        break
-    
-    Misc.Pause(250)
-
-
-
