@@ -89,6 +89,8 @@ A [CraftItems](https://github.com/GloriousRedLeader/omgarturo/blob/master/CraftI
 
 A script that [scans journal entries and alerts](https://github.com/GloriousRedLeader/omgarturo/blob/master/JournalAlert.py) with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
 
+Some convenient **Travel** scripts. There is a series like [RecallOrSacredJourneyRune1](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) which will open up a runebook (first come first serve) and go to the *first* rune. The number after the file name tells the script which rune to use. I usually bind the first 10 runes to shift + num. Makes life easy especially when doing things like the collector quests. Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack.
+
 [Shadowguard](https://github.com/GloriousRedLeader/omgarturo/blob/master/Shadowguard2.cs) script from Dorana. Just keeping a copy. This thing is amazing. Dear god.
 
 [Lootmaster](https://github.com/GloriousRedLeader/omgarturo/blob/master/Lootmaster-1-8-0.cs) script from Dorana. Just keeping a copy for posterity.
