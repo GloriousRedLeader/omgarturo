@@ -47,6 +47,9 @@ class Rune:
         self.name = name
         self.book = book
 
+    def getAtlastPage(self):
+        return ceil((self.runebookButtonId - 99) / 16)
+
 # Opens runebooks and atlasses in top level backpack
 # and parses  rune names.
 def get_runes():
@@ -187,14 +190,27 @@ def recall_or_sacred_journey(runeButtonId, runes, books):
     print("Button is ", runeButtonId)
     print("Rune name is ", runes[runeButtonId - 1].name)
     
+    
     rune = runes[runeButtonId - 1]
+    
+    print("Runebook buttonid is ", rune.runebookButtonId)
 
     Items.UseItem(rune.book.serial)
     if rune.book.graphic == RUNEBOOK_GRAPHIC_ID:
         Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 3000)
         Gumps.SendAction(RUNEBOOK_GUMP_ID, rune.runebookButtonId)
     else:
+        print("Atlas button is ", rune.book.atlasTravelButton)
+        print("Atlas page is ", rune.getAtlastPage())
+        
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
+        
+        for i in range(1, rune.getAtlastPage()):
+            Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, 1150)
+            Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
+            #print("\t\tturning page i ", i)
+        #return
+        
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, rune.runebookButtonId)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
         Gumps.SendAction(RUNIC_ATLAS_GUMP_ID, rune.book.atlasTravelButton)
