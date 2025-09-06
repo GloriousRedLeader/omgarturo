@@ -91,9 +91,9 @@ A script that [scans journal entries and alerts](https://github.com/GloriousRedL
 
 Some convenient **Travel** scripts to help you zip around. There is a series like [RecallOrSacredJourneyRune1](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) which will open up a runebook (first come first serve) and go to the *first* rune. The number after the file name tells the script which rune to use. I usually bind the first 10 runes to shift + num. Makes life easy especially when doing things like the collector quest. 
 
-Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack.
+Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack. **Note:** Dorana has a RuneMaster which is far suprior, so, use his: [Dorana RuneMaster](https://github.com/dorana/RazorEnhancedScripts/blob/master/RazorScripts/RuneMaster.cs)
 
-Here is what the RuneMaster looks like:
+Here is what the RuneMaster5000 looks like:
 
 ![Runemaster](misc/runemaster.jpg)
 
