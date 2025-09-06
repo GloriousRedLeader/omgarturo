@@ -8,7 +8,16 @@ from System.Collections.Generic import List
 from math import ceil
 import sys
 
-# Permanent Atlas Gump with juicy buttons
+# Permanent Atlas Gump with juicy buttons.
+# Crawls through your backpack and picks out all the 
+# runes found in runebooks and runic atlasses. Puts them
+# all in a nice, tidy gump. 
+
+# Set this to some limit on number of books to show.
+# Otherwise if you have 20 runebooks the gump will extend
+# south beyond the bottom edge of your screen and end up
+# in China. 
+MAX_BOOKS_TO_DISPLAY = 4
 
 RUNIC_ATLAS_SERIAL = 0x4064F6A5
 RUNIC_ATLAS_GUMP_ID = 0x1f2
@@ -120,7 +129,8 @@ def get_runes():
     return allRunes, allBooks
     
 
-    
+# Absolutely do not try to make sense of this.
+# I wrote it and I have no idea what it does.
 def render_gump(runes, books):
     
     LINE_HEIGHT = 25
@@ -151,7 +161,6 @@ def render_gump(runes, books):
 
     y = y + BOOK_PADDING 
     for book in books:
-        
         Gumps.AddLabel(atlasGump, 55, y, 1258, book.name)  
         Gumps.AddItem( atlasGump, 10, y - 3, book.graphic, book.hue)
         
