@@ -68,7 +68,7 @@ A couple of resource gathering scripts. Use with caution. Don't break any rules.
 
 [Restocker](https://github.com/GloriousRedLeader/omgarturo/blob/master/Restocker.py) is InsaneUO specific. It moves items from resource boxes (miner's storage box, reagent box, etc.) to a real container. No more clicking a million times and letting resources pile up at your feet. Useful in conjunction with bod builder. 
 
-There are some quality of life scripts for simple things like [mounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetMount.py) and [dismounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetDismount.py) pets, [leashing](https://github.com/GloriousRedLeader/omgarturo/blob/master/LeashPets.py) pets, and [recalling / sacred journey](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) from a rulebook.
+There are some quality of life scripts for simple things like [mounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetMount.py) and [dismounting](https://github.com/GloriousRedLeader/omgarturo/blob/master/PetDismount.py) pets, [leashing](https://github.com/GloriousRedLeader/omgarturo/blob/master/LeashPets.py) pets, etc.
 
 [BOD Builder](https://github.com/GloriousRedLeader/omgarturo/blob/master/BODBuilder.py) script to automate crafting and filling small and large bods. Seriously, this does 100% of the work for you. Highly configurable. Current support for
 * Alchemy
@@ -89,7 +89,13 @@ A [CraftItems](https://github.com/GloriousRedLeader/omgarturo/blob/master/CraftI
 
 A script that [scans journal entries and alerts](https://github.com/GloriousRedLeader/omgarturo/blob/master/JournalAlert.py) with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
 
-Some convenient **Travel** scripts. There is a series like [RecallOrSacredJourneyRune1](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) which will open up a runebook (first come first serve) and go to the *first* rune. The number after the file name tells the script which rune to use. I usually bind the first 10 runes to shift + num. Makes life easy especially when doing things like the collector quests. Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack.
+Some convenient **Travel** scripts to help you zip around. There is a series like [RecallOrSacredJourneyRune1](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) which will open up a runebook (first come first serve) and go to the *first* rune. The number after the file name tells the script which rune to use. I usually bind the first 10 runes to shift + num. Makes life easy especially when doing things like the collector quest. 
+
+Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack.
+
+Here is what the RuneMaster looks like:
+
+![Runemaster](misc/runemaster.jpg)
 
 [Shadowguard](https://github.com/GloriousRedLeader/omgarturo/blob/master/Shadowguard2.cs) script from Dorana. Just keeping a copy. This thing is amazing. Dear god.
 
