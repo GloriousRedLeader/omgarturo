@@ -89,6 +89,12 @@ A [CraftItems](https://github.com/GloriousRedLeader/omgarturo/blob/master/CraftI
 
 A script that [scans journal entries and alerts](https://github.com/GloriousRedLeader/omgarturo/blob/master/JournalAlert.py) with obnoxious sounds and overhead text. Useful for holiday bosses so you don't miss the message. Also good for hunting down specific NPCs like when doing the honesty virtue.
 
+The [QuestHelper](https://github.com/GloriousRedLeader/omgarturo/blob/master/QuestHelper.py) script has misc. utility functionality. Currently:
+- Medusa Egg Farmer - Enable to use your flute to lure snakes to nest. Auto picks up eggs from ground.
+- Collector Quest - Talks to NPCs. Takes pictures of mobs. Use a runebook with the RuneMaster (below) for maximum speed.
+
+![Questhelper](misc/questhelper.jpg)
+
 Some convenient **Travel** scripts to help you zip around. There is a series like [RecallOrSacredJourneyRune1](https://github.com/GloriousRedLeader/omgarturo/blob/master/RecallOrSacredJourneyRune1.py) which will open up a runebook (first come first serve) and go to the *first* rune. The number after the file name tells the script which rune to use. I usually bind the first 10 runes to shift + num. Makes life easy especially when doing things like the collector quest. 
 
 Also in the fast travel category is the [RuneMaster5000](https://github.com/GloriousRedLeader/omgarturo/blob/master/RuneMaster.py) which creates a gump with all runes from atlases and runebooks. There is no limit on this, the gump will keep expanding to accommodate all runebooks and atlases it finds in your backpack. **Note:** Dorana has a RuneMaster which is far suprior, so, use his: [Dorana RuneMaster](https://github.com/dorana/RazorEnhancedScripts/blob/master/RazorScripts/RuneMaster.cs)

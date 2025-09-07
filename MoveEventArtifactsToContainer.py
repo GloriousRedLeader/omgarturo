@@ -14,8 +14,15 @@ from System import Byte, Int32
 # chars use this to offload. Too lazy to click and drag
 # or even use taz uo alt + click.
 
-SUFFIXES = [
-    "of the archlich"
+#SUFFIXES = [
+#    "of the archlich"
+#]
+
+ITEMS_TO_MOVE = [
+    [ "of the archlich", 0x40CBB649],
+    [ "swords of prosperity", 0x40442169],
+    [ "of doom", 0x40DC1238]
+    
 ]
 
 PAUSE_DELAY = 750
@@ -24,13 +31,13 @@ PAUSE_DELAY = 750
 # destContainerSerial = Target.PromptTarget("Pick destination container", 17)
 
 # Hard coded container (easier, no clicking)
-destContainerSerial = 0x40CBB649
+#destContainerSerial = 0x40CBB649
 
 for item in Items.FindBySerial(Player.Backpack.Serial).Contains:
-    print(item.Name)
-    for s in SUFFIXES:
-        if item.Name is not None and s.lower() in item.Name.lower():
+    #print(item.Name)
+    for s in ITEMS_TO_MOVE:
+        if item.Name is not None and s[0].lower() in item.Name.lower():
             Misc.SendMessage("Moving ", item.Name)
-            Items.Move(item, destContainerSerial, 1);
+            Items.Move(item, s[1], 1);
             Misc.Pause(PAUSE_DELAY)
             break

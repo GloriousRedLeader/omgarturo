@@ -425,9 +425,8 @@ def cast_recall_or_sacred_journey(
     buttonId = 74 + rune if chivalrySkill > magerySkill else 49 + rune
 
     if magerySkill < 50 and chivalrySkill < 50 and necroSkill > 80:
-        if not Player.BuffsExist("Wraith Form"):
-            Spells.CastNecro("Wraith Form")
-            Misc.Pause(3000)
+        while not Player.BuffsExist("Wraith Form"):
+            cast_spell("Wraith Form", None, 650)
 
     runebook = Items.FindByID(RUNEBOOK, -1, Player.Backpack.Serial, 0)
     if runebook is None:
