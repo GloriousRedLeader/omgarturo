@@ -31,7 +31,7 @@ from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
 # snakes to egg nests. WIll pick up eggs.
 def medusa_helper(stop, interval):
     while not stop.WaitOne(interval) and not Player.IsGhost:        
-        print("Meduca egg helper")
+        #print("Meduca egg helper")
         #flute = Items.FindByID(SNAKE_CHARMER_FLUTE_STATIC_ID, -1, Player.Backpack.Serial, 1)
         flute = Items.FindByName("snake charmer flute", -1, Player.Backpack.Serial, 0)
         if flute is None:
@@ -99,7 +99,7 @@ def collector_quest(stop, interval):
     paintedMobCache = []
     paintedMobCacheTime = time.time()
     while not stop.WaitOne(interval) and not Player.IsGhost:
-        print("Running Collector Quest")
+        #print("Running Collector Quest")
 
         # 1) Finds nearest yellow npc and opens the talk contextual menu.
         # Use this for doing quests if you cant be bothered to click on an NPC.
