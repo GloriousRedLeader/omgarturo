@@ -65,7 +65,8 @@ def get_runes():
         Items.UseItem(book.Serial)
         Gumps.WaitForGump(RUNIC_ATLAS_GUMP_ID, 3000)
 
-        bookName =  book.Properties[3].ToString() if len(book.Properties) == 4 else "Unnamed Atlas"
+        bookName = book.Properties[len(book.Properties) - 1].ToString()
+        #bookName =  book.Properties[3].ToString() if len(book.Properties) == 4 else "Unnamed Atlas"
         
         data = Gumps.GetGumpData(RUNIC_ATLAS_GUMP_ID).gumpData[1:]
         
