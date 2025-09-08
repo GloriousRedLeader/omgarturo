@@ -14,6 +14,9 @@ from System.Threading import EventWaitHandle, EventResetMode, Thread
 from Scripts.omgarturo.fm_core.core_items import RARE_SERPENT_EGG_STATIC_ID
 from Scripts.omgarturo.fm_core.core_items import SERPENT_NEST_STATIC_ID
 from Scripts.omgarturo.fm_core.core_items import SNAKE_CHARMER_FLUTE_STATIC_ID
+from Scripts.omgarturo.fm_core.core_items import CARRONADE_GRAPHIC_ID
+from Scripts.omgarturo.fm_core.core_items import CANNON_GRAPHIC_IDS
+from Scripts.omgarturo.fm_core.core_items import RAMROD_STATIC_ID
 from Scripts.omgarturo.fm_core.core_mobiles import SILVER_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_items import PAINTS_AND_A_BRUSH_STATIC_ID
@@ -154,11 +157,47 @@ def collector_quest(stop, interval):
                     Items.UseItem(paints)
                     Target.WaitForTarget(2500)
                     Target.TargetExecute(mob)
+                    
+
+def fire_nearest_cannon_loop(stop, interval):
+    while not stop.WaitOne(interval) and not Player.IsGhost:       
+        CANNON_GUMP_ID = 0x40e8c348
+        LOAD_TIME_MS = 10000
+        FIRE_TIME_MS = 5000
+
+        # We could make the loop stop when the beacon is no longer visible,
+        # But I might want to use this for taking out ships as well.
+        #PLUNDER_BEACON_GRAPHIC_ID = 0x4724
+
+        filter = Items.Filter()
+        filter.Graphics = List[Int32](CANNON_GRAPHIC_IDS) 
+        filter.OnGround = True
+        filter.RangeMax = 2
+        items = Items.ApplyFilter(filter)
+
+        if len(items) > 0:
+            # Gets the cannon gump. Side effect opens cannon container.
+            Items.UseItem(items[0])
+            Gumps.WaitForGump(CANNON_GUMP_ID,3000)
+            
+            state = Gumps.LastGumpGetLine(1)
+            print(state)
+            if state == "Not Charged":
+                Misc.SendMessage("Loading Cannon", 123)
+                Gumps.SendAction(CANNON_GUMP_ID, 1)
+                Misc.Pause(LOAD_TIME_MS)
+            elif state == "UNLOAD":
+                Misc.SendMessage("Firing Cannon", 123)
+                Gumps.SendAction(CANNON_GUMP_ID, 6)
+                Misc.Pause(FIRE_TIME_MS)
+            else:
+                Misc.Pause(1000)    
 
 # Register each helper here
 BUTTONS = [
-    [ 1, 0x41BF, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper],
-    [ 2, 0x0FC1, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest   ],
+    [ 1, RARE_SERPENT_EGG_STATIC_ID, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper ],
+    [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest ],
+    [ 3, RAMROD_STATIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
 ]
 
 # Should not need to edit anything below this line    
