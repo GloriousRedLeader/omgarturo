@@ -299,7 +299,7 @@ def huntsman(stop, interval):
                     corpseScannerCache.append(corpse.Serial)
         
             else:
-                print("We have a permit thats probably ready for turnin, it has properties = ", len(permit.Properties))
+                #print("We have a permit thats probably ready for turnin, it has properties = ", len(permit.Properties))
                 #print("NPC Lodgemode")
                 npcs = get_yellows_in_range(range=2)
                 #print(len(npcs))
@@ -321,7 +321,7 @@ BUTTONS = [
     [ 1, RARE_SERPENT_EGG_STATIC_ID, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper ],
     [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest ],
     [ 3, RAMROD_STATIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
-    [ 4, BOW_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses", huntsman ],
+    [ 4, BOW_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses.\nTurns in permits and gets new permits.", huntsman ],
 ]
 
 # Should not need to edit anything below this line    
