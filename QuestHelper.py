@@ -20,8 +20,11 @@ from Scripts.omgarturo.fm_core.core_items import RAMROD_STATIC_ID
 from Scripts.omgarturo.fm_core.core_mobiles import SILVER_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_items import PAINTS_AND_A_BRUSH_STATIC_ID
+from Scripts.omgarturo.fm_core.core_items import BOW_GRAPHIC_ID
+from Scripts.omgarturo.fm_core.core_items import HUNTING_PERMIT_GRAPHIC_ID
 from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
 from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
+from Scripts.omgarturo.fm_core.core_items import get_corpses
 
 # Just a place to dump misc. scripts that aid in doing
 # quests or particular tasks. Works as a gump where
@@ -158,7 +161,8 @@ def collector_quest(stop, interval):
                     Target.WaitForTarget(2500)
                     Target.TargetExecute(mob)
                     
-
+# 3. Just a nice helper for taking out beacons, ships. Just fires a cannon
+# over and over.
 def fire_nearest_cannon_loop(stop, interval):
     while not stop.WaitOne(interval) and not Player.IsGhost:       
         CANNON_GUMP_ID = 0x40e8c348
@@ -192,12 +196,132 @@ def fire_nearest_cannon_loop(stop, interval):
                 Misc.Pause(FIRE_TIME_MS)
             else:
                 Misc.Pause(1000)    
+                
+# 4. Huntsman stuff in skara brae
+def huntsman(stop, interval):
+    GAME_ANIMALS = [
+        "an alligator",
+        "an allosaurus",
+        "an anchisaur",
+        "a bake kitsune",
+        "a boar",
+        "a bull",
+        "a cougar",
+        "a desert ostard",
+        "a dimetrosaur",
+        "an eagle",
+        "a high plains boura",
+        "a frenzie ostard",
+        "a gaman",
+        "a giant toad",
+        "a gorilla",
+        "a grey wolf",
+        "a grizzly bear",
+        "a hiryu",
+        "a kraken",
+        "a lion",
+        "a myrmidex drone",
+        "a myrmidex larvae",
+        "a najasaurus",
+        "a platinum drake",
+        "a polar bear",
+        "a raptor",
+        "a sabre-toothed tiger",
+        "a saurosaurus",
+        "a scorpion",
+        "a sea serpent",
+        "a triceratops",
+        "a turkey",
+        "a tyrannosaurus rex",
+        "a walrus",
+        "a wild tiger"
+    ]
+    
+    corpseScannerCache = []
+    #permit = Items.FindByName("Hunting Permit", -1, Player.Backpack.Serial, 0)
+    #if permit is None:
+    #    print("Shutting down: You dont have a permit! Go get one!")
+    #    return
+        
+    permitTurninCache = []
+    while not stop.WaitOne(interval) and not Player.IsGhost:  
+        #print("Doing huntsman stuff")
+        
+        permits = Items.FindAllByID(HUNTING_PERMIT_GRAPHIC_ID, 0, Player.Backpack.Serial, 0)
+        permits = [permit for permit in permits if permit.Name.lower() == "hunting permit" and permit.Serial not in permitTurninCache ]
+        needsPermit = next((False for permit in permits if len(permit.Properties) < 3), True)
+        
+        if needsPermit:
+            if Timer.Check("huntsmanPermitChecker") == False:
+                Misc.SendMessage("Go to Aiki the huntmaster in skara brae", 38)
+                Timer.Create("huntsmanPermitChecker", 30000) 
+            npcs = get_yellows_in_range(range=2)
+            npc = next((npc for npc in npcs if npc.Name.lower() == "aiko"), None)
+            if npc is not None:
+                Misc.SendMessage("Getting new Permit...", 38)
+                Misc.UseContextMenu(npc.Serial,"Get Hunting Permit",3000)
+        #else:
+        #    if Timer.Check("huntsmanHasPermitChecker") == False:
+        #        Misc.SendMessage("You have a permit, go hunting!", 38)
+        #        Timer.Create("huntsmanHasPermitChecker", 30000)
+            
+        
+        #permit = Items.FindByName("Hunting Permit", -1, Player.Backpack.Serial, 0)
+        for permit in permits:
+            if permit is not None and len(permit.Properties) < 4:
+                #print("In hunting Mode")
+                
+                
+                
+               # print("Permit properties: ", len(permit.Properties))
+                if Timer.Check("hunstmansPulseTimer") == False:
+                    mobs = get_enemies(range = 15)
+                    if len(mobs) > 0:
+                        mobs = List[type(mobs[0])]([mob for mob in mobs if mob.Name.lower() in GAME_ANIMALS ])
+                        for mob in mobs:
+                            Mobiles.Message(mob, 68, "^ Kill Me ^")
+                            
+                    Timer.Create("hunstmansPulseTimer", 3000)
+                        
+                
+                items = get_corpses(range = 5)
+                corpses = [item for item in items if " ".join(item.Name.split()[:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
+                #if len(items) > 0:
+                #    corpses = List[type(items[0])]([item for item in items if " ".join(item.Name.split()[:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache])
+                for corpse in corpses:
+                    Misc.SendMessage("Using Permit...", 38)
+                    Items.UseItem(permit)
+                    Target.WaitForTarget(3000)
+                    Target.TargetExecute(corpse)
+                    if len(corpseScannerCache) >= 30:
+                        corpseScannerCache.pop(0)
+                        #print("cacheLooted popping one off {}".format(len(corpseScannerCache)))
+                    corpseScannerCache.append(corpse.Serial)
+        
+            else:
+                print("We have a permit thats probably ready for turnin, it has properties = ", len(permit.Properties))
+                #print("NPC Lodgemode")
+                npcs = get_yellows_in_range(range=2)
+                #print(len(npcs))
+                #for npc in npcs:
+                    #print(npc.Name)
+                    #print(npc.Name.lower())
+                #if len(npcs) > 0:
+                    #npc = next((npc for npc in npcs if npc.Name.lower() == "aiko the huntmaster"), None)
+                npc = next((npc for npc in npcs if npc.Name.lower() == "aiko"), None)
+                if npc is not None:
+                    permitTurninCache.append(permit.Serial)
+                    Misc.SendMessage("Turning in Permit...", 38)
+                    Items.Move(permit, npc, 1)
+           
+        Misc.Pause(1000)
 
 # Register each helper here
 BUTTONS = [
     [ 1, RARE_SERPENT_EGG_STATIC_ID, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper ],
     [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest ],
     [ 3, RAMROD_STATIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
+    [ 4, BOW_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses", huntsman ],
 ]
 
 # Should not need to edit anything below this line    
