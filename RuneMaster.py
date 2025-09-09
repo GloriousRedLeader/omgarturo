@@ -94,8 +94,9 @@ def get_runes():
             i = i + 1
             
         allBooks.append(runicAtlas)
+        Gumps.SendAction(RUNIC_ATLAS_GUMP_ID,0)
             
-        Gumps.CloseGump(RUNIC_ATLAS_GUMP_ID)        
+        #Gumps.CloseGump(RUNIC_ATLAS_GUMP_ID)        
             
     books = Items.FindAllByID(RUNEBOOK_GRAPHIC_ID, -1, Player.Backpack.Serial, 0)
     for book in books:
@@ -128,7 +129,8 @@ def get_runes():
                 runeBook.left.append(rune)
             i = i + 1
 
-        Gumps.CloseGump(RUNEBOOK_GUMP_ID)
+        #Gumps.CloseGump(RUNEBOOK_GUMP_ID)
+        Gumps.SendAction(RUNEBOOK_GUMP_ID,0)
 
     return allRunes, allBooks
     
