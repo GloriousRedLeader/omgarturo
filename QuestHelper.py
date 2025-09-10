@@ -252,9 +252,9 @@ def huntsman(stop, interval):
         needsPermit = next((False for permit in permits if len(permit.Properties) < 3), True)
         
         if needsPermit:
-            if Timer.Check("huntsmanPermitChecker") == False:
-                Misc.SendMessage("Go to Aiki the huntmaster in skara brae", 38)
-                Timer.Create("huntsmanPermitChecker", 30000) 
+            #if Timer.Check("huntsmanPermitChecker") == False:
+            #    Misc.SendMessage("Go to Aiki the huntmaster in skara brae", 38)
+            #    Timer.Create("huntsmanPermitChecker", 30000) 
             npcs = get_yellows_in_range(range=2)
             npc = next((npc for npc in npcs if npc.Name.lower() == "aiko"), None)
             if npc is not None:
@@ -297,6 +297,7 @@ def huntsman(stop, interval):
                         corpseScannerCache.pop(0)
                         #print("cacheLooted popping one off {}".format(len(corpseScannerCache)))
                     corpseScannerCache.append(corpse.Serial)
+                    break
         
             else:
                 #print("We have a permit thats probably ready for turnin, it has properties = ", len(permit.Properties))
