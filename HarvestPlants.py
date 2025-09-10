@@ -4,14 +4,6 @@
 #   2025-08-29
 # Use at your own risk. 
 
-from System.Collections.Generic import List 
-from System import Byte, Int32
-from Scripts.omgarturo.fm_core.core_items import RARE_SERPENT_EGG_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import SERPENT_NEST_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import SNAKE_CHARMER_FLUTE_STATIC_ID
-from Scripts.omgarturo.fm_core.core_mobiles import SILVER_SERPENT_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
-
 # Looks for nearby plants inside of garden beds and attempts
 # to loot resources, seeds, and then sets them to decorative.
 #
@@ -19,10 +11,11 @@ from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
 # harvest by looking for "A Vibrant" in its name. Thats it. Not sophisticated.
 
 # This will remove the plant and put it in your bag.
-SET_TO_DECORATIVE = True
+SET_TO_DECORATIVE = False
 
-# Best if we keep this small. I suppose we could harvest the whole screen.
-RANGE = 5
+# planting has huge range, but harvesting has pretty limited range
+# its 3 tiles in any direction (diagonal included)
+RANGE = 3
 
 PLANT_GUMP =  0xa9b90129
 REPRODUCTION_GUMP = 0x66e3f765
@@ -35,9 +28,6 @@ filter.RangeMax = RANGE
 plants = Items.ApplyFilter(filter)
 plants = [plant for plant in plants if "a vibrant" in plant.Name]
     
-#plants = List[type(plants[0])](plants)
-#plant = Items.Select(plants, "Nearest")
-
 for plant in plants:
     print("Harvesting ", plant.Name)
     

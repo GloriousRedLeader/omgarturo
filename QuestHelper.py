@@ -321,8 +321,8 @@ def huntsman(stop, interval):
 # Register each helper here
 BUTTONS = [
     [ 1, RARE_SERPENT_EGG_STATIC_ID, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper ],
-    [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest ],
-    [ 3, DRYDOCK_SHIP_GRAPHIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
+    [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures when you\nget to that part.", collector_quest ],
+    [ 3, DRYDOCK_SHIP_GRAPHIC_ID, "Fire Cannon!", "Fires nearest cannon on a loop. Hopefully while you are on\na ship. Just stand near it. BOOM BOOM BOOM.", fire_nearest_cannon_loop ],
     [ 4, HUNTING_PERMIT_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses.\nTurns in permits and gets new permits.", huntsman ],
 ]
 
