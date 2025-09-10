@@ -22,6 +22,7 @@ from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
 from Scripts.omgarturo.fm_core.core_items import PAINTS_AND_A_BRUSH_STATIC_ID
 from Scripts.omgarturo.fm_core.core_items import BOW_GRAPHIC_ID
 from Scripts.omgarturo.fm_core.core_items import HUNTING_PERMIT_GRAPHIC_ID
+from Scripts.omgarturo.fm_core.core_items import DRYDOCK_SHIP_GRAPHIC_ID
 from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
 from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
 from Scripts.omgarturo.fm_core.core_items import get_corpses
@@ -321,8 +322,8 @@ def huntsman(stop, interval):
 BUTTONS = [
     [ 1, RARE_SERPENT_EGG_STATIC_ID, "Medusa Egg Helper", "Uses snake charming flute to lure snakes to egg nests.\nPicks up eggs from ground.", medusa_helper ],
     [ 2, PAINTS_AND_A_BRUSH_STATIC_ID, "Collector Quest", "Will talk to NPCs and take photos of creatures.", collector_quest ],
-    [ 3, RAMROD_STATIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
-    [ 4, BOW_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses.\nTurns in permits and gets new permits.", huntsman ],
+    [ 3, DRYDOCK_SHIP_GRAPHIC_ID, "Fire Cannon!", "Fires nearestcannon while on board a ship. Just stand near it.", fire_nearest_cannon_loop ],
+    [ 4, HUNTING_PERMIT_GRAPHIC_ID, "Huntsman Stuff", "Alerts when relevant animals appear on screen.\nUses permit on corpses.\nTurns in permits and gets new permits.", huntsman ],
 ]
 
 # Should not need to edit anything below this line    
@@ -334,8 +335,8 @@ Gumps.CloseGump(OUR_GUMP_ID)
 def render_gump(buttonid):
     
     WIDTH = 450
-    LINE_HEIGHT = 25
-    PADDING = 15
+    LINE_HEIGHT = 17
+    PADDING = 25
     STYLE = 3500
     
     atlasGump = Gumps.CreateGump(True, True, True, False)
@@ -345,31 +346,45 @@ def render_gump(buttonid):
     atlasGump.x        = 600
     atlasGump.y        = 100
     
-    height = PADDING + (2 * PADDING) + LINE_HEIGHT
+    #height = PADDING + (2 * PADDING) + LINE_HEIGHT
+    height = PADDING + LINE_HEIGHT
     for button in BUTTONS:
         numDescLines = button[3].count('\n') + 1
         height = height + PADDING + LINE_HEIGHT + (LINE_HEIGHT * numDescLines)
     
-    y = PADDING
+    y = 10
     Gumps.AddBackground(atlasGump, 0, 0, WIDTH, height, STYLE)
     Gumps.AddLabel(atlasGump, 120, y, 1258, "Questmaster 5000")      
     
     HUE_INACTIVE = 0
     HUE_ACTIVE = 1258
     
-    y = y + PADDING + LINE_HEIGHT
+    y = y + PADDING
+    
     for button in BUTTONS:
         hueTitle = 1258 if buttonid == button[0] else 10
         hueDesc = 77 if buttonid == button[0] else 0
         numDescLines = button[3].count('\n') + 1
         titleText = (button[2] + " - Running") if buttonid == button[0] else button[2]
         
-        Gumps.AddItem( atlasGump, 10, y - 3, button[1])
-        Gumps.AddLabel(atlasGump, 55, y, hueTitle, titleText)  
-        y = y + LINE_HEIGHT
+        
         Gumps.AddButton(atlasGump, 25, y , 0x4BA, 0x4B9, button[0], 1, 1)
-        Gumps.AddLabel(atlasGump, 55, y, hueDesc, button[3])
-        y = y + PADDING + (LINE_HEIGHT * numDescLines)
+        Gumps.AddLabel(atlasGump, 58, y, hueTitle, titleText)  
+        y = y + LINE_HEIGHT
+        Gumps.AddItem( atlasGump, 10, y, button[1])
+        Gumps.AddLabel(atlasGump, 58, y, hueDesc, button[3])
+        
+        
+        
+        y = y + PADDING + (LINE_HEIGHT * numDescLines)    
+            
+        
+        #Gumps.AddItem( atlasGump, 10, y - 10, button[1])
+        #Gumps.AddLabel(atlasGump, 55, y, hueTitle, titleText)  
+        #y = y + LINE_HEIGHT
+        #Gumps.AddButton(atlasGump, 25, y , 0x4BA, 0x4B9, button[0], 1, 1)
+        #Gumps.AddLabel(atlasGump, 55, y, hueDesc, button[3])
+        #y = y + PADDING + (LINE_HEIGHT * numDescLines)
     
     Gumps.CloseGump(OUR_GUMP_ID)
     Gumps.SendGump(atlasGump, 0, 0)
