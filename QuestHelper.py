@@ -227,7 +227,7 @@ def huntsman(stop, interval):
         "a platinum drake",
         "a polar bear",
         "a raptor",
-        "a sabre-toothed tiger",
+        "saber-toothed tiger",
         "a saurosaurus",
         "a scorpion",
         "a sea serpent",
@@ -239,42 +239,21 @@ def huntsman(stop, interval):
     ]
     
     corpseScannerCache = []
-    #permit = Items.FindByName("Hunting Permit", -1, Player.Backpack.Serial, 0)
-    #if permit is None:
-    #    print("Shutting down: You dont have a permit! Go get one!")
-    #    return
-        
     permitTurninCache = []
     while not stop.WaitOne(interval) and not Player.IsGhost:  
-        #print("Doing huntsman stuff")
-        
         permits = Items.FindAllByID(HUNTING_PERMIT_GRAPHIC_ID, 0, Player.Backpack.Serial, 0)
         permits = [permit for permit in permits if permit.Name.lower() == "hunting permit" and permit.Serial not in permitTurninCache ]
         needsPermit = next((False for permit in permits if len(permit.Properties) < 3), True)
         
         if needsPermit:
-            #if Timer.Check("huntsmanPermitChecker") == False:
-            #    Misc.SendMessage("Go to Aiki the huntmaster in skara brae", 38)
-            #    Timer.Create("huntsmanPermitChecker", 30000) 
             npcs = get_yellows_in_range(range=2)
             npc = next((npc for npc in npcs if npc.Name.lower() == "aiko"), None)
             if npc is not None:
                 Misc.SendMessage("Getting new Permit...", 38)
                 Misc.UseContextMenu(npc.Serial,"Get Hunting Permit",3000)
-        #else:
-        #    if Timer.Check("huntsmanHasPermitChecker") == False:
-        #        Misc.SendMessage("You have a permit, go hunting!", 38)
-        #        Timer.Create("huntsmanHasPermitChecker", 30000)
-            
         
-        #permit = Items.FindByName("Hunting Permit", -1, Player.Backpack.Serial, 0)
         for permit in permits:
             if permit is not None and len(permit.Properties) < 4:
-                #print("In hunting Mode")
-                
-                
-                
-               # print("Permit properties: ", len(permit.Properties))
                 if Timer.Check("hunstmansPulseTimer") == False:
                     mobs = get_enemies(range = 15)
                     if len(mobs) > 0:
@@ -283,12 +262,10 @@ def huntsman(stop, interval):
                             Mobiles.Message(mob, 68, "^ Kill Me ^")
                             
                     Timer.Create("hunstmansPulseTimer", 3000)
-                        
                 
                 items = get_corpses(range = 5)
-                corpses = [item for item in items if " ".join(item.Name.split()[:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
-                #if len(items) > 0:
-                #    corpses = List[type(items[0])]([item for item in items if " ".join(item.Name.split()[:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache])
+                corpses = [item for item in items if " ".join(item.Name.split()[1:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
+
                 for corpse in corpses:
                     Misc.SendMessage("Using Permit...", 38)
                     Items.UseItem(permit)
@@ -301,15 +278,7 @@ def huntsman(stop, interval):
                     break
         
             else:
-                #print("We have a permit thats probably ready for turnin, it has properties = ", len(permit.Properties))
-                #print("NPC Lodgemode")
                 npcs = get_yellows_in_range(range=2)
-                #print(len(npcs))
-                #for npc in npcs:
-                    #print(npc.Name)
-                    #print(npc.Name.lower())
-                #if len(npcs) > 0:
-                    #npc = next((npc for npc in npcs if npc.Name.lower() == "aiko the huntmaster"), None)
                 npc = next((npc for npc in npcs if npc.Name.lower() == "aiko"), None)
                 if npc is not None:
                     permitTurninCache.append(permit.Serial)
