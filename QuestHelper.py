@@ -235,7 +235,8 @@ def huntsman(stop, interval):
         "a turkey",
         "a tyrannosaurus rex",
         "a walrus",
-        "a wild tiger"
+        "a wild tiger",
+        "a tiger"
     ]
     
     corpseScannerCache = []
