@@ -282,7 +282,7 @@ class SmallBodRecipe:
             return True
         return False
     def __str__(self):
-        return f"SmallBodRecipe(hasLargeBod={self.hasLargeBod},recipeName='{self.recipeName}', gumpCategory='{self.gumpCategory}', gumpSelection='{self.gumpSelection}', toolId='{self.toolId}', resources='{self.resources}')"        
+        return "SmallBodRecipe(hasLargeBod={},recipeName='{}', gumpCategory='{}', gumpSelection='{}', toolId='{}', resources='{}')".format(self.hasLargeBod, self.recipeName, self.gumpCategory, self.gumpSelection, self.toolId, self.resources)        
 
 # SmallBodResource (from core_crafting.py)
 class SmallBodResource:
@@ -315,7 +315,7 @@ class SmallBodResource:
         return self.amount
         
     def __str__(self):
-        return f"SmallBodResource(resourceId='{self.resourceId}', amount={self.amount}, canOverrideHue='{self.canOverrideHue()}')"        
+        return "SmallBodResource(resourceId='{}', amount={}, canOverrideHue='{}')".format(self.resourceId, self.amount, self.canOverrideHue())        
 
 # check_resources (from core_crafting.py)
 def check_resources(craftContainer, smallBodResources, resourceContainer, itemMoveDelayMs, specialMaterialHue = None):
@@ -786,7 +786,7 @@ RECIPES = [
     SmallBodRecipe(False, "Medium Crate", CAT_CARPENTRY_CONTAINERS, 16, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(False, "Large Crate", CAT_CARPENTRY_CONTAINERS, 23, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(False, "wooden chest", CAT_CARPENTRY_CONTAINERS, 30, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "wooden shelf", CAT_CARPENTRY_CONTAINERS, 37, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "wooden shel", CAT_CARPENTRY_CONTAINERS, 37, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(False, "armoire", CAT_CARPENTRY_CONTAINERS, 51, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "plain wooden chest", CAT_CARPENTRY_CONTAINERS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "ornate wooden chest", CAT_CARPENTRY_CONTAINERS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
@@ -801,15 +801,15 @@ RECIPES = [
     SmallBodRecipe(True,"cherry armoire", CAT_CARPENTRY_CONTAINERS, 128, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     
     SmallBodRecipe(True, "shepherd's crook", CAT_CARPENTRY_WEAPONS, 2, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ), #'
-    SmallBodRecipe(True, "quarter staff", CAT_CARPENTRY_WEAPONS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "gnarled staff", CAT_CARPENTRY_WEAPONS, 16, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "quarter sta", CAT_CARPENTRY_WEAPONS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "gnarled sta", CAT_CARPENTRY_WEAPONS, 16, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "bokuto", CAT_CARPENTRY_WEAPONS, 23, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "tetsubo", CAT_CARPENTRY_WEAPONS, 37, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "wild staff", CAT_CARPENTRY_WEAPONS, 44, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "arcanist's wild staff", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # '
-    SmallBodRecipe(True, "ancient wild staff", CAT_CARPENTRY_WEAPONS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(PERFECT_EMERALD, 1) ] ),
-    SmallBodRecipe(True, "thorned wild staff", CAT_CARPENTRY_WEAPONS, 72, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(FIRE_RUBY, 1) ] ),
-    SmallBodRecipe(True, "hardened wild staff", CAT_CARPENTRY_WEAPONS, 79, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(TURQUOISE, 1) ] ),
+    SmallBodRecipe(True, "wild sta", CAT_CARPENTRY_WEAPONS, 44, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "arcanist's wild sta", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # "
+    SmallBodRecipe(True, "ancient wild sta", CAT_CARPENTRY_WEAPONS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(PERFECT_EMERALD, 1) ] ),
+    SmallBodRecipe(True, "thorned wild sta", CAT_CARPENTRY_WEAPONS, 72, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(FIRE_RUBY, 1) ] ),
+    SmallBodRecipe(True, "hardened wild sta", CAT_CARPENTRY_WEAPONS, 79, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(TURQUOISE, 1) ] ),
     
     SmallBodRecipe(True, "lap harp", CAT_CARPENTRY_INSTRUMENTS, 2, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID, 20), SmallBodResource(CLOTH_STATIC_ID, 10) ] ),
     SmallBodRecipe(True, "standing harp", CAT_CARPENTRY_INSTRUMENTS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID, 35), SmallBodResource(CLOTH_STATIC_ID, 15) ] ),
@@ -823,7 +823,7 @@ RECIPES = [
     SmallBodRecipe(True, "ringmail leggings", CAT_BLACKSMITHY_METAL_ARMOR, 9, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "ringmail sleeves", CAT_BLACKSMITHY_METAL_ARMOR, 16, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "ringmail tunic", CAT_BLACKSMITHY_METAL_ARMOR, 23, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(True, "chainmail coif", CAT_BLACKSMITHY_METAL_ARMOR, 30, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(True, "chainmail coi", CAT_BLACKSMITHY_METAL_ARMOR, 30, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "chainmail leggings", CAT_BLACKSMITHY_METAL_ARMOR, 37, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "chainmail tunic", CAT_BLACKSMITHY_METAL_ARMOR, 44, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "platemail arms", CAT_BLACKSMITHY_METAL_ARMOR, 51, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
@@ -874,8 +874,8 @@ RECIPES = [
     
     # Polearms
     SmallBodRecipe(True, "bardiche", CAT_BLACKSMITHY_POLEARMS, 2, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "bladed staff", CAT_BLACKSMITHY_POLEARMS, 9, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "double bladed staff", CAT_BLACKSMITHY_POLEARMS, 16, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "bladed sta", CAT_BLACKSMITHY_POLEARMS, 9, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "double bladed sta", CAT_BLACKSMITHY_POLEARMS, 16, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(True, "halberd", CAT_BLACKSMITHY_POLEARMS, 23, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "lance", CAT_BLACKSMITHY_POLEARMS, 30, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "pike", CAT_BLACKSMITHY_POLEARMS, 37, BLACKSMITHY_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
@@ -975,7 +975,7 @@ def run_craft_loop(
     Misc.Pause(itemMoveDelayMs)
 
     recipe = element = next((r for r in RECIPES if r.recipeName == recipeName), None)
-    print(f"Found Recipe {recipe}")
+    print("Found Recipe {}".format(recipe))
     craftGumpSet = False
     totalCrafted = 0
     totalKept = 0
@@ -1084,7 +1084,7 @@ def run_craft_loop(
             print("All done. Crafted {} items".format(totalKept))
             return 
             
-        print(f"Crafted: {totalCrafted}\tKept: {totalKept}")
+        print("Crafted: {}\tKept: {}".format(totalCrafted, totalKept))
         Misc.Pause(50)
 
 # ===============================================

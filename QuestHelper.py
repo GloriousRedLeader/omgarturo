@@ -262,10 +262,11 @@ def huntsman(stop, interval):
                         for mob in mobs:
                             Mobiles.Message(mob, 68, "^ Kill Me ^")
                             
-                    Timer.Create("hunstmansPulseTimer", 3000)
+                    Timer.Create("hunstmansPulseTimer", 1500)
                 
                 items = get_corpses(range = 5)
-                corpses = [item for item in items if " ".join(item.Name.split()[1:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
+                #corpses = [item for item in items if " ".join(item.Name.split()[1:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
+                corpses = [item for item in items if " ".join(item.Name.split()[:-1]) in GAME_ANIMALS and item.Serial not in corpseScannerCache]
 
                 for corpse in corpses:
                     Misc.SendMessage("Using Permit...", 38)

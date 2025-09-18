@@ -244,7 +244,7 @@ for i in range(0 , 5):
     
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()
@@ -326,7 +326,7 @@ for i in range(0 , 5):
     Target.WaitForTarget(4000)
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()
@@ -359,7 +359,7 @@ for i in range(0 , 5):
     Target.WaitForTarget(4000)
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()
@@ -385,7 +385,7 @@ for i in range(0 , 5):
     Target.WaitForTarget(3000)
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()
@@ -409,7 +409,7 @@ for i in range(0 , 5):
     Target.WaitForTarget(3000)
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()
@@ -443,7 +443,7 @@ for i in range(0 , 5):
     Target.WaitForTarget(3000)
     total = time.time() - start
     print("number", i, "fc", FC_VAL, "protection", HAS_PROTECTION, "total", total)
-    res = res + f"\t{total:.2f}"
+    res = res + "\t{:.2f}".format(total)
     Misc.Pause(1500)
 print(res)
 sys.exit()

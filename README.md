@@ -10,12 +10,12 @@ They may or may not work on others. Requires razor enhanced 0.8.2.242
 ### Setup
 
 > [!TIP]
-> **NEW!** Go to the [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/new_format/build_inlined_v2) folder for standalone scripts. You will find all of the scripts there.
+> **NEW!** Go to the [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/master/build_inlined_v2) folder for standalone scripts. You will find all of the scripts there.
 > Note that this is experimental and I hope that it works. You can always use the traditional method that has all the scary setup steps below.
 
 #### New Setup
 
-This is the new easy, way. Just download what you need from here: [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/new_format/build_inlined_v2).
+This is the new easy, way. Just download what you need from here: [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/master/build_inlined_v2).
 
 #### Traditional Setup
 

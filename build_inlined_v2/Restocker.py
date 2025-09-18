@@ -150,7 +150,7 @@ class RestockItem:
         self.resourceBoxPage = resourceBoxPage
         
     def __str__(self):
-        return f"RestockItem(itemId='{self.itemId}', itemHue={self.itemHue}, amount='{self.amount}', resourceBoxSerial='{self.resourceBoxSerial}', resourceBoxButton='{self.resourceBoxButton}', resourceBoxPage='{self.resourceBoxPage}')"        
+        return "RestockItem(itemId='{}', itemHue={}, amount='{}', resourceBoxSerial='{}', resourceBoxButton='{}', resourceBoxPage='{}')".format(self.itemId, self.itemHue, self.amount, self.resourceBoxSerial, self.resourceBoxButton, self.resourceBoxPage)        
 
 # SAPPHIRE (from core_items.py)
 SAPPHIRE = 0x0F11

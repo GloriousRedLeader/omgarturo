@@ -75,7 +75,7 @@ class Tree:
         self.tooFarAwayAttempts = 0
         
     def __str__(self):
-        return f"Tree(x='{self.x}', y='{self.y}', z='{self.z}', staticId={self.staticId})"                        
+        return "Tree(x='{}', y='{}', z='{}', staticId={})".format(self.x, self.y, self.z, self.staticId)                        
 
 # cut_tree (from core_gathering.py)
 def cut_tree(tree, tool, cutDelayMs):
