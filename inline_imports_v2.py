@@ -9,6 +9,12 @@ from typing import Dict, Set, List, Optional, Tuple
 import os
 from datetime import datetime
 
+def extract_source_text(source_lines, node):
+    """Extract source text for a node, compatible with Python 3.5."""
+    start_line = getattr(node, 'lineno', 1) - 1
+    end_line = getattr(node, 'end_lineno', start_line + 1)
+    return '\n'.join(source_lines[start_line:end_line])
+
 def generate_standard_header():
     """Generate the standard header with today's date."""
     today = datetime.now().strftime("%Y-%m-%d")
@@ -208,8 +214,8 @@ class SimpleInliner:
                     if any(alias.name.startswith('Scripts.') for alias in node.names):
                         continue  # Skip local imports - these will be inlined
                 # Keep all other imports (System imports, etc.)
-                import_str = ast.unparse(node)
-                all_imports.add(import_str)
+                import_str = extract_source_text(source.splitlines(), node)
+                all_imports.add(import_str.strip())  # Strip whitespace to help deduplication
         
         # Add imports from inlined modules
         processed_modules = set()
@@ -218,9 +224,14 @@ class SimpleInliner:
                 continue
             processed_modules.add(module_path)
             
-            _, _, module_imports = self.load_module(module_path)
-            # Add System and other non-local imports from this module
+            # Get the module tree and source
             module_tree, _, _ = self.load_module(module_path)
+            try:
+                with open(str(module_path), 'r') as f:
+                    module_source_lines = f.read().splitlines()
+            except:
+                module_source_lines = []
+            
             for node in module_tree.body:
                 if isinstance(node, (ast.Import, ast.ImportFrom)):
                     if isinstance(node, ast.ImportFrom):
@@ -229,9 +240,20 @@ class SimpleInliner:
                     elif isinstance(node, ast.Import):
                         if any(alias.name.startswith('Scripts.') for alias in node.names):
                             continue  # Skip local imports
+                    
                     # Keep System imports, standard library imports, etc.
-                    import_str = ast.unparse(node)
-                    all_imports.add(import_str)
+                    if module_source_lines:
+                        import_str = extract_source_text(module_source_lines, node)
+                    else:
+                        # Fallback - reconstruct import manually
+                        if isinstance(node, ast.ImportFrom):
+                            names = [alias.name for alias in node.names]
+                            import_str = "from {} import {}".format(node.module, ', '.join(names))
+                        else:
+                            names = [alias.name for alias in node.names]
+                            import_str = "import {}".format(', '.join(names))
+                    
+                    all_imports.add(import_str.strip())  # Strip whitespace to help deduplication
         
         # Add all collected imports
         inlined_parts.extend(sorted(all_imports))
@@ -432,14 +454,32 @@ class SimpleInliner:
                         symbol_source_lines = lines[start_line:end_line]
                         symbol_code = '\n'.join(symbol_source_lines)
                     except:
-                        # Fallback to AST unparsing if source reading fails
-                        symbol_code = ast.unparse(symbol_node)
+                        # Fallback - try to reconstruct the code manually
+                        if isinstance(symbol_node, ast.Assign):
+                            # Simple variable assignment
+                            target_names = [t.id for t in symbol_node.targets if isinstance(t, ast.Name)]
+                            if target_names and hasattr(symbol_node.value, 'n'):  # Number
+                                symbol_code = "{} = {}".format(target_names[0], symbol_node.value.n)
+                            elif target_names and hasattr(symbol_node.value, 's'):  # String
+                                symbol_code = "{} = '{}'".format(target_names[0], symbol_node.value.s)
+                            else:
+                                symbol_code = "# Could not extract: {}".format(name)
+                        else:
+                            symbol_code = "# Could not extract: {}".format(name)
                     
                     # Add source comment
                     source_comment = "# {} (from {})".format(name, module_path.name)
                     symbol_code = source_comment + '\n' + symbol_code
                 else:
-                    symbol_code = ast.unparse(symbol_node)
+                    # No source info available - try basic fallback
+                    if isinstance(symbol_node, ast.Assign):
+                        target_names = [t.id for t in symbol_node.targets if isinstance(t, ast.Name)]
+                        if target_names:
+                            symbol_code = "# Could not extract: {}".format(target_names[0])
+                        else:
+                            symbol_code = "# Could not extract symbol"
+                    else:
+                        symbol_code = "# Could not extract: {}".format(name)
                 
                 sorted_symbols.append(symbol_code)
                 remaining.remove(name)
