@@ -570,7 +570,7 @@ def validate_no_local_imports(output_dir: pathlib.Path):
                 import_violations[py_file.name] = violations
                 
         except Exception as e:
-            print(f'Error processing {py_file.name}: {e}')
+            print('Error processing {}: {}'.format(py_file.name, e))
     
     if import_violations:
         print("\n❌ CRITICAL ERROR: Found local imports in {} files!".format(len(import_violations)))
@@ -656,7 +656,7 @@ def check_undefined_variables(output_dir: pathlib.Path):
                 undefined_vars[py_file.name] = sorted(undefined)
         
         except Exception as e:
-            print(f'Error processing {py_file.name}: {e}')
+            print('Error processing {}: {}'.format(py_file.name, e))
     
     if undefined_vars:
         print("\n❌ Found undefined variables in {} files:".format(len(undefined_vars)))
