@@ -8,6 +8,14 @@ import sys
 # ===============================================
 
 # ===== Inlined block from core_attack.py =====
+# ===== Inlined block from core_mobiles.py =====
+# ---- get_mobile_percent_hp (from core_mobiles.py)
+def get_mobile_percent_hp(mobile):
+    if mobile is not None and mobile.Hits is not None and mobile.Hits > 0 and mobile.HitsMax is not None and mobile.HitsMax > 0:
+        return mobile.Hits / mobile.HitsMax
+    else:
+        return 0
+
 # ===== Inlined block from core_rails.py =====
 # ---- user32 (binding from core_rails.py)
 user32 = ctypes.WinDLL('user32', use_last_error=True)
@@ -96,14 +104,6 @@ def check_summon_familiar(
                         Misc.Pause(250)    
                         
     return False
-
-# ===== Inlined block from core_mobiles.py =====
-# ---- get_mobile_percent_hp (from core_mobiles.py)
-def get_mobile_percent_hp(mobile):
-    if mobile is not None and mobile.Hits is not None and mobile.Hits > 0 and mobile.HitsMax is not None and mobile.HitsMax > 0:
-        return mobile.Hits / mobile.HitsMax
-    else:
-        return 0
 
 # ---- run_mage_loop (from core_attack.py)
 def run_mage_loop(

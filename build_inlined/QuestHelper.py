@@ -62,6 +62,81 @@ HUNTING_PERMIT_GRAPHIC_ID = 0x14F0
 # ---- DRYDOCK_SHIP_GRAPHIC_ID (binding from core_items.py)
 DRYDOCK_SHIP_GRAPHIC_ID = 0x14F4
 
+# ===== Inlined block from core_mobiles.py =====
+# ---- get_yellows_in_range (from core_mobiles.py)
+def get_yellows_in_range(range = 8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([7]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = False
+    mobs = Mobiles.ApplyFilter(fil)
+
+    return mobs
+
+# ===== Inlined block from core_mobiles.py =====
+# ---- ANIMATE_DEAD_MOBILE_NAMES (binding from core_mobiles.py)
+ANIMATE_DEAD_MOBILE_NAMES = [
+    "a gore fiend",
+    "a lich",
+    "a flesh golem",
+    "a mummy",
+    "a skeletal dragon",
+    "a lich lord",
+    "a skeletal knight",
+    "a bone knight",
+    "a skeletal mage",
+    "a bone mage",
+    "a patchwork skeleton",
+    "a mound of maggots",
+    "a wailing banshee",
+    "a wraith",
+    "a hellsteed",
+    "a skeletal steed",
+    "an Undead Gargoyle",
+    "a skeletal drake",
+    "a putrid undead gargoyle",
+    "a blade spirit",
+    "an energy vortex",
+    "a skeletal drake"
+]
+
+# ---- get_enemies (from core_mobiles.py)
+def get_enemies(range = 10, serialsToExclude = []):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([3,4,5,6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    
+    # need to remove Animate dead summons. There are a handfull of MobileIDs that match
+    # the regular mobs, however these are red from animate dead when they are normally gray.
+    if len(mobs) > 0:
+        #for mob in mobs:
+            #print(mob.Name, mob.Name not in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety != 6 and mob.Serial not in serialsToExclude)
+            #print("is in animate dead", mob.Name not in ANIMATE_DEAD_MOBILE_NAMES)
+            
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
+#        if len(mobsList) == 0:
+#            print("No mobs found")
+        return mobsList
+
+    return mobs
+
+# ===== Inlined block from core_items.py =====
+# ---- get_corpses (from core_items.py)
+def get_corpses(range = 2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
+
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo

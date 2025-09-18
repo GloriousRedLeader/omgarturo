@@ -11,12 +11,12 @@ import sys
 
 # ===== Inlined block from core_gathering.py =====
 # ===== Inlined block from core_items.py =====
-# ---- LOBSTER_TRAP_STATIC_IDS (binding from core_items.py)
-LOBSTER_TRAP_STATIC_IDS = [0x44CF]
-
-# ===== Inlined block from core_items.py =====
 # ---- DEPLOYED_LOBSTER_TRAP_STATIC_ID (binding from core_items.py)
 DEPLOYED_LOBSTER_TRAP_STATIC_ID = 0x44CB
+
+# ===== Inlined block from core_items.py =====
+# ---- LOBSTER_TRAP_STATIC_IDS (binding from core_items.py)
+LOBSTER_TRAP_STATIC_IDS = [0x44CF]
 
 # ---- run_crab_fishing_loop (from core_gathering.py)
 def run_crab_fishing_loop(

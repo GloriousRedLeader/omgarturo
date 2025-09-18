@@ -19,6 +19,23 @@ def should_move():
         Journal.Clear()
         return False
 
+# ---- get_tile_in_front_serial (from core_gathering.py)
+def get_tile_in_front_serial():
+    tileX, tileY, tileZ = get_tile_in_front()
+    #tileinfo = Statics.GetStaticsLandInfo(tileX, tileY, Player.Map)
+
+    filter = Items.Filter()
+    # 0x053B is Cave floor
+    # 0x0018 is Sand
+    filter.Graphics = List[Int32]((0x053B)) 
+    filter.OnGround = True
+    filter.RangeMax = 1
+    items = Items.ApplyFilter(filter)
+    for item in items:
+        if item.Position.X == tileX and item.Position.Y == tileY:
+            return item.Serial, tileX, tileY, tileZ 
+    return None, tileX, tileY, tileZ
+
 # ---- smelt_ore (from core_gathering.py)
 def smelt_ore(forgeAnimalMobileId, itemMoveDelayMs):
     forgeAnimals = get_pets(range = 2, checkLineOfSight = True, mobileId = forgeAnimalMobileId)
@@ -41,23 +58,6 @@ def smelt_ore(forgeAnimalMobileId, itemMoveDelayMs):
         Misc.Pause(itemMoveDelayMs)     
     else:
         print("No forge animal found")
-
-# ---- get_tile_in_front_serial (from core_gathering.py)
-def get_tile_in_front_serial():
-    tileX, tileY, tileZ = get_tile_in_front()
-    #tileinfo = Statics.GetStaticsLandInfo(tileX, tileY, Player.Map)
-
-    filter = Items.Filter()
-    # 0x053B is Cave floor
-    # 0x0018 is Sand
-    filter.Graphics = List[Int32]((0x053B)) 
-    filter.OnGround = True
-    filter.RangeMax = 1
-    items = Items.ApplyFilter(filter)
-    for item in items:
-        if item.Position.X == tileX and item.Position.Y == tileY:
-            return item.Serial, tileX, tileY, tileZ 
-    return None, tileX, tileY, tileZ
 
 # ---- getMinerTool (from core_gathering.py)
 def getMinerTool():

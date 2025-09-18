@@ -81,180 +81,199 @@ RESOURCE_HUE_FROSTWOOD = 0x047f
 
 # ===== Inlined block from core_crafting.py =====
 # ===== Inlined block from core_items.py =====
+# ---- SPIDERSILK (binding from core_items.py)
+SPIDERSILK = 0x0F8D
+
+# ===== Inlined block from core_items.py =====
 # ---- BATWING (binding from core_items.py)
 BATWING = 0x0F78
-
-# ===== Inlined block from core_items.py =====
-# ---- LEATHER_STATIC_ID (binding from core_items.py)
-LEATHER_STATIC_ID = 0x1081
-
-# ===== Inlined block from core_items.py =====
-# ---- GINSENG (binding from core_items.py)
-GINSENG = 0x0F85
-
-# ===== Inlined block from core_items.py =====
-# ---- CLOTH_STATIC_ID (binding from core_items.py)
-CLOTH_STATIC_ID = 0x1766
-
-# ===== Inlined block from core_items.py =====
-# ---- DIAMOND (binding from core_items.py)
-DIAMOND = 0x0F26
-
-# ===== Inlined block from core_items.py =====
-# ---- PIGIRON (binding from core_items.py)
-PIGIRON = 0x0F8A
-
-# ===== Inlined block from core_items.py =====
-# ---- AMBER (binding from core_items.py)
-AMBER = 0x0F25
-
-# ===== Inlined block from core_items.py =====
-# ---- UNMARKED_RUNE (binding from core_items.py)
-UNMARKED_RUNE = 0x1F14
-
-# ===== Inlined block from core_items.py =====
-# ---- GATE_SCROLL (binding from core_items.py)
-GATE_SCROLL = 0x1F60
-
-# ===== Inlined block from core_items.py =====
-# ---- LUMINESCENT_FUNGI (binding from core_items.py)
-LUMINESCENT_FUNGI = 0x3191
-
-# ===== Inlined block from core_items.py =====
-# ---- PERFECT_EMERALD (binding from core_items.py)
-PERFECT_EMERALD = 0x3194
-
-# ===== Inlined block from core_items.py =====
-# ---- RECALL_SCROLL (binding from core_items.py)
-RECALL_SCROLL = 0x1F4C
-
-# ===== Inlined block from core_items.py =====
-# ---- STAR_SAPPHIRE (binding from core_items.py)
-STAR_SAPPHIRE =  0x0F0F
-
-# ===== Inlined block from core_items.py =====
-# ---- BLANK_SCROLL (binding from core_items.py)
-BLANK_SCROLL = 0x0EF3
-
-# ===== Inlined block from core_items.py =====
-# ---- SAPPHIRE (binding from core_items.py)
-SAPPHIRE = 0x0F11
-
-# ===== Inlined block from core_items.py =====
-# ---- EMPTY_BOTTLE_STATIC_ID (binding from core_items.py)
-EMPTY_BOTTLE_STATIC_ID = 0x0F0E
-
-# ===== Inlined block from core_items.py =====
-# ---- SULPHUROUSASH (binding from core_items.py)
-SULPHUROUSASH = 0x0F8C
-
-# ===== Inlined block from core_items.py =====
-# ---- BLACKPEARL (binding from core_items.py)
-BLACKPEARL = 0x0F7A
-
-# ===== Inlined block from core_items.py =====
-# ---- CITRINE (binding from core_items.py)
-CITRINE = 0x0F15
-
-# ===== Inlined block from core_items.py =====
-# ---- TOURMALINE (binding from core_items.py)
-TOURMALINE = 0x0F18
-
-# ===== Inlined block from core_items.py =====
-# ---- NOXCRYSTAL (binding from core_items.py)
-NOXCRYSTAL = 0x0F8E
-
-# ===== Inlined block from core_items.py =====
-# ---- BLACKSMITHY_TOOL_STATIC_ID (binding from core_items.py)
-BLACKSMITHY_TOOL_STATIC_ID = 0x13E3
-
-# ===== Inlined block from core_items.py =====
-# ---- INSCRIPTION_TOOL_STATIC_ID (binding from core_items.py)
-INSCRIPTION_TOOL_STATIC_ID = 0x0FBF
-
-# ===== Inlined block from core_items.py =====
-# ---- NIGHTSHADE (binding from core_items.py)
-NIGHTSHADE = 0x0F88
-
-# ===== Inlined block from core_items.py =====
-# ---- TINKERING_TOOL_STATIC_ID (binding from core_items.py)
-TINKERING_TOOL_STATIC_ID = 0x1EBC
-
-# ===== Inlined block from core_items.py =====
-# ---- PARASITIC_PLANT (binding from core_items.py)
-PARASITIC_PLANT = 0x3190
-
-# ===== Inlined block from core_items.py =====
-# ---- AMETHYST (binding from core_items.py)
-AMETHYST = 0x0F16
-
-# ===== Inlined block from core_items.py =====
-# ---- BONE (binding from core_items.py)
-BONE = 0x0F7E
-
-# ===== Inlined block from core_items.py =====
-# ---- GARLIC (binding from core_items.py)
-GARLIC = 0x0F84
-
-# ===== Inlined block from core_items.py =====
-# ---- TAILORING_TOOL_STATIC_ID (binding from core_items.py)
-TAILORING_TOOL_STATIC_ID = 0x0F9D
-
-# ===== Inlined block from core_items.py =====
-# ---- GRAVEDUST (binding from core_items.py)
-GRAVEDUST = 0x0F8F
 
 # ===== Inlined block from core_items.py =====
 # ---- FIRE_RUBY (binding from core_items.py)
 FIRE_RUBY = 0x3197
 
 # ===== Inlined block from core_items.py =====
+# ---- PERFECT_EMERALD (binding from core_items.py)
+PERFECT_EMERALD = 0x3194
+
+# ===== Inlined block from core_items.py =====
+# ---- SULPHUROUSASH (binding from core_items.py)
+SULPHUROUSASH = 0x0F8C
+
+# ===== Inlined block from core_items.py =====
+# ---- LEATHER_STATIC_ID (binding from core_items.py)
+LEATHER_STATIC_ID = 0x1081
+
+# ===== Inlined block from core_items.py =====
+# ---- TINKERING_TOOL_STATIC_ID (binding from core_items.py)
+TINKERING_TOOL_STATIC_ID = 0x1EBC
+
+# ===== Inlined block from core_items.py =====
 # ---- CARPENTRY_TOOL_STATIC_ID (binding from core_items.py)
 CARPENTRY_TOOL_STATIC_ID = 0x1034
-
-# ===== Inlined block from core_items.py =====
-# ---- BOARD_STATIC_ID (binding from core_items.py)
-BOARD_STATIC_ID = 0x1BD7
-
-# ===== Inlined block from core_items.py =====
-# ---- MANDRAKEROOT (binding from core_items.py)
-MANDRAKEROOT = 0x0F86
-
-# ===== Inlined block from core_items.py =====
-# ---- EMERALD (binding from core_items.py)
-EMERALD = 0x0F10
 
 # ===== Inlined block from core_items.py =====
 # ---- BLOODMOSS (binding from core_items.py)
 BLOODMOSS = 0x0F7B
 
 # ===== Inlined block from core_items.py =====
+# ---- DIAMOND (binding from core_items.py)
+DIAMOND = 0x0F26
+
+# ===== Inlined block from core_items.py =====
+# ---- STAR_SAPPHIRE (binding from core_items.py)
+STAR_SAPPHIRE =  0x0F0F
+
+# ===== Inlined block from core_items.py =====
+# ---- NOXCRYSTAL (binding from core_items.py)
+NOXCRYSTAL = 0x0F8E
+
+# ===== Inlined block from core_items.py =====
+# ---- TOURMALINE (binding from core_items.py)
+TOURMALINE = 0x0F18
+
+# ===== Inlined block from core_items.py =====
+# ---- INSCRIPTION_TOOL_STATIC_ID (binding from core_items.py)
+INSCRIPTION_TOOL_STATIC_ID = 0x0FBF
+
+# ===== Inlined block from core_items.py =====
+# ---- RECALL_SCROLL (binding from core_items.py)
+RECALL_SCROLL = 0x1F4C
+
+# ===== Inlined block from core_items.py =====
+# ---- GATE_SCROLL (binding from core_items.py)
+GATE_SCROLL = 0x1F60
+
+# ===== Inlined block from core_items.py =====
+# ---- AMBER (binding from core_items.py)
+AMBER = 0x0F25
+
+# ===== Inlined block from core_items.py =====
 # ---- TURQUOISE (binding from core_items.py)
 TURQUOISE = 0x3193
 
 # ===== Inlined block from core_items.py =====
-# ---- WHITE_PEARL (binding from core_items.py)
-WHITE_PEARL = 0x3196
-
-# ===== Inlined block from core_items.py =====
-# ---- SPIDERSILK (binding from core_items.py)
-SPIDERSILK = 0x0F8D
-
-# ===== Inlined block from core_items.py =====
-# ---- RUBY (binding from core_items.py)
-RUBY = 0x0F13
+# ---- NIGHTSHADE (binding from core_items.py)
+NIGHTSHADE = 0x0F88
 
 # ===== Inlined block from core_items.py =====
 # ---- ALCHEMY_TOOL_STATIC_ID (binding from core_items.py)
 ALCHEMY_TOOL_STATIC_ID = 0x0E9B
 
 # ===== Inlined block from core_items.py =====
+# ---- BONE (binding from core_items.py)
+BONE = 0x0F7E
+
+# ===== Inlined block from core_items.py =====
+# ---- BLANK_SCROLL (binding from core_items.py)
+BLANK_SCROLL = 0x0EF3
+
+# ===== Inlined block from core_items.py =====
+# ---- GRAVEDUST (binding from core_items.py)
+GRAVEDUST = 0x0F8F
+
+# ===== Inlined block from core_items.py =====
+# ---- AMETHYST (binding from core_items.py)
+AMETHYST = 0x0F16
+
+# ===== Inlined block from core_items.py =====
 # ---- DAEMONBLOOD (binding from core_items.py)
 DAEMONBLOOD = 0x0F7D
 
 # ===== Inlined block from core_items.py =====
+# ---- CLOTH_STATIC_ID (binding from core_items.py)
+CLOTH_STATIC_ID = 0x1766
+
+# ===== Inlined block from core_items.py =====
+# ---- MANDRAKEROOT (binding from core_items.py)
+MANDRAKEROOT = 0x0F86
+
+# ===== Inlined block from core_items.py =====
+# ---- PIGIRON (binding from core_items.py)
+PIGIRON = 0x0F8A
+
+# ===== Inlined block from core_items.py =====
+# ---- TAILORING_TOOL_STATIC_ID (binding from core_items.py)
+TAILORING_TOOL_STATIC_ID = 0x0F9D
+
+# ===== Inlined block from core_items.py =====
+# ---- EMPTY_BOTTLE_STATIC_ID (binding from core_items.py)
+EMPTY_BOTTLE_STATIC_ID = 0x0F0E
+
+# ===== Inlined block from core_items.py =====
+# ---- SAPPHIRE (binding from core_items.py)
+SAPPHIRE = 0x0F11
+
+# ===== Inlined block from core_items.py =====
+# ---- GINSENG (binding from core_items.py)
+GINSENG = 0x0F85
+
+# ===== Inlined block from core_items.py =====
 # ---- INGOT_STATIC_ID (binding from core_items.py)
 INGOT_STATIC_ID = 0x1BF2
+
+# ===== Inlined block from core_items.py =====
+# ---- WHITE_PEARL (binding from core_items.py)
+WHITE_PEARL = 0x3196
+
+# ===== Inlined block from core_items.py =====
+# ---- UNMARKED_RUNE (binding from core_items.py)
+UNMARKED_RUNE = 0x1F14
+
+# ===== Inlined block from core_items.py =====
+# ---- CITRINE (binding from core_items.py)
+CITRINE = 0x0F15
+
+# ===== Inlined block from core_items.py =====
+# ---- LUMINESCENT_FUNGI (binding from core_items.py)
+LUMINESCENT_FUNGI = 0x3191
+
+# ===== Inlined block from core_items.py =====
+# ---- EMERALD (binding from core_items.py)
+EMERALD = 0x0F10
+
+# ===== Inlined block from core_items.py =====
+# ---- BOARD_STATIC_ID (binding from core_items.py)
+BOARD_STATIC_ID = 0x1BD7
+
+# ===== Inlined block from core_items.py =====
+# ---- PARASITIC_PLANT (binding from core_items.py)
+PARASITIC_PLANT = 0x3190
+
+# ===== Inlined block from core_items.py =====
+# ---- BLACKPEARL (binding from core_items.py)
+BLACKPEARL = 0x0F7A
+
+# ===== Inlined block from core_items.py =====
+# ---- RUBY (binding from core_items.py)
+RUBY = 0x0F13
+
+# ===== Inlined block from core_items.py =====
+# ---- GARLIC (binding from core_items.py)
+GARLIC = 0x0F84
+
+# ===== Inlined block from core_items.py =====
+# ---- BLACKSMITHY_TOOL_STATIC_ID (binding from core_items.py)
+BLACKSMITHY_TOOL_STATIC_ID = 0x13E3
+
+# ---- SmallBodRecipe (from core_crafting.py)
+class SmallBodRecipe:
+    def __init__(self, hasLargeBod, recipeName, gumpCategory, gumpSelection, toolId, resources):
+        self.hasLargeBod = hasLargeBod
+        self.recipeName = recipeName
+        self.gumpCategory = gumpCategory
+        self.gumpSelection = gumpSelection
+        self.toolId = toolId
+        self.resources = resources
+        
+    def canSalvage(self):
+        if self.toolId in [BLACKSMITHY_TOOL_STATIC_ID]:
+            return True
+        if self.toolId == TAILORING_TOOL_STATIC_ID and not any(resource.resourceId == BONE for resource in self.resources):
+            return True
+        return False
+    def __str__(self):
+        return f"SmallBodRecipe(hasLargeBod={self.hasLargeBod},recipeName='{self.recipeName}', gumpCategory='{self.gumpCategory}', gumpSelection='{self.gumpSelection}', toolId='{self.toolId}', resources='{self.resources}')"
 
 # ---- SmallBodResource (from core_crafting.py)
 class SmallBodResource:
@@ -289,135 +308,116 @@ class SmallBodResource:
     def __str__(self):
         return f"SmallBodResource(resourceId='{self.resourceId}', amount={self.amount}, canOverrideHue='{self.canOverrideHue()}')"
 
-# ---- SmallBodRecipe (from core_crafting.py)
-class SmallBodRecipe:
-    def __init__(self, hasLargeBod, recipeName, gumpCategory, gumpSelection, toolId, resources):
-        self.hasLargeBod = hasLargeBod
-        self.recipeName = recipeName
-        self.gumpCategory = gumpCategory
-        self.gumpSelection = gumpSelection
-        self.toolId = toolId
-        self.resources = resources
-        
-    def canSalvage(self):
-        if self.toolId in [BLACKSMITHY_TOOL_STATIC_ID]:
-            return True
-        if self.toolId == TAILORING_TOOL_STATIC_ID and not any(resource.resourceId == BONE for resource in self.resources):
-            return True
-        return False
-    def __str__(self):
-        return f"SmallBodRecipe(hasLargeBod={self.hasLargeBod},recipeName='{self.recipeName}', gumpCategory='{self.gumpCategory}', gumpSelection='{self.gumpSelection}', toolId='{self.toolId}', resources='{self.resources}')"
-
-# ---- CAT_ALCHEMY_TOXIC (binding from core_crafting.py)
-CAT_ALCHEMY_TOXIC = 15
-
-# ---- CAT_BLACKSMITHY_SHIELDS (binding from core_crafting.py)
-CAT_BLACKSMITHY_SHIELDS = 15
-
-# ---- CAT_BLACKSMITHY_HELMETS (binding from core_crafting.py)
-CAT_BLACKSMITHY_HELMETS = 8
-
-# ---- CAT_TAILORING_BONE_ARMOR (binding from core_crafting.py)
-CAT_TAILORING_BONE_ARMOR = 64
-
-# ---- CAT_TAILORING_HATS (binding from core_crafting.py)
-CAT_TAILORING_HATS = 8
-
-# ---- CAT_INSCRIPTION_THIRD_FOURTH (binding from core_crafting.py)
-CAT_INSCRIPTION_THIRD_FOURTH = 8
-
-# ---- CAT_CARPENTRY_OTHER (binding from core_crafting.py)
-CAT_CARPENTRY_OTHER = 1
-
-# ---- CAT_TINKERING_UTENSILS (binding from core_crafting.py)
-CAT_TINKERING_UTENSILS = 29
-
-# ---- CAT_BLACKSMITHY_METAL_ARMOR (binding from core_crafting.py)
-CAT_BLACKSMITHY_METAL_ARMOR = 1
-
-# ---- CAT_BLACKSMITHY_BLADED (binding from core_crafting.py)
-CAT_BLACKSMITHY_BLADED = 22
-
-# ---- CAT_INSCRIPTION_SEVENTH_EIGTH (binding from core_crafting.py)
-CAT_INSCRIPTION_SEVENTH_EIGTH = 22
-
-# ---- CAT_BLACKSMITHY_AXES (binding from core_crafting.py)
-CAT_BLACKSMITHY_AXES = 29
-
-# ---- CAT_INSCRIPTION_FIRST_SECOND (binding from core_crafting.py)
-CAT_INSCRIPTION_FIRST_SECOND = 1
-
-# ---- CAT_TAILORING_FEMALE_ARMOR (binding from core_crafting.py)
-CAT_TAILORING_FEMALE_ARMOR = 57
-
-# ---- CAT_CARPENTRY_FURNITURE (binding from core_crafting.py)
-CAT_CARPENTRY_FURNITURE = 8
-
-# ---- CAT_INSCRIPTION_NECRO (binding from core_crafting.py)
-CAT_INSCRIPTION_NECRO = 29
-
-# ---- CAT_BLACKSMITHY_POLEARMS (binding from core_crafting.py)
-CAT_BLACKSMITHY_POLEARMS = 36
-
-# ---- CAT_TINKERING_MISCELLANEOUS (binding from core_crafting.py)
-CAT_TINKERING_MISCELLANEOUS = 36
+# ---- CAT_CARPENTRY_INSTRUMENTS (binding from core_crafting.py)
+CAT_CARPENTRY_INSTRUMENTS = 36
 
 # ---- CAT_TINKERING_PARTS (binding from core_crafting.py)
 CAT_TINKERING_PARTS = 22
 
-# ---- CAT_INSCRIPTION_FIFTH_SIXTH (binding from core_crafting.py)
-CAT_INSCRIPTION_FIFTH_SIXTH = 15
-
-# ---- CAT_BLACKSMITHY_BASHING (binding from core_crafting.py)
-CAT_BLACKSMITHY_BASHING = 43
-
-# ---- CAT_TINKERING_ASSEMBLIES (binding from core_crafting.py)
-CAT_TINKERING_ASSEMBLIES = 43
-
-# ---- CAT_CARPENTRY_INSTRUMENTS (binding from core_crafting.py)
-CAT_CARPENTRY_INSTRUMENTS = 36
-
-# ---- CAT_CARPENTRY_WEAPONS (binding from core_crafting.py)
-CAT_CARPENTRY_WEAPONS = 22
-
-# ---- CAT_ALCHEMY_EXPLOSIVE (binding from core_crafting.py)
-CAT_ALCHEMY_EXPLOSIVE = 22
-
-# ---- CAT_TINKERING_TOOLS (binding from core_crafting.py)
-CAT_TINKERING_TOOLS = 15
-
-# ---- CAT_TAILORING_STUDDED_ARMOR (binding from core_crafting.py)
-CAT_TAILORING_STUDDED_ARMOR = 50
-
 # ---- CAT_CARPENTRY_CONTAINERS (binding from core_crafting.py)
 CAT_CARPENTRY_CONTAINERS = 15
-
-# ---- CAT_ALCHEMY_HEALING_AND_CURATIVE (binding from core_crafting.py)
-CAT_ALCHEMY_HEALING_AND_CURATIVE = 1
-
-# ---- CAT_TAILORING_FOOTWEAR (binding from core_crafting.py)
-CAT_TAILORING_FOOTWEAR = 29
-
-# ---- CAT_TAILORING_MISCELLANEOUS (binding from core_crafting.py)
-CAT_TAILORING_MISCELLANEOUS = 22
-
-# ---- CAT_ALCHEMY_ENHANCEMENT (binding from core_crafting.py)
-CAT_ALCHEMY_ENHANCEMENT = 8
-
-# ---- CAT_INSCRIPTION_OTHER (binding from core_crafting.py)
-CAT_INSCRIPTION_OTHER = 36
-
-# ---- CAT_TAILORING_LEATHER_ARMOR (binding from core_crafting.py)
-CAT_TAILORING_LEATHER_ARMOR = 36
-
-# ---- CAT_TINKERING_WOODEN_ITEMS (binding from core_crafting.py)
-CAT_TINKERING_WOODEN_ITEMS = 8
 
 # ---- CAT_TINKERING_JEWELRY (binding from core_crafting.py)
 CAT_TINKERING_JEWELRY = 1
 
+# ---- CAT_ALCHEMY_ENHANCEMENT (binding from core_crafting.py)
+CAT_ALCHEMY_ENHANCEMENT = 8
+
+# ---- CAT_TAILORING_LEATHER_ARMOR (binding from core_crafting.py)
+CAT_TAILORING_LEATHER_ARMOR = 36
+
+# ---- CAT_ALCHEMY_EXPLOSIVE (binding from core_crafting.py)
+CAT_ALCHEMY_EXPLOSIVE = 22
+
+# ---- CAT_TAILORING_HATS (binding from core_crafting.py)
+CAT_TAILORING_HATS = 8
+
+# ---- CAT_BLACKSMITHY_BLADED (binding from core_crafting.py)
+CAT_BLACKSMITHY_BLADED = 22
+
+# ---- CAT_TAILORING_BONE_ARMOR (binding from core_crafting.py)
+CAT_TAILORING_BONE_ARMOR = 64
+
+# ---- CAT_BLACKSMITHY_SHIELDS (binding from core_crafting.py)
+CAT_BLACKSMITHY_SHIELDS = 15
+
+# ---- CAT_TAILORING_MISCELLANEOUS (binding from core_crafting.py)
+CAT_TAILORING_MISCELLANEOUS = 22
+
+# ---- CAT_ALCHEMY_HEALING_AND_CURATIVE (binding from core_crafting.py)
+CAT_ALCHEMY_HEALING_AND_CURATIVE = 1
+
+# ---- CAT_CARPENTRY_FURNITURE (binding from core_crafting.py)
+CAT_CARPENTRY_FURNITURE = 8
+
+# ---- CAT_INSCRIPTION_FIFTH_SIXTH (binding from core_crafting.py)
+CAT_INSCRIPTION_FIFTH_SIXTH = 15
+
+# ---- CAT_INSCRIPTION_OTHER (binding from core_crafting.py)
+CAT_INSCRIPTION_OTHER = 36
+
+# ---- CAT_BLACKSMITHY_POLEARMS (binding from core_crafting.py)
+CAT_BLACKSMITHY_POLEARMS = 36
+
+# ---- CAT_TINKERING_WOODEN_ITEMS (binding from core_crafting.py)
+CAT_TINKERING_WOODEN_ITEMS = 8
+
+# ---- CAT_TAILORING_FEMALE_ARMOR (binding from core_crafting.py)
+CAT_TAILORING_FEMALE_ARMOR = 57
+
+# ---- CAT_BLACKSMITHY_BASHING (binding from core_crafting.py)
+CAT_BLACKSMITHY_BASHING = 43
+
+# ---- CAT_INSCRIPTION_SEVENTH_EIGTH (binding from core_crafting.py)
+CAT_INSCRIPTION_SEVENTH_EIGTH = 22
+
+# ---- CAT_INSCRIPTION_THIRD_FOURTH (binding from core_crafting.py)
+CAT_INSCRIPTION_THIRD_FOURTH = 8
+
+# ---- CAT_CARPENTRY_WEAPONS (binding from core_crafting.py)
+CAT_CARPENTRY_WEAPONS = 22
+
+# ---- CAT_BLACKSMITHY_METAL_ARMOR (binding from core_crafting.py)
+CAT_BLACKSMITHY_METAL_ARMOR = 1
+
 # ---- CAT_TAILORING_SHIRTS_AND_PANTS (binding from core_crafting.py)
 CAT_TAILORING_SHIRTS_AND_PANTS = 15
+
+# ---- CAT_INSCRIPTION_NECRO (binding from core_crafting.py)
+CAT_INSCRIPTION_NECRO = 29
+
+# ---- CAT_TAILORING_STUDDED_ARMOR (binding from core_crafting.py)
+CAT_TAILORING_STUDDED_ARMOR = 50
+
+# ---- CAT_BLACKSMITHY_AXES (binding from core_crafting.py)
+CAT_BLACKSMITHY_AXES = 29
+
+# ---- CAT_TINKERING_TOOLS (binding from core_crafting.py)
+CAT_TINKERING_TOOLS = 15
+
+# ---- CAT_TINKERING_MISCELLANEOUS (binding from core_crafting.py)
+CAT_TINKERING_MISCELLANEOUS = 36
+
+# ---- CAT_TINKERING_ASSEMBLIES (binding from core_crafting.py)
+CAT_TINKERING_ASSEMBLIES = 43
+
+# ---- CAT_TAILORING_FOOTWEAR (binding from core_crafting.py)
+CAT_TAILORING_FOOTWEAR = 29
+
+# ---- CAT_CARPENTRY_OTHER (binding from core_crafting.py)
+CAT_CARPENTRY_OTHER = 1
+
+# ---- CAT_ALCHEMY_TOXIC (binding from core_crafting.py)
+CAT_ALCHEMY_TOXIC = 15
+
+# ---- CAT_TINKERING_UTENSILS (binding from core_crafting.py)
+CAT_TINKERING_UTENSILS = 29
+
+# ---- CAT_INSCRIPTION_FIRST_SECOND (binding from core_crafting.py)
+CAT_INSCRIPTION_FIRST_SECOND = 1
+
+# ---- CAT_BLACKSMITHY_HELMETS (binding from core_crafting.py)
+CAT_BLACKSMITHY_HELMETS = 8
 
 # ---- RECIPES (binding from core_crafting.py)
 RECIPES = [
@@ -947,12 +947,20 @@ RECIPES = [
 
 # ===== Inlined block from core_crafting.py =====
 # ===== Inlined block from core_items.py =====
-# ---- HUE_TINKERING (binding from core_items.py)
-HUE_TINKERING = 0x0455
+# ---- HUE_CARPENTRY (binding from core_items.py)
+HUE_CARPENTRY = 0x05e8
 
 # ===== Inlined block from core_items.py =====
 # ---- HUE_ALCHEMY (binding from core_items.py)
 HUE_ALCHEMY = 0x09c9
+
+# ===== Inlined block from core_items.py =====
+# ---- HUE_TINKERING (binding from core_items.py)
+HUE_TINKERING = 0x0455
+
+# ===== Inlined block from core_items.py =====
+# ---- HUE_TAILORING (binding from core_items.py)
+HUE_TAILORING = 0x0483
 
 # ===== Inlined block from core_items.py =====
 # ---- HUE_BLACKSMITHY (binding from core_items.py)
@@ -962,25 +970,11 @@ HUE_BLACKSMITHY = 0x044e
 # ---- HUE_INSCRIPTION (binding from core_items.py)
 HUE_INSCRIPTION = 0x0a26
 
-# ===== Inlined block from core_items.py =====
-# ---- HUE_CARPENTRY (binding from core_items.py)
-HUE_CARPENTRY = 0x05e8
+# ---- LARGE_BOD_GUMP_ID (binding from core_crafting.py)
+LARGE_BOD_GUMP_ID = 0xa125b54a
 
-# ===== Inlined block from core_items.py =====
-# ---- HUE_TAILORING (binding from core_items.py)
-HUE_TAILORING = 0x0483
-
-# ---- PROD_ID_LARGE_BULK_ORDER (binding from core_crafting.py)
-PROD_ID_LARGE_BULK_ORDER = 1060655
-
-# ---- PROP_ID_AMOUNT_TO_MAKE (binding from core_crafting.py)
-PROP_ID_AMOUNT_TO_MAKE = 1060656
-
-# ---- CRAFTING_GUMP_ID (binding from core_crafting.py)
-CRAFTING_GUMP_ID = 0x38920abd
-
-# ---- SMALL_BOD_GUMP_ID (binding from core_crafting.py)
-SMALL_BOD_GUMP_ID = 0x5afbd742
+# ---- PROP_ID_SMALL_BULK_ORDER (binding from core_crafting.py)
+PROP_ID_SMALL_BULK_ORDER = 1060654
 
 # ---- SPECIAL_PROP_MATERIAL_MAP (binding from core_crafting.py)
 SPECIAL_PROP_MATERIAL_MAP = {
@@ -1003,20 +997,141 @@ SPECIAL_PROP_MATERIAL_MAP = {
     1071433: { "button": 48, "hue": RESOURCE_HUE_FROSTWOOD,     "name": "frostwood" },       # Frostwood
 }
 
+# ---- PROP_ID_AMOUNT_TO_MAKE (binding from core_crafting.py)
+PROP_ID_AMOUNT_TO_MAKE = 1060656
+
+# ---- CRAFTING_GUMP_ID (binding from core_crafting.py)
+CRAFTING_GUMP_ID = 0x38920abd
+
 # ---- PROP_ID_ITEM_TEXT (binding from core_crafting.py)
 PROP_ID_ITEM_TEXT = 1060658
 
 # ---- CAT_CARPENTRY_ARMOR (binding from core_crafting.py)
 CAT_CARPENTRY_ARMOR = 29
 
-# ---- LARGE_BOD_GUMP_ID (binding from core_crafting.py)
-LARGE_BOD_GUMP_ID = 0xa125b54a
+# ---- PROD_ID_LARGE_BULK_ORDER (binding from core_crafting.py)
+PROD_ID_LARGE_BULK_ORDER = 1060655
 
 # ---- PROP_ID_BOD_EXCEPTIONAL (binding from core_crafting.py)
 PROP_ID_BOD_EXCEPTIONAL = 1045141
 
-# ---- PROP_ID_SMALL_BULK_ORDER (binding from core_crafting.py)
-PROP_ID_SMALL_BULK_ORDER = 1060654
+# ---- SMALL_BOD_GUMP_ID (binding from core_crafting.py)
+SMALL_BOD_GUMP_ID = 0x5afbd742
+
+# ---- search_complete_small_bod_db (from core_crafting.py)
+def search_complete_small_bod_db(db, largeBod, fillNormalLargeBodsWithExceptionalSmallBods):
+    entries = []
+    for smallBodItem in largeBod.smallBodItems:
+        if smallBodItem["amountMade"] == largeBod.amountToMake:
+            continue
+        if smallBodItem["name"] in db:
+            index = 0
+            found = False
+            for smallBod in db[smallBodItem["name"]]:
+                if fillNormalLargeBodsWithExceptionalSmallBods and (largeBod.isExceptional == False or smallBod.isExceptional == largeBod.isExceptional) and smallBod.amountMade == largeBod.amountToMake and smallBod.specialMaterialPropId == largeBod.specialMaterialPropId:                    
+                    entries.append(smallBod)
+                    found = True
+                    break
+                if smallBod.isExceptional == largeBod.isExceptional and smallBod.amountMade == largeBod.amountToMake and smallBod.specialMaterialPropId == largeBod.specialMaterialPropId:                    
+                    entries.append(smallBod)
+                    found = True
+                    break
+                index = index + 1
+            if found:
+                del db[smallBodItem["name"]][index]
+    return entries
+
+# ---- LargeBod (from core_crafting.py)
+class LargeBod:
+    def __init__(self, bodSerial, isExceptional, amountToMake, specialMaterialPropId, smallBodItems):
+        self.isExceptional = isExceptional
+        self.amountToMake = amountToMake
+        self.specialMaterialPropId = specialMaterialPropId
+        self.smallBodItems = smallBodItems
+        self.bodSerial = bodSerial
+
+    # Use this to identify similar bods (material, exceptional, and items required)
+    # Need this to stort when filling large bods so we complete those with the most progress first
+    def getId(self):
+        part1 = "1" if self.isExceptional else "0"
+        part2 = str(self.specialMaterialPropId) if self.specialMaterialPropId is not None else "0"
+        part3 = "|".join(sorted(list(map(lambda smallBodItem: smallBodItem["name"], self.smallBodItems))))
+        return part1 + "|" + part2 + "|" + part3
+        
+    def numComplete(self):
+        numCompleted = 0
+        for smallBodItem in self.smallBodItems:
+            if smallBodItem['amountMade'] == self.amountToMake:
+                numCompleted = numCompleted + 1
+        return numCompleted
+        
+    def isComplete(self):
+        isComplete = False
+        numCompleted = 0
+        for smallBodItem in self.smallBodItems:
+            if smallBodItem['amountMade'] == self.amountToMake:
+                numCompleted = numCompleted + 1
+        return numCompleted == len(self.smallBodItems)
+
+    def __str__(self):
+        return f"LargeBod(isExceptional='{self.isExceptional}', amountToMake='{self.amountToMake}', specialMaterialPropId={self.specialMaterialPropId}, smallBodItems={self.smallBodItems}, isComplete={self.isComplete()}, numComplete={self.numComplete()})"
+
+# ---- get_tool (from core_crafting.py)
+def get_tool(craftContainer, toolId, toolContainer, itemMoveDelayMs):
+    tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, craftContainer, -1)
+    if tool is None:
+        tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, toolContainer, -1)
+        if tool is not None:
+            Items.Move(tool, craftContainer, 1)
+            Misc.Pause(itemMoveDelayMs)
+            
+    for toolId in [BLACKSMITHY_TOOL_STATIC_ID, TINKERING_TOOL_STATIC_ID, ALCHEMY_TOOL_STATIC_ID, TAILORING_TOOL_STATIC_ID, CARPENTRY_TOOL_STATIC_ID, INSCRIPTION_TOOL_STATIC_ID]:
+        toolsToPutAway = Items.FindAllByID(toolId, -1, craftContainer, 0)
+        for toolToPutAway in toolsToPutAway:
+            if tool is None or tool.Serial != toolToPutAway.Serial:
+                Items.Move(toolToPutAway, toolContainer, 1)
+                Misc.Pause(itemMoveDelayMs)
+                
+    return tool
+
+# ---- BodReport (from core_crafting.py)
+class BodReport:
+    def __init__(self, name):
+        self.name = name
+        self.numIncompleteSmallBods = 0
+        self.numCompleteSmallBods = 0
+        self.numIncompleteLargeBods = 0
+        self.numCompleteLargeBods = 0
+        self.numInWrongContainer = 0
+        self.numMissingRecipe = 0
+        self.numMissingResources = 0
+
+    def incrementNumIncompleteSmallBods(self):
+        self.numIncompleteSmallBods = self.numIncompleteSmallBods + 1
+        
+    def incrementNumCompleteSmallBods(self):
+        self.numCompleteSmallBods = self.numCompleteSmallBods + 1        
+        
+    def incrementNumIncompleteLargeBods(self):
+        self.numIncompleteLargeBods = self.numIncompleteLargeBods + 1
+        
+    def incrementNumCompleteLargeBods(self):
+        self.numCompleteLargeBods = self.numCompleteLargeBods + 1  
+  
+    def incrementNumInWrongContainer(self):
+        self.numInWrongContainer = self.numInWrongContainer + 1
+        
+    def incrementNumMissingRecipe(self):
+        self.numMissingRecipe = self.numMissingRecipe + 1
+        
+    def incrementNumMissingResources(self):
+        self.numMissingResources = self.numMissingResources + 1
+        
+    def __str__(self):
+        totalSmall = self.numIncompleteSmallBods + self.numCompleteSmallBods + self.numMissingRecipe
+        totalLarge = self.numIncompleteLargeBods + self.numCompleteLargeBods
+        #incompleteSmall = self.numIncompleteSmallBods - self.numMissingRecipe
+        return "{}:\t\tSmall ({}/{})\t\tLarge ({}/{})\tWrong Container ({})\tNo Recipe ({})\tNo Resources ({})".format(self.name, self.numCompleteSmallBods, totalSmall, self.numCompleteLargeBods, totalLarge, self.numInWrongContainer, self.numMissingRecipe, self.numMissingResources)
 
 # ---- cleanup (from core_crafting.py)
 def cleanup(craftContainer, salvageBag, trashContainer, resourceContainer, itemMoveDelayMs, smallBod = None):
@@ -1060,24 +1175,6 @@ def cleanup(craftContainer, salvageBag, trashContainer, resourceContainer, itemM
                 Items.Move(item, resourceContainer, item.Amount)    
                 Misc.Pause(itemMoveDelayMs)
 
-# ---- get_tool (from core_crafting.py)
-def get_tool(craftContainer, toolId, toolContainer, itemMoveDelayMs):
-    tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, craftContainer, -1)
-    if tool is None:
-        tool = Items.FindByID(toolId, RESOURCE_HUE_DEFAULT, toolContainer, -1)
-        if tool is not None:
-            Items.Move(tool, craftContainer, 1)
-            Misc.Pause(itemMoveDelayMs)
-            
-    for toolId in [BLACKSMITHY_TOOL_STATIC_ID, TINKERING_TOOL_STATIC_ID, ALCHEMY_TOOL_STATIC_ID, TAILORING_TOOL_STATIC_ID, CARPENTRY_TOOL_STATIC_ID, INSCRIPTION_TOOL_STATIC_ID]:
-        toolsToPutAway = Items.FindAllByID(toolId, -1, craftContainer, 0)
-        for toolToPutAway in toolsToPutAway:
-            if tool is None or tool.Serial != toolToPutAway.Serial:
-                Items.Move(toolToPutAway, toolContainer, 1)
-                Misc.Pause(itemMoveDelayMs)
-                
-    return tool
-
 # ---- check_resources (from core_crafting.py)
 def check_resources(craftContainer, smallBodResources, resourceContainer, itemMoveDelayMs, specialMaterialHue = None):
     itemsToMove = []
@@ -1109,103 +1206,6 @@ def check_resources(craftContainer, smallBodResources, resourceContainer, itemMo
         Misc.Pause(itemMoveDelayMs)
 
     return True
-
-# ---- LargeBod (from core_crafting.py)
-class LargeBod:
-    def __init__(self, bodSerial, isExceptional, amountToMake, specialMaterialPropId, smallBodItems):
-        self.isExceptional = isExceptional
-        self.amountToMake = amountToMake
-        self.specialMaterialPropId = specialMaterialPropId
-        self.smallBodItems = smallBodItems
-        self.bodSerial = bodSerial
-
-    # Use this to identify similar bods (material, exceptional, and items required)
-    # Need this to stort when filling large bods so we complete those with the most progress first
-    def getId(self):
-        part1 = "1" if self.isExceptional else "0"
-        part2 = str(self.specialMaterialPropId) if self.specialMaterialPropId is not None else "0"
-        part3 = "|".join(sorted(list(map(lambda smallBodItem: smallBodItem["name"], self.smallBodItems))))
-        return part1 + "|" + part2 + "|" + part3
-        
-    def numComplete(self):
-        numCompleted = 0
-        for smallBodItem in self.smallBodItems:
-            if smallBodItem['amountMade'] == self.amountToMake:
-                numCompleted = numCompleted + 1
-        return numCompleted
-        
-    def isComplete(self):
-        isComplete = False
-        numCompleted = 0
-        for smallBodItem in self.smallBodItems:
-            if smallBodItem['amountMade'] == self.amountToMake:
-                numCompleted = numCompleted + 1
-        return numCompleted == len(self.smallBodItems)
-
-    def __str__(self):
-        return f"LargeBod(isExceptional='{self.isExceptional}', amountToMake='{self.amountToMake}', specialMaterialPropId={self.specialMaterialPropId}, smallBodItems={self.smallBodItems}, isComplete={self.isComplete()}, numComplete={self.numComplete()})"
-
-# ---- search_complete_small_bod_db (from core_crafting.py)
-def search_complete_small_bod_db(db, largeBod, fillNormalLargeBodsWithExceptionalSmallBods):
-    entries = []
-    for smallBodItem in largeBod.smallBodItems:
-        if smallBodItem["amountMade"] == largeBod.amountToMake:
-            continue
-        if smallBodItem["name"] in db:
-            index = 0
-            found = False
-            for smallBod in db[smallBodItem["name"]]:
-                if fillNormalLargeBodsWithExceptionalSmallBods and (largeBod.isExceptional == False or smallBod.isExceptional == largeBod.isExceptional) and smallBod.amountMade == largeBod.amountToMake and smallBod.specialMaterialPropId == largeBod.specialMaterialPropId:                    
-                    entries.append(smallBod)
-                    found = True
-                    break
-                if smallBod.isExceptional == largeBod.isExceptional and smallBod.amountMade == largeBod.amountToMake and smallBod.specialMaterialPropId == largeBod.specialMaterialPropId:                    
-                    entries.append(smallBod)
-                    found = True
-                    break
-                index = index + 1
-            if found:
-                del db[smallBodItem["name"]][index]
-    return entries
-
-# ---- BodReport (from core_crafting.py)
-class BodReport:
-    def __init__(self, name):
-        self.name = name
-        self.numIncompleteSmallBods = 0
-        self.numCompleteSmallBods = 0
-        self.numIncompleteLargeBods = 0
-        self.numCompleteLargeBods = 0
-        self.numInWrongContainer = 0
-        self.numMissingRecipe = 0
-        self.numMissingResources = 0
-
-    def incrementNumIncompleteSmallBods(self):
-        self.numIncompleteSmallBods = self.numIncompleteSmallBods + 1
-        
-    def incrementNumCompleteSmallBods(self):
-        self.numCompleteSmallBods = self.numCompleteSmallBods + 1        
-        
-    def incrementNumIncompleteLargeBods(self):
-        self.numIncompleteLargeBods = self.numIncompleteLargeBods + 1
-        
-    def incrementNumCompleteLargeBods(self):
-        self.numCompleteLargeBods = self.numCompleteLargeBods + 1  
-  
-    def incrementNumInWrongContainer(self):
-        self.numInWrongContainer = self.numInWrongContainer + 1
-        
-    def incrementNumMissingRecipe(self):
-        self.numMissingRecipe = self.numMissingRecipe + 1
-        
-    def incrementNumMissingResources(self):
-        self.numMissingResources = self.numMissingResources + 1
-        
-    def __str__(self):
-        totalSmall = self.numIncompleteSmallBods + self.numCompleteSmallBods + self.numMissingRecipe
-        totalLarge = self.numIncompleteLargeBods + self.numCompleteLargeBods
-        #incompleteSmall = self.numIncompleteSmallBods - self.numMissingRecipe
-        return "{}:\t\tSmall ({}/{})\t\tLarge ({}/{})\tWrong Container ({})\tNo Recipe ({})\tNo Resources ({})".format(self.name, self.numCompleteSmallBods, totalSmall, self.numCompleteLargeBods, totalLarge, self.numInWrongContainer, self.numMissingRecipe, self.numMissingResources)
 
 # ---- SmallBod (from core_crafting.py)
 class SmallBod:
@@ -1324,6 +1324,19 @@ def parse_large_bod(bod):
     if isLargeBod:
         return LargeBod(bod.Serial, isExceptional, amountToMake, specialMaterialPropId, smallBodItems)
 
+# ---- sort_large_bods (from core_crafting.py)
+def sort_large_bods(incompleteBodContainers):
+    largeBods = []
+    for incompleteBodContainer in incompleteBodContainers:
+        bods = Items.FindAllByID(BOD_STATIC_ID, -1, incompleteBodContainer, 1)
+        for bod in bods:
+            largeBod = parse_large_bod(bod)
+            if largeBod is not None: 
+                largeBods.append(largeBod)
+    
+    largeBods = sorted(largeBods, key = lambda largeBod: (largeBod.getId(), -ord(str(largeBod.numComplete()))))
+    return largeBods
+
 # ---- parse_small_bod (from core_crafting.py)
 def parse_small_bod(bod, recipes, alertMissingRecipe = False):
     isExceptional = False
@@ -1361,18 +1374,27 @@ def parse_small_bod(bod, recipes, alertMissingRecipe = False):
         for prop in bod.Properties:
             print("\t", prop.ToString(), "(", prop.Number, ")")
 
-# ---- sort_large_bods (from core_crafting.py)
-def sort_large_bods(incompleteBodContainers):
-    largeBods = []
-    for incompleteBodContainer in incompleteBodContainers:
-        bods = Items.FindAllByID(BOD_STATIC_ID, -1, incompleteBodContainer, 1)
+# ---- build_complete_small_bod_db (from core_crafting.py)
+def build_complete_small_bod_db(smallBodWaitingForLargeBodContainers, recipes):
+    db = {}
+    itemsInDb = 0
+    for smallBodWaitingForLargeBodContainer in smallBodWaitingForLargeBodContainers:
+        bods = Items.FindAllByID(BOD_STATIC_ID, -1, smallBodWaitingForLargeBodContainer, 1)
         for bod in bods:
-            largeBod = parse_large_bod(bod)
-            if largeBod is not None: 
-                largeBods.append(largeBod)
-    
-    largeBods = sorted(largeBods, key = lambda largeBod: (largeBod.getId(), -ord(str(largeBod.numComplete()))))
-    return largeBods
+            smallBod = parse_small_bod(bod, recipes)
+            if smallBod is not None and smallBod.isComplete():
+                smallBod.getNameInLargeBod()
+                if smallBod.getNameInLargeBod() not in db:
+                    db[smallBod.getNameInLargeBod()] = []
+                db[smallBod.getNameInLargeBod()].append(smallBod)
+                
+                #if smallBod.recipe.recipeName not in db:
+                #    db[smallBod.recipe.recipeName] = []
+                #db[smallBod.recipe.recipeName].append(smallBod)
+                itemsInDb = itemsInDb + 1    
+                    
+    print("Database built with {} complete small bods".format(itemsInDb))
+    return db
 
 # ---- report_final_metrics (from core_crafting.py)
 def report_final_metrics(reports, recipes, incompleteBodContainers, smallBodWaitingForLargeBodContainers, completeSmallBodContainer, completeLargeBodContainer):
@@ -1487,28 +1509,6 @@ def report_final_metrics(reports, recipes, incompleteBodContainers, smallBodWait
     for k in reports:
         print(reports[k])
     print("\nReady for turn in:\n\n\t* Small:\t{}\n\t* Large:\t{}".format(smallBodsReadyForTurnIn, largeBodsReadyForTurnIn))
-
-# ---- build_complete_small_bod_db (from core_crafting.py)
-def build_complete_small_bod_db(smallBodWaitingForLargeBodContainers, recipes):
-    db = {}
-    itemsInDb = 0
-    for smallBodWaitingForLargeBodContainer in smallBodWaitingForLargeBodContainers:
-        bods = Items.FindAllByID(BOD_STATIC_ID, -1, smallBodWaitingForLargeBodContainer, 1)
-        for bod in bods:
-            smallBod = parse_small_bod(bod, recipes)
-            if smallBod is not None and smallBod.isComplete():
-                smallBod.getNameInLargeBod()
-                if smallBod.getNameInLargeBod() not in db:
-                    db[smallBod.getNameInLargeBod()] = []
-                db[smallBod.getNameInLargeBod()].append(smallBod)
-                
-                #if smallBod.recipe.recipeName not in db:
-                #    db[smallBod.recipe.recipeName] = []
-                #db[smallBod.recipe.recipeName].append(smallBod)
-                itemsInDb = itemsInDb + 1    
-                    
-    print("Database built with {} complete small bods".format(itemsInDb))
-    return db
 
 # ---- run_bod_builder (from core_crafting.py)
 def run_bod_builder(

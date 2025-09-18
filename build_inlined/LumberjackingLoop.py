@@ -40,27 +40,6 @@ def get_tile_behind(distance = 1):
 
     return tileX, tileY, Player.Position.Z
 
-# ---- cut_logs_to_boards (from core_gathering.py)
-def cut_logs_to_boards(axe, itemMoveDelayMs):    
-    for logStaticID in LOG_STATIC_IDS:
-        logs = find_all_in_container_by_id(logStaticID, containerSerial = Player.Backpack.Serial)
-        for log in logs:
-            Items.UseItem(axe)
-            Target.WaitForTarget(10000, False)
-            Target.TargetExecute(log.Serial)
-            Misc.Pause(itemMoveDelayMs)
-
-# ---- drop_unwanted_resources (from core_gathering.py)
-def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):    
-    for itemStaticId in itemStaticIds:
-        resources = find_all_in_container_by_id(itemStaticId, containerSerial = Player.Backpack.Serial)
-        for resource in resources:
-            if resource.Color not in keepItemHues:
-                print("Dropping {} on ground".format(resource.Name))
-                tileX, tileY, tileZ = get_tile_behind(2)
-                Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
-                Misc.Pause(itemMoveDelayMs)
-
 # ---- move_items_to_pack_animal (from core_gathering.py)
 def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
     for itemId in itemIds:
@@ -106,6 +85,27 @@ def cut_tree(tree, tool, cutDelayMs):
     else:
         #cut_tree(tree, tool, cutDelayMs)
         return True
+
+# ---- drop_unwanted_resources (from core_gathering.py)
+def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):    
+    for itemStaticId in itemStaticIds:
+        resources = find_all_in_container_by_id(itemStaticId, containerSerial = Player.Backpack.Serial)
+        for resource in resources:
+            if resource.Color not in keepItemHues:
+                print("Dropping {} on ground".format(resource.Name))
+                tileX, tileY, tileZ = get_tile_behind(2)
+                Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
+                Misc.Pause(itemMoveDelayMs)
+
+# ---- cut_logs_to_boards (from core_gathering.py)
+def cut_logs_to_boards(axe, itemMoveDelayMs):    
+    for logStaticID in LOG_STATIC_IDS:
+        logs = find_all_in_container_by_id(logStaticID, containerSerial = Player.Backpack.Serial)
+        for log in logs:
+            Items.UseItem(axe)
+            Target.WaitForTarget(10000, False)
+            Target.TargetExecute(log.Serial)
+            Misc.Pause(itemMoveDelayMs)
 
 # ---- Tree (from core_gathering.py)
 class Tree:

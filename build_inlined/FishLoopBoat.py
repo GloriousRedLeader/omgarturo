@@ -34,6 +34,19 @@ FISH_STATIC_IDS = [
     0x44D4, # Hummer lobster
 ]
 
+# ===== Inlined block from core_items.py =====
+# ---- FISHING_POLE_STATIC_IDS (binding from core_items.py)
+FISHING_POLE_STATIC_IDS = [0x0DC0]
+
+# ===== Inlined block from core_items.py =====
+# ---- get_corpses (from core_items.py)
+def get_corpses(range = 2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
+
 # ===== Inlined block from core_player.py =====
 # ---- equip_weapon (from core_player.py)
 def equip_weapon(newItem):
@@ -69,19 +82,6 @@ def find_first_in_hands_by_ids(itemIDs):
         if item != None:
             return item
     return None
-
-# ===== Inlined block from core_items.py =====
-# ---- get_corpses (from core_items.py)
-def get_corpses(range = 2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
-
-# ===== Inlined block from core_items.py =====
-# ---- FISHING_POLE_STATIC_IDS (binding from core_items.py)
-FISHING_POLE_STATIC_IDS = [0x0DC0]
 
 # ---- corpseScannerCache (binding from core_gathering.py)
 corpseScannerCache = []
