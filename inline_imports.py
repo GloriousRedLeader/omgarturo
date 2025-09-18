@@ -290,9 +290,14 @@ class Inliner:
             all_deps.add(name)
         
         # Process imported symbols - recursively inline them from their source modules
-        while imported_symbols:
+        # Keep doing this until no new symbols are discovered
+        iteration = 0
+        max_iterations = 10  # Prevent infinite loops
+        
+        while imported_symbols and iteration < max_iterations:
             current_imports = imported_symbols.copy()
             imported_symbols.clear()
+            iteration += 1
             
             for import_path, import_name in current_imports:
                 # Recursively inline the imported symbol

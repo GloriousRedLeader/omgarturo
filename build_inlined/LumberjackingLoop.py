@@ -55,6 +55,28 @@ def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
                     Items.Move(item, packAnimal.Backpack.Serial, item.Amount)
                     Misc.Pause(itemMoveDelayMs)
 
+# ---- cut_logs_to_boards (from core_gathering.py)
+def cut_logs_to_boards(axe, itemMoveDelayMs):    
+    for logStaticID in LOG_STATIC_IDS:
+        logs = find_all_in_container_by_id(logStaticID, containerSerial = Player.Backpack.Serial)
+        for log in logs:
+            Items.UseItem(axe)
+            Target.WaitForTarget(10000, False)
+            Target.TargetExecute(log.Serial)
+            Misc.Pause(itemMoveDelayMs)
+
+# ---- Tree (from core_gathering.py)
+class Tree:
+    def __init__(self, x, y, z, staticId):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.staticId = staticId
+        self.tooFarAwayAttempts = 0
+        
+    def __str__(self):
+        return f"Tree(x='{self.x}', y='{self.y}', z='{self.z}', staticId={self.staticId})"
+
 # ---- cut_tree (from core_gathering.py)
 def cut_tree(tree, tool, cutDelayMs):
     Target.Cancel()
@@ -96,28 +118,6 @@ def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):
                 tileX, tileY, tileZ = get_tile_behind(2)
                 Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
                 Misc.Pause(itemMoveDelayMs)
-
-# ---- cut_logs_to_boards (from core_gathering.py)
-def cut_logs_to_boards(axe, itemMoveDelayMs):    
-    for logStaticID in LOG_STATIC_IDS:
-        logs = find_all_in_container_by_id(logStaticID, containerSerial = Player.Backpack.Serial)
-        for log in logs:
-            Items.UseItem(axe)
-            Target.WaitForTarget(10000, False)
-            Target.TargetExecute(log.Serial)
-            Misc.Pause(itemMoveDelayMs)
-
-# ---- Tree (from core_gathering.py)
-class Tree:
-    def __init__(self, x, y, z, staticId):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.staticId = staticId
-        self.tooFarAwayAttempts = 0
-        
-    def __str__(self):
-        return f"Tree(x='{self.x}', y='{self.y}', z='{self.z}', staticId={self.staticId})"
 
 # ---- scan_trees (from core_gathering.py)
 def scan_trees(tileRange, treeStaticIds):

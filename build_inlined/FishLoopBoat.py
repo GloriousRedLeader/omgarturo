@@ -34,19 +34,6 @@ FISH_STATIC_IDS = [
     0x44D4, # Hummer lobster
 ]
 
-# ===== Inlined block from core_items.py =====
-# ---- FISHING_POLE_STATIC_IDS (binding from core_items.py)
-FISHING_POLE_STATIC_IDS = [0x0DC0]
-
-# ===== Inlined block from core_items.py =====
-# ---- get_corpses (from core_items.py)
-def get_corpses(range = 2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
-
 # ===== Inlined block from core_player.py =====
 # ---- equip_weapon (from core_player.py)
 def equip_weapon(newItem):
@@ -63,6 +50,10 @@ def equip_weapon(newItem):
     Player.EquipItem(newItem)    
     Misc.Pause(1000)      
     return [leftHand, rightHand]
+
+# ===== Inlined block from core_items.py =====
+# ---- FISHING_POLE_STATIC_IDS (binding from core_items.py)
+FISHING_POLE_STATIC_IDS = [0x0DC0]
 
 # ===== Inlined block from core_player.py =====
 # ---- find_in_hands_by_id (from core_player.py)
@@ -83,11 +74,20 @@ def find_first_in_hands_by_ids(itemIDs):
             return item
     return None
 
-# ---- corpseScannerCache (binding from core_gathering.py)
-corpseScannerCache = []
+# ===== Inlined block from core_items.py =====
+# ---- get_corpses (from core_items.py)
+def get_corpses(range = 2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
 
 # ---- TRUE_NORTH_DIRECTION_MAP (binding from core_gathering.py)
 TRUE_NORTH_DIRECTION_MAP = ["Forward One", "Right One", "Back One", "Left One"]
+
+# ---- corpseScannerCache (binding from core_gathering.py)
+corpseScannerCache = []
 
 # ---- get_boat_direction (from core_gathering.py)
 def get_boat_direction():

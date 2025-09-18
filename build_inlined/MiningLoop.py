@@ -10,32 +10,6 @@ import sys
 # ===============================================
 
 # ===== Inlined block from core_gathering.py =====
-# ---- should_move (from core_gathering.py)
-def should_move():
-    if Journal.Search('no metal') or Journal.Search('t mine that') or Journal.Search('no sand'):
-        Journal.Clear()
-        return True
-    else:
-        Journal.Clear()
-        return False
-
-# ---- get_tile_in_front_serial (from core_gathering.py)
-def get_tile_in_front_serial():
-    tileX, tileY, tileZ = get_tile_in_front()
-    #tileinfo = Statics.GetStaticsLandInfo(tileX, tileY, Player.Map)
-
-    filter = Items.Filter()
-    # 0x053B is Cave floor
-    # 0x0018 is Sand
-    filter.Graphics = List[Int32]((0x053B)) 
-    filter.OnGround = True
-    filter.RangeMax = 1
-    items = Items.ApplyFilter(filter)
-    for item in items:
-        if item.Position.X == tileX and item.Position.Y == tileY:
-            return item.Serial, tileX, tileY, tileZ 
-    return None, tileX, tileY, tileZ
-
 # ---- smelt_ore (from core_gathering.py)
 def smelt_ore(forgeAnimalMobileId, itemMoveDelayMs):
     forgeAnimals = get_pets(range = 2, checkLineOfSight = True, mobileId = forgeAnimalMobileId)
@@ -65,6 +39,32 @@ def getMinerTool():
         miningTool = find_in_container_by_id(minerToolStaticID, Player.Backpack.Serial)
         if miningTool is not None:
             return miningTool
+
+# ---- should_move (from core_gathering.py)
+def should_move():
+    if Journal.Search('no metal') or Journal.Search('t mine that') or Journal.Search('no sand'):
+        Journal.Clear()
+        return True
+    else:
+        Journal.Clear()
+        return False
+
+# ---- get_tile_in_front_serial (from core_gathering.py)
+def get_tile_in_front_serial():
+    tileX, tileY, tileZ = get_tile_in_front()
+    #tileinfo = Statics.GetStaticsLandInfo(tileX, tileY, Player.Map)
+
+    filter = Items.Filter()
+    # 0x053B is Cave floor
+    # 0x0018 is Sand
+    filter.Graphics = List[Int32]((0x053B)) 
+    filter.OnGround = True
+    filter.RangeMax = 1
+    items = Items.ApplyFilter(filter)
+    for item in items:
+        if item.Position.X == tileX and item.Position.Y == tileY:
+            return item.Serial, tileX, tileY, tileZ 
+    return None, tileX, tileY, tileZ
 
 # ---- run_mining_loop (from core_gathering.py)
 def run_mining_loop(

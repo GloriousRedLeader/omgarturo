@@ -8,78 +8,6 @@ import sys
 # ===============================================
 
 # ===== Inlined block from core_attack.py =====
-# ===== Inlined block from core_mobiles.py =====
-# ---- ANIMATE_DEAD_MOBILE_NAMES (binding from core_mobiles.py)
-ANIMATE_DEAD_MOBILE_NAMES = [
-    "a gore fiend",
-    "a lich",
-    "a flesh golem",
-    "a mummy",
-    "a skeletal dragon",
-    "a lich lord",
-    "a skeletal knight",
-    "a bone knight",
-    "a skeletal mage",
-    "a bone mage",
-    "a patchwork skeleton",
-    "a mound of maggots",
-    "a wailing banshee",
-    "a wraith",
-    "a hellsteed",
-    "a skeletal steed",
-    "an Undead Gargoyle",
-    "a skeletal drake",
-    "a putrid undead gargoyle",
-    "a blade spirit",
-    "an energy vortex",
-    "a skeletal drake"
-]
-
-# ---- get_enemies (from core_mobiles.py)
-def get_enemies(range = 10, serialsToExclude = []):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([3,4,5,6]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    
-    # need to remove Animate dead summons. There are a handfull of MobileIDs that match
-    # the regular mobs, however these are red from animate dead when they are normally gray.
-    if len(mobs) > 0:
-        #for mob in mobs:
-            #print(mob.Name, mob.Name not in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety != 6 and mob.Serial not in serialsToExclude)
-            #print("is in animate dead", mob.Name not in ANIMATE_DEAD_MOBILE_NAMES)
-            
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-#        if len(mobsList) == 0:
-#            print("No mobs found")
-        return mobsList
-
-    return mobs
-
-# ---- get_honor_target (from core_mobiles.py)
-def get_honor_target():
-    for mob in get_enemies(10):
-        if mob.Hits == mob.HitsMax:
-            return mob
-
-# ===== Inlined block from core_mobiles.py =====
-# ---- get_blues_in_range (from core_mobiles.py)
-def get_blues_in_range(range = 8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-
-    return mobs
-
 # ===== Inlined block from core_spells.py =====
 # ===== Inlined block from core_items.py =====
 # ---- LAP_HARP_GRAPHIC_ID (binding from core_items.py)
@@ -96,152 +24,65 @@ INSTRUMENT_STATIC_IDS = [
     0x0E9D, # tambourine (tassle)
 ]
 
-# ---- MEDITATION_DELAY (binding from core_spells.py)
-MEDITATION_DELAY = 1250
-
-# ---- SPIRIT_SPEAK_DELAY (binding from core_spells.py)
-SPIRIT_SPEAK_DELAY = 999
-
-# ---- use_skill (from core_spells.py)
-def use_skill(
-
-    # Meditation, Spirit Speak, etc.
-    skillName,
-    
-    # (Optional) Mobile
-    target = None,
-    
-    # (Optional) 
-    latencyMs = None
-):
-    
-    if skillName == "Discordance": 
-        Journal.Clear()
-        
-    Player.UseSkill(skillName)
-    
-    if skillName == "Meditation":
-        Misc.Pause(MEDITATION_DELAY)
-    elif skillName == "Spirit Speak":
-        Misc.Pause(SPIRIT_SPEAK_DELAY)
-    elif skillName == "Discordance":
-        Target.WaitForTarget(latencyMs)
-        if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
-        #if Journal.Search( 'No instruments found to Discord with!' ):
-            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
-            if instrument is not None:
-                Target.TargetExecute(instrument)
-                Target.WaitForTarget(latencyMs)
-            else:
-                Misc.SendMessage("No instruments found to Discord with!")
-        Target.TargetExecute(target)
-        Misc.Pause(latencyMs)
-        
-    else:
-        Misc.Pause(1000)
-
-# ===== Inlined block from core_spells.py =====
-# ---- WORD_OF_DEATH_DELAY (binding from core_spells.py)
-WORD_OF_DEATH_DELAY = 3500
-
-# ---- FC_CAP_NECROMANCY (binding from core_spells.py)
-FC_CAP_NECROMANCY = 3 if (Player.GetSkillValue("Necromancy") == 120 and Player.GetSkillValue("Necromancy") == 120 and not any(Player.GetSkillValue(skill) > 30 for skill in ["Magery", "Spellweaving", "Parrying", "Mysticism", "Chivalry", "Animal Taming", "Animal Lore", "Ninjitsu", "Bushido", "Focus", "Imbuing", "Evaluating Intelligence"])) else 2
-
-# ---- CHAIN_LIGHTNING_DELAY (binding from core_spells.py)
-CHAIN_LIGHTNING_DELAY = 2000
-
-# ---- BLOOD_OATH_DELAY (binding from core_spells.py)
-BLOOD_OATH_DELAY = 1750
-
-# ---- ARCANE_EMPOWERMENT_DELAY (binding from core_spells.py)
-ARCANE_EMPOWERMENT_DELAY = 3000
-
-# ---- WILDFIRE_DELAY (binding from core_spells.py)
-WILDFIRE_DELAY = 2500
-
-# ---- WRAITH_FORM_DELAY (binding from core_spells.py)
-WRAITH_FORM_DELAY = 2250
-
 # ---- REMOVE_CURSE_DELAY (binding from core_spells.py)
 REMOVE_CURSE_DELAY = 1500
-
-# ---- FC_CAP_SHIELD_BASH (binding from core_spells.py)
-FC_CAP_SHIELD_BASH = 4
-
-# ---- FLAME_STRIKE_DELAY (binding from core_spells.py)
-FLAME_STRIKE_DELAY = 2500
-
-# ---- DEATH_RAY_DELAY (binding from core_spells.py)
-DEATH_RAY_DELAY = 2250
-
-# ---- CONDUIT_DELAY (binding from core_spells.py)
-CONDUIT_DELAY = 2250
-
-# ---- SHIELD_BASH_DELAY (binding from core_spells.py)
-SHIELD_BASH_DELAY = 1000
-
-# ---- FIRE_FIELD_DELAY (binding from core_spells.py)
-FIRE_FIELD_DELAY = 1750
-
-# ---- ANIMATE_DEAD_DELAY (binding from core_spells.py)
-ANIMATE_DEAD_DELAY = 1750
-
-# ---- CONSECRATE_WEAPON_DELAY (binding from core_spells.py)
-CONSECRATE_WEAPON_DELAY = 500
-
-# ---- POISON_DELAY (binding from core_spells.py)
-POISON_DELAY = 1500
-
-# ---- BARD_SONG_DELAY (binding from core_spells.py)
-BARD_SONG_DELAY = 2000
-
-# ---- FC_CAP_SPELLWEAVING (binding from core_spells.py)
-FC_CAP_SPELLWEAVING = 4
-
-# ---- ATTUNE_WEAPON_DELAY (binding from core_spells.py)
-ATTUNE_WEAPON_DELAY = 1000
-
-# ---- PROTECTION_DELAY (binding from core_spells.py)
-PROTECTION_DELAY = 750
-
-# ---- CORPSE_SKIN_DELAY (binding from core_spells.py)
-CORPSE_SKIN_DELAY = 1750
-
-# ---- ENERGY_BOLT_DELAY (binding from core_spells.py)
-ENERGY_BOLT_DELAY = 2000
-
-# ---- PAIN_SPIKE_DELAY (binding from core_spells.py)
-PAIN_SPIKE_DELAY = 1250
-
-# ---- THUNDERSTORM_DELAY (binding from core_spells.py)
-THUNDERSTORM_DELAY = 1500
 
 # ---- GIFT_OF_LIFE_DELAY (binding from core_spells.py)
 GIFT_OF_LIFE_DELAY = 4000
 
-# ---- WITHER_DELAY (binding from core_spells.py)
-WITHER_DELAY = 2250
+# ---- FC_CAP_BARD_SONG (binding from core_spells.py)
+FC_CAP_BARD_SONG = 4
 
-# ---- CURSE_DELAY (binding from core_spells.py)
-CURSE_DELAY = 1750
+# ---- WORD_OF_DEATH_DELAY (binding from core_spells.py)
+WORD_OF_DEATH_DELAY = 3500
 
-# ---- CLOSE_WOUNDS_DELAY (binding from core_spells.py)
-CLOSE_WOUNDS_DELAY = 1500
+# ---- CHAIN_LIGHTNING_DELAY (binding from core_spells.py)
+CHAIN_LIGHTNING_DELAY = 2000
+
+# ---- CORPSE_SKIN_DELAY (binding from core_spells.py)
+CORPSE_SKIN_DELAY = 1750
+
+# ---- CONSECRATE_WEAPON_DELAY (binding from core_spells.py)
+CONSECRATE_WEAPON_DELAY = 500
+
+# ---- ENERGY_BOLT_DELAY (binding from core_spells.py)
+ENERGY_BOLT_DELAY = 2000
+
+# ---- GIFT_OF_RENEWAL_DELAY (binding from core_spells.py)
+GIFT_OF_RENEWAL_DELAY = 3000
+
+# ---- FC_CAP_SPELLWEAVING (binding from core_spells.py)
+FC_CAP_SPELLWEAVING = 4
+
+# ---- WILDFIRE_DELAY (binding from core_spells.py)
+WILDFIRE_DELAY = 2500
+
+# ---- DEATH_RAY_DELAY (binding from core_spells.py)
+DEATH_RAY_DELAY = 2250
 
 # ---- ARCH_CURE_DELAY (binding from core_spells.py)
 ARCH_CURE_DELAY = 1750
 
-# ---- GREATER_HEAL_DELAY (binding from core_spells.py)
-GREATER_HEAL_DELAY = 1750
+# ---- WRAITH_FORM_DELAY (binding from core_spells.py)
+WRAITH_FORM_DELAY = 2250
 
-# ---- FC_CAP_BARD_SONG (binding from core_spells.py)
-FC_CAP_BARD_SONG = 4
+# ---- DIVINE_FURY_DELAY (binding from core_spells.py)
+DIVINE_FURY_DELAY = 1000
 
-# ---- POISON_STRIKE_DELAY (binding from core_spells.py)
-POISON_STRIKE_DELAY = 2000
+# ---- CURSE_WEAPON_DELAY (binding from core_spells.py)
+CURSE_WEAPON_DELAY = 1000
+
+# ---- SHIELD_BASH_DELAY (binding from core_spells.py)
+SHIELD_BASH_DELAY = 1000
 
 # ---- POISON_FIELD_DELAY (binding from core_spells.py)
 POISON_FIELD_DELAY = 2000
+
+# ---- EVIL_OMEN_DELAY (binding from core_spells.py)
+EVIL_OMEN_DELAY = 1000
+
+# ---- FLAME_STRIKE_DELAY (binding from core_spells.py)
+FLAME_STRIKE_DELAY = 2500
 
 # ---- ENEMY_OF_ONE_DELAY (binding from core_spells.py)
 ENEMY_OF_ONE_DELAY = 500
@@ -249,26 +90,68 @@ ENEMY_OF_ONE_DELAY = 500
 # ---- FC_CAP_MAGERY (binding from core_spells.py)
 FC_CAP_MAGERY = 2
 
-# ---- EVIL_OMEN_DELAY (binding from core_spells.py)
-EVIL_OMEN_DELAY = 1000
+# ---- THUNDERSTORM_DELAY (binding from core_spells.py)
+THUNDERSTORM_DELAY = 1500
 
-# ---- STRANGLE_DELAY (binding from core_spells.py)
-STRANGLE_DELAY = 2250 + 500
+# ---- CONDUIT_DELAY (binding from core_spells.py)
+CONDUIT_DELAY = 2250
 
-# ---- FC_CAP_CHIVALRY (binding from core_spells.py)
-FC_CAP_CHIVALRY = 4
+# ---- GREATER_HEAL_DELAY (binding from core_spells.py)
+GREATER_HEAL_DELAY = 1750
 
-# ---- GIFT_OF_RENEWAL_DELAY (binding from core_spells.py)
-GIFT_OF_RENEWAL_DELAY = 3000
+# ---- CURSE_DELAY (binding from core_spells.py)
+CURSE_DELAY = 1750
+
+# ---- POISON_STRIKE_DELAY (binding from core_spells.py)
+POISON_STRIKE_DELAY = 2000
+
+# ---- FC_CAP_SHIELD_BASH (binding from core_spells.py)
+FC_CAP_SHIELD_BASH = 4
+
+# ---- CLOSE_WOUNDS_DELAY (binding from core_spells.py)
+CLOSE_WOUNDS_DELAY = 1500
+
+# ---- ATTUNE_WEAPON_DELAY (binding from core_spells.py)
+ATTUNE_WEAPON_DELAY = 1000
+
+# ---- PROTECTION_DELAY (binding from core_spells.py)
+PROTECTION_DELAY = 750
+
+# ---- BARD_SONG_DELAY (binding from core_spells.py)
+BARD_SONG_DELAY = 2000
+
+# ---- ANIMATE_DEAD_DELAY (binding from core_spells.py)
+ANIMATE_DEAD_DELAY = 1750
 
 # ---- VAMPIRIC_EMBRACE_DELAY (binding from core_spells.py)
 VAMPIRIC_EMBRACE_DELAY = 2250
 
-# ---- CURSE_WEAPON_DELAY (binding from core_spells.py)
-CURSE_WEAPON_DELAY = 1000
+# ---- STRANGLE_DELAY (binding from core_spells.py)
+STRANGLE_DELAY = 2250 + 500
 
-# ---- DIVINE_FURY_DELAY (binding from core_spells.py)
-DIVINE_FURY_DELAY = 1000
+# ---- WITHER_DELAY (binding from core_spells.py)
+WITHER_DELAY = 2250
+
+# ---- POISON_DELAY (binding from core_spells.py)
+POISON_DELAY = 1500
+
+# ---- FIRE_FIELD_DELAY (binding from core_spells.py)
+FIRE_FIELD_DELAY = 1750
+
+# ---- ARCANE_EMPOWERMENT_DELAY (binding from core_spells.py)
+ARCANE_EMPOWERMENT_DELAY = 3000
+
+# ---- FC_CAP_NECROMANCY (binding from core_spells.py)
+FC_CAP_NECROMANCY = 3 if (Player.GetSkillValue("Necromancy") == 120 and Player.GetSkillValue("Necromancy") == 120 and not any(Player.GetSkillValue(skill) > 30 for skill in ["Magery", "Spellweaving", "Parrying", "Mysticism", "Chivalry", "Animal Taming", "Animal Lore", "Ninjitsu", "Bushido", "Focus", "Imbuing", "Evaluating Intelligence"])) else 2
+
+# ---- PAIN_SPIKE_DELAY (binding from core_spells.py)
+PAIN_SPIKE_DELAY = 1250
+
+# ---- BLOOD_OATH_DELAY (binding from core_spells.py)
+BLOOD_OATH_DELAY = 1750
+
+# ---- FC_CAP_CHIVALRY (binding from core_spells.py)
+FC_CAP_CHIVALRY = 4
 
 # ---- get_fcr_delay (from core_spells.py)
 def get_fcr_delay(
@@ -464,6 +347,72 @@ def cast_spell(
     
     Misc.Pause(get_fcr_delay(spellName, latencyMs))
 
+# ===== Inlined block from core_mobiles.py =====
+# ---- get_blues_in_range (from core_mobiles.py)
+def get_blues_in_range(range = 8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+
+    return mobs
+
+# ===== Inlined block from core_mobiles.py =====
+# ---- ANIMATE_DEAD_MOBILE_NAMES (binding from core_mobiles.py)
+ANIMATE_DEAD_MOBILE_NAMES = [
+    "a gore fiend",
+    "a lich",
+    "a flesh golem",
+    "a mummy",
+    "a skeletal dragon",
+    "a lich lord",
+    "a skeletal knight",
+    "a bone knight",
+    "a skeletal mage",
+    "a bone mage",
+    "a patchwork skeleton",
+    "a mound of maggots",
+    "a wailing banshee",
+    "a wraith",
+    "a hellsteed",
+    "a skeletal steed",
+    "an Undead Gargoyle",
+    "a skeletal drake",
+    "a putrid undead gargoyle",
+    "a blade spirit",
+    "an energy vortex",
+    "a skeletal drake"
+]
+
+# ---- get_enemies (from core_mobiles.py)
+def get_enemies(range = 10, serialsToExclude = []):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([3,4,5,6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    
+    # need to remove Animate dead summons. There are a handfull of MobileIDs that match
+    # the regular mobs, however these are red from animate dead when they are normally gray.
+    if len(mobs) > 0:
+        #for mob in mobs:
+            #print(mob.Name, mob.Name not in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety != 6 and mob.Serial not in serialsToExclude)
+            #print("is in animate dead", mob.Name not in ANIMATE_DEAD_MOBILE_NAMES)
+            
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
+#        if len(mobsList) == 0:
+#            print("No mobs found")
+        return mobsList
+
+    return mobs
+
 # ===== Inlined block from core_player.py =====
 # ===== Inlined block from core_items.py =====
 # ---- GOLD_STATIC_IDS (binding from core_items.py)
@@ -492,6 +441,62 @@ def use_bag_of_sending(
     else:
         print("No bag of sending found!")
 
+# ===== Inlined block from core_spells.py =====
+# ---- SPIRIT_SPEAK_DELAY (binding from core_spells.py)
+SPIRIT_SPEAK_DELAY = 999
+
+# ---- MEDITATION_DELAY (binding from core_spells.py)
+MEDITATION_DELAY = 1250
+
+# ---- use_skill (from core_spells.py)
+def use_skill(
+
+    # Meditation, Spirit Speak, etc.
+    skillName,
+    
+    # (Optional) Mobile
+    target = None,
+    
+    # (Optional) 
+    latencyMs = None
+):
+    
+    if skillName == "Discordance": 
+        Journal.Clear()
+        
+    Player.UseSkill(skillName)
+    
+    if skillName == "Meditation":
+        Misc.Pause(MEDITATION_DELAY)
+    elif skillName == "Spirit Speak":
+        Misc.Pause(SPIRIT_SPEAK_DELAY)
+    elif skillName == "Discordance":
+        Target.WaitForTarget(latencyMs)
+        if Journal.Search( 'What instrument shall you play?' ) or Journal.Search( 'No instruments found to Discord with!' ):
+        #if Journal.Search( 'No instruments found to Discord with!' ):
+            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
+            if instrument is not None:
+                Target.TargetExecute(instrument)
+                Target.WaitForTarget(latencyMs)
+            else:
+                Misc.SendMessage("No instruments found to Discord with!")
+        Target.TargetExecute(target)
+        Misc.Pause(latencyMs)
+        
+    else:
+        Misc.Pause(1000)
+
+# ===== Inlined block from core_items.py =====
+# ---- BANDAGE_STATIC_ID (binding from core_items.py)
+BANDAGE_STATIC_ID = 0x0E21
+
+# ===== Inlined block from core_mobiles.py =====
+# ---- get_honor_target (from core_mobiles.py)
+def get_honor_target():
+    for mob in get_enemies(10):
+        if mob.Hits == mob.HitsMax:
+            return mob
+
 # ===== Inlined block from core_mobiles.py =====
 # ---- get_pets (from core_mobiles.py)
 def get_pets(range = 10, checkLineOfSight = True, mobileId = None):
@@ -512,10 +517,6 @@ def get_pets(range = 10, checkLineOfSight = True, mobileId = None):
         if blue.CanRename:
             pets.append(blue)
     return pets
-
-# ===== Inlined block from core_items.py =====
-# ---- BANDAGE_STATIC_ID (binding from core_items.py)
-BANDAGE_STATIC_ID = 0x0E21
 
 # ---- heal_player_and_friends (from core_attack.py)
 def heal_player_and_friends(
