@@ -362,12 +362,41 @@ class SimpleInliner:
         # Combine everything
         final_code = '\n'.join(code_sections)
         
-        # Write output
-        output_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(str(output_file), 'w') as f:
-            f.write(final_code + '\n')
+        # Check if file exists and content has changed (excluding header date)
+        should_write = True
+        if output_file.exists():
+            try:
+                with open(str(output_file), 'r') as f:
+                    existing_content = f.read()
+                
+                # Compare content excluding the date line
+                def normalize_content(content):
+                    lines = content.splitlines()
+                    # Skip the date line (line 4: "#   YYYY-MM-DD")
+                    normalized = []
+                    for i, line in enumerate(lines):
+                        if i == 3 and line.strip().startswith('#   20'):  # Date line
+                            normalized.append('#   DATE_PLACEHOLDER')
+                        else:
+                            normalized.append(line)
+                    return '\n'.join(normalized)
+                
+                existing_normalized = normalize_content(existing_content)
+                new_normalized = normalize_content(final_code)
+                
+                if existing_normalized == new_normalized:
+                    should_write = False
+                    print("Skipped {} (content unchanged)".format(output_file.name))
+            except:
+                # If comparison fails, write the file
+                should_write = True
         
-        print("Wrote {}".format(output_file))
+        if should_write:
+            # Write output
+            output_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(str(output_file), 'w') as f:
+                f.write(final_code + '\n')
+            print("Wrote {} (content changed)".format(output_file))
     
     def _topologically_sort_all_symbols(self, constant_nodes, function_nodes, class_nodes):
         """Topologically sort all symbols (constants, functions, classes) based on their dependencies."""
