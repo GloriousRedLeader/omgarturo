@@ -561,19 +561,18 @@ def validate_syntax(output_dir: pathlib.Path):
     print("="*50)
     
     syntax_errors = {}
-    import py_compile
-    import tempfile
-    import os
+    import ast
     
     for py_file in output_dir.glob('*.py'):
         try:
-            # Try to compile the file
-            with tempfile.NamedTemporaryFile(suffix='.pyc', delete=True) as tmp:
-                py_compile.compile(str(py_file), tmp.name, doraise=True)
-        except py_compile.PyCompileError as e:
-            syntax_errors[py_file.name] = str(e)
+            # Try to parse the file with AST (no temp files needed)
+            with open(str(py_file), 'r') as f:
+                source = f.read()
+            ast.parse(source, filename=str(py_file))
+        except SyntaxError as e:
+            syntax_errors[py_file.name] = "Syntax error: {} at line {}".format(e.msg, e.lineno)
         except Exception as e:
-            syntax_errors[py_file.name] = "Compilation error: {}".format(e)
+            syntax_errors[py_file.name] = "Parse error: {}".format(e)
     
     if syntax_errors:
         print("\n[ERROR] Found syntax errors in {} files:".format(len(syntax_errors)))
