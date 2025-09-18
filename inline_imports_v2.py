@@ -360,8 +360,11 @@ def validate_imports(output_dir: pathlib.Path):
     
     import_errors = {}
     original_path = sys.path.copy()
+    original_dont_write_bytecode = sys.dont_write_bytecode
     
     try:
+        # Prevent Python from creating __pycache__ folders
+        sys.dont_write_bytecode = True
         # Add output directory to Python path
         sys.path.insert(0, str(output_dir.absolute()))
         
@@ -398,8 +401,9 @@ def validate_imports(output_dir: pathlib.Path):
                     if not is_uo_api_error:
                         import_errors[py_file.name] = f"Import error: {e}"
     finally:
-        # Restore original path
+        # Restore original settings
         sys.path = original_path
+        sys.dont_write_bytecode = original_dont_write_bytecode
     
     if import_errors:
         print(f"\n❌ Found import errors in {len(import_errors)} files:")
