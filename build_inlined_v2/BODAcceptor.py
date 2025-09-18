@@ -2,11 +2,9 @@ from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
 
-# Constants
-BOD_STATIC_ID = 8792
+# Inlined dependencies (topologically sorted)
 BOD_BOOK_STATIC_ID = 8793
-
-# Functions
+BOD_STATIC_ID = 8792
 def get_yellows_in_range(range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True

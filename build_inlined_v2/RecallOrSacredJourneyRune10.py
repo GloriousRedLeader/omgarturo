@@ -4,67 +4,52 @@ import inspect
 import os
 import re
 
-# Constants
-POISON_STRIKE_DELAY = 2000
-REMOVE_CURSE_DELAY = 1500
-ARCH_CURE_DELAY = 1750
-CONDUIT_DELAY = 2250
-RUNEBOOK = 8901
-WILDFIRE_DELAY = 2500
-ENEMY_OF_ONE_DELAY = 500
-EVIL_OMEN_DELAY = 1000
-CHAIN_LIGHTNING_DELAY = 2000
-FC_CAP_CHIVALRY = 4
-BARD_SONG_DELAY = 2000
-DIVINE_FURY_DELAY = 1000
-FC_CAP_SHIELD_BASH = 4
-FC_CAP_MAGERY = 2
-WITHER_DELAY = 2250
-LAP_HARP_GRAPHIC_ID = 3762
-FC_CAP_BARD_SONG = 4
-ENERGY_BOLT_DELAY = 2000
+# Inlined dependencies (topologically sorted)
 ANIMATE_DEAD_DELAY = 1750
-FLAME_STRIKE_DELAY = 2500
-FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
-WRAITH_FORM_DELAY = 2250
-CURSE_DELAY = 1750
-GIFT_OF_LIFE_DELAY = 4000
-BLOOD_OATH_DELAY = 1750
-FIRE_FIELD_DELAY = 1750
-CONSECRATE_WEAPON_DELAY = 500
-GREATER_HEAL_DELAY = 1750
 ARCANE_EMPOWERMENT_DELAY = 3000
-CLOSE_WOUNDS_DELAY = 1500
-CORPSE_SKIN_DELAY = 1750
-SHIELD_BASH_DELAY = 1000
-DEATH_RAY_DELAY = 2250
-FC_CAP_SPELLWEAVING = 4
-POISON_DELAY = 1500
-CURSE_WEAPON_DELAY = 1000
-STRANGLE_DELAY = 2250 + 500
-POISON_FIELD_DELAY = 2000
-VAMPIRIC_EMBRACE_DELAY = 2250
-THUNDERSTORM_DELAY = 1500
+ARCH_CURE_DELAY = 1750
 ATTUNE_WEAPON_DELAY = 1000
-PROTECTION_DELAY = 750
-WORD_OF_DEATH_DELAY = 3500
-PAIN_SPIKE_DELAY = 1250
+BARD_SONG_DELAY = 2000
+BLOOD_OATH_DELAY = 1750
+CHAIN_LIGHTNING_DELAY = 2000
+CLOSE_WOUNDS_DELAY = 1500
+CONDUIT_DELAY = 2250
+CONSECRATE_WEAPON_DELAY = 500
+CORPSE_SKIN_DELAY = 1750
+CURSE_DELAY = 1750
+CURSE_WEAPON_DELAY = 1000
+DEATH_RAY_DELAY = 2250
+DIVINE_FURY_DELAY = 1000
+ENEMY_OF_ONE_DELAY = 500
+ENERGY_BOLT_DELAY = 2000
+EVIL_OMEN_DELAY = 1000
+FC_CAP_BARD_SONG = 4
+FC_CAP_CHIVALRY = 4
+FC_CAP_MAGERY = 2
+FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
+FC_CAP_SHIELD_BASH = 4
+FC_CAP_SPELLWEAVING = 4
+FIRE_FIELD_DELAY = 1750
+FLAME_STRIKE_DELAY = 2500
+GIFT_OF_LIFE_DELAY = 4000
 GIFT_OF_RENEWAL_DELAY = 3000
-INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
-
-# Functions
-def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
-    latency = 100
-    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
-    delay = baseDelayMs - fcOffset
-    if delay < 250:
-        delay = 250
-    return delay + latencyMs
-def get_fcr_delay(spellName, latencyMs=200):
-    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
-    if fcr < 1:
-        fcr = 1
-    return fcr + latencyMs
+GREATER_HEAL_DELAY = 1750
+LAP_HARP_GRAPHIC_ID = 3762
+PAIN_SPIKE_DELAY = 1250
+POISON_DELAY = 1500
+POISON_FIELD_DELAY = 2000
+POISON_STRIKE_DELAY = 2000
+PROTECTION_DELAY = 750
+REMOVE_CURSE_DELAY = 1500
+RUNEBOOK = 8901
+SHIELD_BASH_DELAY = 1000
+STRANGLE_DELAY = 2250 + 500
+THUNDERSTORM_DELAY = 1500
+VAMPIRIC_EMBRACE_DELAY = 2250
+WILDFIRE_DELAY = 2500
+WITHER_DELAY = 2250
+WORD_OF_DEATH_DELAY = 3500
+WRAITH_FORM_DELAY = 2250
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -84,6 +69,19 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
+def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
+    latency = 100
+    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
+    delay = baseDelayMs - fcOffset
+    if delay < 250:
+        delay = 250
+    return delay + latencyMs
+def get_fcr_delay(spellName, latencyMs=200):
+    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
+    if fcr < 1:
+        fcr = 1
+    return fcr + latencyMs
+INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
         item = find_in_container_by_id(itemID, containerSerial)

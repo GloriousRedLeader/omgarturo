@@ -10,123 +10,64 @@ import re
 import sys
 import time
 
-# Constants
-POISON_STRIKE_DELAY = 2000
-REMOVE_CURSE_DELAY = 1500
-ARCH_CURE_DELAY = 1750
-CONDUIT_DELAY = 2250
-ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
-WILDFIRE_DELAY = 2500
-ENEMY_OF_ONE_DELAY = 500
-EVIL_OMEN_DELAY = 1000
-CHAIN_LIGHTNING_DELAY = 2000
-FC_CAP_CHIVALRY = 4
-BARD_SONG_DELAY = 2000
-DIVINE_FURY_DELAY = 1000
-FC_CAP_SHIELD_BASH = 4
-BANDAGE_STATIC_ID = 3617
-FC_CAP_MAGERY = 2
-WITHER_DELAY = 2250
-LAP_HARP_GRAPHIC_ID = 3762
-FC_CAP_BARD_SONG = 4
-ENERGY_BOLT_DELAY = 2000
+# Inlined dependencies (topologically sorted)
 ANIMATE_DEAD_DELAY = 1750
-FLAME_STRIKE_DELAY = 2500
-PAIN_SPIKE_DELAY = 1250
-FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
-WRAITH_FORM_DELAY = 2250
-CURSE_DELAY = 1750
-GIFT_OF_LIFE_DELAY = 4000
-SUMMON_FAMILIAR_DELAY = 2250
-BLOOD_OATH_DELAY = 1750
-FIRE_FIELD_DELAY = 1750
-CONSECRATE_WEAPON_DELAY = 500
-GREATER_HEAL_DELAY = 1750
-MEDITATION_DELAY = 1250
+ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 ARCANE_EMPOWERMENT_DELAY = 3000
-CLOSE_WOUNDS_DELAY = 1500
-CORPSE_SKIN_DELAY = 1750
-SHIELD_BASH_DELAY = 1000
-GOLD_STATIC_IDS = [3821]
-DEATH_RAY_DELAY = 2250
-FC_CAP_SPELLWEAVING = 4
-SPIRIT_SPEAK_DELAY = 999
-CURSE_WEAPON_DELAY = 1000
-STRANGLE_DELAY = 2250 + 500
-POISON_FIELD_DELAY = 2000
-POISON_DELAY = 1500
-VAMPIRIC_EMBRACE_DELAY = 2250
-THUNDERSTORM_DELAY = 1500
+ARCH_CURE_DELAY = 1750
 ATTUNE_WEAPON_DELAY = 1000
-user32 = ctypes.WinDLL('user32', use_last_error=True)
-PROTECTION_DELAY = 750
-WORD_OF_DEATH_DELAY = 3500
+BANDAGE_STATIC_ID = 3617
+BARD_SONG_DELAY = 2000
+BLOOD_OATH_DELAY = 1750
+CHAIN_LIGHTNING_DELAY = 2000
+CLOSE_WOUNDS_DELAY = 1500
+CONDUIT_DELAY = 2250
+CONSECRATE_WEAPON_DELAY = 500
+CORPSE_SKIN_DELAY = 1750
+CURSE_DELAY = 1750
+CURSE_WEAPON_DELAY = 1000
+DEATH_RAY_DELAY = 2250
+DIVINE_FURY_DELAY = 1000
+ENEMY_OF_ONE_DELAY = 500
+ENERGY_BOLT_DELAY = 2000
+EVIL_OMEN_DELAY = 1000
+FC_CAP_BARD_SONG = 4
+FC_CAP_CHIVALRY = 4
+FC_CAP_MAGERY = 2
+FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
+FC_CAP_SHIELD_BASH = 4
+FC_CAP_SPELLWEAVING = 4
+FIRE_FIELD_DELAY = 1750
+FLAME_STRIKE_DELAY = 2500
+GIFT_OF_LIFE_DELAY = 4000
 GIFT_OF_RENEWAL_DELAY = 3000
-INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
-
-# Functions
-def get_mobile_percent_hp(mobile):
-    if mobile is not None and mobile.Hits is not None and (mobile.Hits > 0) and (mobile.HitsMax is not None) and (mobile.HitsMax > 0):
-        return mobile.Hits / mobile.HitsMax
-    else:
-        return 0
-def get_friends_by_names(friendNames=[], range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    if len(mobs) > 0:
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if mob.Name in friendNames])
-        return mobsList
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
-def get_pets(range=10, checkLineOfSight=True, mobileId=None):
-    pets = []
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = checkLineOfSight
-    if mobileId is not None:
-        fil.Bodies = List[Int32]([mobileId])
-    blues = Mobiles.ApplyFilter(fil)
-    for blue in blues:
-        if blue.CanRename:
-            pets.append(blue)
-    return pets
+GOLD_STATIC_IDS = [3821]
+GREATER_HEAL_DELAY = 1750
+LAP_HARP_GRAPHIC_ID = 3762
+MEDITATION_DELAY = 1250
+PAIN_SPIKE_DELAY = 1250
+POISON_DELAY = 1500
+POISON_FIELD_DELAY = 2000
+POISON_STRIKE_DELAY = 2000
+PROTECTION_DELAY = 750
+REMOVE_CURSE_DELAY = 1500
+SHIELD_BASH_DELAY = 1000
+SPIRIT_SPEAK_DELAY = 999
+STRANGLE_DELAY = 2250 + 500
+SUMMON_FAMILIAR_DELAY = 2250
+THUNDERSTORM_DELAY = 1500
+VAMPIRIC_EMBRACE_DELAY = 2250
+WILDFIRE_DELAY = 2500
+WITHER_DELAY = 2250
+WORD_OF_DEATH_DELAY = 3500
+WRAITH_FORM_DELAY = 2250
 def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     items = []
     for itemID in itemIDs:
         items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
     return items
-def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
-    latency = 100
-    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
-    delay = baseDelayMs - fcOffset
-    if delay < 250:
-        delay = 250
-    return delay + latencyMs
-def get_blues_in_range(range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
-def get_fcr_delay(spellName, latencyMs=200):
-    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
-    if fcr < 1:
-        fcr = 1
-    return fcr + latencyMs
+def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
+    return Items.FindByName(itemName, -1, containerSerial, 1)
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -146,10 +87,65 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
-    return Items.FindByName(itemName, -1, containerSerial, 1)
-def is_player_moving():
-    return user32.GetAsyncKeyState(2) & 32768
+def get_blues_in_range(range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
+def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
+    latency = 100
+    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
+    delay = baseDelayMs - fcOffset
+    if delay < 250:
+        delay = 250
+    return delay + latencyMs
+def get_fcr_delay(spellName, latencyMs=200):
+    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
+    if fcr < 1:
+        fcr = 1
+    return fcr + latencyMs
+def get_friends_by_names(friendNames=[], range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    if len(mobs) > 0:
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if mob.Name in friendNames])
+        return mobsList
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
+def get_mobile_percent_hp(mobile):
+    if mobile is not None and mobile.Hits is not None and (mobile.Hits > 0) and (mobile.HitsMax is not None) and (mobile.HitsMax > 0):
+        return mobile.Hits / mobile.HitsMax
+    else:
+        return 0
+def get_pets(range=10, checkLineOfSight=True, mobileId=None):
+    pets = []
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = checkLineOfSight
+    if mobileId is not None:
+        fil.Bodies = List[Int32]([mobileId])
+    blues = Mobiles.ApplyFilter(fil)
+    for blue in blues:
+        if blue.CanRename:
+            pets.append(blue)
+    return pets
+user32 = ctypes.WinDLL('user32', use_last_error=True)
+INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 def check_summon_familiar(latencyMs=200):
     SUMMON_FAMILIAR_GUMP_ID = 545409390
     if Timer.Check('checkSummonFamiliarTimer') == False:
@@ -201,17 +197,6 @@ def check_summon_familiar(latencyMs=200):
                         Gumps.SendAction(SUMMON_FAMILIAR_GUMP_ID, petButtonMap[petName])
                         Misc.Pause(250)
     return False
-def use_bag_of_sending(minGold=50000):
-    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
-    if bag is not None:
-        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
-        for goldPile in goldPiles:
-            if goldPile.Amount >= minGold:
-                Items.UseItem(bag)
-                Target.WaitForTarget(1000, False)
-                Target.TargetExecute(goldPile)
-    else:
-        print('No bag of sending found!')
 def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
         item = find_in_container_by_id(itemID, containerSerial)
@@ -231,10 +216,19 @@ def get_enemies(range=10, serialsToExclude=[]):
         mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
         return mobsList
     return mobs
-def get_honor_target():
-    for mob in get_enemies(10):
-        if mob.Hits == mob.HitsMax:
-            return mob
+def is_player_moving():
+    return user32.GetAsyncKeyState(2) & 32768
+def use_bag_of_sending(minGold=50000):
+    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
+    if bag is not None:
+        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
+        for goldPile in goldPiles:
+            if goldPile.Amount >= minGold:
+                Items.UseItem(bag)
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(goldPile)
+    else:
+        print('No bag of sending found!')
 def cast_spell(spellName, target=None, latencyMs=200):
     Target.Cancel()
     if spellName == 'Wildfire':
@@ -366,6 +360,10 @@ def cast_spell(spellName, target=None, latencyMs=200):
         else:
             Target.TargetExecute(target)
     Misc.Pause(get_fcr_delay(spellName, latencyMs))
+def get_honor_target():
+    for mob in get_enemies(10):
+        if mob.Hits == mob.HitsMax:
+            return mob
 def use_skill(skillName, target=None, latencyMs=None):
     if skillName == 'Discordance':
         Journal.Clear()

@@ -5,13 +5,8 @@ import ctypes
 import sys
 import time
 
-# Constants
-railsStartingTime = 0
-railsEarnedGold = 0
+# Inlined dependencies (topologically sorted)
 ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
-railsLastGold = 0
-
-# Functions
 def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
     if Player.Position.X == x and Player.Position.Y == y:
         return True
@@ -33,6 +28,22 @@ def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
     route.Timeout = timeoutSeconds
     res = PathFinding.Go(route)
     return res
+railsEarnedGold = 0
+railsLastGold = 0
+railsStartingTime = 0
+def get_enemies(range=10, serialsToExclude=[]):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    if len(mobs) > 0:
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
+        return mobsList
+    return mobs
 def rails_stats(option):
     global railsStartingTime
     global railsEarnedGold
@@ -58,19 +69,6 @@ def rails_stats(option):
             message = 'Gold Earned: {} Minutes: {} GPH: {}'.format('{:,.0f}'.format(railsEarnedGold), timeMinutes, goldPerHour)
             Misc.SendMessage(message, 253)
             Timer.Create('railsStatsTimer', 15000)
-def get_enemies(range=10, serialsToExclude=[]):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    if len(mobs) > 0:
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-        return mobsList
-    return mobs
 def run_defend_loop(range=6, autoLootBufferMs=0, pathFindingTimeoutSeconds=3.0, tileOffset=0):
     rails_stats('start')
     while not Player.IsGhost:

@@ -1,15 +1,13 @@
-# Constants
-POISON_POTION_STATIC_ID = 3850
+# Inlined dependencies (topologically sorted)
 KEG_STATIC_IDS = [6464]
-
-# Functions
+POISON_POTION_STATIC_ID = 3850
+def find_all_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial):
+    return Items.FindAllByID(itemID, -1, containerSerial, 1)
 def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     items = []
     for itemID in itemIDs:
         items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
     return items
-def find_all_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial):
-    return Items.FindAllByID(itemID, -1, containerSerial, 1)
 
 # Main code
 MAX_LEVEL = 120

@@ -1,7 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 
-# Functions
+# Inlined dependencies (topologically sorted)
 def get_yellows_in_range(range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True

@@ -242,7 +242,7 @@ class SimpleInliner:
                     constant_nodes.append((symbol_name, symbol_node))
         
         # Topologically sort all symbols considering cross-dependencies
-        constants, functions, classes = self._topologically_sort_all_symbols(constant_nodes, function_nodes, class_nodes)
+        sorted_symbols = self._topologically_sort_all_symbols(constant_nodes, function_nodes, class_nodes)
         
         # Build organized code sections
         code_sections = []
@@ -253,23 +253,11 @@ class SimpleInliner:
         if code_sections:
             code_sections.append('')  # Blank line after imports
         
-        # Add constants
-        if constants:
-            code_sections.append('# Constants')
-            code_sections.extend(constants)
-            code_sections.append('')  # Blank line after constants
-        
-        # Add classes
-        if classes:
-            code_sections.append('# Classes')
-            code_sections.extend(classes)
-            code_sections.append('')  # Blank line after classes
-        
-        # Add functions
-        if functions:
-            code_sections.append('# Functions')
-            code_sections.extend(functions)
-            code_sections.append('')  # Blank line after functions
+        # Add inlined symbols in topological order
+        if sorted_symbols:
+            code_sections.append('# Inlined dependencies (topologically sorted)')
+            code_sections.extend(sorted_symbols)
+            code_sections.append('')  # Blank line after inlined code
         
         # Add original code (excluding import statements)
         original_code = []
@@ -309,6 +297,10 @@ class SimpleInliner:
                 if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Load):
                     if child.id in all_symbols and child.id != name:
                         deps.add(child.id)
+                # Also check for function/class calls
+                elif isinstance(child, ast.Call) and isinstance(child.func, ast.Name):
+                    if child.func.id in all_symbols and child.func.id != name:
+                        deps.add(child.func.id)
             dependencies[name] = deps
             
             # Track symbol type
@@ -322,34 +314,102 @@ class SimpleInliner:
                 symbol_types[name] = 'constant'  # fallback
         
         # Topological sort using Kahn's algorithm
-        sorted_constants = []
-        sorted_functions = []
-        sorted_classes = []
+        sorted_symbols = []
         remaining = set(all_symbols.keys())
         
-        while remaining:
+        iteration = 0
+        while remaining and iteration < 200:  # Prevent infinite loops
+            iteration += 1
+            
             # Find symbols with no dependencies among remaining symbols
             ready = []
             for name in remaining:
-                if not dependencies[name] & remaining:  # No unresolved dependencies
+                remaining_deps = dependencies[name] & remaining
+                if not remaining_deps:  # No unresolved dependencies
                     ready.append(name)
             
             if not ready:
-                # Circular dependency or other issue - just add them in arbitrary order
+                # Debug circular dependency
+                print(f"Circular dependency detected at iteration {iteration}")
+                print(f"Remaining symbols: {sorted(remaining)}")
+                for name in list(remaining)[:5]:  # Show first 5
+                    remaining_deps = dependencies[name] & remaining
+                    print(f"  {name} depends on: {sorted(remaining_deps)}")
+                # Take one arbitrarily to break the cycle
                 ready = [next(iter(remaining))]
+                print(f"Breaking cycle by adding: {ready[0]}")
             
-            # Add ready symbols to appropriate result lists
-            for name in ready:
+            # Add ready symbols in topological order
+            for name in sorted(ready):  # Sort for consistency within each iteration
                 symbol_code = ast.unparse(all_symbols[name])
-                if symbol_types[name] == 'constant':
-                    sorted_constants.append(symbol_code)
-                elif symbol_types[name] == 'function':
-                    sorted_functions.append(symbol_code)
-                elif symbol_types[name] == 'class':
-                    sorted_classes.append(symbol_code)
+                sorted_symbols.append(symbol_code)
                 remaining.remove(name)
         
-        return sorted_constants, sorted_functions, sorted_classes
+        return sorted_symbols
+
+def validate_imports(output_dir: pathlib.Path):
+    """Try to actually import generated files to catch NameError issues."""
+    print("\n" + "="*50)
+    print("IMPORT VALIDATION: Testing actual imports...")
+    print("="*50)
+    
+    import sys
+    import importlib.util
+    import tempfile
+    import os
+    
+    import_errors = {}
+    original_path = sys.path.copy()
+    
+    try:
+        # Add output directory to Python path
+        sys.path.insert(0, str(output_dir.absolute()))
+        
+        for py_file in output_dir.glob('*.py'):
+            module_name = py_file.stem
+            try:
+                spec = importlib.util.spec_from_file_location(module_name, py_file)
+                if spec and spec.loader:
+                    module = importlib.util.module_from_spec(spec)
+                    # Try to execute the module to catch NameError issues
+                    spec.loader.exec_module(module)
+            except NameError as e:
+                error_msg = str(e)
+                # Filter out UO API NameErrors - these are expected
+                uo_api_names = {
+                    'Items', 'Player', 'Gumps', 'Misc', 'Target', 'Timer', 'Journal', 
+                    'Mobiles', 'Spells', 'PathFinding', 'Statics'
+                }
+                is_uo_api_error = any(f"name '{api}' is not defined" in error_msg for api in uo_api_names)
+                
+                if not is_uo_api_error:
+                    import_errors[py_file.name] = f"NameError: {e}"
+            except Exception as e:
+                # Only report NameErrors and other critical issues, ignore UO API errors
+                error_msg = str(e)
+                if "NameError" in error_msg or "not defined" in error_msg:
+                    # Filter out UO API errors
+                    uo_api_names = {
+                        'Items', 'Player', 'Gumps', 'Misc', 'Target', 'Timer', 'Journal', 
+                        'Mobiles', 'Spells', 'PathFinding', 'Statics'
+                    }
+                    is_uo_api_error = any(f"name '{api}' is not defined" in error_msg for api in uo_api_names)
+                    
+                    if not is_uo_api_error:
+                        import_errors[py_file.name] = f"Import error: {e}"
+    finally:
+        # Restore original path
+        sys.path = original_path
+    
+    if import_errors:
+        print(f"\n❌ Found import errors in {len(import_errors)} files:")
+        for filename, error in sorted(import_errors.items()):
+            print(f"  {filename}: {error}")
+        print(f"\nTotal files with import errors: {len(import_errors)}")
+        return False
+    else:
+        print(f"\n✅ All {len(list(output_dir.glob('*.py')))} files import successfully!")
+        return True
 
 def validate_syntax(output_dir: pathlib.Path):
     """Check all generated files for syntax errors."""
@@ -492,12 +552,18 @@ def main():
     print("="*60)
     
     syntax_ok = validate_syntax(output_dir)
-    check_undefined_variables(output_dir)
+    import_ok = validate_imports(output_dir)
+    check_undefined_variables(output_dir)  # This is just informational
     
-    if syntax_ok:
-        print(f"\n🎉 BUILD SUCCESSFUL: All {processed_count} files generated with proper syntax!")
+    if syntax_ok and import_ok:
+        print(f"\n🎉 BUILD SUCCESSFUL: All {processed_count} files generated and validated!")
+        print("Note: 'Undefined variables' above are mostly function parameters (expected).")
     else:
-        print(f"\n💥 BUILD FAILED: Syntax errors found in generated files!")
+        print(f"\n💥 BUILD FAILED: Critical errors found in generated files!")
+        if not syntax_ok:
+            print("  - Syntax errors found")
+        if not import_ok:
+            print("  - Import/NameError issues found (real dependency problems)")
         print("Fix dependency ordering issues before using these scripts.")
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-# Functions
+# Inlined dependencies (topologically sorted)
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:

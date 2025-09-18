@@ -3,26 +3,8 @@ from System.Collections.Generic import List
 import re
 import time
 
-# Constants
+# Inlined dependencies (topologically sorted)
 PET_LEASH_STATIC_IDS = [4980]
-
-# Functions
-def get_pets(range=10, checkLineOfSight=True, mobileId=None):
-    pets = []
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = checkLineOfSight
-    if mobileId is not None:
-        fil.Bodies = List[Int32]([mobileId])
-    blues = Mobiles.ApplyFilter(fil)
-    for blue in blues:
-        if blue.CanRename:
-            pets.append(blue)
-    return pets
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -42,6 +24,22 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
+def get_pets(range=10, checkLineOfSight=True, mobileId=None):
+    pets = []
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = checkLineOfSight
+    if mobileId is not None:
+        fil.Bodies = List[Int32]([mobileId])
+    blues = Mobiles.ApplyFilter(fil)
+    for blue in blues:
+        if blue.CanRename:
+            pets.append(blue)
+    return pets
 def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
         item = find_in_container_by_id(itemID, containerSerial)

@@ -1,7 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 
-# Functions
+# Inlined dependencies (topologically sorted)
 def get_pets(range=10, checkLineOfSight=True, mobileId=None):
     pets = []
     fil = Mobiles.Filter()

@@ -1,4 +1,4 @@
-# Functions
+# Inlined dependencies (topologically sorted)
 def drop_all_items_from_pack_animal_to_floor():
     currentNum = 0
     packAnimals = get_pets()

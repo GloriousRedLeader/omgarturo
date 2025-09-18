@@ -1,7 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 
-# Functions
+# Inlined dependencies (topologically sorted)
 def find_vendor_by_name(vendorName, vendorRange=10):
     fil = Mobiles.Filter()
     fil.Enabled = True

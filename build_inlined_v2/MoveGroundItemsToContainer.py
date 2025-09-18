@@ -1,7 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 
-# Functions
+# Inlined dependencies (topologically sorted)
 def move_item_to_container(item, destinationSerial):
     Items.Move(item, destinationSerial, item.Amount)
     Misc.Pause(800)

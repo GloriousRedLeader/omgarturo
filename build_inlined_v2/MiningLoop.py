@@ -5,36 +5,44 @@ import ctypes
 import sys
 import time
 
-# Constants
-RESOURCE_HUE_DEFAULT = 0
-MINER_TOOLS_STATIC_IDS = [3897, 3718]
-RESOURCE_HUE_DULL_COPPER = 2419
-RESOURCE_HUE_BRONZE = 2418
-RESOURCE_HUE_SHADOW_IRON = 2406
+# Inlined dependencies (topologically sorted)
 BLUE_BEETLE_MOBILE_ID = 791
+FIRE_BEETLE_MOBILE_ID = 169
 INGOT_STATIC_IDS = [7154]
+MINER_TOOLS_STATIC_IDS = [3897, 3718]
+ORE_STATIC_IDS = [6583, 6586, 6584, 6585, 0, 1045, 1119, 1752, 1109, 1719, 2430, 2002, 1348, 2413]
+RESOURCE_HUE_AGAPITE = 2425
+RESOURCE_HUE_BRONZE = 2418
+RESOURCE_HUE_COPPER = 2413
+RESOURCE_HUE_DEFAULT = 0
+RESOURCE_HUE_DULL_COPPER = 2419
+RESOURCE_HUE_GOLD = 2213
+RESOURCE_HUE_SHADOW_IRON = 2406
+RESOURCE_HUE_VALORITE = 2219
+RESOURCE_HUE_VERITE = 2207
 SAND_STATIC_IDS = [16954]
 STONE_STATIC_IDS = [6009]
-RESOURCE_HUE_AGAPITE = 2425
-RESOURCE_HUE_VALORITE = 2219
-RESOURCE_HUE_COPPER = 2413
-ORE_STATIC_IDS = [6583, 6586, 6584, 6585, 0, 1045, 1119, 1752, 1109, 1719, 2430, 2002, 1348, 2413]
-RESOURCE_HUE_GOLD = 2213
-RESOURCE_HUE_VERITE = 2207
-FIRE_BEETLE_MOBILE_ID = 169
-
-# Functions
-def should_move():
-    if Journal.Search('no metal') or Journal.Search('t mine that') or Journal.Search('no sand'):
-        Journal.Clear()
-        return True
+def find_all_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial):
+    return Items.FindAllByID(itemID, -1, containerSerial, 1)
+def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
+    ignoreColor = False
+    if color == -1:
+        ignoreColor = True
+    container = Items.FindBySerial(containerSerial)
+    if isinstance(itemID, int):
+        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
+    elif isinstance(itemID, list):
+        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
     else:
-        Journal.Clear()
-        return False
-def move(x):
-    for _ in range(x):
-        Player.Run(Player.Direction)
-        Misc.Pause(200)
+        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
+    if foundItem != None:
+        return foundItem
+    elif recursive == True:
+        for item in container.Contains:
+            if item.IsContainer:
+                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
+                if foundItem != None:
+                    return foundItem
 def get_pets(range=10, checkLineOfSight=True, mobileId=None):
     pets = []
     fil = Mobiles.Filter()
@@ -114,38 +122,17 @@ def get_tile_in_front(distance=1):
         tileY = playerY
         tileZ = playerZ
     return (tileX, tileY, tileZ)
-def find_all_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial):
-    return Items.FindAllByID(itemID, -1, containerSerial, 1)
-def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
-    ignoreColor = False
-    if color == -1:
-        ignoreColor = True
-    container = Items.FindBySerial(containerSerial)
-    if isinstance(itemID, int):
-        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
-    elif isinstance(itemID, list):
-        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
+def move(x):
+    for _ in range(x):
+        Player.Run(Player.Direction)
+        Misc.Pause(200)
+def should_move():
+    if Journal.Search('no metal') or Journal.Search('t mine that') or Journal.Search('no sand'):
+        Journal.Clear()
+        return True
     else:
-        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
-    if foundItem != None:
-        return foundItem
-    elif recursive == True:
-        for item in container.Contains:
-            if item.IsContainer:
-                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-                if foundItem != None:
-                    return foundItem
-def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
-    for itemId in itemIds:
-        for item in Items.FindAllByID(itemId, -1, Player.Backpack.Serial, 0):
-            packAnimals = get_pets(range=2, checkLineOfSight=True, mobileId=packAnimalMobileId)
-            if len(packAnimals) == 0:
-                return
-            for packAnimal in packAnimals:
-                if packAnimal.Backpack.Weight < 1350:
-                    print('Moving {} to {} (Weight: {})'.format(item.Name, packAnimal.Name, packAnimal.Backpack.Weight))
-                    Items.Move(item, packAnimal.Backpack.Serial, item.Amount)
-                    Misc.Pause(itemMoveDelayMs)
+        Journal.Clear()
+        return False
 def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):
     for itemStaticId in itemStaticIds:
         resources = find_all_in_container_by_id(itemStaticId, containerSerial=Player.Backpack.Serial)
@@ -155,6 +142,11 @@ def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):
                 tileX, tileY, tileZ = get_tile_behind(2)
                 Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
                 Misc.Pause(itemMoveDelayMs)
+def getMinerTool():
+    for minerToolStaticID in MINER_TOOLS_STATIC_IDS:
+        miningTool = find_in_container_by_id(minerToolStaticID, Player.Backpack.Serial)
+        if miningTool is not None:
+            return miningTool
 def get_tile_in_front_serial():
     tileX, tileY, tileZ = get_tile_in_front()
     filter = Items.Filter()
@@ -166,11 +158,17 @@ def get_tile_in_front_serial():
         if item.Position.X == tileX and item.Position.Y == tileY:
             return (item.Serial, tileX, tileY, tileZ)
     return (None, tileX, tileY, tileZ)
-def getMinerTool():
-    for minerToolStaticID in MINER_TOOLS_STATIC_IDS:
-        miningTool = find_in_container_by_id(minerToolStaticID, Player.Backpack.Serial)
-        if miningTool is not None:
-            return miningTool
+def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
+    for itemId in itemIds:
+        for item in Items.FindAllByID(itemId, -1, Player.Backpack.Serial, 0):
+            packAnimals = get_pets(range=2, checkLineOfSight=True, mobileId=packAnimalMobileId)
+            if len(packAnimals) == 0:
+                return
+            for packAnimal in packAnimals:
+                if packAnimal.Backpack.Weight < 1350:
+                    print('Moving {} to {} (Weight: {})'.format(item.Name, packAnimal.Name, packAnimal.Backpack.Weight))
+                    Items.Move(item, packAnimal.Backpack.Serial, item.Amount)
+                    Misc.Pause(itemMoveDelayMs)
 def smelt_ore(forgeAnimalMobileId, itemMoveDelayMs):
     forgeAnimals = get_pets(range=2, checkLineOfSight=True, mobileId=forgeAnimalMobileId)
     if len(forgeAnimals) > 0:

@@ -2,12 +2,10 @@ from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
 
-# Constants
-LOBSTER_TRAP_STATIC_IDS = [17615]
-FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
+# Inlined dependencies (topologically sorted)
 DEPLOYED_LOBSTER_TRAP_STATIC_ID = 17611
-
-# Functions
+FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
+LOBSTER_TRAP_STATIC_IDS = [17615]
 def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     items = []
     for itemID in itemIDs:

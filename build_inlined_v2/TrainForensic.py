@@ -1,4 +1,4 @@
-# Functions
+# Inlined dependencies (topologically sorted)
 def get_corpses(range=2):
     filter = Items.Filter()
     filter.OnGround = True
