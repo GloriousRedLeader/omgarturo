@@ -9,6 +9,14 @@ They may or may not work on others. Requires razor enhanced 0.8.2.242
 
 ### Setup
 
+> [!TIP]
+> **NEW!** Go to the [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/new_format/build_inlined_v2) folder for standalone scripts. You will find all of the scripts there.
+> Note that this is experimental and I hope that it works. You can always use the traditional method that has all the scary setup steps below.
+
+> [!NOTE]
+> **NEW!** Go to the [build_inlined_v2](https://github.com/GloriousRedLeader/omgarturo/tree/new_format/build_inlined_v2) folder for standalone scripts. You will find all of the scripts there.
+> Note that this is experimental and I hope that it works. You can always use the traditional method that has all the scary setup steps below.
+
 Easy way is to clone this repo into your scripts directory.
 
 ```bash
