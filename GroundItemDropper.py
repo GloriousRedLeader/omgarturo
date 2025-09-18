@@ -52,7 +52,7 @@ TRASH_NAMES = [
     "Gold Bricks",
     "Lord Blackthorn's Exemplar", # '
     "Wrath of the Dryad",
-    "Jaana's Staff", #'
+    "Jaana's Staf", #"
     "Sentinel's Guard", #'
     "a map of the known world",
     "10th Anniversary Sculpture",

@@ -85,7 +85,7 @@ class Tree:
         self.tooFarAwayAttempts = 0
         
     def __str__(self):
-        return f"Tree(x='{self.x}', y='{self.y}', z='{self.z}', staticId={self.staticId})"                        
+        return "Tree(x='{}', y='{}', z='{}', staticId={})".format(self.x, self.y, self.z, self.staticId)                        
 
 # Internal helper to generate a list of Tree        
 def scan_trees(tileRange, treeStaticIds):

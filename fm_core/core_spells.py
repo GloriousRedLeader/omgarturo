@@ -339,7 +339,7 @@ def check_summon_familiar(
                     if buttonId in [2, 102]:
                         petButtonMap["Shadow Wisp"] = buttonId
                     elif buttonId in [3, 103]:
-                        petButtonMap["Dark Wolf"] = buttonId
+                        petButtonMap["Dark Wol"] = buttonId
                     elif buttonId in [4, 104]:
                         petButtonMap["Death Adder"] = buttonId
                     elif buttonId in [5, 105]:
@@ -435,11 +435,11 @@ def cast_recall_or_sacred_journey(
 
     print(runebook)
     print(script_name)
-    print(f"Magery Skill {magerySkill}")
-    print(f"Chivalry Skill {chivalrySkill}")
-    print(f"Necromancy Skill {necroSkill}")
-    print(f"Rune {rune}")
-    print(f"Button ID {buttonId}")
+    print("Magery Skill {}".format(magerySkill))
+    print("Chivalry Skill {}".format(chivalrySkill))
+    print("Necromancy Skill {}".format(necroSkill))
+    print("Rune {}".format(rune))
+    print("Button ID {}".format(buttonId))
 
     Items.UseItem(runebook)
     Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 10000)

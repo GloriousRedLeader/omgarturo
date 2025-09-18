@@ -73,7 +73,7 @@ class IDOCScanner(object):
                 else:
                     # Skip this item and add it to the ignore list to avoid repeated attempts
                     self.ignore.append(item.Serial)
-                    Misc.SendMessage(f"Item {item.Serial} skipped due to insufficient properties.", 55)
+                    Misc.SendMessage("Item {} skipped due to insufficient properties.".format(item.Serial), 55)
 
 Misc.SendMessage('Starting IDOC Scanner...' ,88)
 IS = IDOCScanner()

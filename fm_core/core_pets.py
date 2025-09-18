@@ -59,7 +59,7 @@ def vet_pets( healthPercent, petSerials, containerSerial, bandageDelayMs, rezDel
     
     print("---------- - - - - ------------------")
     for pet in pets:
-        print(f"Pet Name: { pet.Name } Health: { pet.Hits } / { pet.HitsMax } ")
+        print("Pet Name: {} Health: {} / {} ".format( pet.Name ,  pet.Hits ,  pet.HitsMax ))
     
     #for pet in pets:
     if len(pets) > 0:
