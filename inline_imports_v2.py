@@ -102,7 +102,7 @@ class SimpleInliner:
             return self.module_cache[module_path]
             
         try:
-            with open(module_path, 'r') as f:
+            with open(str(module_path), 'r') as f:
                 source = f.read()
             tree = ast.parse(source)
             defined_names = collect_names_defined(tree)
@@ -176,7 +176,7 @@ class SimpleInliner:
         self.processed = set()
         
         # Load the original file
-        with open(input_file, 'r') as f:
+        with open(str(input_file), 'r') as f:
             source = f.read()
         
         tree = ast.parse(source)
@@ -342,7 +342,7 @@ class SimpleInliner:
         
         # Write output
         output_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_file, 'w') as f:
+        with open(str(output_file), 'w') as f:
             f.write(final_code + '\n')
         
         print("Wrote {}".format(output_file))
@@ -424,7 +424,7 @@ class SimpleInliner:
                     
                     # Try to get original source with comments
                     try:
-                        with open(module_path, 'r') as f:
+                        with open(str(module_path), 'r') as f:
                             module_text = f.read()
                         lines = module_text.splitlines()
                         start_line = getattr(symbol_node, 'lineno', 1) - 1
@@ -555,7 +555,7 @@ def validate_no_local_imports(output_dir: pathlib.Path):
     
     for py_file in output_dir.glob('*.py'):
         try:
-            with open(py_file, 'r') as f:
+            with open(str(py_file), 'r') as f:
                 content = f.read()
             
             # Check for any Scripts.omgarturo imports
@@ -617,7 +617,7 @@ def check_undefined_variables(output_dir: pathlib.Path):
     
     for py_file in output_dir.glob('*.py'):
         try:
-            with open(py_file, 'r') as f:
+            with open(str(py_file), 'r') as f:
                 source = f.read()
             
             tree = ast.parse(source)
