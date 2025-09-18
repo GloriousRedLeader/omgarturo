@@ -4,13 +4,10 @@ import sys
 
 # Constants
 DEPLOYED_LOBSTER_TRAP_STATIC_ID = 17611
-FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
 LOBSTER_TRAP_STATIC_IDS = [17615]
+FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
 
 # Functions
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
 def run_crab_fishing_loop(numLoops=1, moveTiles=0, maxTraps=19, trapDelayMs=65000, fishToKeep=None):
     for i in range(1, numLoops + 1):
         Player.HeadMessage(28, 'Running crab fishing loop {} / {}'.format(i, numLoops))
@@ -160,6 +157,9 @@ def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial
     for itemID in itemIDs:
         items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
     return items
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
 
 # Main code
 run_crab_fishing_loop(numLoops=2, moveTiles=4, maxTraps=5, trapDelayMs=5000, fishToKeep='blue crab')

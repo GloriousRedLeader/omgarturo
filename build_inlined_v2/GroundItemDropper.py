@@ -12,19 +12,11 @@ import time
 
 # Constants
 TREE_STATIC_IDS = [3221, 3222, 3225, 3227, 3228, 3229, 3210, 3238, 3240, 3242, 3243, 3267, 3268, 3272, 3273, 3275, 3276, 3277, 3280, 3283, 3286, 3288, 3290, 3293, 3296, 3299, 3302, 3320, 3323, 3326, 3329, 3365, 3367, 3381, 3383, 3384, 3394, 3395, 3417, 3440, 3461, 3476, 3478, 3480, 3482, 3484, 3486, 3488, 3490, 3492, 3496]
-LOG_STATIC_IDS = [7133]
 AXE_STATIC_IDS = [3913, 3911]
+LOG_STATIC_IDS = [7133]
 ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 
 # Functions
-def move_all_items_from_container(sourceSerial, destinationSerial):
-    for item in Items.FindBySerial(sourceSerial).Contains:
-        Player.HeadMessage(455, 'Moving item {}'.format(item.Name))
-        Items.Move(item, destinationSerial, item.Amount)
-        Misc.Pause(800)
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
 def get_tile_in_front(distance=1):
     direction = Player.Direction
     playerX = Player.Position.X
@@ -63,6 +55,18 @@ def get_tile_in_front(distance=1):
         tileY = playerY
         tileZ = playerZ
     return (tileX, tileY, tileZ)
+def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
+    latency = 100
+    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
+    delay = baseDelayMs - fcOffset
+    if delay < 250:
+        delay = 250
+    return delay + latencyMs
+def move_all_items_from_container(sourceSerial, destinationSerial):
+    for item in Items.FindBySerial(sourceSerial).Contains:
+        Player.HeadMessage(455, 'Moving item {}'.format(item.Name))
+        Items.Move(item, destinationSerial, item.Amount)
+        Misc.Pause(800)
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -82,13 +86,9 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
-    latency = 100
-    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
-    delay = baseDelayMs - fcOffset
-    if delay < 250:
-        delay = 250
-    return delay + latencyMs
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
 def get_enemies(range=10, serialsToExclude=[]):
     fil = Mobiles.Filter()
     fil.Enabled = True

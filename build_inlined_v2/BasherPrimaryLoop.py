@@ -8,58 +8,125 @@ import re
 import sys
 
 # Constants
-WORD_OF_DEATH_DELAY = 3500
-LAP_HARP_GRAPHIC_ID = 3762
-GREATER_HEAL_DELAY = 1750
-PAIN_SPIKE_DELAY = 1250
-VAMPIRIC_EMBRACE_DELAY = 2250
-CURSE_WEAPON_DELAY = 1000
-GOLD_STATIC_IDS = [3821]
-FC_CAP_CHIVALRY = 4
-ARCANE_EMPOWERMENT_DELAY = 3000
-FC_CAP_MAGERY = 2
-ENERGY_BOLT_DELAY = 2000
-ENEMY_OF_ONE_DELAY = 500
-ARCH_CURE_DELAY = 1750
-FLAME_STRIKE_DELAY = 2500
+WILDFIRE_DELAY = 2500
+SHIELD_BASH_DELAY = 1000
 DEATH_RAY_DELAY = 2250
-BARD_SONG_DELAY = 2000
-EVIL_OMEN_DELAY = 1000
-STRANGLE_DELAY = 2250 + 500
-GIFT_OF_RENEWAL_DELAY = 3000
-BANDAGE_STATIC_ID = 3617
-BLOOD_OATH_DELAY = 1750
-SPIRIT_SPEAK_DELAY = 999
+WITHER_DELAY = 2250
+FC_CAP_SPELLWEAVING = 4
+PROTECTION_DELAY = 750
 THUNDERSTORM_DELAY = 1500
-CONSECRATE_WEAPON_DELAY = 500
-FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
+REMOVE_CURSE_DELAY = 1500
+CLOSE_WOUNDS_DELAY = 1500
+FC_CAP_CHIVALRY = 4
+ENEMY_OF_ONE_DELAY = 500
 CONDUIT_DELAY = 2250
+ARCANE_EMPOWERMENT_DELAY = 3000
+GREATER_HEAL_DELAY = 1750
+GOLD_STATIC_IDS = [3821]
+ANIMATE_DEAD_DELAY = 1750
+EVIL_OMEN_DELAY = 1000
+POISON_FIELD_DELAY = 2000
+SPIRIT_SPEAK_DELAY = 999
+FC_CAP_BARD_SONG = 4
+ATTUNE_WEAPON_DELAY = 1000
+GIFT_OF_LIFE_DELAY = 4000
+VAMPIRIC_EMBRACE_DELAY = 2250
+CURSE_DELAY = 1750
+FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
 ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 POISON_DELAY = 1500
-CHAIN_LIGHTNING_DELAY = 2000
-ATTUNE_WEAPON_DELAY = 1000
-POISON_STRIKE_DELAY = 2000
-CURSE_DELAY = 1750
-DIVINE_FURY_DELAY = 1000
-GIFT_OF_LIFE_DELAY = 4000
-WRAITH_FORM_DELAY = 2250
-CLOSE_WOUNDS_DELAY = 1500
-SHIELD_BASH_DELAY = 1000
-FC_CAP_SHIELD_BASH = 4
-REMOVE_CURSE_DELAY = 1500
+BANDAGE_STATIC_ID = 3617
+CURSE_WEAPON_DELAY = 1000
+BLOOD_OATH_DELAY = 1750
 CORPSE_SKIN_DELAY = 1750
-FC_CAP_BARD_SONG = 4
-FC_CAP_SPELLWEAVING = 4
-WILDFIRE_DELAY = 2500
-PROTECTION_DELAY = 750
-ANIMATE_DEAD_DELAY = 1750
-WITHER_DELAY = 2250
-FIRE_FIELD_DELAY = 1750
-POISON_FIELD_DELAY = 2000
+STRANGLE_DELAY = 2250 + 500
 MEDITATION_DELAY = 1250
+CHAIN_LIGHTNING_DELAY = 2000
+WORD_OF_DEATH_DELAY = 3500
+LAP_HARP_GRAPHIC_ID = 3762
+POISON_STRIKE_DELAY = 2000
+FC_CAP_SHIELD_BASH = 4
+CONSECRATE_WEAPON_DELAY = 500
+ARCH_CURE_DELAY = 1750
+FLAME_STRIKE_DELAY = 2500
+DIVINE_FURY_DELAY = 1000
+FC_CAP_MAGERY = 2
+PAIN_SPIKE_DELAY = 1250
+WRAITH_FORM_DELAY = 2250
+FIRE_FIELD_DELAY = 1750
+BARD_SONG_DELAY = 2000
+GIFT_OF_RENEWAL_DELAY = 3000
+ENERGY_BOLT_DELAY = 2000
 INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 
 # Functions
+def get_pets(range=10, checkLineOfSight=True, mobileId=None):
+    pets = []
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = checkLineOfSight
+    if mobileId is not None:
+        fil.Bodies = List[Int32]([mobileId])
+    blues = Mobiles.ApplyFilter(fil)
+    for blue in blues:
+        if blue.CanRename:
+            pets.append(blue)
+    return pets
+def run_dex_loop(loopName='Dex Loop', specialAbilityType=0, useShieldBash=0, useConsecrateWeapon=0, useCurseWeapon=0, useDivineFury=0, useEnemyOfOne=0, useRemoveCurse=0, useCleanseByFire=0, useHonor=0, attackRange=6, useBandagesOnSelf=0, healThreshold=0.95, minGold=0, latencyMs=200):
+    Timer.Create('dexPingTimer', 5000)
+    while not Player.IsGhost:
+        if Timer.Check('dexPingTimer') == False:
+            Player.HeadMessage(78, '{} Running...'.format(loopName))
+            Timer.Create('dexPingTimer', 10000)
+        if minGold > 0 and Player.Gold >= minGold:
+            use_bag_of_sending(minGold)
+        if not Player.Visible:
+            Misc.Pause(500)
+            continue
+        if heal_player_and_friends(useCleanseByFire=useCleanseByFire, useRemoveCurse=useRemoveCurse, useBandagesOnSelf=useBandagesOnSelf, healThreshold=healThreshold) == True:
+            continue
+        eligible = get_enemies(attackRange)
+        if len(eligible) > 0:
+            nearestMob = Mobiles.Select(eligible, 'Nearest')
+            honorMob = get_honor_target() if useHonor == 1 and (not Player.BuffsExist('Perfection')) else None
+            if honorMob is not None:
+                Player.InvokeVirtue('Honor')
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(honorMob)
+            elif useEnemyOfOne == 1 and (not Player.BuffsExist('Enemy Of One')) and (Player.Mana > 20):
+                cast_spell('Enemy of One', None, latencyMs)
+            elif useConsecrateWeapon == 1 and (not Player.BuffsExist('Consecrate Weapon')) and (Player.Mana > 12):
+                cast_spell('Consecrate Weapon', None, latencyMs)
+            elif useDivineFury == 1 and (not Player.BuffsExist('Divine Fury')) and (Player.Mana > 20):
+                cast_spell('Divine Fury', None, latencyMs)
+            elif useCurseWeapon == 1 and (not Player.BuffsExist('Curse Weapon')) and (Player.Mana > 20):
+                cast_spell('Curse Weapon', None, latencyMs)
+            if useShieldBash == 1 and (not Player.BuffsExist('Shield Bash')) and (Player.Mana > 35):
+                cast_spell('Shield Bash', None, latencyMs)
+            if (useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist('Shield Bash'))) and Player.Mana > 20:
+                if specialAbilityType == 1:
+                    if not Player.HasPrimarySpecial:
+                        Player.WeaponPrimarySA()
+                elif specialAbilityType == 2:
+                    if not Player.HasSecondarySpecial:
+                        Player.WeaponSecondarySA()
+                elif specialAbilityType == 3:
+                    if not Player.BuffsExist('Lightning Strike'):
+                        Spells.CastBushido('Lightning Strike', True)
+                elif specialAbilityType == 4:
+                    print('This needs work, there is no buff for focus attack. TODO')
+                    if not Player.BuffsExist('Focus Attack'):
+                        Spells.CastNinjitsu('Focus Attack', True)
+                elif specialAbilityType == 5:
+                    print('This needs work, there is no buff for momentum strike. TODO')
+                    if not Player.BuffsExist('Momentum Strike'):
+                        Spells.CastBushido('Momentum Strike', True)
+            Player.Attack(nearestMob)
+        Misc.Pause(100)
 def use_skill(skillName, target=None, latencyMs=None):
     if skillName == 'Discordance':
         Journal.Clear()
@@ -81,6 +148,42 @@ def use_skill(skillName, target=None, latencyMs=None):
         Misc.Pause(latencyMs)
     else:
         Misc.Pause(1000)
+def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
+    ignoreColor = False
+    if color == -1:
+        ignoreColor = True
+    container = Items.FindBySerial(containerSerial)
+    if isinstance(itemID, int):
+        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
+    elif isinstance(itemID, list):
+        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
+    else:
+        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
+    if foundItem != None:
+        return foundItem
+    elif recursive == True:
+        for item in container.Contains:
+            if item.IsContainer:
+                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
+                if foundItem != None:
+                    return foundItem
+def get_enemies(range=10, serialsToExclude=[]):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    if len(mobs) > 0:
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
+        return mobsList
+    return mobs
+def get_honor_target():
+    for mob in get_enemies(10):
+        if mob.Hits == mob.HitsMax:
+            return mob
 def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
     latency = 100
     fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
@@ -88,11 +191,22 @@ def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
     if delay < 250:
         delay = 250
     return delay + latencyMs
-def get_fcr_delay(spellName, latencyMs=200):
-    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
-    if fcr < 1:
-        fcr = 1
-    return fcr + latencyMs
+def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    for itemID in itemIDs:
+        item = find_in_container_by_id(itemID, containerSerial)
+        if item != None:
+            return item
+    return None
+def get_blues_in_range(range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
 def cast_spell(spellName, target=None, latencyMs=200):
     Target.Cancel()
     if spellName == 'Wildfire':
@@ -224,93 +338,6 @@ def cast_spell(spellName, target=None, latencyMs=200):
         else:
             Target.TargetExecute(target)
     Misc.Pause(get_fcr_delay(spellName, latencyMs))
-def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
-    return Items.FindByName(itemName, -1, containerSerial, 1)
-def use_bag_of_sending(minGold=50000):
-    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
-    if bag is not None:
-        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
-        for goldPile in goldPiles:
-            if goldPile.Amount >= minGold:
-                Items.UseItem(bag)
-                Target.WaitForTarget(1000, False)
-                Target.TargetExecute(goldPile)
-    else:
-        print('No bag of sending found!')
-def get_enemies(range=10, serialsToExclude=[]):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    if len(mobs) > 0:
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-        return mobsList
-    return mobs
-def run_dex_loop(loopName='Dex Loop', specialAbilityType=0, useShieldBash=0, useConsecrateWeapon=0, useCurseWeapon=0, useDivineFury=0, useEnemyOfOne=0, useRemoveCurse=0, useCleanseByFire=0, useHonor=0, attackRange=6, useBandagesOnSelf=0, healThreshold=0.95, minGold=0, latencyMs=200):
-    Timer.Create('dexPingTimer', 5000)
-    while not Player.IsGhost:
-        if Timer.Check('dexPingTimer') == False:
-            Player.HeadMessage(78, '{} Running...'.format(loopName))
-            Timer.Create('dexPingTimer', 10000)
-        if minGold > 0 and Player.Gold >= minGold:
-            use_bag_of_sending(minGold)
-        if not Player.Visible:
-            Misc.Pause(500)
-            continue
-        if heal_player_and_friends(useCleanseByFire=useCleanseByFire, useRemoveCurse=useRemoveCurse, useBandagesOnSelf=useBandagesOnSelf, healThreshold=healThreshold) == True:
-            continue
-        eligible = get_enemies(attackRange)
-        if len(eligible) > 0:
-            nearestMob = Mobiles.Select(eligible, 'Nearest')
-            honorMob = get_honor_target() if useHonor == 1 and (not Player.BuffsExist('Perfection')) else None
-            if honorMob is not None:
-                Player.InvokeVirtue('Honor')
-                Target.WaitForTarget(1000, False)
-                Target.TargetExecute(honorMob)
-            elif useEnemyOfOne == 1 and (not Player.BuffsExist('Enemy Of One')) and (Player.Mana > 20):
-                cast_spell('Enemy of One', None, latencyMs)
-            elif useConsecrateWeapon == 1 and (not Player.BuffsExist('Consecrate Weapon')) and (Player.Mana > 12):
-                cast_spell('Consecrate Weapon', None, latencyMs)
-            elif useDivineFury == 1 and (not Player.BuffsExist('Divine Fury')) and (Player.Mana > 20):
-                cast_spell('Divine Fury', None, latencyMs)
-            elif useCurseWeapon == 1 and (not Player.BuffsExist('Curse Weapon')) and (Player.Mana > 20):
-                cast_spell('Curse Weapon', None, latencyMs)
-            if useShieldBash == 1 and (not Player.BuffsExist('Shield Bash')) and (Player.Mana > 35):
-                cast_spell('Shield Bash', None, latencyMs)
-            if (useShieldBash == 0 or (useShieldBash == 1 and Player.BuffsExist('Shield Bash'))) and Player.Mana > 20:
-                if specialAbilityType == 1:
-                    if not Player.HasPrimarySpecial:
-                        Player.WeaponPrimarySA()
-                elif specialAbilityType == 2:
-                    if not Player.HasSecondarySpecial:
-                        Player.WeaponSecondarySA()
-                elif specialAbilityType == 3:
-                    if not Player.BuffsExist('Lightning Strike'):
-                        Spells.CastBushido('Lightning Strike', True)
-                elif specialAbilityType == 4:
-                    print('This needs work, there is no buff for focus attack. TODO')
-                    if not Player.BuffsExist('Focus Attack'):
-                        Spells.CastNinjitsu('Focus Attack', True)
-                elif specialAbilityType == 5:
-                    print('This needs work, there is no buff for momentum strike. TODO')
-                    if not Player.BuffsExist('Momentum Strike'):
-                        Spells.CastBushido('Momentum Strike', True)
-            Player.Attack(nearestMob)
-        Misc.Pause(100)
-def get_blues_in_range(range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
 def get_friends_by_names(friendNames=[], range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -325,56 +352,22 @@ def get_friends_by_names(friendNames=[], range=8):
         return mobsList
     mobs = Mobiles.ApplyFilter(fil)
     return mobs
-def get_honor_target():
-    for mob in get_enemies(10):
-        if mob.Hits == mob.HitsMax:
-            return mob
-def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    for itemID in itemIDs:
-        item = find_in_container_by_id(itemID, containerSerial)
-        if item != None:
-            return item
-    return None
-def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    items = []
-    for itemID in itemIDs:
-        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-    return items
-def get_pets(range=10, checkLineOfSight=True, mobileId=None):
-    pets = []
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = checkLineOfSight
-    if mobileId is not None:
-        fil.Bodies = List[Int32]([mobileId])
-    blues = Mobiles.ApplyFilter(fil)
-    for blue in blues:
-        if blue.CanRename:
-            pets.append(blue)
-    return pets
-def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
-    ignoreColor = False
-    if color == -1:
-        ignoreColor = True
-    container = Items.FindBySerial(containerSerial)
-    if isinstance(itemID, int):
-        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
-    elif isinstance(itemID, list):
-        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
+def get_fcr_delay(spellName, latencyMs=200):
+    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
+    if fcr < 1:
+        fcr = 1
+    return fcr + latencyMs
+def use_bag_of_sending(minGold=50000):
+    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
+    if bag is not None:
+        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
+        for goldPile in goldPiles:
+            if goldPile.Amount >= minGold:
+                Items.UseItem(bag)
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(goldPile)
     else:
-        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
-    if foundItem != None:
-        return foundItem
-    elif recursive == True:
-        for item in container.Contains:
-            if item.IsContainer:
-                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-                if foundItem != None:
-                    return foundItem
+        print('No bag of sending found!')
 def heal_player_and_friends(friendSelectMethod=0, friendNames=[], range=8, healThreshold=0.7, useCure=0, useGreaterHeal=0, useCloseWounds=0, useCleanseByFire=0, useRemoveCurse=0, useSpiritSpeak=0, useCloakOfGraveMists=0, useGiftOfRenewal=0, useBandagesOnSelf=0, latencyMs=100):
     if useCure == 0 and useGreaterHeal == 0 and (useCloseWounds == 0) and (useCleanseByFire == 0) and (useRemoveCurse == 0) and (useSpiritSpeak == 0) and (useCloakOfGraveMists == 0) and (useGiftOfRenewal == 0) and (useBandagesOnSelf == 0):
         return False
@@ -446,6 +439,13 @@ def heal_player_and_friends(friendSelectMethod=0, friendNames=[], range=8, healT
             cast_spell('Greater Heal', friendMobile, latencyMs)
             return True
     return False
+def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    items = []
+    for itemID in itemIDs:
+        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+    return items
+def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
+    return Items.FindByName(itemName, -1, containerSerial, 1)
 
 # Main code
 run_dex_loop(loopName='Basher (primary)', specialAbilityType=1, useShieldBash=1, useConsecrateWeapon=1, useCurseWeapon=0, useDivineFury=0, useEnemyOfOne=0, useRemoveCurse=1, useCleanseByFire=0, useHonor=0, attackRange=6, useBandagesOnSelf=1, healThreshold=0.95, minGold=35000, latencyMs=200)

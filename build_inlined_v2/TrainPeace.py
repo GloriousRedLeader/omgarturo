@@ -5,6 +5,12 @@ LAP_HARP_GRAPHIC_ID = 3762
 INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 
 # Functions
+def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    for itemID in itemIDs:
+        item = find_in_container_by_id(itemID, containerSerial)
+        if item != None:
+            return item
+    return None
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -24,12 +30,6 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    for itemID in itemIDs:
-        item = find_in_container_by_id(itemID, containerSerial)
-        if item != None:
-            return item
-    return None
 
 # Main code
 '\nAuthor: TheWarDoctor95\nOther Contributors:\nLast Contribution By: TheWarDoctor95 - March 23, 2019\n\nDescription: Uses the Peacemaking skill on the player to train Peacemaking to GM\n'

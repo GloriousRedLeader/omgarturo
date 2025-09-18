@@ -3,8 +3,8 @@ from System.Collections.Generic import List
 import sys
 
 # Constants
-BOD_STATIC_ID = 8792
 BOD_BOOK_STATIC_ID = 8793
+BOD_STATIC_ID = 8792
 
 # Functions
 def get_yellows_in_range(range=8):

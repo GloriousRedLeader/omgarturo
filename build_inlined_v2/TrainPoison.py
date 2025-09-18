@@ -1,6 +1,6 @@
 # Constants
-POISON_POTION_STATIC_ID = 3850
 KEG_STATIC_IDS = [6464]
+POISON_POTION_STATIC_ID = 3850
 
 # Functions
 def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
