@@ -11,76 +11,237 @@ import sys
 import time
 
 # Constants
-MEDITATION_DELAY = 1250
-CONSECRATE_WEAPON_DELAY = 500
-EVIL_OMEN_DELAY = 1000
-ATTUNE_WEAPON_DELAY = 1000
-FC_CAP_MAGERY = 2
-ANIMATE_DEAD_DELAY = 1750
-BANDAGE_STATIC_ID = 3617
-GREATER_HEAL_DELAY = 1750
-VAMPIRIC_EMBRACE_DELAY = 2250
-FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
-GIFT_OF_LIFE_DELAY = 4000
-GOLD_STATIC_IDS = [3821]
-ARCANE_EMPOWERMENT_DELAY = 3000
-FC_CAP_SPELLWEAVING = 4
 WORD_OF_DEATH_DELAY = 3500
-GIFT_OF_RENEWAL_DELAY = 3000
-DEATH_RAY_DELAY = 2250
-CONDUIT_DELAY = 2250
-POISON_FIELD_DELAY = 2000
-PROTECTION_DELAY = 750
-BARD_SONG_DELAY = 2000
-BLOOD_OATH_DELAY = 1750
-ARCH_CURE_DELAY = 1750
-DIVINE_FURY_DELAY = 1000
-WITHER_DELAY = 2250
-user32 = ctypes.WinDLL('user32', use_last_error=True)
-ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 LAP_HARP_GRAPHIC_ID = 3762
-INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
-WRAITH_FORM_DELAY = 2250
-ENEMY_OF_ONE_DELAY = 500
-WILDFIRE_DELAY = 2500
-FIRE_FIELD_DELAY = 1750
-FC_CAP_CHIVALRY = 4
-STRANGLE_DELAY = 2250 + 500
-CURSE_WEAPON_DELAY = 1000
-FC_CAP_BARD_SONG = 4
-POISON_DELAY = 1500
-FC_CAP_SHIELD_BASH = 4
-POISON_STRIKE_DELAY = 2000
-THUNDERSTORM_DELAY = 1500
-SHIELD_BASH_DELAY = 1000
-CURSE_DELAY = 1750
-SUMMON_FAMILIAR_DELAY = 2250
-CORPSE_SKIN_DELAY = 1750
-REMOVE_CURSE_DELAY = 1500
-CHAIN_LIGHTNING_DELAY = 2000
-SPIRIT_SPEAK_DELAY = 999
-CLOSE_WOUNDS_DELAY = 1500
+GREATER_HEAL_DELAY = 1750
 PAIN_SPIKE_DELAY = 1250
-FLAME_STRIKE_DELAY = 2500
+VAMPIRIC_EMBRACE_DELAY = 2250
+SUMMON_FAMILIAR_DELAY = 2250
+CURSE_WEAPON_DELAY = 1000
+GOLD_STATIC_IDS = [3821]
+FC_CAP_CHIVALRY = 4
+ARCANE_EMPOWERMENT_DELAY = 3000
+FC_CAP_MAGERY = 2
 ENERGY_BOLT_DELAY = 2000
+ENEMY_OF_ONE_DELAY = 500
+ARCH_CURE_DELAY = 1750
+FLAME_STRIKE_DELAY = 2500
+DEATH_RAY_DELAY = 2250
+BARD_SONG_DELAY = 2000
+EVIL_OMEN_DELAY = 1000
+STRANGLE_DELAY = 2250 + 500
+GIFT_OF_RENEWAL_DELAY = 3000
+BANDAGE_STATIC_ID = 3617
+BLOOD_OATH_DELAY = 1750
+SPIRIT_SPEAK_DELAY = 999
+THUNDERSTORM_DELAY = 1500
+CONSECRATE_WEAPON_DELAY = 500
+FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
+CONDUIT_DELAY = 2250
+ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
+POISON_DELAY = 1500
+CHAIN_LIGHTNING_DELAY = 2000
+ATTUNE_WEAPON_DELAY = 1000
+POISON_STRIKE_DELAY = 2000
+CURSE_DELAY = 1750
+DIVINE_FURY_DELAY = 1000
+GIFT_OF_LIFE_DELAY = 4000
+user32 = ctypes.WinDLL('user32', use_last_error=True)
+WRAITH_FORM_DELAY = 2250
+CLOSE_WOUNDS_DELAY = 1500
+SHIELD_BASH_DELAY = 1000
+FC_CAP_SHIELD_BASH = 4
+REMOVE_CURSE_DELAY = 1500
+CORPSE_SKIN_DELAY = 1750
+FC_CAP_BARD_SONG = 4
+FC_CAP_SPELLWEAVING = 4
+WILDFIRE_DELAY = 2500
+PROTECTION_DELAY = 750
+ANIMATE_DEAD_DELAY = 1750
+WITHER_DELAY = 2250
+FIRE_FIELD_DELAY = 1750
+POISON_FIELD_DELAY = 2000
+MEDITATION_DELAY = 1250
+INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 
 # Functions
-def get_pets(range=10, checkLineOfSight=True, mobileId=None):
-    pets = []
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = checkLineOfSight
-    if mobileId is not None:
-        fil.Bodies = List[Int32]([mobileId])
-    blues = Mobiles.ApplyFilter(fil)
-    for blue in blues:
-        if blue.CanRename:
-            pets.append(blue)
-    return pets
+def use_skill(skillName, target=None, latencyMs=None):
+    if skillName == 'Discordance':
+        Journal.Clear()
+    Player.UseSkill(skillName)
+    if skillName == 'Meditation':
+        Misc.Pause(MEDITATION_DELAY)
+    elif skillName == 'Spirit Speak':
+        Misc.Pause(SPIRIT_SPEAK_DELAY)
+    elif skillName == 'Discordance':
+        Target.WaitForTarget(latencyMs)
+        if Journal.Search('What instrument shall you play?') or Journal.Search('No instruments found to Discord with!'):
+            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
+            if instrument is not None:
+                Target.TargetExecute(instrument)
+                Target.WaitForTarget(latencyMs)
+            else:
+                Misc.SendMessage('No instruments found to Discord with!')
+        Target.TargetExecute(target)
+        Misc.Pause(latencyMs)
+    else:
+        Misc.Pause(1000)
+def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
+    latency = 100
+    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
+    delay = baseDelayMs - fcOffset
+    if delay < 250:
+        delay = 250
+    return delay + latencyMs
+def get_fcr_delay(spellName, latencyMs=200):
+    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
+    if fcr < 1:
+        fcr = 1
+    return fcr + latencyMs
+def cast_spell(spellName, target=None, latencyMs=200):
+    Target.Cancel()
+    if spellName == 'Wildfire':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(WILDFIRE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Attune Weapon':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(ATTUNE_WEAPON_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Thunderstorm':
+        Spells.CastSpellweaving(spellName)
+        Misc.Pause(get_fc_delay(THUNDERSTORM_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Word of Death':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(WORD_OF_DEATH_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Arcane Empowerment':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(ARCANE_EMPOWERMENT_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Gift of Life':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(GIFT_OF_LIFE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Gift of Renewal':
+        Spells.CastSpellweaving(spellName)
+        Target.WaitForTarget(get_fc_delay(GIFT_OF_RENEWAL_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
+    elif spellName == 'Wither':
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(WITHER_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Conduit':
+        Spells.CastMastery(spellName)
+        Target.WaitForTarget(get_fc_delay(CONDUIT_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Corpse Skin':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(CORPSE_SKIN_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Pain Spike':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(PAIN_SPIKE_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Evil Omen':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(EVIL_OMEN_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Blood Oath':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(BLOOD_OATH_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Strangle':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(STRANGLE_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Poison Strike':
+        Spells.CastNecro(spellName)
+        Target.WaitForTarget(get_fc_delay(POISON_STRIKE_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Curse Weapon':
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(CURSE_WEAPON_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Animate Dead':
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(ANIMATE_DEAD_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Wraith Form':
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(WRAITH_FORM_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Vampiric Embrace':
+        Spells.CastNecro(spellName)
+        Misc.Pause(get_fc_delay(VAMPIRIC_EMBRACE_DELAY, FC_CAP_NECROMANCY, latencyMs))
+    elif spellName == 'Poison Field':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(POISON_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Fire Field':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(FIRE_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Poison':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(POISON_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Protection':
+        Spells.CastMagery(spellName)
+        Misc.Pause(get_fc_delay(PROTECTION_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Energy Bolt':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(ENERGY_BOLT_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Flame Strike':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(FLAME_STRIKE_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Chain Lightning':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(CHAIN_LIGHTNING_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Death Ray':
+        Spells.CastMastery(spellName)
+        Target.WaitForTarget(get_fc_delay(DEATH_RAY_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Curse':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(CURSE_DELAY, FC_CAP_MAGERY, latencyMs))
+        Target.TargetExecute(target)
+    elif spellName == 'Arch Cure':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(ARCH_CURE_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Greater Heal':
+        Spells.CastMagery(spellName)
+        Target.WaitForTarget(get_fc_delay(GREATER_HEAL_DELAY, FC_CAP_MAGERY, latencyMs))
+    elif spellName == 'Remove Curse':
+        Spells.CastChivalry(spellName)
+        Target.WaitForTarget(get_fc_delay(REMOVE_CURSE_DELAY, FC_CAP_CHIVALRY, latencyMs))
+    elif spellName == 'Close Wounds':
+        Spells.CastChivalry(spellName)
+        Target.WaitForTarget(get_fc_delay(CLOSE_WOUNDS_DELAY, FC_CAP_CHIVALRY, latencyMs))
+    elif spellName == 'Divine Fury':
+        Spells.CastChivalry(spellName)
+        Misc.Pause(get_fc_delay(DIVINE_FURY_DELAY, FC_CAP_CHIVALRY, latencyMs))
+    elif spellName == 'Consecrate Weapon':
+        Spells.CastChivalry(spellName)
+        Misc.Pause(get_fc_delay(CONSECRATE_WEAPON_DELAY, FC_CAP_CHIVALRY, latencyMs))
+    elif spellName == 'Enemy of One':
+        Spells.CastChivalry(spellName)
+        Misc.Pause(get_fc_delay(ENEMY_OF_ONE_DELAY, FC_CAP_CHIVALRY, latencyMs))
+    elif spellName == 'Shield Bash':
+        Spells.CastMastery(spellName)
+        Misc.Pause(get_fc_delay(SHIELD_BASH_DELAY, FC_CAP_SHIELD_BASH, latencyMs))
+    elif spellName == 'Inspire' or spellName == 'Invigorate' or spellName == 'Resilience' or (spellName == 'Perseverance'):
+        Journal.Clear()
+        Spells.CastMastery(spellName)
+        Misc.Pause(get_fc_delay(BARD_SONG_DELAY, FC_CAP_BARD_SONG, latencyMs))
+        if Journal.Search('What instrument shall you play?'):
+            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
+            if instrument is not None:
+                Target.TargetExecute(instrument)
+                Target.WaitForTarget(latencyMs)
+            else:
+                Misc.SendMessage('No instruments found to play bard songs!')
+    else:
+        Player.HeadMessage(28, 'That spell is not supported! Pausing.')
+        Misc.Pause(1000)
+    if target is not None:
+        if type(target).__name__ == 'Point3D':
+            Target.TargetExecute(target.X, target.Y, target.Z)
+        else:
+            Target.TargetExecute(target)
+    Misc.Pause(get_fcr_delay(spellName, latencyMs))
+def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
+    return Items.FindByName(itemName, -1, containerSerial, 1)
+def use_bag_of_sending(minGold=50000):
+    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
+    if bag is not None:
+        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
+        for goldPile in goldPiles:
+            if goldPile.Amount >= minGold:
+                Items.UseItem(bag)
+                Target.WaitForTarget(1000, False)
+                Target.TargetExecute(goldPile)
+    else:
+        print('No bag of sending found!')
 def get_enemies(range=10, serialsToExclude=[]):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -94,50 +255,6 @@ def get_enemies(range=10, serialsToExclude=[]):
         mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
         return mobsList
     return mobs
-def get_friends_by_names(friendNames=[], range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    if len(mobs) > 0:
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if mob.Name in friendNames])
-        return mobsList
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
-def use_bag_of_sending(minGold=50000):
-    bag = find_first_in_container_by_name('a bag of sending', containerSerial=Player.Backpack.Serial)
-    if bag is not None:
-        goldPiles = find_all_in_container_by_ids(GOLD_STATIC_IDS)
-        for goldPile in goldPiles:
-            if goldPile.Amount >= minGold:
-                Items.UseItem(bag)
-                Target.WaitForTarget(1000, False)
-                Target.TargetExecute(goldPile)
-    else:
-        print('No bag of sending found!')
-def get_mobile_percent_hp(mobile):
-    if mobile is not None and mobile.Hits is not None and (mobile.Hits > 0) and (mobile.HitsMax is not None) and (mobile.HitsMax > 0):
-        return mobile.Hits / mobile.HitsMax
-    else:
-        return 0
-def find_first_in_container_by_name(itemName, containerSerial=Player.Backpack.Serial):
-    return Items.FindByName(itemName, -1, containerSerial, 1)
-def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
-    latency = 100
-    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
-    delay = baseDelayMs - fcOffset
-    if delay < 250:
-        delay = 250
-    return delay + latencyMs
-def get_fcr_delay(spellName, latencyMs=200):
-    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
-    if fcr < 1:
-        fcr = 1
-    return fcr + latencyMs
 def check_summon_familiar(latencyMs=200):
     SUMMON_FAMILIAR_GUMP_ID = 545409390
     if Timer.Check('checkSummonFamiliarTimer') == False:
@@ -189,10 +306,63 @@ def check_summon_familiar(latencyMs=200):
                         Gumps.SendAction(SUMMON_FAMILIAR_GUMP_ID, petButtonMap[petName])
                         Misc.Pause(250)
     return False
+def get_blues_in_range(range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
+def get_friends_by_names(friendNames=[], range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    if len(mobs) > 0:
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if mob.Name in friendNames])
+        return mobsList
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
 def get_honor_target():
     for mob in get_enemies(10):
         if mob.Hits == mob.HitsMax:
             return mob
+def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    for itemID in itemIDs:
+        item = find_in_container_by_id(itemID, containerSerial)
+        if item != None:
+            return item
+    return None
+def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    items = []
+    for itemID in itemIDs:
+        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+    return items
+def is_player_moving():
+    return user32.GetAsyncKeyState(2) & 32768
+def get_pets(range=10, checkLineOfSight=True, mobileId=None):
+    pets = []
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = checkLineOfSight
+    if mobileId is not None:
+        fil.Bodies = List[Int32]([mobileId])
+    blues = Mobiles.ApplyFilter(fil)
+    for blue in blues:
+        if blue.CanRename:
+            pets.append(blue)
+    return pets
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -212,12 +382,11 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    for itemID in itemIDs:
-        item = find_in_container_by_id(itemID, containerSerial)
-        if item != None:
-            return item
-    return None
+def get_mobile_percent_hp(mobile):
+    if mobile is not None and mobile.Hits is not None and (mobile.Hits > 0) and (mobile.HitsMax is not None) and (mobile.HitsMax > 0):
+        return mobile.Hits / mobile.HitsMax
+    else:
+        return 0
 def heal_player_and_friends(friendSelectMethod=0, friendNames=[], range=8, healThreshold=0.7, useCure=0, useGreaterHeal=0, useCloseWounds=0, useCleanseByFire=0, useRemoveCurse=0, useSpiritSpeak=0, useCloakOfGraveMists=0, useGiftOfRenewal=0, useBandagesOnSelf=0, latencyMs=100):
     if useCure == 0 and useGreaterHeal == 0 and (useCloseWounds == 0) and (useCleanseByFire == 0) and (useRemoveCurse == 0) and (useSpiritSpeak == 0) and (useCloakOfGraveMists == 0) and (useGiftOfRenewal == 0) and (useBandagesOnSelf == 0):
         return False
@@ -289,34 +458,6 @@ def heal_player_and_friends(friendSelectMethod=0, friendNames=[], range=8, healT
             cast_spell('Greater Heal', friendMobile, latencyMs)
             return True
     return False
-def is_player_moving():
-    return user32.GetAsyncKeyState(2) & 32768
-def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    items = []
-    for itemID in itemIDs:
-        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-    return items
-def use_skill(skillName, target=None, latencyMs=None):
-    if skillName == 'Discordance':
-        Journal.Clear()
-    Player.UseSkill(skillName)
-    if skillName == 'Meditation':
-        Misc.Pause(MEDITATION_DELAY)
-    elif skillName == 'Spirit Speak':
-        Misc.Pause(SPIRIT_SPEAK_DELAY)
-    elif skillName == 'Discordance':
-        Target.WaitForTarget(latencyMs)
-        if Journal.Search('What instrument shall you play?') or Journal.Search('No instruments found to Discord with!'):
-            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
-            if instrument is not None:
-                Target.TargetExecute(instrument)
-                Target.WaitForTarget(latencyMs)
-            else:
-                Misc.SendMessage('No instruments found to Discord with!')
-        Target.TargetExecute(target)
-        Misc.Pause(latencyMs)
-    else:
-        Misc.Pause(1000)
 def run_mage_loop(loopName='Mage Loop', friendSelectMethod=0, friendNames=[], range=8, useArcaneEmpowerment=0, mainNukeSpell=0, mainNukeDelayMs=100, mainAoeSpell=0, mainAoeDelayMs=100, aoeMinMobCount=3, aoeMaxRange=7, useStrangle=0, strangleDelayMs=60000, useCorpseSkin=0, corpseSkinDelayMs=60000, useEvilOmen=0, evilOmenDelayMs=20000, useBloodOath=0, bloodOathDelayMs=30000, useCurse=0, curseDelayMs=60000, usePoison=0, poisonDelayMs=30000, usePoisonField=0, poisonFieldDelayMs=10000, useFireField=0, fireFieldDelayMs=10000, useDeathRay=0, useWordOfDeath=0, useWildfire=0, wildfireDelayMs=9000, usePainSpike=0, useAnimateDead=0, animateDeadDelayMs=60000, useSummonFamiliar=0, useForm=0, useCure=0, useGreaterHeal=0, useSpiritSpeak=0, useConduit=0, conduitDelayMs=15000, useMeditation=0, healThreshold=0.7, useCloakOfGraveMists=0, useGiftOfRenewal=0, useGiftOfLife=0, useAttuneWeapon=0, useBardAbility=0, bardAbilityDelayMs=10000, useBardSongs=0, useProtection=0, useHonor=0, minGold=0, latencyMs=200):
     Timer.Create('animateDeadTimer', animateDeadDelayMs)
     if Player.Visible:
@@ -474,147 +615,6 @@ def run_mage_loop(loopName='Mage Loop', friendSelectMethod=0, friendNames=[], ra
             Player.HeadMessage(58, 'Meditating!')
             Timer.Create('meditationTimer', 10000)
         Misc.Pause(100)
-def get_blues_in_range(range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
-def cast_spell(spellName, target=None, latencyMs=200):
-    Target.Cancel()
-    if spellName == 'Wildfire':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(WILDFIRE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Attune Weapon':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(ATTUNE_WEAPON_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Thunderstorm':
-        Spells.CastSpellweaving(spellName)
-        Misc.Pause(get_fc_delay(THUNDERSTORM_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Word of Death':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(WORD_OF_DEATH_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Arcane Empowerment':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(ARCANE_EMPOWERMENT_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Gift of Life':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(GIFT_OF_LIFE_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Gift of Renewal':
-        Spells.CastSpellweaving(spellName)
-        Target.WaitForTarget(get_fc_delay(GIFT_OF_RENEWAL_DELAY, FC_CAP_SPELLWEAVING, latencyMs))
-    elif spellName == 'Wither':
-        Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(WITHER_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Conduit':
-        Spells.CastMastery(spellName)
-        Target.WaitForTarget(get_fc_delay(CONDUIT_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Corpse Skin':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(CORPSE_SKIN_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Pain Spike':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(PAIN_SPIKE_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Evil Omen':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(EVIL_OMEN_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Blood Oath':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(BLOOD_OATH_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Strangle':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(STRANGLE_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Poison Strike':
-        Spells.CastNecro(spellName)
-        Target.WaitForTarget(get_fc_delay(POISON_STRIKE_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Curse Weapon':
-        Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(CURSE_WEAPON_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Animate Dead':
-        Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(ANIMATE_DEAD_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Wraith Form':
-        Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(WRAITH_FORM_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Vampiric Embrace':
-        Spells.CastNecro(spellName)
-        Misc.Pause(get_fc_delay(VAMPIRIC_EMBRACE_DELAY, FC_CAP_NECROMANCY, latencyMs))
-    elif spellName == 'Poison Field':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(POISON_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Fire Field':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(FIRE_FIELD_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Poison':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(POISON_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Protection':
-        Spells.CastMagery(spellName)
-        Misc.Pause(get_fc_delay(PROTECTION_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Energy Bolt':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(ENERGY_BOLT_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Flame Strike':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(FLAME_STRIKE_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Chain Lightning':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(CHAIN_LIGHTNING_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Death Ray':
-        Spells.CastMastery(spellName)
-        Target.WaitForTarget(get_fc_delay(DEATH_RAY_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Curse':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(CURSE_DELAY, FC_CAP_MAGERY, latencyMs))
-        Target.TargetExecute(target)
-    elif spellName == 'Arch Cure':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(ARCH_CURE_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Greater Heal':
-        Spells.CastMagery(spellName)
-        Target.WaitForTarget(get_fc_delay(GREATER_HEAL_DELAY, FC_CAP_MAGERY, latencyMs))
-    elif spellName == 'Remove Curse':
-        Spells.CastChivalry(spellName)
-        Target.WaitForTarget(get_fc_delay(REMOVE_CURSE_DELAY, FC_CAP_CHIVALRY, latencyMs))
-    elif spellName == 'Close Wounds':
-        Spells.CastChivalry(spellName)
-        Target.WaitForTarget(get_fc_delay(CLOSE_WOUNDS_DELAY, FC_CAP_CHIVALRY, latencyMs))
-    elif spellName == 'Divine Fury':
-        Spells.CastChivalry(spellName)
-        Misc.Pause(get_fc_delay(DIVINE_FURY_DELAY, FC_CAP_CHIVALRY, latencyMs))
-    elif spellName == 'Consecrate Weapon':
-        Spells.CastChivalry(spellName)
-        Misc.Pause(get_fc_delay(CONSECRATE_WEAPON_DELAY, FC_CAP_CHIVALRY, latencyMs))
-    elif spellName == 'Enemy of One':
-        Spells.CastChivalry(spellName)
-        Misc.Pause(get_fc_delay(ENEMY_OF_ONE_DELAY, FC_CAP_CHIVALRY, latencyMs))
-    elif spellName == 'Shield Bash':
-        Spells.CastMastery(spellName)
-        Misc.Pause(get_fc_delay(SHIELD_BASH_DELAY, FC_CAP_SHIELD_BASH, latencyMs))
-    elif spellName == 'Inspire' or spellName == 'Invigorate' or spellName == 'Resilience' or (spellName == 'Perseverance'):
-        Journal.Clear()
-        Spells.CastMastery(spellName)
-        Misc.Pause(get_fc_delay(BARD_SONG_DELAY, FC_CAP_BARD_SONG, latencyMs))
-        if Journal.Search('What instrument shall you play?'):
-            instrument = find_first_in_container_by_ids(INSTRUMENT_STATIC_IDS)
-            if instrument is not None:
-                Target.TargetExecute(instrument)
-                Target.WaitForTarget(latencyMs)
-            else:
-                Misc.SendMessage('No instruments found to play bard songs!')
-    else:
-        Player.HeadMessage(28, 'That spell is not supported! Pausing.')
-        Misc.Pause(1000)
-    if target is not None:
-        if type(target).__name__ == 'Point3D':
-            Target.TargetExecute(target.X, target.Y, target.Z)
-        else:
-            Target.TargetExecute(target)
-    Misc.Pause(get_fcr_delay(spellName, latencyMs))
 
 # Main code
 run_mage_loop(loopName='Wither Necro', friendSelectMethod=0, friendNames=[], range=10, useArcaneEmpowerment=0, mainNukeSpell=1, mainNukeDelayMs=100, mainAoeSpell=1, mainAoeDelayMs=100, aoeMinMobCount=3, aoeMaxRange=9, useStrangle=0, strangleDelayMs=25000, useCorpseSkin=1, corpseSkinDelayMs=30000, useEvilOmen=0, evilOmenDelayMs=20000, useBloodOath=0, bloodOathDelayMs=30000, useCurse=0, curseDelayMs=60000, usePoison=0, poisonDelayMs=30000, usePoisonField=0, poisonFieldDelayMs=10000, useFireField=0, fireFieldDelayMs=10000, useDeathRay=0, useWordOfDeath=0, useWildfire=0, usePainSpike=0, useAnimateDead=1, animateDeadDelayMs=25000, useSummonFamiliar=1, useForm=2, useCure=0, useGreaterHeal=0, useSpiritSpeak=1, useConduit=0, conduitDelayMs=15000, useMeditation=0, healThreshold=0.7, useCloakOfGraveMists=1, useGiftOfRenewal=0, useGiftOfLife=0, useAttuneWeapon=0, useBardAbility=0, bardAbilityDelayMs=10000, useProtection=0, useHonor=0, minGold=45000, latencyMs=200)

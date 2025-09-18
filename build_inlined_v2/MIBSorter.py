@@ -23,6 +23,18 @@ def get_pets(range=10, checkLineOfSight=True, mobileId=None):
         if blue.CanRename:
             pets.append(blue)
     return pets
+def leash_pets():
+    leash = find_first_in_container_by_ids(PET_LEASH_STATIC_IDS)
+    if leash == None:
+        Player.HeadMessage(38, 'You do not have a leash in backpack.')
+        return False
+    for pet in get_pets():
+        if Player.DistanceTo(pet) <= 5:
+            Items.UseItem(leash)
+            Target.WaitForTarget(3000)
+            Player.HeadMessage(88, 'Leashing fluffy {}'.format(pet.Name))
+            Target.TargetExecute(pet)
+            Misc.Pause(1000)
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -48,18 +60,6 @@ def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Seri
         if item != None:
             return item
     return None
-def leash_pets():
-    leash = find_first_in_container_by_ids(PET_LEASH_STATIC_IDS)
-    if leash == None:
-        Player.HeadMessage(38, 'You do not have a leash in backpack.')
-        return False
-    for pet in get_pets():
-        if Player.DistanceTo(pet) <= 5:
-            Items.UseItem(leash)
-            Target.WaitForTarget(3000)
-            Player.HeadMessage(88, 'Leashing fluffy {}'.format(pet.Name))
-            Target.TargetExecute(pet)
-            Misc.Pause(1000)
 
 # Main code
 SOURCE_CONTAINER_ID = Target.PromptTarget('Pick source container', 38)

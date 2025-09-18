@@ -222,25 +222,28 @@ class SimpleInliner:
         # Add all collected imports
         inlined_parts.extend(sorted(all_imports))
         
-        # Organize collected symbols by type
-        constants = []
+        # Organize collected symbols by type and topologically sort constants
+        constant_nodes = []
         functions = []
         classes = []
         
         for (module_path, symbol_name) in needed_deps:
             if (module_path, symbol_name) in self.collected_code:
                 symbol_node = self.collected_code[(module_path, symbol_name)]
-                symbol_code = ast.unparse(symbol_node)
                 
                 if isinstance(symbol_node, ast.FunctionDef):
-                    functions.append(symbol_code)
+                    functions.append(ast.unparse(symbol_node))
                 elif isinstance(symbol_node, ast.ClassDef):
-                    classes.append(symbol_code)
+                    classes.append(ast.unparse(symbol_node))
                 elif isinstance(symbol_node, ast.Assign):
-                    constants.append(symbol_code)
+                    # Store the node and its dependencies for sorting
+                    constant_nodes.append((symbol_name, symbol_node))
                 else:
                     # Other types (like complex expressions)
-                    constants.append(symbol_code)
+                    constant_nodes.append((symbol_name, symbol_node))
+        
+        # Topologically sort constants by their dependencies
+        constants = self._topologically_sort_constants(constant_nodes)
         
         # Build organized code sections
         code_sections = []
@@ -288,6 +291,43 @@ class SimpleInliner:
             f.write(final_code + '\n')
         
         print(f"Wrote {output_file}")
+    
+    def _topologically_sort_constants(self, constant_nodes):
+        """Topologically sort constants based on their dependencies."""
+        # Build dependency graph
+        constant_dict = {name: node for name, node in constant_nodes}
+        dependencies = {}
+        
+        for name, node in constant_nodes:
+            deps = set()
+            # Find what names this constant references
+            for child in ast.walk(node):
+                if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Load):
+                    if child.id in constant_dict and child.id != name:
+                        deps.add(child.id)
+            dependencies[name] = deps
+        
+        # Topological sort using Kahn's algorithm
+        sorted_constants = []
+        remaining = set(constant_dict.keys())
+        
+        while remaining:
+            # Find constants with no dependencies among remaining constants
+            ready = []
+            for name in remaining:
+                if not dependencies[name] & remaining:  # No unresolved dependencies
+                    ready.append(name)
+            
+            if not ready:
+                # Circular dependency or other issue - just add them in arbitrary order
+                ready = [next(iter(remaining))]
+            
+            # Add ready constants to result
+            for name in ready:
+                sorted_constants.append(ast.unparse(constant_dict[name]))
+                remaining.remove(name)
+        
+        return sorted_constants
 
 def check_undefined_variables(output_dir: pathlib.Path):
     """Check all generated files for undefined variables."""

@@ -6,12 +6,33 @@ import sys
 import time
 
 # Constants
-railsStartingTime = 0
-railsEarnedGold = 0
 ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 railsLastGold = 0
+railsEarnedGold = 0
+railsStartingTime = 0
 
 # Functions
+def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
+    if Player.Position.X == x and Player.Position.Y == y:
+        return True
+    start_time = time.time()
+    if tileOffset > 0:
+        tiles = PathFinding.GetPath(x, y, True)
+        numTiles = len(tiles) if tiles is not None else 0
+        if numTiles - tileOffset > 1:
+            tileIndex = numTiles - tileOffset - 2
+            x = tiles[tileIndex].X
+            y = tiles[tileIndex].Y
+        else:
+            return True
+    route = PathFinding.Route()
+    route.X = x
+    route.Y = y
+    route.MaxRetry = 3
+    route.IgnoreMobile = True
+    route.Timeout = timeoutSeconds
+    res = PathFinding.Go(route)
+    return res
 def get_enemies(range=10, serialsToExclude=[]):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -25,25 +46,6 @@ def get_enemies(range=10, serialsToExclude=[]):
         mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
         return mobsList
     return mobs
-def run_defend_loop(range=6, autoLootBufferMs=0, pathFindingTimeoutSeconds=3.0, tileOffset=0):
-    rails_stats('start')
-    while not Player.IsGhost:
-        rails_stats('report_head')
-        Misc.Pause(2000)
-        eligible = get_enemies(range)
-        if len(eligible) > 0:
-            Player.HeadMessage(48, 'Found {} things to attack'.format(len(eligible)))
-            nearest = Mobiles.Select(eligible, 'Nearest')
-            while Mobiles.FindBySerial(nearest.Serial) is not None and Player.DistanceTo(nearest) <= range:
-                Mobiles.Message(nearest, 68, '^ {} tiles ^'.format(Player.DistanceTo(nearest)), False)
-                res = go_to_tile(nearest.Position.X, nearest.Position.Y, pathFindingTimeoutSeconds, tileOffset)
-                Misc.Pause(250)
-            if autoLootBufferMs > 0 and goToNearestAttempts > 0:
-                Player.HeadMessage(48, 'Pausing a little extra for more loot')
-                Misc.Pause(autoLootBufferMs)
-        else:
-            Player.HeadMessage(48, 'Nothing left in sector')
-            Misc.Pause(1000)
 def rails_stats(option):
     global railsStartingTime
     global railsEarnedGold
@@ -69,27 +71,25 @@ def rails_stats(option):
             message = 'Gold Earned: {} Minutes: {} GPH: {}'.format('{:,.0f}'.format(railsEarnedGold), timeMinutes, goldPerHour)
             Misc.SendMessage(message, 253)
             Timer.Create('railsStatsTimer', 15000)
-def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
-    if Player.Position.X == x and Player.Position.Y == y:
-        return True
-    start_time = time.time()
-    if tileOffset > 0:
-        tiles = PathFinding.GetPath(x, y, True)
-        numTiles = len(tiles) if tiles is not None else 0
-        if numTiles - tileOffset > 1:
-            tileIndex = numTiles - tileOffset - 2
-            x = tiles[tileIndex].X
-            y = tiles[tileIndex].Y
+def run_defend_loop(range=6, autoLootBufferMs=0, pathFindingTimeoutSeconds=3.0, tileOffset=0):
+    rails_stats('start')
+    while not Player.IsGhost:
+        rails_stats('report_head')
+        Misc.Pause(2000)
+        eligible = get_enemies(range)
+        if len(eligible) > 0:
+            Player.HeadMessage(48, 'Found {} things to attack'.format(len(eligible)))
+            nearest = Mobiles.Select(eligible, 'Nearest')
+            while Mobiles.FindBySerial(nearest.Serial) is not None and Player.DistanceTo(nearest) <= range:
+                Mobiles.Message(nearest, 68, '^ {} tiles ^'.format(Player.DistanceTo(nearest)), False)
+                res = go_to_tile(nearest.Position.X, nearest.Position.Y, pathFindingTimeoutSeconds, tileOffset)
+                Misc.Pause(250)
+            if autoLootBufferMs > 0 and goToNearestAttempts > 0:
+                Player.HeadMessage(48, 'Pausing a little extra for more loot')
+                Misc.Pause(autoLootBufferMs)
         else:
-            return True
-    route = PathFinding.Route()
-    route.X = x
-    route.Y = y
-    route.MaxRetry = 3
-    route.IgnoreMobile = True
-    route.Timeout = timeoutSeconds
-    res = PathFinding.Go(route)
-    return res
+            Player.HeadMessage(48, 'Nothing left in sector')
+            Misc.Pause(1000)
 
 # Main code
 Player.HeadMessage(48, 'Starting Rail Loop Defend!')
