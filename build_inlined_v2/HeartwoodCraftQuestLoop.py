@@ -1180,30 +1180,6 @@ def run_craft_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
-from Scripts.omgarturo.fm_core.core_mobiles import get_pets
-from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
-from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
-from Scripts.omgarturo.fm_core.core_items import HEATER_SHIELD_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import BASCINET_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import BROADSWORD_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import KILT_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import FANCY_SHIRT_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import FLOWER_GARLAND_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import LAP_HARP_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import STUDDED_BUSTIER_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import SPYGLASS_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import FOOT_STOOL_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import BROADSWORD_GRAPHIC_ID
-import re
-import sys
-
 # Does the heartwood quests. 
 # You need a pack animal that contains all of your tools and resources.
 # You can configure the quests you want to do / skip below.

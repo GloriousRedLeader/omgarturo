@@ -40,14 +40,6 @@ def get_pets(range = 10, checkLineOfSight = True, mobileId = None):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-24
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_mobiles import get_pets
-
 # Clicks the hitching post and targets a pet at moonglow zoo
 # so you dont have to.
 # WARNING: THIS SCRIPT IS DANGEROUS! You can lose your pet!

@@ -15,32 +15,6 @@ from System.Collections.Generic import List
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-10-16
-# Use at your own risk. 
-
-# This one was taken from here:
-# https://razorenhanced.net/dokuwiki/doku.php?id=inscription
-# I removed the tinkering part. Just put a bunch of pens in your
-# bag and set your reagents in a chest and stand by it. 
-# For raising this or any other crafting skill, you can also use the
-# CraftItems script. It will create an item in a loop. Once your skill
-# gets high enough, change to another recipe.
-
-#Inscription Trainer by Frank Castle
-#
-#What you need:
-# 1 - 30.0+ Tinkering Skill. If you do not have it buy it up. 
-# 1 - 30.0+ Inscription Skill. If you do not have it buy it up.
-# 2 - a player made Tinker Tools
-# 3 - a chest with plenty of iron ingots, reagents, and scrolls
-# 
-# Written and tested on OSI. 
-
-from System.Collections.Generic import List
-
 # Set these because gumps can be different across free shards.
 # It is a pain. In any case you can get these values by hitting 
 # the record button, selecting the circle, then manually creating

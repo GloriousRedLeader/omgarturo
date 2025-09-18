@@ -10,18 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-10-26
-# Use at your own risk. 
-
-# This is a standalone script that will monitor exciting entries in the journal.
-# If you are looking for a rare pet, just plug the name in here.
-# If you are waiting for a boss to spawn during some event (e.g. SoTW on InsaneUO, 
-# add the strings here.)
-
-# Number of times to beep and flash a message
 HOW_MANY_TIMES_TO_BEEP = 5
 
 # If you want a pulse just to let you know this script is running

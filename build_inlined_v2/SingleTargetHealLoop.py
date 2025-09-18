@@ -10,18 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# This is a very basic single target heal loop script. 
-# Use case is despise boss. Works with magery and chivalry.
-# WHen it starts, you select all the mobiles you want to heal. Hit escape when done
-# selecting mobiles. Mobiles can be yourself, other players, and pets.
-# Works with chiv healing and magery healing.
-
 isMage = True if Player.GetSkillValue("Magery") > 75 else False
 
 petSerials = []

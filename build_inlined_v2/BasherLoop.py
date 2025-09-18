@@ -856,14 +856,6 @@ def run_dex_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_attack import run_dex_loop
-
 # This is a basher script for Insane UO. Internally it calls my main dex loop.
 # It's just configured to use the good stuff like shield bash.
 

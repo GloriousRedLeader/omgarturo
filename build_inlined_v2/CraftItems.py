@@ -1090,14 +1090,6 @@ def run_craft_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-04
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_crafting import run_craft_loop
-
 # Crafts items in a loop. Useful for crafters who are looking for
 # very specific pieces of gear like armor with 3 or fewer physical resist.
 # Can be used to automate any recipe found in omgarturo.fm_core.core_crafting.RECIPES.

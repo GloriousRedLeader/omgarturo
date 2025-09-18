@@ -17,17 +17,6 @@ from System.Collections.Generic import List
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from System import Byte, Int32
-from System.Collections.Generic import List
-from System import Int32
-
 # This is written by someone else! Storing for safe keeping. It is excellent.
 
 class IDOCScanner(object):

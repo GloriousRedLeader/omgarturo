@@ -40,19 +40,6 @@ def get_yellows_in_range(range = 8):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from System import Byte, Int32
-import sys
-from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
-from Scripts.omgarturo.fm_core.core_items import BOD_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import BOD_BOOK_STATIC_ID
-
 # Accepts bods from NPC vendors if you are too lazy to click like me
 # Just stand near them, turn this on, and let it rip.
 # You can the bods automatically placed into a BOD book if you wish.

@@ -31,17 +31,6 @@ def find_all_in_container_by_ids(itemIDs, containerSerial = Player.Backpack.Seri
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-11-14
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_ids
-from Scripts.omgarturo.fm_core.core_items import KEG_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import POISON_POTION_STATIC_ID
-
 # I am just storing this here for safekeeping. This script is from on UO Alive Discord
 # Original Author may be Firebottle, posted on 3/17/2023
 
@@ -109,4 +98,3 @@ while Player.GetSkillValue("Poisoning") < MAX_LEVEL:
             Target.WaitForTarget(10000, False)
             Target.TargetExecute(weapon)
             Misc.Pause(8000)
-        

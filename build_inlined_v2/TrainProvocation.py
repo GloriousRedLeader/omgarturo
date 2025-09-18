@@ -70,20 +70,6 @@ def find_first_in_container_by_ids(itemIDs, containerSerial = Player.Backpack.Se
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I DID NOT WRITE THIS SCRIPT!
-# Credit goes to wherever this came from. 
-# Im hosting for safekeeping.
-# Also, it may or may not work. I forget. Good luck.
-# I did do some stuff to it, so youll need my fm_core framework unfortunately.
-# The original version targetted player instead of a monster for the secondary
-# target. I changed because "you cannot incite that". Also, use autoSelectTarget = true
-
 '''
 Author: TheWarDoctor95
 Other Contributors:
@@ -94,15 +80,6 @@ Description: Uses the instruments from the player's backpack and the selected or
 '''
 
 
-from Scripts.omgarturo.fm_core.core_items import INSTRUMENT_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
-from System import Byte
-from System.Collections.Generic import List
-from System.Collections.Generic import List
-from System import Byte, Int32
-import sys
-import time
-import math
 
 Player.HeadMessage(38, "Training Provocation")
 

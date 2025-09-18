@@ -447,15 +447,6 @@ def cast_recall_or_sacred_journey(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-03-23
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_items import RUNEBOOK
-from Scripts.omgarturo.fm_core.core_spells import cast_recall_or_sacred_journey
-
 # Finds first runebook in inventory and attempts to recall / sacred journey to 
 # the rune indicated in the file name. File name must match this pattern for it to work:
 # RecallOrSacredJourneyRune<NUMBER>.py where NUMBER is an integer starting at 1 (first rune in book)

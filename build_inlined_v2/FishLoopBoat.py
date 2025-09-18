@@ -394,17 +394,6 @@ def run_fishing_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_gathering import run_fishing_loop
-from Scripts.omgarturo.fm_core.core_items import DAGGER_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import HARVESTERS_BLADE_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import BUTCHERS_WAR_CLEAVER_STATIC_ID
-
 # Auto fishes. Works on a boat. Works on a dock. Works if youre on a rock. 
 # Take advantage of the moveTiles param to move boat after 
 # each fishing attempt. It will say forward one X number of times.

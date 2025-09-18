@@ -10,8 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Trains stealing. Need a pack animal and an item.
-
 packAnimalSerial = Target.PromptTarget("Pick pack animal (must be in guild)")
 itemSerial = Target.PromptTarget("Pick item to steal")
 
@@ -48,4 +46,3 @@ while Player.GetSkillValue("Stealing") < Player.GetSkillCap('Stealing'):
         Items.Move(item, packAnimalBackpackSerial, item.Amount)
         print("Moving item back")
         Misc.Pause(1000)
-    

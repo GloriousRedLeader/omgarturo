@@ -25,16 +25,6 @@ def move_item_to_container(item, destinationSerial):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container
-from System.Collections.Generic import List
-from System import Byte, Int32
-
 # Move x number of items from container 1 to container 2
 # Enter number of items to move via chat
 # Prompt for source container

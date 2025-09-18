@@ -10,15 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# The halloween quests are a PITA. This one searches for a particular combination
-# of mobs to kill that are all in deceipt champ spawn (the ghouls and wraiths and such)
-# Just let it run. It will stop when it gets the quest.
 cnt = 0
 while True:
     cnt = cnt + 1

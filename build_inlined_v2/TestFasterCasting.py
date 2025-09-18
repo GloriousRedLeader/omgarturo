@@ -151,26 +151,6 @@ def get_enemies(range = 10, serialsToExclude = []):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
-
-from Scripts.omgarturo.fm_core.core_player import move_all_items_from_container
-from Scripts.omgarturo.fm_core.core_items import AXE_STATIC_IDS, LOG_STATIC_IDS, TREE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
-
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container
-from Scripts.omgarturo.fm_core.core_spells import get_fc_delay
-from System.Collections.Generic import List
-import sys
-from System import Byte, Int32
-import time
-
-
 Player.HeadMessage(455, "start fc test")
 
 
@@ -574,15 +554,3 @@ for HAS_PROTECTION in [True, False]:
         #delay = 250 * (min(abs(Player.FasterCasting - 2), FC_CAP_SHIELD_BASH - 2) if Player.BuffsExist("Protection") else min(Player.FasterCasting, FC_CAP_SHIELD_BASH))
         print("fc", FC_VAL, "protection", HAS_PROTECTION, "delay", delay)
 sys.exit()
-
-
-
-
-
-
-
-
-
-
-
-

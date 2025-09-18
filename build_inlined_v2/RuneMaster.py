@@ -17,16 +17,6 @@ import sys
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-04
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from math import ceil
-import sys
-
 # Permanent Atlas Gump with juicy buttons.
 # Crawls through your backpack and picks out all the 
 # runes found in runebooks and runic atlasses. Puts them

@@ -10,47 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-06
-# Use at your own risk. 
-
-# Spams eval over and over to gain. Praise
-
-#MSG = "Eval Bot Started"
-#Player.HeadMessage(128, MSG)
-
-#serial = Target.PromptTarget("Pick an npc to evaluate", 66)
-#while Player.GetSkillValue('Evaluating Intelligence') < Player.GetSkillCap('Evaluating Intelligence'):
-#    Player.UseSkill("Evaluating Intelligence")
-#    Target.WaitForTarget(4000,False)
-    #Target.Self()
-#    Target.TargetExecute(serial)
-#    Misc.Pause(1500)
-
-#MSG = "Eval Bot Done!"
-#Player.HeadMessage(128, MSG)
-
-# Well, using the eval skill doesnt do jack. So, try magery.AcceptMe
-
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I am just storing this here for safekeeping. This script is from on UO Alive Discord.
-# Whoever made this, thank you.
-# Dec 18, 2023 Magery 0 - 120
-
-#30 - 45: Cast Fireball
-#45 - 55: Cast Lightning (or Mana Drain for also raise Resisting Spells and Evaluating Intelligence)
-#55 - 65: Cast Paralyze
-#65 - 75: Cast Reveal
-#75 - 90: Cast Flamestrike (or Mana Vampire for also raise Resisting Spells and Evaluating Intelligence)
-#90 - 120: Cast Earthquake - Equip a spell channeling, mage weapon: -29 magery weaon
-
 CAST_TIMEOUT = 700
 
 def SelfCast(spell, wait_for_target = True):
@@ -86,6 +45,3 @@ while Player.GetSkillValue("Evaluating Intelligence") < Player.GetSkillCap('Eval
             #SelfCast("Earthquake", False)
             Spells.CastMagery("Earthquake")
             Misc.Pause(5000)
-             
-
-

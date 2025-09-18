@@ -33,14 +33,6 @@ def get_yellows_in_range(range = 8):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-03
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
-
 # Finds nearest yellow npc and opens the talk contextual menu.
 # Use this for doing quests if you cant be bothered to click on an NPC.
 

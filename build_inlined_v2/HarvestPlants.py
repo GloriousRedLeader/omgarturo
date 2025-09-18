@@ -10,19 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-29
-# Use at your own risk. 
-
-# Looks for nearby plants inside of garden beds and attempts
-# to loot resources, seeds, and then sets them to decorative.
-#
-# Warning: Not thoroughly tested. Good luck. It matches plants to
-# harvest by looking for "A Vibrant" in its name. Thats it. Not sophisticated.
-
-# This will remove the plant and put it in your bag.
 SET_TO_DECORATIVE = False
 
 # planting has huge range, but harvesting has pretty limited range

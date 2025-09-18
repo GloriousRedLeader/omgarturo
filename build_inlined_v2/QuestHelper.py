@@ -133,35 +133,6 @@ def get_enemies(range = 10, serialsToExclude = []):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-04
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from math import ceil
-import sys
-import threading, atexit
-from System import Byte, Int32
-import time
-from System.Threading import EventWaitHandle, EventResetMode, Thread
-from Scripts.omgarturo.fm_core.core_items import RARE_SERPENT_EGG_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import SERPENT_NEST_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import SNAKE_CHARMER_FLUTE_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import CARRONADE_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import CANNON_GRAPHIC_IDS
-from Scripts.omgarturo.fm_core.core_items import RAMROD_STATIC_ID
-from Scripts.omgarturo.fm_core.core_mobiles import SILVER_SERPENT_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_mobiles import GIANT_SERPENT_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_items import PAINTS_AND_A_BRUSH_STATIC_ID
-from Scripts.omgarturo.fm_core.core_items import BOW_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import HUNTING_PERMIT_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_items import DRYDOCK_SHIP_GRAPHIC_ID
-from Scripts.omgarturo.fm_core.core_mobiles import get_yellows_in_range
-from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
-from Scripts.omgarturo.fm_core.core_items import get_corpses
-
 # Just a place to dump misc. scripts that aid in doing
 # quests or particular tasks. Works as a gump where
 # you toggle the functionality off / on.
@@ -544,5 +515,3 @@ while True:
 
     
     Misc.Pause(250)    
-    
-

@@ -545,6 +545,47 @@ def validate_syntax(output_dir: pathlib.Path):
         print(f"\n✅ All {len(list(output_dir.glob('*.py')))} files compile successfully!")
         return True
 
+def validate_no_local_imports(output_dir: pathlib.Path):
+    """Check that NO generated files contain any Scripts.omgarturo imports."""
+    print("\n" + "="*50)
+    print("LOCAL IMPORT VALIDATION: Checking for remaining local imports...")
+    print("="*50)
+    
+    import_violations = {}
+    
+    for py_file in output_dir.glob('*.py'):
+        try:
+            with open(py_file, 'r') as f:
+                content = f.read()
+            
+            # Check for any Scripts.omgarturo imports
+            lines = content.splitlines()
+            violations = []
+            
+            for i, line in enumerate(lines, 1):
+                if 'from Scripts.omgarturo' in line or 'import Scripts.omgarturo' in line:
+                    violations.append(f"Line {i}: {line.strip()}")
+            
+            if violations:
+                import_violations[py_file.name] = violations
+                
+        except Exception as e:
+            print(f'Error processing {py_file.name}: {e}')
+    
+    if import_violations:
+        print(f"\n❌ CRITICAL ERROR: Found local imports in {len(import_violations)} files!")
+        print("These files are NOT standalone and will fail to run:")
+        for filename, violations in sorted(import_violations.items()):
+            print(f"\n  {filename}:")
+            for violation in violations:
+                print(f"    {violation}")
+        print(f"\nTotal files with import violations: {len(import_violations)}")
+        print("THE INLINER IS BROKEN - IT'S NOT ACTUALLY INLINING!")
+        return False
+    else:
+        print(f"\n✅ All {len(list(output_dir.glob('*.py')))} files are standalone (no local imports)!")
+        return True
+
 def check_undefined_variables(output_dir: pathlib.Path):
     """Check all generated files for undefined variables."""
     print("\n" + "="*50)
@@ -655,16 +696,19 @@ def main():
     print("="*60)
     
     syntax_ok = validate_syntax(output_dir)
+    no_local_imports_ok = validate_no_local_imports(output_dir)
     import_ok = validate_imports(output_dir)
     check_undefined_variables(output_dir)  # This is just informational
     
-    if syntax_ok and import_ok:
+    if syntax_ok and no_local_imports_ok and import_ok:
         print(f"\n🎉 BUILD SUCCESSFUL: All {processed_count} files generated and validated!")
         print("Note: 'Undefined variables' above are mostly function parameters (expected).")
     else:
         print(f"\n💥 BUILD FAILED: Critical errors found in generated files!")
         if not syntax_ok:
             print("  - Syntax errors found")
+        if not no_local_imports_ok:
+            print("  - LOCAL IMPORTS STILL PRESENT - INLINER IS BROKEN!")
         if not import_ok:
             print("  - Import/NameError issues found (real dependency problems)")
         print("Fix dependency ordering issues before using these scripts.")

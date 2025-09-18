@@ -22,14 +22,6 @@ def get_corpses(range = 2):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-11-27
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_items import get_corpses
-
 # Trains Forensic Eval
 
 # 0 - 30 from trainer

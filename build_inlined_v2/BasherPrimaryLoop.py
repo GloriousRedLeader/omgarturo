@@ -856,14 +856,6 @@ def run_dex_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_attack import run_dex_loop
-
 # Intended for Bashers and uses Primary Ability
 
 # Basic dexer loop that attacks nearby monsters using the abilities listed below.

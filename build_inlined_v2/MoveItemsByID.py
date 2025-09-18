@@ -52,14 +52,6 @@ def move_item_to_container_by_id(itemID, sourceSerial, destinationSerial, color 
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container_by_id
-
 # Prompts for an item type (source container is that items container)
 # Destination is prompt
 # Moves all items with that ItemID, e.g. all bod scrolls (of every color) to destination container

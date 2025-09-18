@@ -10,17 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I DID NOT WRITE THIS SCRIPT! Or at least I dont think I did.
-# Credit goes to wherever this came from. 
-# Im hosting for safekeeping.
-# Also, it may or may not work. I forget. Good luck.
-
 def Meditate():
     if Player.Mana != Player.ManaMax:
         Player.UseSkill("Meditation")

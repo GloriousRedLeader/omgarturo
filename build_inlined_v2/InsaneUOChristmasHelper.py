@@ -16,15 +16,6 @@ from System.Collections.Generic import List
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-12-17
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from System import Byte, Int32
-
 # InsaneUO Christmas Helper
 # 1. Loots stockings
 # 2. Picks up snowballs and throws them at bad guys.

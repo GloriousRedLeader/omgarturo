@@ -139,18 +139,6 @@ def get_enemies(range = 10, serialsToExclude = []):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-25
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_mobiles import get_pets
-from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
-from Scripts.omgarturo.fm_core.core_rails import go_to_tile
-from System.Collections.Generic import List
-from System import Byte, Int32
-
 # Auto Tamer. Just tames things nearby. Nothing fancy.
 # Noterieties:  blue = 1, green = 2, gray = 3, gray crim = 4, orange = 5, red = 6, yellow = 7
 

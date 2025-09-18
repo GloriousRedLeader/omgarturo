@@ -15,14 +15,6 @@ import sys
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-04
-# Use at your own risk. 
-
-import sys
-
 # This script may or may not have been written by me.
 # All credit goes to original author. I am just storing
 # it here for safekeeping. Also not sure if it actually works.
@@ -90,6 +82,3 @@ def fill_Keg():
 if Player.GetSkillValue('Alchemy') < 30:
     Misc.SendMessage('Increase alchemy  skill from NPC')
     Misc.NoOperation()
-
-
-

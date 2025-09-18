@@ -291,24 +291,6 @@ def run_rail_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-13
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_rails import run_rail_loop
-from Scripts.omgarturo.fm_core.core_routes import new_haven_noob_dungeon
-from Scripts.omgarturo.fm_core.core_routes import new_haven_skeleton_town
-from Scripts.omgarturo.fm_core.core_routes import deceipt_1_full
-from Scripts.omgarturo.fm_core.core_routes import deceipt_2_full
-from Scripts.omgarturo.fm_core.core_routes import tortuga_champ_spawn
-from Scripts.omgarturo.fm_core.core_routes import vermin_horde_champ_middle
-from Scripts.omgarturo.fm_core.core_routes import vermin_horde_champ_top
-from Scripts.omgarturo.fm_core.core_routes import hythloth_2
-from Scripts.omgarturo.fm_core.core_routes import hythloth_3
-from Scripts.omgarturo.fm_core.core_routes import hythloth_4
-
 Player.HeadMessage(48, "Starting Rail Loop")
 
 # Runs a route based on a list of [x, y] coordinates. Will run it repeatadly.

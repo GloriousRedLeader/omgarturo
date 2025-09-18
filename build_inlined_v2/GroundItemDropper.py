@@ -194,24 +194,6 @@ def get_enemies(range = 10, serialsToExclude = []):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-07
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_mobiles import get_enemies
-from Scripts.omgarturo.fm_core.core_player import move_all_items_from_container
-from Scripts.omgarturo.fm_core.core_items import AXE_STATIC_IDS, LOG_STATIC_IDS, TREE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container
-from Scripts.omgarturo.fm_core.core_spells import get_fc_delay
-from Scripts.omgarturo.fm_core.core_rails import get_tile_in_front
-from System.Collections.Generic import List
-import sys
-from System import Byte, Int32
-import time
-
 # Drops everything in the list below to the ground so it doesnt clutter your bags.
 # Its like and inverse auto looter. Use this for all those pesky bag drops you dont want.
 

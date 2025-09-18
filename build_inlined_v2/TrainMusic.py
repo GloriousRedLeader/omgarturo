@@ -10,14 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# This is a standalone script to train musicianship. Praise be.
-
 INSTRUMENT_STATIC_IDS = [ 
     0x0E9C, # drum
     0x2805, # flute

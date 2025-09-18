@@ -16,15 +16,6 @@ from System.Collections.Generic import List
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from System import Byte, Int32
-
 # Change serials. This needs work to make it usable by anyone.
 # Converts cotton via a loom to spools of thread.
 

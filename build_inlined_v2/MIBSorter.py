@@ -92,15 +92,6 @@ def leash_pets ():
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_pets import leash_pets
-import re
-
 # Organizes scrolls for mibs into containers based on x, y coordinates.
 # Set one container for east and another for west. 
 

@@ -10,36 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I am just storing this here for safekeeping. This script is from razor enhanced offical site.
-# https://razorenhanced.net/dokuwiki/doku.php?id=necromancy by FrankC
-
-# Here is what Frankc says:
-#
-# What you need:
-#
-#
-# 1) A suit with Lower Reagent Cost 100%
-#
-# 2) Full Necromancy Spellbook
-#
-# 3) A weapon Equipped(If under 20 Necro)
-#
-# Once you have those Press Play  
-#
-
-#0 - 40: Train at NPC Necromancer in New Haven
-#40 - 50: Cast Pain Spike on yourself
-#50 - 70: Cast Horrific Beast
-#70 - 90: Cast Wither
-#90 - 100: Cast Lich Form
-#100 - 120: Cast Vampiric Embrace
-
 while Player.GetSkillValue('Necromancy') < Player.GetSkillCap('Necromancy'):
     Necro = Player.GetSkillValue('Necromancy')
     if Necro < 35 and Player.Mana > 7:

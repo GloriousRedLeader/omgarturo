@@ -18,17 +18,6 @@ import time
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-18
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-from System import Byte, Int32
-import sys
-import time
-
 # 0-30 trainer
 # 30-80 i went to compassion desert and disco scorpions and spiders - spiders stop giving gains around 70 something
 # 80-120 do cus, if you are good karma they dont get aggro
@@ -88,4 +77,3 @@ while Player.GetRealSkillValue("Discordance") <  Player.GetSkillCap('Discordance
         
         
     Misc.Pause(1500)
-    

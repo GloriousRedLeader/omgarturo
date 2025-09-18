@@ -286,39 +286,6 @@ def move_item_to_container_by_id(itemID, sourceSerial, destinationSerial, color 
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-11-21
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-import sys
-from System import Byte, Int32
-from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_ids
-from Scripts.omgarturo.fm_core.core_player import move_all_items_from_container
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container_by_id
-from Scripts.omgarturo.fm_core.core_player import find_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import find_first_in_container_by_name
-from Scripts.omgarturo.fm_core.core_player import find_all_in_container_by_id
-from Scripts.omgarturo.fm_core.core_player import move_item_to_container
-from Scripts.omgarturo.fm_core.core_mobiles import get_friends_by_names
-from Scripts.omgarturo.fm_core.core_mobiles import get_pets
-from Scripts.omgarturo.fm_core.core_rails import move
-from Scripts.omgarturo.fm_core.core_rails import go_to_tile
-from Scripts.omgarturo.fm_core.core_rails import get_tile_in_front
-from Scripts.omgarturo.fm_core.core_items import AXE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import LOG_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import TREE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import DAGGER_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import BOARD_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import MINER_TOOLS_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import ORE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import INGOT_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import STONE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import SAND_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_items import BLUE_BEETLE_ITEM_ID
-
 # Will pick up items on the ground and stash them in inventory or giant beetles
 # Will attempt to deploy giant beetles that are in inventory.
 # You can use this for idocs. It isnt great though. Needs work.

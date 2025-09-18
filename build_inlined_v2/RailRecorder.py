@@ -24,35 +24,12 @@ import sys
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-01-11
-# Use at your own risk. 
-
-# GRL DID NOT WRITE THIS.
-# This beautiful script was written by someone else. Just storing it here for safekeeping.
-# This is a good, very useful script.
-
-from time import sleep
-from datetime import datetime
-import clr, time, sys, System
-
 clr.AddReference('System')
 clr.AddReference('System.Drawing')
 clr.AddReference('System.Windows.Forms')
 clr.AddReference('System.Data')
 
-from System.Collections.Generic import List
-from System import Byte
-from System import Environment
-from System.Drawing import Point, Color, Size
-from System.Windows.Forms import (Application, Button, Form, BorderStyle, Label, FlatStyle, DataGridView,
- DataGridViewAutoSizeColumnsMode, DataGridViewSelectionMode, DataGridViewEditMode, RadioButton, GroupBox,
- TextBox, CheckBox, ProgressBar)
-from System.Data import DataTable
 
-import sys
 
 def access(fname):
     rv = False

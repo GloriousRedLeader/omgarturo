@@ -208,14 +208,6 @@ def run_defend_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-13
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_rails import run_defend_loop
-
 Player.HeadMessage(48, "Starting Rail Loop Defend!")
 
 # Stays put until an enemy comes into range, then moves to it.

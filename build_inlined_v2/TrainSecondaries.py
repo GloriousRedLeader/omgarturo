@@ -10,29 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I DID NOT WRITE THIS SCRIPT!
-# Credit goes to wherever this came from. 
-# Im hosting for safekeeping.
-# I think remove trap does not work, at least when I tried. There is 
-# a dedicated script for that anyway. This will level a lot of free secondary skills.
-# It does it quite well. Just enable the ones you want in the order variable below.
-
-#------Vars
-
-# Note remove trap doesnt work. Use the dedicated script.
-
-#arrange these in the order that you would like to train the skill.  Remove any if you do not want to train them.
-#order = ["track", "picking","detect", "taste","camp","hide","arms","item", "removetrap"]
-#order = ["picking","detect", "taste","camp","hide","arms","item"]
-#order = ["picking", "hide", "arms", "item", "taste"]
-#order = ["detect", "taste","camp","hide","arms","item"]
-#order = ["picking", "item", "track", "detect", "hide"]
 order = ["taste"]
 
 # REMOVE TRAP IS BUSTED. USE DEDICATED SCRIPT.
@@ -423,4 +400,3 @@ def main(skillList):
             
 
 main(order)
-        

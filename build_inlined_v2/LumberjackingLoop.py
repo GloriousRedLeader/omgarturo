@@ -420,24 +420,6 @@ def run_lumberjacking_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-12
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_DEFAULT
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_OAK
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_ASH
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_YEW
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_HEARTWOOD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_BLOODWOOD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_FROSTWOOD
-from Scripts.omgarturo.fm_core.core_items import TREE_STATIC_IDS
-from Scripts.omgarturo.fm_core.core_gathering import run_lumberjacking_loop
-from Scripts.omgarturo.fm_core.core_mobiles import FIRE_BEETLE_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_mobiles import BLUE_BEETLE_MOBILE_ID
-
 #run_lumberjacking_loop(tileRange = 12, weightLimit = 425, cutLogsToBoards = True, dropOnGround = False, packAnimalNames = ["one"])
 
 # Makes a box around where player is standing and chops trees inside. The

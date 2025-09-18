@@ -245,63 +245,6 @@ def run_restocker(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-04
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_items import INGOT_STATIC_ID 
-from Scripts.omgarturo.fm_core.core_items import BOARD_STATIC_ID 
-from Scripts.omgarturo.fm_core.core_items import CLOTH_STATIC_ID 
-from Scripts.omgarturo.fm_core.core_items import LEATHER_STATIC_ID 
-from Scripts.omgarturo.fm_core.core_items import WHITE_PEARL
-from Scripts.omgarturo.fm_core.core_items import FIRE_RUBY
-from Scripts.omgarturo.fm_core.core_items import PERFECT_EMERALD
-from Scripts.omgarturo.fm_core.core_items import TURQUOISE
-from Scripts.omgarturo.fm_core.core_items import STAR_SAPPHIRE
-from Scripts.omgarturo.fm_core.core_items import CITRINE 
-from Scripts.omgarturo.fm_core.core_items import DIAMOND
-from Scripts.omgarturo.fm_core.core_items import AMBER
-from Scripts.omgarturo.fm_core.core_items import AMETHYST
-from Scripts.omgarturo.fm_core.core_items import SAPPHIRE
-from Scripts.omgarturo.fm_core.core_items import RUBY
-from Scripts.omgarturo.fm_core.core_items import EMERALD
-from Scripts.omgarturo.fm_core.core_items import TOURMALINE
-from Scripts.omgarturo.fm_core.core_items import MANDRAKEROOT
-from Scripts.omgarturo.fm_core.core_items import BLOODMOSS
-from Scripts.omgarturo.fm_core.core_items import SULPHUROUSASH
-from Scripts.omgarturo.fm_core.core_items import NIGHTSHADE
-from Scripts.omgarturo.fm_core.core_items import BLACKPEARL
-from Scripts.omgarturo.fm_core.core_items import SPIDERSILK
-from Scripts.omgarturo.fm_core.core_items import GINSENG
-from Scripts.omgarturo.fm_core.core_items import GARLIC
-from Scripts.omgarturo.fm_core.core_items import PIGIRON
-from Scripts.omgarturo.fm_core.core_items import BATWING
-from Scripts.omgarturo.fm_core.core_items import NOXCRYSTAL
-from Scripts.omgarturo.fm_core.core_items import DAEMONBLOOD
-from Scripts.omgarturo.fm_core.core_items import GRAVEDUST
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_DEFAULT
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_DULL_COPPER
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_SHADOW_IRON
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_COPPER
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_BRONZE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_GOLD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_AGAPITE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_VERITE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_VALORITE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_BARBED
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_SPINED
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_HORNED
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_OAK
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_ASH
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_YEW
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_HEARTWOOD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_BLOODWOOD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_FROSTWOOD
-from Scripts.omgarturo.fm_core.core_crafting import RestockItem
-from Scripts.omgarturo.fm_core.core_crafting import run_restocker
-
 # Insane UO Specific. Transfer resources from resource box to a commodity box.
 # Use this to prepare your box in conjunction with the BODBuilder.
 # Automates resource transferring for use.

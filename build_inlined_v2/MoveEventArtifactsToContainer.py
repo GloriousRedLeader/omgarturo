@@ -17,16 +17,6 @@ import sys
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-11-21
-# Use at your own risk. 
-
-from System.Collections.Generic import List
-import sys
-from System import Byte, Int32
-
 # Scans backpack for "of the three", "of wildfire", etc. 
 # and moves to a container. This is just a dumper script.
 # I like to turn in my arties on just one char, so my other

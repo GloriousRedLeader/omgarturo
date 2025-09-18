@@ -1223,14 +1223,6 @@ def run_mage_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-08-19
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_attack import run_mage_loop
-
 # This one is configured for: Insane UO Pure Necro
 # It makes heavy use of Conduit instead of Wither
 

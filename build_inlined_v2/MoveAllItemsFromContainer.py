@@ -21,14 +21,6 @@ def move_all_items_from_container(sourceSerial, destinationSerial):
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_player import move_all_items_from_container
-
 # Moves all number of items from container 1 to container 2
 # Prompts for source container.
 # Prompts for destination container.

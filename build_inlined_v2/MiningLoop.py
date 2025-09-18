@@ -340,25 +340,6 @@ def run_mining_loop(
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2025-02-12
-# Use at your own risk. 
-
-from Scripts.omgarturo.fm_core.core_gathering import run_mining_loop
-from Scripts.omgarturo.fm_core.core_mobiles import FIRE_BEETLE_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_mobiles import BLUE_BEETLE_MOBILE_ID
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_DEFAULT
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_DULL_COPPER
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_SHADOW_IRON
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_COPPER
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_BRONZE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_GOLD
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_AGAPITE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_VERITE
-from Scripts.omgarturo.fm_core.core_items import RESOURCE_HUE_VALORITE
-
 # Mines in a straight line. Perfect for cave floors. Your character will mine
 # a vein until it runs out and then step forward numTilesToMove tiles.
 # You can provide a mobile ID for a pack animal and a forge animal

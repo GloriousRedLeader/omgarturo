@@ -10,23 +10,6 @@
 # ===============================================
 # Main Script Code
 # ===============================================
-# Razor Enhanced Scripts for Ultima Online by
-#   GRL  
-#   https://github.com/GloriousRedLeader/omgarturo
-#   2024-03-26
-# Use at your own risk. 
-
-# I am just storing this here for safekeeping. This script is from on UO Alive Discord.
-# Whoever made this, thank you.
-# Dec 18, 2023 Magery 0 - 120
-
-#30 - 45: Cast Fireball
-#45 - 55: Cast Lightning (or Mana Drain for also raise Resisting Spells and Evaluating Intelligence)
-#55 - 65: Cast Paralyze
-#65 - 75: Cast Reveal
-#75 - 90: Cast Flamestrike (or Mana Vampire for also raise Resisting Spells and Evaluating Intelligence)
-#90 - 120: Cast Earthquake - Equip a spell channeling, mage weapon: -29 magery weaon
-
 CAST_TIMEOUT = 700
 
 def SelfCast(spell, wait_for_target = True):
@@ -66,6 +49,3 @@ while Player.GetSkillValue("Magery") < Player.GetSkillCap('Magery'):
             #SelfCast("Earthquake", False)
             Spells.CastMagery("Earthquake")
             Misc.Pause(5000)
-             
-
-
