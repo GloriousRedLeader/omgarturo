@@ -774,6 +774,17 @@ def main():
         except Exception as e:
             print("Error copying {}: {}".format(cs_file.name, e))
     
+    # Copy Assemblies.cfg if it exists
+    assemblies_file = src_dir / 'Assemblies.cfg'
+    if assemblies_file.exists():
+        output_assemblies = output_dir / 'Assemblies.cfg'
+        try:
+            shutil.copy2(str(assemblies_file), str(output_assemblies))
+            print("Copied Assemblies.cfg")
+            copied_count += 1
+        except Exception as e:
+            print("Error copying Assemblies.cfg: {}".format(e))
+    
     print("\nProcessed {} Python files, copied {} C# files.".format(processed_count, copied_count))
     
     # Run comprehensive validation

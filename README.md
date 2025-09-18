@@ -13,11 +13,11 @@ They may or may not work on others. Requires razor enhanced 0.8.2.242
 > **NEW!** Go to the [scripts](https://github.com/GloriousRedLeader/omgarturo/tree/master/scripts) folder for standalone scripts. You will find all of the scripts there.
 > Note that this is experimental and I hope that it works. You can always use the traditional method that has all the scary setup steps below.
 
-#### New Setup
+### New Setup
 
 This is the new easy, way. Just download what you need from here: [scripts](https://github.com/GloriousRedLeader/omgarturo/tree/master/scripts). These are all now 100% stanadlone scripts.
 
-#### Traditional Setup (deprecated)
+### Traditional Setup (deprecated)
 
 > [!WARNING]
 > Don't use this any more. 
