@@ -105,6 +105,8 @@ A script that [scans journal entries and alerts](https://github.com/GloriousRedL
 The [QuestHelper](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/QuestHelper.py) script has misc. utility functionality. Currently:
 - Medusa Egg Farmer - Enable to use your flute to lure snakes to nest. Auto picks up eggs from ground.
 - Collector Quest - Talks to NPCs. Takes pictures of mobs. Use a runebook with the RuneMaster (below) for maximum speed.
+- Fire Cannon - If you're standing near a cannon, it fires it until you run out of ammo. Useful for ships and taking out beacons.
+- Hunstman Quest - Collects permits, turns in permits, marks animals to kill. Use this with runemaster for quickly zipping back and forth.
 
 ![Questhelper](misc/questhelper.jpg)
 
