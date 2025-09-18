@@ -545,13 +545,13 @@ def validate_imports(output_dir: pathlib.Path):
         sys.dont_write_bytecode = original_dont_write_bytecode
     
     if import_errors:
-        print("\n❌ Found import errors in {} files:".format(len(import_errors)))
+        print("\n[ERROR] Found import errors in {} files:".format(len(import_errors)))
         for filename, error in sorted(import_errors.items()):
             print("  {}: {}".format(filename, error))
         print("\nTotal files with import errors: {}".format(len(import_errors)))
         return False
     else:
-        print("\n✅ All {} files import successfully!".format(len(list(output_dir.glob('*.py')))))
+        print("\n[SUCCESS] All {} files import successfully!".format(len(list(output_dir.glob('*.py')))))
         return True
 
 def validate_syntax(output_dir: pathlib.Path):
@@ -576,13 +576,13 @@ def validate_syntax(output_dir: pathlib.Path):
             syntax_errors[py_file.name] = "Compilation error: {}".format(e)
     
     if syntax_errors:
-        print("\n❌ Found syntax errors in {} files:".format(len(syntax_errors)))
+        print("\n[ERROR] Found syntax errors in {} files:".format(len(syntax_errors)))
         for filename, error in sorted(syntax_errors.items()):
             print("  {}: {}".format(filename, error))
         print("\nTotal files with syntax errors: {}".format(len(syntax_errors)))
         return False
     else:
-        print("\n✅ All {} files compile successfully!".format(len(list(output_dir.glob('*.py')))))
+        print("\n[SUCCESS] All {} files compile successfully!".format(len(list(output_dir.glob('*.py')))))
         return True
 
 def validate_no_local_imports(output_dir: pathlib.Path):
@@ -613,7 +613,7 @@ def validate_no_local_imports(output_dir: pathlib.Path):
             print('Error processing {}: {}'.format(py_file.name, e))
     
     if import_violations:
-        print("\n❌ CRITICAL ERROR: Found local imports in {} files!".format(len(import_violations)))
+        print("\n[CRITICAL ERROR] Found local imports in {} files!".format(len(import_violations)))
         print("These files are NOT standalone and will fail to run:")
         for filename, violations in sorted(import_violations.items()):
             print("\n  {}:".format(filename))
@@ -623,7 +623,7 @@ def validate_no_local_imports(output_dir: pathlib.Path):
         print("THE INLINER IS BROKEN - IT'S NOT ACTUALLY INLINING!")
         return False
     else:
-        print("\n✅ All {} files are standalone (no local imports)!".format(len(list(output_dir.glob('*.py')))))
+        print("\n[SUCCESS] All {} files are standalone (no local imports)!".format(len(list(output_dir.glob('*.py')))))
         return True
 
 def check_undefined_variables(output_dir: pathlib.Path):
@@ -699,12 +699,12 @@ def check_undefined_variables(output_dir: pathlib.Path):
             print('Error processing {}: {}'.format(py_file.name, e))
     
     if undefined_vars:
-        print("\n❌ Found undefined variables in {} files:".format(len(undefined_vars)))
+        print("\n[INFO] Found undefined variables in {} files:".format(len(undefined_vars)))
         for filename, vars in sorted(undefined_vars.items()):
             print("  {}: {}".format(filename, vars[:10]) + (" ..." if len(vars) > 10 else ""))
         print("\nTotal files with issues: {}".format(len(undefined_vars)))
     else:
-        print("\n✅ All {} files passed validation!".format(len(list(output_dir.glob('*.py')))))
+        print("\n[SUCCESS] All {} files passed validation!".format(len(list(output_dir.glob('*.py')))))
     
     print("="*50)
 
@@ -741,10 +741,10 @@ def main():
     check_undefined_variables(output_dir)  # This is just informational
     
     if syntax_ok and no_local_imports_ok and import_ok:
-        print("\n🎉 BUILD SUCCESSFUL: All {} files generated and validated!".format(processed_count))
+        print("\n[BUILD SUCCESSFUL] All {} files generated and validated!".format(processed_count))
         print("Note: 'Undefined variables' above are mostly function parameters (expected).")
     else:
-        print("\n💥 BUILD FAILED: Critical errors found in generated files!")
+        print("\n[BUILD FAILED] Critical errors found in generated files!")
         if not syntax_ok:
             print("  - Syntax errors found")
         if not no_local_imports_ok:
