@@ -119,7 +119,7 @@ class SimpleInliner:
             return result
         except Exception as e:
             print("Error loading module {}: {}".format(module_path, e))
-            return ast.Module(body=[], type_ignores=[]), {}, {}
+            return ast.Module(body=[]), {}, {}
     
     def collect_symbol_dependencies(self, symbol_name: str, module_path: pathlib.Path, needed_deps: Set[Tuple[pathlib.Path, str]]):
         """Recursively collect all dependencies for a symbol."""
