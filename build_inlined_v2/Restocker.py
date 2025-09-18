@@ -1,54 +1,54 @@
 import sys
 
 # Constants
+AMBER = 3877
+BOARD_STATIC_ID = 7127
+PIGIRON = 3978
+CLOTH_STATIC_ID = 5990
+INGOT_STATIC_ID = 7154
+RESOURCE_HUE_DEFAULT = 0
+GRAVEDUST = 3983
+MANDRAKEROOT = 3974
+WHITE_PEARL = 12694
+NOXCRYSTAL = 3982
+RESOURCE_HUE_DULL_COPPER = 2419
+TOURMALINE = 3864
+GARLIC = 3972
+RESOURCE_HUE_YEW = 1192
 LEATHER_STATIC_ID = 4225
 NIGHTSHADE = 3976
-TURQUOISE = 12691
-SULPHUROUSASH = 3980
-RESOURCE_HUE_HEARTWOOD = 1193
-RESOURCE_HUE_OAK = 2010
-TOURMALINE = 3864
-RESOURCE_HUE_VALORITE = 2219
-BOARD_STATIC_ID = 7127
-DIAMOND = 3878
+RESOURCE_HUE_BRONZE = 2418
+RESOURCE_HUE_ASH = 1191
 BLACKPEARL = 3962
-MANDRAKEROOT = 3974
-RESOURCE_HUE_FROSTWOOD = 1151
-RESOURCE_HUE_VERITE = 2207
-WHITE_PEARL = 12694
+RESOURCE_HUE_SHADOW_IRON = 2406
+EMERALD = 3856
+AMETHYST = 3862
 RESOURCE_HUE_BARBED = 2129
-BLOODMOSS = 3963
-RESOURCE_HUE_BLOODWOOD = 1194
+SULPHUROUSASH = 3980
+RESOURCE_HUE_FROSTWOOD = 1151
 SPIDERSILK = 3981
+STAR_SAPPHIRE = 3855
+FIRE_RUBY = 12695
+PERFECT_EMERALD = 12692
+DIAMOND = 3878
+RUBY = 3859
+SAPPHIRE = 3857
+TURQUOISE = 12691
+RESOURCE_HUE_HORNED = 2117
+BLOODMOSS = 3963
 RESOURCE_HUE_SPINED = 2220
 RESOURCE_HUE_AGAPITE = 2425
-AMETHYST = 3862
-GINSENG = 3973
-BATWING = 3960
-PERFECT_EMERALD = 12692
-RESOURCE_HUE_HORNED = 2117
-RESOURCE_HUE_ASH = 1191
-INGOT_STATIC_ID = 7154
-RUBY = 3859
-CITRINE = 3861
-RESOURCE_HUE_SHADOW_IRON = 2406
+RESOURCE_HUE_VALORITE = 2219
+RESOURCE_HUE_OAK = 2010
 RESOURCE_HUE_COPPER = 2413
-RESOURCE_HUE_YEW = 1192
-STAR_SAPPHIRE = 3855
-RESOURCE_HUE_BRONZE = 2418
-GRAVEDUST = 3983
-GARLIC = 3972
-NOXCRYSTAL = 3982
-DAEMONBLOOD = 3965
-PIGIRON = 3978
-SAPPHIRE = 3857
-FIRE_RUBY = 12695
-EMERALD = 3856
-AMBER = 3877
+RESOURCE_HUE_HEARTWOOD = 1193
+RESOURCE_HUE_BLOODWOOD = 1194
+BATWING = 3960
 RESOURCE_HUE_GOLD = 2213
-RESOURCE_HUE_DULL_COPPER = 2419
-CLOTH_STATIC_ID = 5990
-RESOURCE_HUE_DEFAULT = 0
+RESOURCE_HUE_VERITE = 2207
+GINSENG = 3973
+DAEMONBLOOD = 3965
+CITRINE = 3861
 
 # Classes
 class RestockItem:
@@ -65,6 +65,12 @@ class RestockItem:
         return f"RestockItem(itemId='{self.itemId}', itemHue={self.itemHue}, amount='{self.amount}', resourceBoxSerial='{self.resourceBoxSerial}', resourceBoxButton='{self.resourceBoxButton}', resourceBoxPage='{self.resourceBoxPage}')"
 
 # Functions
+def get_amount_in_container(resource, containerSerial):
+    amount = 0
+    items = Items.FindAllByID(resource.itemId, resource.itemHue, containerSerial, 0)
+    for item in items:
+        amount = amount + item.Amount
+    return amount
 def run_restocker(commodityBoxSerial, resources, itemMoveDelayMs=1000, gumpDelayMs=500):
     RESOURCE_BOX_GUMP_ID = 600895849
     Items.UseItem(commodityBoxSerial)
@@ -98,12 +104,6 @@ def run_restocker(commodityBoxSerial, resources, itemMoveDelayMs=1000, gumpDelay
                     Misc.Pause(itemMoveDelayMs)
             if not runAgain:
                 break
-def get_amount_in_container(resource, containerSerial):
-    amount = 0
-    items = Items.FindAllByID(resource.itemId, resource.itemHue, containerSerial, 0)
-    for item in items:
-        amount = amount + item.Amount
-    return amount
 
 # Main code
 commodityBoxSerial = 1082966558

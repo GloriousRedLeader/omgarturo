@@ -9,35 +9,6 @@ import time
 ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
 
 # Functions
-def get_enemies(range=10, serialsToExclude=[]):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = True
-    mobs = Mobiles.ApplyFilter(fil)
-    if len(mobs) > 0:
-        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-        return mobsList
-    return mobs
-def get_pets(range=10, checkLineOfSight=True, mobileId=None):
-    pets = []
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([1, 2]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = checkLineOfSight
-    if mobileId is not None:
-        fil.Bodies = List[Int32]([mobileId])
-    blues = Mobiles.ApplyFilter(fil)
-    for blue in blues:
-        if blue.CanRename:
-            pets.append(blue)
-    return pets
 def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
     if Player.Position.X == x and Player.Position.Y == y:
         return True
@@ -59,6 +30,35 @@ def go_to_tile(x, y, timeoutSeconds=-1, tileOffset=0):
     route.Timeout = timeoutSeconds
     res = PathFinding.Go(route)
     return res
+def get_pets(range=10, checkLineOfSight=True, mobileId=None):
+    pets = []
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([1, 2]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = checkLineOfSight
+    if mobileId is not None:
+        fil.Bodies = List[Int32]([mobileId])
+    blues = Mobiles.ApplyFilter(fil)
+    for blue in blues:
+        if blue.CanRename:
+            pets.append(blue)
+    return pets
+def get_enemies(range=10, serialsToExclude=[]):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([3, 4, 5, 6]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = True
+    mobs = Mobiles.ApplyFilter(fil)
+    if len(mobs) > 0:
+        mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
+        return mobsList
+    return mobs
 
 # Main code
 while True:

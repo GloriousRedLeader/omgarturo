@@ -222,28 +222,27 @@ class SimpleInliner:
         # Add all collected imports
         inlined_parts.extend(sorted(all_imports))
         
-        # Organize collected symbols by type and topologically sort constants
+        # Organize collected symbols by type
         constant_nodes = []
-        functions = []
-        classes = []
+        function_nodes = []
+        class_nodes = []
         
         for (module_path, symbol_name) in needed_deps:
             if (module_path, symbol_name) in self.collected_code:
                 symbol_node = self.collected_code[(module_path, symbol_name)]
                 
                 if isinstance(symbol_node, ast.FunctionDef):
-                    functions.append(ast.unparse(symbol_node))
+                    function_nodes.append((symbol_name, symbol_node))
                 elif isinstance(symbol_node, ast.ClassDef):
-                    classes.append(ast.unparse(symbol_node))
+                    class_nodes.append((symbol_name, symbol_node))
                 elif isinstance(symbol_node, ast.Assign):
-                    # Store the node and its dependencies for sorting
                     constant_nodes.append((symbol_name, symbol_node))
                 else:
                     # Other types (like complex expressions)
                     constant_nodes.append((symbol_name, symbol_node))
         
-        # Topologically sort constants by their dependencies
-        constants = self._topologically_sort_constants(constant_nodes)
+        # Topologically sort all symbols considering cross-dependencies
+        constants, functions, classes = self._topologically_sort_all_symbols(constant_nodes, function_nodes, class_nodes)
         
         # Build organized code sections
         code_sections = []
@@ -292,27 +291,44 @@ class SimpleInliner:
         
         print(f"Wrote {output_file}")
     
-    def _topologically_sort_constants(self, constant_nodes):
-        """Topologically sort constants based on their dependencies."""
-        # Build dependency graph
-        constant_dict = {name: node for name, node in constant_nodes}
-        dependencies = {}
+    def _topologically_sort_all_symbols(self, constant_nodes, function_nodes, class_nodes):
+        """Topologically sort all symbols (constants, functions, classes) based on their dependencies."""
+        # Build combined symbol dictionary
+        all_symbols = {}
+        for name, node in constant_nodes + function_nodes + class_nodes:
+            all_symbols[name] = node
         
-        for name, node in constant_nodes:
+        # Build dependency graph
+        dependencies = {}
+        symbol_types = {}
+        
+        for name, node in constant_nodes + function_nodes + class_nodes:
             deps = set()
-            # Find what names this constant references
+            # Find what names this symbol references
             for child in ast.walk(node):
                 if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Load):
-                    if child.id in constant_dict and child.id != name:
+                    if child.id in all_symbols and child.id != name:
                         deps.add(child.id)
             dependencies[name] = deps
+            
+            # Track symbol type
+            if isinstance(node, ast.Assign):
+                symbol_types[name] = 'constant'
+            elif isinstance(node, ast.FunctionDef):
+                symbol_types[name] = 'function'
+            elif isinstance(node, ast.ClassDef):
+                symbol_types[name] = 'class'
+            else:
+                symbol_types[name] = 'constant'  # fallback
         
         # Topological sort using Kahn's algorithm
         sorted_constants = []
-        remaining = set(constant_dict.keys())
+        sorted_functions = []
+        sorted_classes = []
+        remaining = set(all_symbols.keys())
         
         while remaining:
-            # Find constants with no dependencies among remaining constants
+            # Find symbols with no dependencies among remaining symbols
             ready = []
             for name in remaining:
                 if not dependencies[name] & remaining:  # No unresolved dependencies
@@ -322,17 +338,54 @@ class SimpleInliner:
                 # Circular dependency or other issue - just add them in arbitrary order
                 ready = [next(iter(remaining))]
             
-            # Add ready constants to result
+            # Add ready symbols to appropriate result lists
             for name in ready:
-                sorted_constants.append(ast.unparse(constant_dict[name]))
+                symbol_code = ast.unparse(all_symbols[name])
+                if symbol_types[name] == 'constant':
+                    sorted_constants.append(symbol_code)
+                elif symbol_types[name] == 'function':
+                    sorted_functions.append(symbol_code)
+                elif symbol_types[name] == 'class':
+                    sorted_classes.append(symbol_code)
                 remaining.remove(name)
         
-        return sorted_constants
+        return sorted_constants, sorted_functions, sorted_classes
+
+def validate_syntax(output_dir: pathlib.Path):
+    """Check all generated files for syntax errors."""
+    print("\n" + "="*50)
+    print("SYNTAX VALIDATION: Checking for compilation errors...")
+    print("="*50)
+    
+    syntax_errors = {}
+    import py_compile
+    import tempfile
+    import os
+    
+    for py_file in output_dir.glob('*.py'):
+        try:
+            # Try to compile the file
+            with tempfile.NamedTemporaryFile(suffix='.pyc', delete=True) as tmp:
+                py_compile.compile(str(py_file), tmp.name, doraise=True)
+        except py_compile.PyCompileError as e:
+            syntax_errors[py_file.name] = str(e)
+        except Exception as e:
+            syntax_errors[py_file.name] = f"Compilation error: {e}"
+    
+    if syntax_errors:
+        print(f"\n❌ Found syntax errors in {len(syntax_errors)} files:")
+        for filename, error in sorted(syntax_errors.items()):
+            print(f"  {filename}: {error}")
+        print(f"\nTotal files with syntax errors: {len(syntax_errors)}")
+        return False
+    else:
+        print(f"\n✅ All {len(list(output_dir.glob('*.py')))} files compile successfully!")
+        return True
 
 def check_undefined_variables(output_dir: pathlib.Path):
     """Check all generated files for undefined variables."""
     print("\n" + "="*50)
-    print("QUALITY CHECK: Scanning for undefined variables...")
+    print("UNDEFINED VARIABLES: Scanning for missing definitions...")
     print("="*50)
     
     undefined_vars = {}
@@ -433,8 +486,19 @@ def main():
     
     print(f"\nProcessed {processed_count} files.")
     
-    # Run quality check
+    # Run comprehensive validation
+    print("\n" + "="*60)
+    print("COMPREHENSIVE VALIDATION")
+    print("="*60)
+    
+    syntax_ok = validate_syntax(output_dir)
     check_undefined_variables(output_dir)
+    
+    if syntax_ok:
+        print(f"\n🎉 BUILD SUCCESSFUL: All {processed_count} files generated with proper syntax!")
+    else:
+        print(f"\n💥 BUILD FAILED: Syntax errors found in generated files!")
+        print("Fix dependency ordering issues before using these scripts.")
 
 if __name__ == '__main__':
     main()

@@ -7,21 +7,27 @@ import threading, atexit
 import time
 
 # Constants
-GIANT_SERPENT_MOBILE_ID = 21
-CARRONADE_GRAPHIC_ID = 16925
+SERPENT_NEST_STATIC_ID = 8755
+RAMROD_STATIC_ID = 16966
+PAINTS_AND_A_BRUSH_STATIC_ID = 4033
+SILVER_SERPENT_MOBILE_ID = 92
 HUNTING_PERMIT_GRAPHIC_ID = 5360
 RARE_SERPENT_EGG_STATIC_ID = 16831
-RAMROD_STATIC_ID = 16966
-SERPENT_NEST_STATIC_ID = 8755
-PAINTS_AND_A_BRUSH_STATIC_ID = 4033
-ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
+CARRONADE_GRAPHIC_ID = 16925
 BOW_GRAPHIC_ID = 5042
-DRYDOCK_SHIP_GRAPHIC_ID = 5364
-SILVER_SERPENT_MOBILE_ID = 92
 SNAKE_CHARMER_FLUTE_STATIC_ID = 10245
+DRYDOCK_SHIP_GRAPHIC_ID = 5364
+ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
+GIANT_SERPENT_MOBILE_ID = 21
 CANNON_GRAPHIC_IDS = [CARRONADE_GRAPHIC_ID]
 
 # Functions
+def get_corpses(range=2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
 def get_yellows_in_range(range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -32,12 +38,6 @@ def get_yellows_in_range(range=8):
     fil.CheckLineOfSight = False
     mobs = Mobiles.ApplyFilter(fil)
     return mobs
-def get_corpses(range=2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
 def get_enemies(range=10, serialsToExclude=[]):
     fil = Mobiles.Filter()
     fil.Enabled = True

@@ -1,7 +1,4 @@
 # Functions
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -21,6 +18,9 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
 def move_item_to_container_by_id(itemID, sourceSerial, destinationSerial, color=-1):
     while True:
         item = find_in_container_by_id(itemID, sourceSerial, color=color, ignoreContainer=[])

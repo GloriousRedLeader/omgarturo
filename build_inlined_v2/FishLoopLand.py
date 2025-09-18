@@ -6,21 +6,15 @@ import sys
 import time
 
 # Constants
-BUTCHERS_WAR_CLEAVER_STATIC_ID = 11567
-corpseScannerCache = []
-HARVESTERS_BLADE_STATIC_ID = 11552
-FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
 FISHING_POLE_STATIC_IDS = [3520]
-TRUE_NORTH_DIRECTION_MAP = ['Forward One', 'Right One', 'Back One', 'Left One']
 DAGGER_STATIC_ID = 3922
+BUTCHERS_WAR_CLEAVER_STATIC_ID = 11567
+FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
+TRUE_NORTH_DIRECTION_MAP = ['Forward One', 'Right One', 'Back One', 'Left One']
+HARVESTERS_BLADE_STATIC_ID = 11552
+corpseScannerCache = []
 
 # Functions
-def get_corpses(range=2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
 def equip_weapon(newItem):
     leftHand = Player.GetItemOnLayer('LeftHand')
     if leftHand != None:
@@ -33,6 +27,9 @@ def equip_weapon(newItem):
     Player.EquipItem(newItem)
     Misc.Pause(1000)
     return [leftHand, rightHand]
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
 def find_in_hands_by_id(itemID):
     leftHand = Player.GetItemOnLayer('LeftHand')
     if leftHand != None and leftHand.ItemID == itemID:
@@ -41,25 +38,11 @@ def find_in_hands_by_id(itemID):
     if rightHand != None and rightHand.ItemID == itemID:
         return rightHand
     return None
-def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
-    ignoreColor = False
-    if color == -1:
-        ignoreColor = True
-    container = Items.FindBySerial(containerSerial)
-    if isinstance(itemID, int):
-        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
-    elif isinstance(itemID, list):
-        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
-    else:
-        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
-    if foundItem != None:
-        return foundItem
-    elif recursive == True:
-        for item in container.Contains:
-            if item.IsContainer:
-                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-                if foundItem != None:
-                    return foundItem
+def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    items = []
+    for itemID in itemIDs:
+        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+    return items
 def get_boat_direction():
     boatDirection = None
     playerX = Player.Position.X
@@ -81,21 +64,6 @@ def get_boat_direction():
     Player.ChatSay('back one')
     Misc.Pause(1000)
     return boatDirection
-def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    for itemID in itemIDs:
-        item = find_in_container_by_id(itemID, containerSerial)
-        if item != None:
-            return item
-    return None
-def find_first_in_hands_by_ids(itemIDs):
-    for itemID in itemIDs:
-        item = find_in_hands_by_id(itemID)
-        if item != None:
-            return item
-    return None
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
 def get_tile_in_front(distance=1):
     direction = Player.Direction
     playerX = Player.Position.X
@@ -134,6 +102,31 @@ def get_tile_in_front(distance=1):
         tileY = playerY
         tileZ = playerZ
     return (tileX, tileY, tileZ)
+def get_corpses(range=2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
+def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
+    ignoreColor = False
+    if color == -1:
+        ignoreColor = True
+    container = Items.FindBySerial(containerSerial)
+    if isinstance(itemID, int):
+        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
+    elif isinstance(itemID, list):
+        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
+    else:
+        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
+    if foundItem != None:
+        return foundItem
+    elif recursive == True:
+        for item in container.Contains:
+            if item.IsContainer:
+                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
+                if foundItem != None:
+                    return foundItem
 def sail_to_tile(x, y, boatDirection, moveCmdLatencyMs=650):
     directionMap = TRUE_NORTH_DIRECTION_MAP[boatDirection:] + TRUE_NORTH_DIRECTION_MAP[:boatDirection]
     while True:
@@ -148,11 +141,18 @@ def sail_to_tile(x, y, boatDirection, moveCmdLatencyMs=650):
         elif Player.Position.Y > y:
             Player.ChatSay(directionMap[0])
         Misc.Pause(1000)
-def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    items = []
+def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
-        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-    return items
+        item = find_in_container_by_id(itemID, containerSerial)
+        if item != None:
+            return item
+    return None
+def find_first_in_hands_by_ids(itemIDs):
+    for itemID in itemIDs:
+        item = find_in_hands_by_id(itemID)
+        if item != None:
+            return item
+    return None
 def run_fishing_loop(fishRange=4, moveTiles=0, fishDelayMs=9000, fishHandling=0, fishToKeep=None, cutToolItemId=DAGGER_STATIC_ID, useCorpseScanner=False, corpseScannerMoveCommandDelayMs=650, corpseScannerPauseDelayMs=2000, corpseNames=['a deep sea serpents corpse', 'a sea serpents corpse']):
     global corpseScannerCache
     fishingPole = find_first_in_hands_by_ids(FISHING_POLE_STATIC_IDS)

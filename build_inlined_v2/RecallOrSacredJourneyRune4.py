@@ -5,54 +5,66 @@ import os
 import re
 
 # Constants
+POISON_STRIKE_DELAY = 2000
+REMOVE_CURSE_DELAY = 1500
+ARCH_CURE_DELAY = 1750
+CONDUIT_DELAY = 2250
+RUNEBOOK = 8901
 WILDFIRE_DELAY = 2500
+ENEMY_OF_ONE_DELAY = 500
+EVIL_OMEN_DELAY = 1000
+CHAIN_LIGHTNING_DELAY = 2000
+FC_CAP_CHIVALRY = 4
+BARD_SONG_DELAY = 2000
+DIVINE_FURY_DELAY = 1000
+FC_CAP_SHIELD_BASH = 4
+FC_CAP_MAGERY = 2
+WITHER_DELAY = 2250
+LAP_HARP_GRAPHIC_ID = 3762
+FC_CAP_BARD_SONG = 4
+ENERGY_BOLT_DELAY = 2000
+ANIMATE_DEAD_DELAY = 1750
+FLAME_STRIKE_DELAY = 2500
+FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
+WRAITH_FORM_DELAY = 2250
+CURSE_DELAY = 1750
+GIFT_OF_LIFE_DELAY = 4000
+BLOOD_OATH_DELAY = 1750
+FIRE_FIELD_DELAY = 1750
+CONSECRATE_WEAPON_DELAY = 500
+GREATER_HEAL_DELAY = 1750
+ARCANE_EMPOWERMENT_DELAY = 3000
+CLOSE_WOUNDS_DELAY = 1500
+CORPSE_SKIN_DELAY = 1750
 SHIELD_BASH_DELAY = 1000
 DEATH_RAY_DELAY = 2250
-WITHER_DELAY = 2250
 FC_CAP_SPELLWEAVING = 4
-PROTECTION_DELAY = 750
-THUNDERSTORM_DELAY = 1500
-REMOVE_CURSE_DELAY = 1500
-CLOSE_WOUNDS_DELAY = 1500
-FC_CAP_CHIVALRY = 4
-ENEMY_OF_ONE_DELAY = 500
-CONDUIT_DELAY = 2250
-ARCANE_EMPOWERMENT_DELAY = 3000
-GREATER_HEAL_DELAY = 1750
-ANIMATE_DEAD_DELAY = 1750
-EVIL_OMEN_DELAY = 1000
-POISON_FIELD_DELAY = 2000
-RUNEBOOK = 8901
-FC_CAP_BARD_SONG = 4
-ATTUNE_WEAPON_DELAY = 1000
-GIFT_OF_LIFE_DELAY = 4000
-VAMPIRIC_EMBRACE_DELAY = 2250
-CURSE_DELAY = 1750
-FC_CAP_NECROMANCY = 3 if Player.GetSkillValue('Necromancy') == 120 and Player.GetSkillValue('Necromancy') == 120 and (not any((Player.GetSkillValue(skill) > 30 for skill in ['Magery', 'Spellweaving', 'Parrying', 'Mysticism', 'Chivalry', 'Animal Taming', 'Animal Lore', 'Ninjitsu', 'Bushido', 'Focus', 'Imbuing', 'Evaluating Intelligence']))) else 2
 POISON_DELAY = 1500
 CURSE_WEAPON_DELAY = 1000
-BLOOD_OATH_DELAY = 1750
-CORPSE_SKIN_DELAY = 1750
 STRANGLE_DELAY = 2250 + 500
-CHAIN_LIGHTNING_DELAY = 2000
+POISON_FIELD_DELAY = 2000
+VAMPIRIC_EMBRACE_DELAY = 2250
+THUNDERSTORM_DELAY = 1500
+ATTUNE_WEAPON_DELAY = 1000
+PROTECTION_DELAY = 750
 WORD_OF_DEATH_DELAY = 3500
-LAP_HARP_GRAPHIC_ID = 3762
-POISON_STRIKE_DELAY = 2000
-FC_CAP_SHIELD_BASH = 4
-CONSECRATE_WEAPON_DELAY = 500
-ARCH_CURE_DELAY = 1750
-FLAME_STRIKE_DELAY = 2500
-DIVINE_FURY_DELAY = 1000
-FC_CAP_MAGERY = 2
 PAIN_SPIKE_DELAY = 1250
-WRAITH_FORM_DELAY = 2250
-FIRE_FIELD_DELAY = 1750
-BARD_SONG_DELAY = 2000
 GIFT_OF_RENEWAL_DELAY = 3000
-ENERGY_BOLT_DELAY = 2000
 INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, LAP_HARP_GRAPHIC_ID, 3761, 3742, 3741]
 
 # Functions
+def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
+    latency = 100
+    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
+    delay = baseDelayMs - fcOffset
+    if delay < 250:
+        delay = 250
+    return delay + latencyMs
+def get_fcr_delay(spellName, latencyMs=200):
+    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
+    if fcr < 1:
+        fcr = 1
+    return fcr + latencyMs
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -72,51 +84,12 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-def get_fc_delay(baseDelayMs, fcCap, latencyMs=200):
-    latency = 100
-    fcOffset = 250 * (min(max(Player.FasterCasting - 2, 0), fcCap - 2) if Player.BuffsExist('Protection') else min(Player.FasterCasting, fcCap))
-    delay = baseDelayMs - fcOffset
-    if delay < 250:
-        delay = 250
-    return delay + latencyMs
 def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
         item = find_in_container_by_id(itemID, containerSerial)
         if item != None:
             return item
     return None
-def cast_recall_or_sacred_journey(shapeshiftDelayMs=3000):
-    RUNEBOOK_GUMP_ID = 89
-    script_name = getattr(__main__, '__file__', None) or sys.argv[0]
-    rune = int(re.search('RecallOrSacredJourneyRune(\\d+)\\.py', script_name).group(1))
-    magerySkill = Player.GetSkillValue('Magery')
-    chivalrySkill = Player.GetSkillValue('Chivalry')
-    necroSkill = Player.GetSkillValue('Necromancy')
-    hasWraith = Player.BuffsExist('Wraith Form')
-    hasVampire = Player.BuffsExist('Vampiric Embrace')
-    buttonId = 74 + rune if chivalrySkill > magerySkill else 49 + rune
-    if magerySkill < 50 and chivalrySkill < 50 and (necroSkill > 80):
-        while not Player.BuffsExist('Wraith Form'):
-            cast_spell('Wraith Form', None, 650)
-    runebook = Items.FindByID(RUNEBOOK, -1, Player.Backpack.Serial, 0)
-    if runebook is None:
-        Misc.SendMessage('No runebook found. Must be in backpack.', 38)
-        sys.exit()
-    print(runebook)
-    print(script_name)
-    print(f'Magery Skill {magerySkill}')
-    print(f'Chivalry Skill {chivalrySkill}')
-    print(f'Necromancy Skill {necroSkill}')
-    print(f'Rune {rune}')
-    print(f'Button ID {buttonId}')
-    Items.UseItem(runebook)
-    Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 10000)
-    Gumps.SendAction(RUNEBOOK_GUMP_ID, buttonId)
-    Misc.Pause(3000)
-    if hasVampire and Player.BuffsExist('Wraith Form'):
-        Spells.CastNecro('Vampiric Embrace')
-    if not hasVampire and (not hasWraith) and Player.BuffsExist('Wraith Form'):
-        Spells.CastNecro('Wraith Form')
 def cast_spell(spellName, target=None, latencyMs=200):
     Target.Cancel()
     if spellName == 'Wildfire':
@@ -248,11 +221,38 @@ def cast_spell(spellName, target=None, latencyMs=200):
         else:
             Target.TargetExecute(target)
     Misc.Pause(get_fcr_delay(spellName, latencyMs))
-def get_fcr_delay(spellName, latencyMs=200):
-    fcr = int((6 - Player.FasterCastRecovery) / 4 * 1000)
-    if fcr < 1:
-        fcr = 1
-    return fcr + latencyMs
+def cast_recall_or_sacred_journey(shapeshiftDelayMs=3000):
+    RUNEBOOK_GUMP_ID = 89
+    script_name = getattr(__main__, '__file__', None) or sys.argv[0]
+    rune = int(re.search('RecallOrSacredJourneyRune(\\d+)\\.py', script_name).group(1))
+    magerySkill = Player.GetSkillValue('Magery')
+    chivalrySkill = Player.GetSkillValue('Chivalry')
+    necroSkill = Player.GetSkillValue('Necromancy')
+    hasWraith = Player.BuffsExist('Wraith Form')
+    hasVampire = Player.BuffsExist('Vampiric Embrace')
+    buttonId = 74 + rune if chivalrySkill > magerySkill else 49 + rune
+    if magerySkill < 50 and chivalrySkill < 50 and (necroSkill > 80):
+        while not Player.BuffsExist('Wraith Form'):
+            cast_spell('Wraith Form', None, 650)
+    runebook = Items.FindByID(RUNEBOOK, -1, Player.Backpack.Serial, 0)
+    if runebook is None:
+        Misc.SendMessage('No runebook found. Must be in backpack.', 38)
+        sys.exit()
+    print(runebook)
+    print(script_name)
+    print(f'Magery Skill {magerySkill}')
+    print(f'Chivalry Skill {chivalrySkill}')
+    print(f'Necromancy Skill {necroSkill}')
+    print(f'Rune {rune}')
+    print(f'Button ID {buttonId}')
+    Items.UseItem(runebook)
+    Gumps.WaitForGump(RUNEBOOK_GUMP_ID, 10000)
+    Gumps.SendAction(RUNEBOOK_GUMP_ID, buttonId)
+    Misc.Pause(3000)
+    if hasVampire and Player.BuffsExist('Wraith Form'):
+        Spells.CastNecro('Vampiric Embrace')
+    if not hasVampire and (not hasWraith) and Player.BuffsExist('Wraith Form'):
+        Spells.CastNecro('Wraith Form')
 
 # Main code
 cast_recall_or_sacred_journey()
