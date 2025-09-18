@@ -50,7 +50,7 @@ def collect_names_defined(tree: ast.AST) -> Dict[str, ast.AST]:
             for target in node.targets:
                 if isinstance(target, ast.Name):
                     defined[target.id] = node
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+        elif hasattr(ast, 'AnnAssign') and isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
             defined[node.target.id] = node
     
     return defined
@@ -673,7 +673,7 @@ def check_undefined_variables(output_dir: pathlib.Path):
                     for target in node.targets:
                         if isinstance(target, ast.Name):
                             defined.add(target.id)
-                elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+                elif hasattr(ast, 'AnnAssign') and isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
                     defined.add(node.target.id)
                 elif isinstance(node, ast.Import):
                     for alias in node.names:
