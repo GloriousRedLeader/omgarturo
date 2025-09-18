@@ -1,0 +1,22 @@
+# Razor Enhanced Scripts for Ultima Online by
+#   GRL  
+#   https://github.com/GloriousRedLeader/omgarturo
+#   2024-03-26
+# Use at your own risk. 
+
+from Scripts.omgarturo.src.fm_core.core_player import move_item_to_container_by_id
+
+# Prompts for an item type (source container is that items container)
+# Destination is prompt
+# Moves all items with that ItemID, e.g. all bod scrolls (of every color) to destination container
+
+itemSerial = Target.PromptTarget("Which item type? Click one.")
+destinationSerial = Target.PromptTarget("Pick target container")
+
+Items.UseItem(destinationSerial)
+Misc.Pause(650)
+
+item = Items.FindBySerial(itemSerial)
+if item is not None:
+    sourceSerial = Items.FindBySerial(item.Container).Serial
+    move_item_to_container_by_id(item.ItemID, sourceSerial, destinationSerial)

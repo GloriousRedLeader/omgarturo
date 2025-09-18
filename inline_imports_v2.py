@@ -61,8 +61,8 @@ def collect_imports(tree: ast.AST) -> Dict[str, str]:
     
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
-            if node.module and not node.module.startswith('Scripts.'):
-                continue  # Only process local imports
+            if node.module and not node.module.startswith('Scripts.omgarturo.src.'):
+                continue  # Only process local imports from src
             if node.names[0].name == '*':
                 continue  # Skip star imports
             
@@ -72,8 +72,8 @@ def collect_imports(tree: ast.AST) -> Dict[str, str]:
                 imports[symbol_name] = module_name
         elif isinstance(node, ast.Import):
             for alias in node.names:
-                if not alias.name.startswith('Scripts.'):
-                    continue  # Only process local imports
+                if not alias.name.startswith('Scripts.omgarturo.src.'):
+                    continue  # Only process local imports from src
                 symbol_name = alias.asname if alias.asname else alias.name.split('.')[-1]
                 imports[symbol_name] = alias.name
     
@@ -90,11 +90,12 @@ class SimpleInliner:
         if not module_name.startswith('Scripts.omgarturo.'):
             return None
             
-        # Scripts.omgarturo.fm_core.core_gathering -> fm_core/core_gathering.py
+        # Scripts.omgarturo.src.fm_core.core_gathering -> src/fm_core/core_gathering.py
         parts = module_name.split('.')
-        if len(parts) < 3:
+        if len(parts) < 4:  # Need at least Scripts.omgarturo.src.module
             return None
             
+        # Skip Scripts.omgarturo and build path from src/
         rel_path = '/'.join(parts[2:]) + '.py'
         full_path = pathlib.Path(rel_path)
         
@@ -208,10 +209,10 @@ class SimpleInliner:
         for node in tree.body:
             if isinstance(node, (ast.Import, ast.ImportFrom)):
                 if isinstance(node, ast.ImportFrom):
-                    if node.module and node.module.startswith('Scripts.'):
+                    if node.module and node.module.startswith('Scripts.omgarturo.src.'):
                         continue  # Skip local imports - these will be inlined
                 elif isinstance(node, ast.Import):
-                    if any(alias.name.startswith('Scripts.') for alias in node.names):
+                    if any(alias.name.startswith('Scripts.omgarturo.src.') for alias in node.names):
                         continue  # Skip local imports - these will be inlined
                 # Keep all other imports (System imports, etc.)
                 import_str = extract_source_text(source.splitlines(), node)
@@ -235,10 +236,10 @@ class SimpleInliner:
             for node in module_tree.body:
                 if isinstance(node, (ast.Import, ast.ImportFrom)):
                     if isinstance(node, ast.ImportFrom):
-                        if node.module and node.module.startswith('Scripts.'):
+                        if node.module and node.module.startswith('Scripts.omgarturo.src.'):
                             continue  # Skip local imports
                     elif isinstance(node, ast.Import):
-                        if any(alias.name.startswith('Scripts.') for alias in node.names):
+                        if any(alias.name.startswith('Scripts.omgarturo.src.') for alias in node.names):
                             continue  # Skip local imports
                     
                     # Keep System imports, standard library imports, etc.
@@ -631,7 +632,7 @@ def validate_no_local_imports(output_dir: pathlib.Path):
             violations = []
             
             for i, line in enumerate(lines, 1):
-                if 'from Scripts.omgarturo' in line or 'import Scripts.omgarturo' in line:
+                if 'from Scripts.omgarturo.src' in line or 'import Scripts.omgarturo.src' in line:
                     violations.append("Line {}: {}".format(i, line.strip()))
             
             if violations:
@@ -737,18 +738,24 @@ def check_undefined_variables(output_dir: pathlib.Path):
     print("="*50)
 
 def main():
-    """Process all Python files in the current directory."""
+    """Process all Python files in the src directory."""
     inliner = SimpleInliner()
     
     # Create output directory
-    output_dir = pathlib.Path('build_inlined_v2')
+    output_dir = pathlib.Path('scripts')
     output_dir.mkdir(exist_ok=True)
     
-    # Process all Python files (excluding the inliner itself)
+    # Process all Python files in src/ directory
+    src_dir = pathlib.Path('src')
+    if not src_dir.exists():
+        print("Error: src/ directory not found!")
+        return
+    
     processed_count = 0
-    for py_file in pathlib.Path('.').glob('*.py'):
-        if py_file.name.startswith('inline_imports'):
-            continue
+    copied_count = 0
+    
+    # Process Python files with inlining
+    for py_file in src_dir.glob('*.py'):
         if py_file.name.startswith('__'):
             continue
         
@@ -756,7 +763,29 @@ def main():
         inliner.inline_file(py_file, output_file)
         processed_count += 1
     
-    print("\nProcessed {} files.".format(processed_count))
+    # Copy C# files as-is
+    import shutil
+    for cs_file in src_dir.glob('*.cs'):
+        output_file = output_dir / cs_file.name
+        try:
+            shutil.copy2(str(cs_file), str(output_file))
+            print("Copied {} (C# file)".format(cs_file.name))
+            copied_count += 1
+        except Exception as e:
+            print("Error copying {}: {}".format(cs_file.name, e))
+    
+    # Copy Assemblies.cfg if it exists
+    assemblies_file = src_dir / 'Assemblies.cfg'
+    if assemblies_file.exists():
+        output_assemblies = output_dir / 'Assemblies.cfg'
+        try:
+            shutil.copy2(str(assemblies_file), str(output_assemblies))
+            print("Copied Assemblies.cfg")
+            copied_count += 1
+        except Exception as e:
+            print("Error copying Assemblies.cfg: {}".format(e))
+    
+    print("\nProcessed {} Python files, copied {} C# files.".format(processed_count, copied_count))
     
     # Run comprehensive validation
     print("\n" + "="*60)
