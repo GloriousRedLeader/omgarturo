@@ -1,5 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
+
+# Main code
 while True:
     items = Items.FindAllByID(3577, -1, Player.Backpack.Serial, -1, False)
     if len(items) > 0:

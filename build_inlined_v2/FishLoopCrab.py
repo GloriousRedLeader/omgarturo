@@ -1,48 +1,16 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
-items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-y = Player.Position.Y - 6
-filter = Items.Filter()
-def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    items = []
-    for itemID in itemIDs:
-        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-    return items
-container = Items.FindBySerial(containerSerial)
-item = find_in_container_by_id(itemID, sourceSerial, color=color, ignoreContainer=[])
-fishies = find_all_in_container_by_ids(FISH_STATIC_IDS)
+
+# Constants
+FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
 DEPLOYED_LOBSTER_TRAP_STATIC_ID = 17611
-foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-def get_corpses(range=2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
-trapNum = trapNum + 1
-x = Player.Position.X - 6
-ignoreColor = True
-def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
-    ignoreColor = False
-    if color == -1:
-        ignoreColor = True
-    container = Items.FindBySerial(containerSerial)
-    if isinstance(itemID, int):
-        foundItem = next((item for item in container.Contains if item.ItemID == itemID and (ignoreColor or item.Hue == color)), None)
-    elif isinstance(itemID, list):
-        foundItem = next((item for item in container.Contains if item.ItemID in itemID and (ignoreColor or item.Hue == color)), None)
-    else:
-        raise ValueError('Unknown argument type for itemID passed to FindItem().', itemID, container)
-    if foundItem != None:
-        return foundItem
-    elif recursive == True:
-        for item in container.Contains:
-            if item.IsContainer:
-                foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-                if foundItem != None:
-                    return foundItem
-trapItems = find_all_in_container_by_ids(LOBSTER_TRAP_STATIC_IDS)
+LOBSTER_TRAP_STATIC_IDS = [17615]
+
+# Functions
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
 def run_crab_fishing_loop(numLoops=1, moveTiles=0, maxTraps=19, trapDelayMs=65000, fishToKeep=None):
     for i in range(1, numLoops + 1):
         Player.HeadMessage(28, 'Running crab fishing loop {} / {}'.format(i, numLoops))
@@ -187,16 +155,11 @@ def run_crab_fishing_loop(numLoops=1, moveTiles=0, maxTraps=19, trapDelayMs=6500
         for i in range(0, moveTiles):
             Player.ChatSay('forward one')
             Misc.Pause(750)
-items = get_corpses(range=10)
-FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
-z = Player.Position.Z
-filter = Items.Filter()
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
-actualTraps = len(traps)
-hatches = Items.ApplyFilter(fil)
-LOBSTER_TRAP_STATIC_IDS = [17615]
-traps = []
-fil = Items.Filter()
+def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    items = []
+    for itemID in itemIDs:
+        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+    return items
+
+# Main code
 run_crab_fishing_loop(numLoops=2, moveTiles=4, maxTraps=5, trapDelayMs=5000, fishToKeep='blue crab')

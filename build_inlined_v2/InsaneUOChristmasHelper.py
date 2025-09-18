@@ -1,5 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
+
+# Main code
 STOCKING_ID = 11228
 SNOWMAN_SERIAL = 1075250926
 SNOWBALL_ID = 2323

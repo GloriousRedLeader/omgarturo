@@ -1,3 +1,4 @@
+# Main code
 MSG = 'Pick an NPC to beg from'
 Player.HeadMessage(128, MSG)
 npc = Mobiles.FindBySerial(Target.PromptTarget(MSG))

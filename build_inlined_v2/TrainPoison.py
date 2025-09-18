@@ -1,13 +1,17 @@
-items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+# Constants
+KEG_STATIC_IDS = [6464]
+POISON_POTION_STATIC_ID = 3850
+
+# Functions
 def find_all_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial):
     return Items.FindAllByID(itemID, -1, containerSerial, 1)
-POISON_POTION_STATIC_ID = 3850
-KEG_STATIC_IDS = [6464]
 def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     items = []
     for itemID in itemIDs:
         items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
     return items
+
+# Main code
 MAX_LEVEL = 120
 mage = False
 kegs = find_all_in_container_by_ids(KEG_STATIC_IDS, containerSerial=Player.Backpack.Serial)

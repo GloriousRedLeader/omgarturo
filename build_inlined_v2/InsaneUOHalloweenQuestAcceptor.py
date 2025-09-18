@@ -1,3 +1,4 @@
+# Main code
 cnt = 0
 while True:
     cnt = cnt + 1

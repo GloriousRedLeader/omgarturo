@@ -1,4 +1,4 @@
-item = find_in_container_by_id(itemID, sourceSerial, color=color, ignoreContainer=[])
+# Functions
 def move_item_to_container_by_id(itemID, sourceSerial, destinationSerial, color=-1):
     while True:
         item = find_in_container_by_id(itemID, sourceSerial, color=color, ignoreContainer=[])
@@ -6,12 +6,6 @@ def move_item_to_container_by_id(itemID, sourceSerial, destinationSerial, color=
             move_item_to_container(item, destinationSerial)
         else:
             break
-foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-container = Items.FindBySerial(containerSerial)
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
-ignoreColor = True
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -31,6 +25,11 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
+
+# Main code
 itemSerial = Target.PromptTarget('Which item type? Click one.')
 destinationSerial = Target.PromptTarget('Pick target container')
 Items.UseItem(destinationSerial)

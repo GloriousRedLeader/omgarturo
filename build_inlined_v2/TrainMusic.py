@@ -1,3 +1,4 @@
+# Main code
 INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, 3762, 3761, 3742, 3741]
 Player.HeadMessage(38, 'Training Musicianship')
 Player.HeadMessage(38, 'Make sure you have instruments in your backpack.')

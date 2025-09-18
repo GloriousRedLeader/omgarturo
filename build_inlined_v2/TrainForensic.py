@@ -1,10 +1,12 @@
+# Functions
 def get_corpses(range=2):
     filter = Items.Filter()
     filter.OnGround = True
     filter.RangeMax = range
     filter.IsCorpse = True
     return Items.ApplyFilter(filter)
-filter = Items.Filter()
+
+# Main code
 while Player.GetSkillValue('Forensic Evaluation') < 55:
     corpses = get_corpses(1)
     for corpse in corpses:

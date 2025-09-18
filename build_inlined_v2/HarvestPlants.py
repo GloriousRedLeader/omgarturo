@@ -1,3 +1,4 @@
+# Main code
 SET_TO_DECORATIVE = False
 RANGE = 3
 PLANT_GUMP = 2847473961

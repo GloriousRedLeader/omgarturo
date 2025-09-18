@@ -5,37 +5,29 @@ from math import ceil
 import sys
 import threading, atexit
 import time
-SNAKE_CHARMER_FLUTE_STATIC_ID = 10245
-HUNTING_PERMIT_GRAPHIC_ID = 5360
-filter = Items.Filter()
+
+# Constants
 CANNON_GRAPHIC_IDS = [CARRONADE_GRAPHIC_ID]
+PAINTS_AND_A_BRUSH_STATIC_ID = 4033
 DRYDOCK_SHIP_GRAPHIC_ID = 5364
 SILVER_SERPENT_MOBILE_ID = 92
-RARE_SERPENT_EGG_STATIC_ID = 16831
+ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
+SNAKE_CHARMER_FLUTE_STATIC_ID = 10245
+RAMROD_STATIC_ID = 16966
 BOW_GRAPHIC_ID = 5042
+HUNTING_PERMIT_GRAPHIC_ID = 5360
+GIANT_SERPENT_MOBILE_ID = 21
+CARRONADE_GRAPHIC_ID = 16925
+SERPENT_NEST_STATIC_ID = 8755
+RARE_SERPENT_EGG_STATIC_ID = 16831
+
+# Functions
 def get_corpses(range=2):
     filter = Items.Filter()
     filter.OnGround = True
     filter.RangeMax = range
     filter.IsCorpse = True
     return Items.ApplyFilter(filter)
-ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
-RAMROD_STATIC_ID = 16966
-fil = Mobiles.Filter()
-def get_yellows_in_range(range=8):
-    fil = Mobiles.Filter()
-    fil.Enabled = True
-    fil.RangeMax = range
-    fil.Notorieties = List[Byte](bytes([7]))
-    fil.IsGhost = False
-    fil.Friend = False
-    fil.CheckLineOfSight = False
-    mobs = Mobiles.ApplyFilter(fil)
-    return mobs
-SERPENT_NEST_STATIC_ID = 8755
-mobs = Mobiles.ApplyFilter(fil)
-GIANT_SERPENT_MOBILE_ID = 21
-PAINTS_AND_A_BRUSH_STATIC_ID = 4033
 def get_enemies(range=10, serialsToExclude=[]):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -49,8 +41,18 @@ def get_enemies(range=10, serialsToExclude=[]):
         mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
         return mobsList
     return mobs
-mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-CARRONADE_GRAPHIC_ID = 16925
+def get_yellows_in_range(range=8):
+    fil = Mobiles.Filter()
+    fil.Enabled = True
+    fil.RangeMax = range
+    fil.Notorieties = List[Byte](bytes([7]))
+    fil.IsGhost = False
+    fil.Friend = False
+    fil.CheckLineOfSight = False
+    mobs = Mobiles.ApplyFilter(fil)
+    return mobs
+
+# Main code
 def medusa_helper(stop, interval):
     while not stop.WaitOne(interval) and (not Player.IsGhost):
         flute = Items.FindByName('snake charmer flute', -1, Player.Backpack.Serial, 0)

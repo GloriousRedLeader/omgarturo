@@ -1,3 +1,4 @@
+# Main code
 while Player.GetSkillValue('Hiding') < Player.GetSkillCap('Hiding'):
     Player.UseSkill('Hiding')
     Misc.Pause(3000)

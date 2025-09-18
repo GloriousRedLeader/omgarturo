@@ -1,3 +1,4 @@
+# Main code
 order = ['taste']
 mainpack = Mobiles.FindBySerial(Player.Serial).Backpack
 useOwnPicks = True

@@ -1,6 +1,8 @@
 from System.Collections.Generic import List
 from math import ceil
 import sys
+
+# Main code
 MAX_BOOKS_TO_DISPLAY = 4
 RUNIC_ATLAS_SERIAL = 1080358565
 RUNIC_ATLAS_GUMP_ID = 498

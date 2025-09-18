@@ -1,4 +1,6 @@
 import sys
+
+# Main code
 waitTarget = 200
 while True:
     mortar = Items.FindByID(3739, -1, Player.Backpack.Serial)

@@ -1,3 +1,4 @@
+# Main code
 CAST_TIMEOUT = 700
 def SelfCast(spell, wait_for_target=True):
     Spells.CastMagery(spell)

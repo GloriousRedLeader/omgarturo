@@ -1,5 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
+
+# Functions
 def get_yellows_in_range(range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -10,8 +12,8 @@ def get_yellows_in_range(range=8):
     fil.CheckLineOfSight = False
     mobs = Mobiles.ApplyFilter(fil)
     return mobs
-fil = Mobiles.Filter()
-mobs = Mobiles.ApplyFilter(fil)
+
+# Main code
 TALK_CONTEXT = 5376
 npcs = get_yellows_in_range(range=1)
 if len(npcs) > 0:

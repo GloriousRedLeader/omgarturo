@@ -1,4 +1,6 @@
 from System.Collections.Generic import List
+
+# Main code
 GUMP_ID = 949095101
 CIRCLES_3_4 = 8
 TELEPORT_ID = 37

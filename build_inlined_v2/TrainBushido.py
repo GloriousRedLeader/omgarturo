@@ -1,4 +1,6 @@
 import sys
+
+# Main code
 while Player.GetSkillValue('Bushido') < 100:
     Misc.Pause(1)
     Bushido = Player.GetSkillValue('Bushido')

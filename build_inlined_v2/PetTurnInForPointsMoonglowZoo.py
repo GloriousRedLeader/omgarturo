@@ -1,7 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
-pets = []
-fil = Mobiles.Filter()
+
+# Functions
 def get_pets(range=10, checkLineOfSight=True, mobileId=None):
     pets = []
     fil = Mobiles.Filter()
@@ -18,7 +18,8 @@ def get_pets(range=10, checkLineOfSight=True, mobileId=None):
         if blue.CanRename:
             pets.append(blue)
     return pets
-blues = Mobiles.ApplyFilter(fil)
+
+# Main code
 pets = get_pets()
 for pet in pets:
     Items.UseItem(1075577407)

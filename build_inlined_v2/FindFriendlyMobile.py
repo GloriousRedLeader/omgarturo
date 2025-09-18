@@ -1,9 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
-mobsList = List[type(mobs[0])]([mob for mob in mobs if not (mob.Name in ANIMATE_DEAD_MOBILE_NAMES and mob.Notoriety == 6) and mob.Serial not in serialsToExclude])
-ANIMATE_DEAD_MOBILE_NAMES = ['a gore fiend', 'a lich', 'a flesh golem', 'a mummy', 'a skeletal dragon', 'a lich lord', 'a skeletal knight', 'a bone knight', 'a skeletal mage', 'a bone mage', 'a patchwork skeleton', 'a mound of maggots', 'a wailing banshee', 'a wraith', 'a hellsteed', 'a skeletal steed', 'an Undead Gargoyle', 'a skeletal drake', 'a putrid undead gargoyle', 'a blade spirit', 'an energy vortex', 'a skeletal drake']
-fil = Mobiles.Filter()
-mobs = Mobiles.ApplyFilter(fil)
+
+# Functions
 def get_friends_by_names(friendNames=[], range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -18,6 +16,8 @@ def get_friends_by_names(friendNames=[], range=8):
         return mobsList
     mobs = Mobiles.ApplyFilter(fil)
     return mobs
+
+# Main code
 RANGE = 15
 NAMES_TO_SEARCH = ['Daedaulus', "Daedaulus'", 'Daedaulus`', 'Bamba']
 while True:

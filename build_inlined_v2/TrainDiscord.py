@@ -2,6 +2,8 @@ from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
 import time
+
+# Main code
 Misc.SendMessage('Training Discoteca')
 INSTRUMENT_STATIC_IDS = [3740, 10245, 3763, 3762, 3761, 3742, 3741]
 while Player.GetRealSkillValue('Discordance') < Player.GetSkillCap('Discordance'):

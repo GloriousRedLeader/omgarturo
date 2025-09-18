@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 import sys
+
+# Main code
 class Puzzle:
 
     def __init__(self, timeout=400):

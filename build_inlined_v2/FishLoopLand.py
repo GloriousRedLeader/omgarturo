@@ -4,23 +4,32 @@ from ctypes import wintypes
 import ctypes
 import sys
 import time
-playerY = Player.Position.Y
-items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-boatDirection = 2
-playerX = Player.Position.X
-y = Player.Position.Y - 6
-direction = Player.Direction
-filter = Items.Filter()
-fishingPole = find_first_in_container_by_ids(FISHING_POLE_STATIC_IDS)
-def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
-    items = []
-    for itemID in itemIDs:
-        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
-    return items
-container = Items.FindBySerial(containerSerial)
-playerY = Player.Position.Y
-fished = True
-rightHand = Player.GetItemOnLayer('RightHand')
+
+# Constants
+FISHING_POLE_STATIC_IDS = [3520]
+TRUE_NORTH_DIRECTION_MAP = ['Forward One', 'Right One', 'Back One', 'Left One']
+corpseScannerCache = []
+HARVESTERS_BLADE_STATIC_ID = 11552
+BUTCHERS_WAR_CLEAVER_STATIC_ID = 11567
+FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
+DAGGER_STATIC_ID = 3922
+
+# Functions
+def move_item_to_container(item, destinationSerial):
+    Items.Move(item, destinationSerial, item.Amount)
+    Misc.Pause(800)
+def equip_weapon(newItem):
+    leftHand = Player.GetItemOnLayer('LeftHand')
+    if leftHand != None:
+        Player.UnEquipItemByLayer('LeftHand', True)
+        Misc.Pause(1000)
+    rightHand = Player.GetItemOnLayer('RightHand')
+    if rightHand != None:
+        Player.UnEquipItemByLayer('RightHand', True)
+        Misc.Pause(1000)
+    Player.EquipItem(newItem)
+    Misc.Pause(1000)
+    return [leftHand, rightHand]
 def get_boat_direction():
     boatDirection = None
     playerX = Player.Position.X
@@ -42,20 +51,58 @@ def get_boat_direction():
     Player.ChatSay('back one')
     Misc.Pause(1000)
     return boatDirection
-item = find_in_container_by_id(itemID, sourceSerial, color=color, ignoreContainer=[])
-playerX = Player.Position.X
-HARVESTERS_BLADE_STATIC_ID = 11552
-fishies = find_all_in_container_by_ids(FISH_STATIC_IDS)
-foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
-def get_corpses(range=2):
-    filter = Items.Filter()
-    filter.OnGround = True
-    filter.RangeMax = range
-    filter.IsCorpse = True
-    return Items.ApplyFilter(filter)
-tileInfoList = Statics.GetStaticsTileInfo(x, y, Player.Map)
-x = Player.Position.X - 6
-ignoreColor = True
+def find_first_in_hands_by_ids(itemIDs):
+    for itemID in itemIDs:
+        item = find_in_hands_by_id(itemID)
+        if item != None:
+            return item
+    return None
+def get_tile_in_front(distance=1):
+    direction = Player.Direction
+    playerX = Player.Position.X
+    playerY = Player.Position.Y
+    playerZ = Player.Position.Z
+    if direction == 'Up':
+        tileX = playerX - distance
+        tileY = playerY - distance
+        tileZ = playerZ
+    elif direction == 'North':
+        tileX = playerX
+        tileY = playerY - distance
+        tileZ = playerZ
+    elif direction == 'Right':
+        tileX = playerX + distance
+        tileY = playerY - distance
+        tileZ = playerZ
+    elif direction == 'East':
+        tileX = playerX + distance
+        tileY = playerY
+        tileZ = playerZ
+    elif direction == 'Down':
+        tileX = playerX + distance
+        tileY = playerY + distance
+        tileZ = playerZ
+    elif direction == 'South':
+        tileX = playerX
+        tileY = playerY + distance
+        tileZ = playerZ
+    elif direction == 'Left':
+        tileX = playerX - distance
+        tileY = playerY + distance
+        tileZ = playerZ
+    elif direction == 'West':
+        tileX = playerX - distance
+        tileY = playerY
+        tileZ = playerZ
+    return (tileX, tileY, tileZ)
+def find_in_hands_by_id(itemID):
+    leftHand = Player.GetItemOnLayer('LeftHand')
+    if leftHand != None and leftHand.ItemID == itemID:
+        return leftHand
+    rightHand = Player.GetItemOnLayer('RightHand')
+    if rightHand != None and rightHand.ItemID == itemID:
+        return rightHand
+    return None
 def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, color=-1, ignoreContainer=[], recursive=False):
     ignoreColor = False
     if color == -1:
@@ -75,18 +122,12 @@ def find_in_container_by_id(itemID, containerSerial=Player.Backpack.Serial, colo
                 foundItem = find_in_container_by_id(itemID, containerSerial=item.Serial, color=color, ignoreContainer=ignoreContainer, recursive=recursive)
                 if foundItem != None:
                     return foundItem
-FISHING_POLE_STATIC_IDS = [3520]
-tileY = playerY
-DAGGER_STATIC_ID = 3922
-TRUE_NORTH_DIRECTION_MAP = ['Forward One', 'Right One', 'Back One', 'Left One']
-tileX = Player.Position.X + distance
-def find_first_in_hands_by_ids(itemIDs):
+def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
     for itemID in itemIDs:
-        item = find_in_hands_by_id(itemID)
+        item = find_in_container_by_id(itemID, containerSerial)
         if item != None:
             return item
     return None
-items = get_corpses(range=10)
 def sail_to_tile(x, y, boatDirection, moveCmdLatencyMs=650):
     directionMap = TRUE_NORTH_DIRECTION_MAP[boatDirection:] + TRUE_NORTH_DIRECTION_MAP[:boatDirection]
     while True:
@@ -101,22 +142,17 @@ def sail_to_tile(x, y, boatDirection, moveCmdLatencyMs=650):
         elif Player.Position.Y > y:
             Player.ChatSay(directionMap[0])
         Misc.Pause(1000)
-landInfo = Statics.GetStaticsLandInfo(x, y, Player.Map)
-FISH_STATIC_IDS = [17154, 17155, 17158, 17159, 2508, 2509, 2510, 2511, 17603, 17604, 17605, 17606, 17617, 17618, 17619, 17620]
-BUTCHERS_WAR_CLEAVER_STATIC_ID = 11567
-def find_first_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+def find_all_in_container_by_ids(itemIDs, containerSerial=Player.Backpack.Serial):
+    items = []
     for itemID in itemIDs:
-        item = find_in_container_by_id(itemID, containerSerial)
-        if item != None:
-            return item
-    return None
-def move_item_to_container(item, destinationSerial):
-    Items.Move(item, destinationSerial, item.Amount)
-    Misc.Pause(800)
-cutTool = Items.FindByID(cutToolItemId, -1, Player.Backpack.Serial, 1)
-corpses = List[type(items[0])]([item for item in items if item.Name in corpseNames and item.Serial not in corpseScannerCache])
-directionMap = TRUE_NORTH_DIRECTION_MAP[boatDirection:] + TRUE_NORTH_DIRECTION_MAP[:boatDirection]
-tileZ = playerZ
+        items = items + Items.FindAllByID(itemID, -1, containerSerial, 1)
+    return items
+def get_corpses(range=2):
+    filter = Items.Filter()
+    filter.OnGround = True
+    filter.RangeMax = range
+    filter.IsCorpse = True
+    return Items.ApplyFilter(filter)
 def run_fishing_loop(fishRange=4, moveTiles=0, fishDelayMs=9000, fishHandling=0, fishToKeep=None, cutToolItemId=DAGGER_STATIC_ID, useCorpseScanner=False, corpseScannerMoveCommandDelayMs=650, corpseScannerPauseDelayMs=2000, corpseNames=['a deep sea serpents corpse', 'a sea serpents corpse']):
     global corpseScannerCache
     fishingPole = find_first_in_hands_by_ids(FISHING_POLE_STATIC_IDS)
@@ -202,67 +238,6 @@ def run_fishing_loop(fishRange=4, moveTiles=0, fishDelayMs=9000, fishHandling=0,
         for i in range(0, moveTiles):
             Player.ChatSay('forward one')
             Misc.Pause(750)
-hatches = Items.ApplyFilter(fil)
-corpseScannerCache = []
-def find_in_hands_by_id(itemID):
-    leftHand = Player.GetItemOnLayer('LeftHand')
-    if leftHand != None and leftHand.ItemID == itemID:
-        return leftHand
-    rightHand = Player.GetItemOnLayer('RightHand')
-    if rightHand != None and rightHand.ItemID == itemID:
-        return rightHand
-    return None
-leftHand = Player.GetItemOnLayer('LeftHand')
-playerZ = Player.Position.Z
-fil = Items.Filter()
-def equip_weapon(newItem):
-    leftHand = Player.GetItemOnLayer('LeftHand')
-    if leftHand != None:
-        Player.UnEquipItemByLayer('LeftHand', True)
-        Misc.Pause(1000)
-    rightHand = Player.GetItemOnLayer('RightHand')
-    if rightHand != None:
-        Player.UnEquipItemByLayer('RightHand', True)
-        Misc.Pause(1000)
-    Player.EquipItem(newItem)
-    Misc.Pause(1000)
-    return [leftHand, rightHand]
-def get_tile_in_front(distance=1):
-    direction = Player.Direction
-    playerX = Player.Position.X
-    playerY = Player.Position.Y
-    playerZ = Player.Position.Z
-    if direction == 'Up':
-        tileX = playerX - distance
-        tileY = playerY - distance
-        tileZ = playerZ
-    elif direction == 'North':
-        tileX = playerX
-        tileY = playerY - distance
-        tileZ = playerZ
-    elif direction == 'Right':
-        tileX = playerX + distance
-        tileY = playerY - distance
-        tileZ = playerZ
-    elif direction == 'East':
-        tileX = playerX + distance
-        tileY = playerY
-        tileZ = playerZ
-    elif direction == 'Down':
-        tileX = playerX + distance
-        tileY = playerY + distance
-        tileZ = playerZ
-    elif direction == 'South':
-        tileX = playerX
-        tileY = playerY + distance
-        tileZ = playerZ
-    elif direction == 'Left':
-        tileX = playerX - distance
-        tileY = playerY + distance
-        tileZ = playerZ
-    elif direction == 'West':
-        tileX = playerX - distance
-        tileY = playerY
-        tileZ = playerZ
-    return (tileX, tileY, tileZ)
+
+# Main code
 run_fishing_loop(fishRange=4, moveTiles=0, fishDelayMs=9000, fishHandling=0, fishToKeep=None, cutToolItemId=DAGGER_STATIC_ID, useCorpseScanner=False, corpseScannerMoveCommandDelayMs=650, corpseScannerPauseDelayMs=2000, corpseNames=['a deep sea serpents corpse', 'a sea serpents corpse'])

@@ -1,3 +1,4 @@
+# Main code
 def Meditate():
     if Player.Mana != Player.ManaMax:
         Player.UseSkill('Meditation')

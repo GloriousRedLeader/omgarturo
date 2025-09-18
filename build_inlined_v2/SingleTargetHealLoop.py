@@ -1,3 +1,4 @@
+# Main code
 isMage = True if Player.GetSkillValue('Magery') > 75 else False
 petSerials = []
 while True:

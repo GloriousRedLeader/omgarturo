@@ -1,3 +1,4 @@
+# Main code
 Misc.SendMessage('Training Chiv')
 while Player.GetRealSkillValue('Chivalry') < 90:
     skillValue = Player.GetRealSkillValue('Chivalry')

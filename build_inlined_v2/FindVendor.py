@@ -1,5 +1,7 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
+
+# Functions
 def find_vendor_by_name(vendorName, vendorRange=10):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -13,8 +15,8 @@ def find_vendor_by_name(vendorName, vendorRange=10):
         if m.Name == vendorName:
             return m
     return None
-fil = Mobiles.Filter()
-mobs = Mobiles.ApplyFilter(fil)
+
+# Main code
 VENDOR_NAME = 'Luthien'
 VENDOR_RANGE = 15
 vendor = find_vendor_by_name(vendorName=VENDOR_NAME, vendorRange=VENDOR_RANGE)

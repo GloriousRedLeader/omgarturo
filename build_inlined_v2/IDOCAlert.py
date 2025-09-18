@@ -1,6 +1,8 @@
 from System import Byte, Int32
 from System import Int32
 from System.Collections.Generic import List
+
+# Main code
 class IDOCScanner(object):
     global signs
     ignore = []

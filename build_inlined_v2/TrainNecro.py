@@ -1,3 +1,4 @@
+# Main code
 while Player.GetSkillValue('Necromancy') < Player.GetSkillCap('Necromancy'):
     Necro = Player.GetSkillValue('Necromancy')
     if Necro < 35 and Player.Mana > 7:

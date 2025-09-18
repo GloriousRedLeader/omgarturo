@@ -1,3 +1,4 @@
+# Main code
 while Player.GetSkillValue('Meditation') < Player.GetSkillCap('Meditation'):
     Spells.CastMagery('Earthquake')
     Misc.Pause(5000)

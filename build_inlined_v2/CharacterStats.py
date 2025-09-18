@@ -5,6 +5,8 @@ from System.Windows.Forms import DataGridViewCellBorderStyle, ColumnStyle, SizeT
 from System.Windows.Forms import TextBox, Keys, KeyPressEventHandler, DataGridView, DataGridViewHeaderBorderStyle
 import clr
 import re
+
+# Main code
 clr.AddReference('System.Windows.Forms')
 clr.AddReference('System.Drawing')
 class CharacterStats(Forms.Form):

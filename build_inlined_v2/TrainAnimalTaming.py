@@ -1,6 +1,8 @@
 from System import Byte
 from System import Int32
 from System.Collections.Generic import List
+
+# Main code
 '\nAuthor: Aga - original author of the uosteam script\nOther Contributors: TheWarDoctor95 - converted to Razor Enhanced script\nLast Contribution By: TheWarDoctor95 - March 19, 2019\n\nDescription: Tames nearby animals to train Animal Taming to GM\n'
 renameTamedAnimalsTo = 'crane'
 petsToIgnore = [renameTamedAnimalsTo, 'omg doggie', 'snuggle monster']

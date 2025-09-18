@@ -1,6 +1,8 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
+
+# Main code
 ITEMS_TO_MOVE = [['of the archlich', 1087092297], ['swords of prosperity', 1078206825], ['of doom', 1088164408]]
 PAUSE_DELAY = 750
 for item in Items.FindBySerial(Player.Backpack.Serial).Contains:

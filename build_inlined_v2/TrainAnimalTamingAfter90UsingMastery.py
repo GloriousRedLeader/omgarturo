@@ -1,3 +1,4 @@
+# Main code
 Player.HeadMessage(38, 'Training Animal Taming Using Mastery')
 PET_SERIAL = 962807
 while not Player.IsGhost:

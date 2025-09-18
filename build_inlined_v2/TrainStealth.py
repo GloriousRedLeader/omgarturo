@@ -1,3 +1,4 @@
+# Main code
 while Player.GetSkillValue('Stealth') < 60:
     if Player.Visible:
         Target.Cancel()

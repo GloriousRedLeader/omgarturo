@@ -1,3 +1,4 @@
+# Main code
 packAnimalSerial = Target.PromptTarget('Pick pack animal (must be in guild)')
 itemSerial = Target.PromptTarget('Pick item to steal')
 packAnimalBackpackSerial = Mobiles.FindBySerial(packAnimalSerial).Backpack.Serial

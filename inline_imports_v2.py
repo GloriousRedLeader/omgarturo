@@ -17,10 +17,11 @@ def collect_names_used(node: ast.AST) -> Set[str]:
     return names
 
 def collect_names_defined(tree: ast.AST) -> Dict[str, ast.AST]:
-    """Collect all names defined in this module."""
+    """Collect all names defined at module level in this module."""
     defined = {}
     
-    for node in ast.walk(tree):
+    # Only look at top-level statements, not inside functions/classes
+    for node in tree.body:
         if isinstance(node, ast.FunctionDef):
             defined[node.name] = node
         elif isinstance(node, ast.ClassDef):
@@ -29,6 +30,8 @@ def collect_names_defined(tree: ast.AST) -> Dict[str, ast.AST]:
             for target in node.targets:
                 if isinstance(target, ast.Name):
                     defined[target.id] = node
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            defined[node.target.id] = node
     
     return defined
 
@@ -219,20 +222,65 @@ class SimpleInliner:
         # Add all collected imports
         inlined_parts.extend(sorted(all_imports))
         
-        # Add collected symbol definitions
+        # Organize collected symbols by type
+        constants = []
+        functions = []
+        classes = []
+        
         for (module_path, symbol_name) in needed_deps:
             if (module_path, symbol_name) in self.collected_code:
                 symbol_node = self.collected_code[(module_path, symbol_name)]
-                inlined_parts.append(ast.unparse(symbol_node))
+                symbol_code = ast.unparse(symbol_node)
+                
+                if isinstance(symbol_node, ast.FunctionDef):
+                    functions.append(symbol_code)
+                elif isinstance(symbol_node, ast.ClassDef):
+                    classes.append(symbol_code)
+                elif isinstance(symbol_node, ast.Assign):
+                    constants.append(symbol_code)
+                else:
+                    # Other types (like complex expressions)
+                    constants.append(symbol_code)
+        
+        # Build organized code sections
+        code_sections = []
+        
+        # Add imports first
+        code_sections.extend(sorted(all_imports))
+        
+        if code_sections:
+            code_sections.append('')  # Blank line after imports
+        
+        # Add constants
+        if constants:
+            code_sections.append('# Constants')
+            code_sections.extend(constants)
+            code_sections.append('')  # Blank line after constants
+        
+        # Add classes
+        if classes:
+            code_sections.append('# Classes')
+            code_sections.extend(classes)
+            code_sections.append('')  # Blank line after classes
+        
+        # Add functions
+        if functions:
+            code_sections.append('# Functions')
+            code_sections.extend(functions)
+            code_sections.append('')  # Blank line after functions
         
         # Add original code (excluding import statements)
-        original_body = []
+        original_code = []
         for node in tree.body:
             if not isinstance(node, (ast.Import, ast.ImportFrom)):
-                original_body.append(ast.unparse(node))
+                original_code.append(ast.unparse(node))
+        
+        if original_code:
+            code_sections.append('# Main code')
+            code_sections.extend(original_code)
         
         # Combine everything
-        final_code = '\n'.join(inlined_parts + original_body)
+        final_code = '\n'.join(code_sections)
         
         # Write output
         output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -277,9 +325,9 @@ def check_undefined_variables(output_dir: pathlib.Path):
             
             tree = ast.parse(source)
             
-            # Collect defined names
+            # Collect defined names (only at module level)
             defined = set()
-            for node in ast.walk(tree):
+            for node in tree.body:
                 if isinstance(node, ast.FunctionDef):
                     defined.add(node.name)
                 elif isinstance(node, ast.ClassDef):

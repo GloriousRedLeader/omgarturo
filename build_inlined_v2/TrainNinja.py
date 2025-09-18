@@ -1,4 +1,6 @@
 import sys
+
+# Main code
 print('Training Ninjitsu')
 while Player.GetSkillValue('Ninjitsu') < Player.GetSkillCap('Ninjitsu'):
     if Player.GetSkillValue('Ninjitsu') < 50:

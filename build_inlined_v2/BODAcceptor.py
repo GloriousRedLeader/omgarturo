@@ -1,10 +1,12 @@
 from System import Byte, Int32
 from System.Collections.Generic import List
 import sys
-BOD_STATIC_ID = 8792
+
+# Constants
 BOD_BOOK_STATIC_ID = 8793
-fil = Mobiles.Filter()
-mobs = Mobiles.ApplyFilter(fil)
+BOD_STATIC_ID = 8792
+
+# Functions
 def get_yellows_in_range(range=8):
     fil = Mobiles.Filter()
     fil.Enabled = True
@@ -15,6 +17,8 @@ def get_yellows_in_range(range=8):
     fil.CheckLineOfSight = False
     mobs = Mobiles.ApplyFilter(fil)
     return mobs
+
+# Main code
 placeInBodBook = False
 NPC_BOD_GUMP_ID = 2611865322
 BOD_BOOK_GUMP_ID = 1425364447
