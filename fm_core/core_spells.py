@@ -339,7 +339,7 @@ def check_summon_familiar(
                     if buttonId in [2, 102]:
                         petButtonMap["Shadow Wisp"] = buttonId
                     elif buttonId in [3, 103]:
-                        petButtonMap["Dark Wol"] = buttonId
+                        petButtonMap["Dark Wolf"] = buttonId
                     elif buttonId in [4, 104]:
                         petButtonMap["Death Adder"] = buttonId
                     elif buttonId in [5, 105]:
