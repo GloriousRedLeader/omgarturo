@@ -93,7 +93,7 @@ def get_quest_details(gumpText):
     
 # Extra parsing needed for the quantity of items to craft
 def get_quest_amount(gumpText):
-    pattern = rf"(\d+)\s+{re.escape(questItemName)}s"
+    pattern = r"(\d+)\s+{}s".format(re.escape(questItemName))
     match = re.search(pattern, gumpText)
     if match:
         return int(match.groups()[0])

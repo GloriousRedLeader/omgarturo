@@ -15,7 +15,9 @@ from System import Environment
 from System.Collections.Generic import List
 from System.Data import DataTable
 from System.Drawing import Point, Color, Size
-from System.Windows.Forms import Application, Button, Form, BorderStyle, Label, FlatStyle, DataGridView, DataGridViewAutoSizeColumnsMode, DataGridViewSelectionMode, DataGridViewEditMode, RadioButton, GroupBox, TextBox, CheckBox, ProgressBar
+from System.Windows.Forms import (Application, Button, Form, BorderStyle, Label, FlatStyle, DataGridView,
+ DataGridViewAutoSizeColumnsMode, DataGridViewSelectionMode, DataGridViewEditMode, RadioButton, GroupBox,
+ TextBox, CheckBox, ProgressBar)
 from datetime import datetime
 from time import sleep
 import clr, time, sys, System
