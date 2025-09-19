@@ -2,7 +2,6 @@
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
 #   2025-09-19
-# Use at your own risk.
 
 # ##########################################################
 # #                                                        #
@@ -317,12 +316,10 @@ def check_resources(craftContainer, smallBodResources, resourceContainer, itemMo
         hue = specialMaterialHue if resource.canOverrideHue() and specialMaterialHue is not None else RESOURCE_HUE_DEFAULT    
         items = Items.FindAllByID(resource.resourceId, hue, craftContainer, 0)
         amountBackpack = sum(item.Amount for item in items)
-        
         if amountBackpack > resource.amount:
             continue
             
         amountNeeded = max(0, resource.getOptimizedAmout() - amountBackpack)
-        
         items = Items.FindAllByID(resource.resourceId, hue, resourceContainer, -1)
         for item in items:
             if amountNeeded == 0:
@@ -560,6 +557,9 @@ RECIPES = [
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 114, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 121, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 128, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),    
+    
+    # Traps  - These dont produce an item
+    #SmallBodRecipe(False, "dart trap", CAT_TINKERING_TRAPS, 2, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID), SmallBodResource(CROSSBOW_BOLT_GRAPHIC_ID)] ),    
 
     
     ############################ Tailoring ############################
@@ -797,7 +797,7 @@ RECIPES = [
     SmallBodRecipe(True, "bokuto", CAT_CARPENTRY_WEAPONS, 23, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "tetsubo", CAT_CARPENTRY_WEAPONS, 37, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "wild sta", CAT_CARPENTRY_WEAPONS, 44, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "arcanist's wild sta", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # "
+    SmallBodRecipe(True, "arcanist's wild sta", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # '
     SmallBodRecipe(True, "ancient wild sta", CAT_CARPENTRY_WEAPONS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(PERFECT_EMERALD, 1) ] ),
     SmallBodRecipe(True, "thorned wild sta", CAT_CARPENTRY_WEAPONS, 72, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(FIRE_RUBY, 1) ] ),
     SmallBodRecipe(True, "hardened wild sta", CAT_CARPENTRY_WEAPONS, 79, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(TURQUOISE, 1) ] ),
@@ -920,6 +920,7 @@ def run_craft_loop(
     
     # (Optional) A number that marks the upper limit on crafted items.
     # Default is None which means keep crafting forever.
+    # A value of 0 means exactly 1 craft attempt (success or failure)
     maxItemsToCraft = None,
     
     # NOTE: NOT IMPLEMENTED. ONLY WORKS WITH DEFAULT MATERIALS LIKE IRON AND LEATHER
