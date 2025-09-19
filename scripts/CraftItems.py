@@ -2,6 +2,7 @@
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
 #   2025-09-19
+# Use at your own risk.
 
 # ##########################################################
 # #                                                        #
