@@ -79,11 +79,11 @@ for crate in crates:
         
         Gumps.WaitForGump(CRAFTING_GUMP_ID, 5000)
         Misc.Pause(760)
-        gumpData = Gumps.GetGumpData(CRAFTING_GUMP_ID).gumpText
-        
-        crateIsTrapped = next((True for gd in gumpData if "Trap is disabled until you lock the chest." == gd or "You can only place one trap on an object at a time." == gd), False)
+        gumpData = Gumps.GetGumpData(CRAFTING_GUMP_ID)
+        if gumpData is not None:
+            crateIsTrapped = next((True for gd in gumpData.gumpText if "Trap is disabled until you lock the chest." == gd or "You can only place one trap on an object at a time." == gd), False)
         #print("crateIsTrapped ", crateIsTrapped)
         
-        Misc.Pause(250)
+        Misc.Pause(750)
 
     countTrapped = countTrapped + 1
