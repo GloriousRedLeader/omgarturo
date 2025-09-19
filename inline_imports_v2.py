@@ -298,9 +298,17 @@ class SimpleInliner:
         
         # Add inlined symbols in topological order
         if sorted_symbols:
-            code_sections.append('# ===============================================')
-            code_sections.append('# Inlined Dependencies (topologically sorted)')
-            code_sections.append('# ===============================================')
+            code_sections.append('# ##########################################################')
+            code_sections.append('# #                                                        #')
+            code_sections.append('# #              INLINED DEPENDENCIES                     #')
+            code_sections.append('# #                                                        #')
+            code_sections.append('# #  DO NOT EDIT THIS SECTION - AUTO-GENERATED CODE       #')
+            code_sections.append('# #                                                        #')
+            code_sections.append('# #  These are dependencies from fm_core that have been   #')
+            code_sections.append('# #  automatically inlined. For user-editable code,       #')
+            code_sections.append('# #  scroll down to the bottom of this file.              #')
+            code_sections.append('# #                                                        #')
+            code_sections.append('# ##########################################################')
             code_sections.append('')
             
             # Add symbols with proper spacing
@@ -311,6 +319,20 @@ class SimpleInliner:
                     code_sections.append('')
             
             code_sections.append('')  # Blank line after inlined code
+        
+        # Add header for user-editable section
+        code_sections.append('# ##########################################################')
+        code_sections.append('# #                                                        #')
+        code_sections.append('# #                 USER EDITABLE CODE                    #')
+        code_sections.append('# #                                                        #')
+        code_sections.append('# #  This is the original script code that you can        #')
+        code_sections.append('# #  modify and customize. Edit the parameters, logic,    #')
+        code_sections.append('# #  and function calls below as needed for your setup.   #')
+        code_sections.append('# #                                                        #')
+        code_sections.append('# #  The dependencies above have been automatically       #')
+        code_sections.append('# #  inlined and should not be modified.                  #')
+        code_sections.append('# ##########################################################')
+        code_sections.append('')
         
         # Add original code (excluding import statements) with preserved formatting
         if tree.body:
@@ -397,7 +419,7 @@ class SimpleInliner:
             output_file.parent.mkdir(parents=True, exist_ok=True)
             with open(str(output_file), 'w') as f:
                 f.write(final_code + '\n')
-            print("Wrote {} (content changed)".format(output_file))
+            print("Wrote {} (content changed)".format(output_file.name))
     
     def _topologically_sort_all_symbols(self, constant_nodes, function_nodes, class_nodes):
         """Topologically sort all symbols (constants, functions, classes) based on their dependencies."""
@@ -773,17 +795,6 @@ def main():
             copied_count += 1
         except Exception as e:
             print("Error copying {}: {}".format(cs_file.name, e))
-    
-    # Copy Assemblies.cfg if it exists
-    assemblies_file = src_dir / 'Assemblies.cfg'
-    if assemblies_file.exists():
-        output_assemblies = output_dir / 'Assemblies.cfg'
-        try:
-            shutil.copy2(str(assemblies_file), str(output_assemblies))
-            print("Copied Assemblies.cfg")
-            copied_count += 1
-        except Exception as e:
-            print("Error copying Assemblies.cfg: {}".format(e))
     
     print("\nProcessed {} Python files, copied {} C# files.".format(processed_count, copied_count))
     
