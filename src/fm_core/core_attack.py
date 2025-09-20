@@ -20,6 +20,7 @@ from Scripts.omgarturo.src.fm_core.core_spells import check_summon_familiar
 from Scripts.omgarturo.src.fm_core.core_spells import use_skill
 from Scripts.omgarturo.src.fm_core.core_rails import is_player_moving
 from Scripts.omgarturo.src.fm_core.core_items import BANDAGE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import SMALL_CRATE_GRAPHIC_ID
 import sys
 
 # These are loops that will run on your character that find nearest enemies,
@@ -102,6 +103,13 @@ def run_dex_loop(
     # Only heal things that are below this percent HP
     healThreshold = 0.95,
     
+    # When true will use the first small crate it finds in your pack.
+    # Use this to break paralyze. Does damage to you. There is a script
+    # to help craft the traps since it is kind of a pain.
+    # If you have more than one crate in your pack, first come first serve.
+    # If the crate is not trapped, it will just open it.
+    useTrappedBox = 0,
+    
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 0,
     
@@ -123,6 +131,13 @@ def run_dex_loop(
         if not Player.Visible:
             Misc.Pause(500)
             continue
+            
+        if useTrappedBox == 1 and Player.BuffsExist("Paralyze"):
+            trappedBox = Items.FindByID(SMALL_CRATE_GRAPHIC_ID, -1, Player.Backpack.Serial, 0)
+            if trappedBox is not None:
+                Items.UseItem(trappedBox)
+                Misc.Pause(250)
+                continue
 
         if heal_player_and_friends(useCleanseByFire = useCleanseByFire, useRemoveCurse = useRemoveCurse, useBandagesOnSelf = useBandagesOnSelf, healThreshold = healThreshold) == True:
             continue
@@ -603,6 +618,13 @@ def run_mage_loop(
     # Use the Magery Protection spell. Casts when no nearby enemies.
     useProtection = 0,
     
+    # When true will use the first small crate it finds in your pack.
+    # Use this to break paralyze. Does damage to you. There is a script
+    # to help craft the traps since it is kind of a pain.
+    # If you have more than one crate in your pack, first come first serve.
+    # If the crate is not trapped, it will just open it.
+    useTrappedBox = 0,
+    
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
     # Will try to find an enemy at full health when the buff doesnt exist on player.
@@ -630,6 +652,14 @@ def run_mage_loop(
         if not Player.Visible:
             Misc.Pause(500)
             continue  
+            
+        if useTrappedBox == 1 and Player.BuffsExist("Paralyze"):
+            trappedBox = Items.FindByID(SMALL_CRATE_GRAPHIC_ID, -1, Player.Backpack.Serial, 0)
+            if trappedBox is not None:
+                print("USING TRAPPED BOX")
+                Items.UseItem(trappedBox)
+                Misc.Pause(250)
+                continue
             
         if minGold > 0 and Player.Gold >= minGold:
             use_bag_of_sending(minGold)            

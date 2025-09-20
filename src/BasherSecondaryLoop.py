@@ -67,6 +67,13 @@ run_dex_loop (
     # Only heal things that are below this percent HP
     healThreshold = 0.95,
     
+    # When true will use the first small crate it finds in your pack.
+    # Use this to break paralyze. Does damage to you. There is a script
+    # to help craft the traps since it is kind of a pain.
+    # If you have more than one crate in your pack, first come first serve.
+    # If the crate is not trapped, it will just open it.
+    useTrappedBox = 1,
+    
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 35000,
     
