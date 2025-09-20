@@ -1386,6 +1386,13 @@ run_mage_loop(
     # Use the Magery Protection spell. Casts when no nearby enemies.
     useProtection = 0,
     
+    # When true will use the first small crate it finds in your pack.
+    # Use this to break paralyze. Does damage to you. There is a script
+    # to help craft the traps since it is kind of a pain.
+    # If you have more than one crate in your pack, first come first serve.
+    # If the crate is not trapped, it will just open it.
+    useTrappedBox = 1,
+    
     # EXPERIMENTAL: Does not work great. Would recommend not using this.
     # Whether to honor a nearby enemy to gain the perfection buff.
     # Will try to find an enemy at full health when the buff doesnt exist on player.
