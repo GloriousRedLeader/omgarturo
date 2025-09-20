@@ -755,7 +755,6 @@ def run_dex_loop(
             if trappedBox is not None:
                 Items.UseItem(trappedBox)
                 Misc.Pause(250)
-                continue
 
         if heal_player_and_friends(useCleanseByFire = useCleanseByFire, useRemoveCurse = useRemoveCurse, useBandagesOnSelf = useBandagesOnSelf, healThreshold = healThreshold) == True:
             continue

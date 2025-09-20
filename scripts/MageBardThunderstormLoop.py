@@ -998,7 +998,6 @@ def run_mage_loop(
                 print("USING TRAPPED BOX")
                 Items.UseItem(trappedBox)
                 Misc.Pause(250)
-                continue
             
         if minGold > 0 and Player.Gold >= minGold:
             use_bag_of_sending(minGold)            
