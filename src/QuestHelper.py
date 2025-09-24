@@ -242,7 +242,7 @@ def huntsman(stop, interval):
     
     GAME_ANIMAL_CORPSES = [
         "an alligator corpse",
-        "an allosaurus  corpse",
+        "an allosaurus corpse",
         "an anchisaur corpse",
         "a bake kitsune corpse",
         "a pig corpse",

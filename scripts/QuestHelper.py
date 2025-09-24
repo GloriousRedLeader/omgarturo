@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-09-24
 # Use at your own risk.
 
 # ##########################################################
@@ -343,7 +343,7 @@ def huntsman(stop, interval):
     
     GAME_ANIMAL_CORPSES = [
         "an alligator corpse",
-        "an allosaurus  corpse",
+        "an allosaurus corpse",
         "an anchisaur corpse",
         "a bake kitsune corpse",
         "a pig corpse",
