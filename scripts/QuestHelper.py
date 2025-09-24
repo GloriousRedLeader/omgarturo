@@ -352,7 +352,7 @@ def huntsman(stop, interval):
         "a desert ostard corpse",
         "a dimetrosaur corpse",
         "an eagle corpse",
-        "a high plains boura corpse",
+        "a boura corpse",
         "a frenzie ostard corpse",
         "a gaman corpse",
         "a giant toad corpse",
