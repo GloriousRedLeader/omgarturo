@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-09-25
 # Use at your own risk.
 
 # ##########################################################
@@ -855,18 +855,38 @@ run_dex_loop(
     # Checks for the buff, if it doesnt exist, casts it.
     useEnemyOfOne = 0,
     
-    # Chiv spell
+    # Removes less troublesome things like Curse, Feeblemind, Mind Rot, etc. every 10 seconds.
+    # Uses remove curse when blood oath is detected IMMEDIATELY.
     useRemoveCurse = 0,
     
     # Paladin spell for curing poisons, only works on self.
     useCleanseByFire = 0,
+
+    # EXPERIMENTAL: Does not work great. Would recommend not using this.
+    # Whether to honor a nearby enemy to gain the perfection buff.
+    # Will try to find an enemy at full health when the buff doesnt exist on player.
+    useHonor = 0,
    
     # how many tiles to look for enemies and attack them
     attackRange = 6,
+    
+    # Bandage self. Requires healing skill and bandages in top level of pack.
+    # 0 = Disabled, 1 = Enabled
+    useBandagesOnSelf = 0,
+    
+    # Only heal things that are below this percent HP
+    healThreshold = 0.95,
+    
+    # When true will use the first small crate it finds in your pack.
+    # Use this to break paralyze. Does damage to you. There is a script
+    # to help craft the traps since it is kind of a pain.
+    # If you have more than one crate in your pack, first come first serve.
+    # If the crate is not trapped, it will just open it.
+    useTrappedBox = 0,
     
     # If greater than 0 will attempt to use bag of sending when this much gold is present. Default is 0, no bag of sending usage.
     minGold = 0,
     
     # Milliseonds of extra delay when computing cast time to account for internet fuzz. Fine tune this as needed.
-    latencyMs = 200,    
+    latencyMs = 200   
 )
