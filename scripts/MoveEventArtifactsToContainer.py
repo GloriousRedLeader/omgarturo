@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-09-29
 # Use at your own risk.
 
 # ##########################################################
@@ -45,7 +45,8 @@ import sys
 ITEMS_TO_MOVE = [
     [ "of the archlich", 0x40CBB649],
     [ "swords of prosperity", 0x40442169],
-    [ "of doom", 0x40DC1238]
+    [ "of doom", 0x40DC1238],
+    [ "of minax", 0x400E1D0C],
     
 ]
 

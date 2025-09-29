@@ -21,7 +21,8 @@ from System import Byte, Int32
 ITEMS_TO_MOVE = [
     [ "of the archlich", 0x40CBB649],
     [ "swords of prosperity", 0x40442169],
-    [ "of doom", 0x40DC1238]
+    [ "of doom", 0x40DC1238],
+    [ "of minax", 0x400E1D0C],
     
 ]
 
