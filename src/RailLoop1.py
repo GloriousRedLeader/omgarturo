@@ -15,8 +15,9 @@ from Scripts.omgarturo.src.fm_core.core_routes import vermin_horde_champ_top
 from Scripts.omgarturo.src.fm_core.core_routes import hythloth_2
 from Scripts.omgarturo.src.fm_core.core_routes import hythloth_3
 from Scripts.omgarturo.src.fm_core.core_routes import hythloth_4
+from Scripts.omgarturo.src.fm_core.core_routes import ilsh_gold_farm_2
 
-Player.HeadMessage(48, "Starting Rail Loop")
+Player.HeadMessage(48, "Starting Rail Loop 1")
 
 # Runs a route based on a list of [x, y] coordinates. Will run it repeatadly.
 # It is recommended to make those routes a loop that start and end at or
@@ -31,7 +32,7 @@ run_rail_loop(
     # You can generate your own using the rails tool. Its easy. Just load up the script RailRecorder.py
     # and start adding points. Walk to a location, click add point. When youre done hit save. Open the file. It 
     # will contain a list of coordinates you can paste here. Your character will walk around like an idiot.
-    path = new_haven_noob_dungeon,
+    path = ilsh_gold_farm_2,
 
     # (Optional) Number of tiles to scan for nearby monsters. If you set this too high it will
     # try to find monsters through walls and in other maps and waste time.

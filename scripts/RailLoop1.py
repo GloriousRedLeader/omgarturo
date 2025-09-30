@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-09-30
 # Use at your own risk.
 
 # ##########################################################
@@ -100,6 +100,8 @@ hythloth_2 = [[5918, 222], [5918, 228], [5918, 233], [5918, 221], [5925, 219], [
 hythloth_3 = [[6093, 155], [6101, 155], [6106, 161], [6106, 170], [6096, 170], [6091, 170], [6088, 176], [6094, 181], [6097, 189], [6097, 207], [6104, 219], [6109, 219], [6110, 219], [6111, 219], [6117, 219], [6117, 224], [6122, 212], [6114, 219], [6113, 219], [6112, 219], [6099, 219], [6099, 203], [6095, 182], [6084, 172], [6081, 171], [6080, 171], [6069, 171], [6058, 171], [6059, 169], [6059, 168], [6059, 167], [6059, 160], [6054, 155], [6059, 164], [6059, 165], [6059, 166], [6059, 167], [6059, 187], [6059, 202], [6049, 203], [6048, 203], [6041, 200], [6036, 196], [6041, 201], [6045, 203], [6046, 203], [6059, 203], [6059, 187], [6059, 170], [6075, 170], [6077, 171], [6078, 171], [6087, 171], [6095, 171], [6107, 171], [6107, 161], [6101, 155], [6093, 155]]
 
 hythloth_4 = []
+
+ilsh_gold_farm_2 = [[2176, 1230], [2176, 1229], [2175, 1230], [2176, 1229]]
 
 new_haven_noob_dungeon = [[5918, 352], [5916, 344], [5912, 340], [5908, 336], [5909, 333], [5909, 322], [5909, 312], [5909, 307], [5909, 303], [5910, 299], [5913, 297], [5916, 290], [5916, 286], [5922, 283], [5928, 283], [5932, 283], [5932, 279], [5935, 279], [5939, 278], [5944, 278], [5954, 278], [5957, 277], [5962, 277], [5970, 278], [5976, 284], [5980, 283], [5986, 288], [5989, 296], [5993, 301], [5994, 310], [5992, 313], [5992, 317], [5993, 319], [5994, 323], [5994, 329], [5994, 338], [5991, 338], [5988, 342], [5988, 342], [5988, 352], [5978, 356], [5970, 359], [5970, 359], [5967, 362], [5959, 362], [5948, 362], [5943, 362], [5938, 362], [5934, 362], [5930, 357], [5924, 353], [5917, 353]]
 
@@ -283,7 +285,7 @@ def run_rail_loop(
 # #  inlined and should not be modified.                   #
 # ##########################################################
 
-Player.HeadMessage(48, "Starting Rail Loop")
+Player.HeadMessage(48, "Starting Rail Loop 1")
 
 # Runs a route based on a list of [x, y] coordinates. Will run it repeatadly.
 # It is recommended to make those routes a loop that start and end at or
@@ -298,7 +300,7 @@ run_rail_loop(
     # You can generate your own using the rails tool. Its easy. Just load up the script RailRecorder.py
     # and start adding points. Walk to a location, click add point. When youre done hit save. Open the file. It 
     # will contain a list of coordinates you can paste here. Your character will walk around like an idiot.
-    path = new_haven_noob_dungeon,
+    path = ilsh_gold_farm_2,
 
     # (Optional) Number of tiles to scan for nearby monsters. If you set this too high it will
     # try to find monsters through walls and in other maps and waste time.
