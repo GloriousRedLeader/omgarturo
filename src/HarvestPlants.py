@@ -11,7 +11,7 @@
 # harvest by looking for "A Vibrant" in its name. Thats it. Not sophisticated.
 
 # This will remove the plant and put it in your bag.
-SET_TO_DECORATIVE = False
+SET_TO_DECORATIVE = True
 
 # planting has huge range, but harvesting has pretty limited range
 # its 3 tiles in any direction (diagonal included)
@@ -26,6 +26,9 @@ filter.Movable = -1
 filter.OnGround = True
 filter.RangeMax = RANGE
 plants = Items.ApplyFilter(filter)
+
+# Note this will crash if standing near a "mount of dirt for a vibrant ...."
+# Gump failure.
 plants = [plant for plant in plants if "a vibrant" in plant.Name]
     
 for plant in plants:

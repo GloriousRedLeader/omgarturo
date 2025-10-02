@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-02
 # Use at your own risk.
 
 # ##########################################################
@@ -16,7 +16,7 @@
 # #  inlined and should not be modified.                   #
 # ##########################################################
 
-SET_TO_DECORATIVE = False
+SET_TO_DECORATIVE = True
 
 # planting has huge range, but harvesting has pretty limited range
 # its 3 tiles in any direction (diagonal included)
@@ -31,6 +31,9 @@ filter.Movable = -1
 filter.OnGround = True
 filter.RangeMax = RANGE
 plants = Items.ApplyFilter(filter)
+
+# Note this will crash if standing near a "mount of dirt for a vibrant ...."
+# Gump failure.
 plants = [plant for plant in plants if "a vibrant" in plant.Name]
     
 for plant in plants:
