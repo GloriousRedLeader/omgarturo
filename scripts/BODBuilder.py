@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-04
 # Use at your own risk.
 
 # ##########################################################
@@ -1737,24 +1737,24 @@ run_bod_builder(
 
     # Array of serials for containers to put your bods in to start things off (both small and large).
     # You put your brand new or partially complete bods in here.
-    incompleteBodContainers = [0x40251A02, 0x402519AE, 0x4025193E, 0x40F71F41, 0x4086CCD7],
+    incompleteBodContainers = [0x4007BD22, 0x403F3518, 0x40093126, 0x40093126, 0x40093089],
     
     # Array of serials for containers to store completed small bods
     # that are part of a large bod. This can take time. So store them here
     # until the can be combined.
-    smallBodWaitingForLargeBodContainers = [0x40251A68, 0x4042D758, 0x4042D779, 0x40E996FD, 0x4086CCF4, 0x4086C7F6, 0x40861A19, 0x4086C7A2, 0x40861A29],
+    smallBodWaitingForLargeBodContainers = [0x4007C01A, 0x4060725E, 0x4009316D, 0x40093840, 0x4009382F, 0x40093512, 0x40093559, 0x40860F58, 0x40093507, 0x4009352D, 0x400C526D ],
     
     # Serial of container to put completed SOLO small bods. These
     # are small bods that do not have a corresponding large bod. They are ready
     # for turn-in.
-    completeSmallBodContainer = 0x405DE401,
+    completeSmallBodContainer = 0x401D61FB,
     
     # Serial of container for completed LBODs. This is where you can pick them
     # up and then go turn them in. 
-    completeLargeBodContainer = 0x4042E137,
+    completeLargeBodContainer = 0x400BA41A,
     
     # Stash a bunch of tools in here and let it rip. Serial of container.
-    toolContainer = 0x4042E100,
+    toolContainer = 0x4007BD18,
     
     # Serial of regular container / commodity deed box (not a special resource box like insaneuo).
     # Fill this with ingots, reagents, etc. Use the run_restocker() function to help fill it up.
@@ -1771,7 +1771,7 @@ run_bod_builder(
     # e.g. if you need exceptional footlockers and only get ordinary ones. Dont need that junk.
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
-    trashContainer = 0x401DEA04,
+    trashContainer = 0x402F043A,
     
     # (Optional) Array of SmallBodRecipe. If not in this list, the bod will be skipped.
     # Only build bods that want these items. Can be of any profession.
