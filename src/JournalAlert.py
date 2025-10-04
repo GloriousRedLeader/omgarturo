@@ -21,14 +21,14 @@ HOW_OFTEN_TO_PING_MS = 5000
 STRINGS_TO_LOOK_FOR = [
     "The Master of the Hunt has",
     "You sense a dark presence",
-    "a putrid steed",
-    "a venom steed",
-    "an inferno steed",
-    "a blazing steed",
-    "a maelstrom steed", 
-    "a void steed",
-    "a glacial steed",
-    "an ice steed"
+    #"a putrid steed",
+    #"a venom steed",
+    #"an inferno steed",
+    #"a blazing steed",
+    #"a maelstrom steed", 
+    #"a void steed",
+    #"a glacial steed",
+    #"an ice steed"
     
     
     
