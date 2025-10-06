@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-06
 # Use at your own risk.
 
 # ##########################################################
@@ -336,7 +336,7 @@ def check_summon_familiar(
                     elif buttonId in [5, 105]:
                         petButtonMap["Vampire Bat"] = buttonId
 
-            pets = get_pets(range = 15, checkLineOfSight = False)
+            pets = get_pets(range = 25, checkLineOfSight = False)
             petNames = [pet.Name.replace(Player.Name + " ", "") for pet in pets]    
             goodPetCount = 0
             connectionTooTenuous = False # Rare error where we need to reset all pets completely, dunno

@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-06
 # Use at your own risk.
 
 # ##########################################################
@@ -35,6 +35,8 @@ BLANK_SCROLL = 0x0EF3
 BLOODMOSS = 0x0F7B
 
 BOARD_STATIC_ID = 0x1BD7
+
+BOLA_BALLS_STATIC_ID = 0x0E73
 
 BONE = 0x0F7E
 
@@ -229,6 +231,7 @@ class SmallBodResource:
         if self.resourceId in [STAR_SAPPHIRE, CITRINE, TURQUOISE, DIAMOND, AMBER, AMETHYST, SAPPHIRE, RUBY, EMERALD, TOURMALINE]:
             return self.amount * 50      
             
+        print("Returning omg ", self.amount)
         return self.amount
         
     def __str__(self):
@@ -406,7 +409,7 @@ RECIPES = [
     SmallBodRecipe(False, "sextant parts", CAT_TINKERING_PARTS, 30, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "barrel hoops", CAT_TINKERING_PARTS, 37, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 5)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "bola balls", CAT_TINKERING_PARTS, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 10)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 58, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 65, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 72, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
@@ -468,7 +471,7 @@ RECIPES = [
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 23, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 30, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 37, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "bola", CAT_TINKERING_ASSEMBLIES, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(LEATHER_STATIC_ID, 3), SmallBodResource(BOLA_BALLS_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 58, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 65, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
@@ -1042,7 +1045,7 @@ run_craft_loop(
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
     #recipeName = "leather leggings",
-    recipeName = "Gate Travel",
+    recipeName = "bola",
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
@@ -1051,7 +1054,7 @@ run_craft_loop(
     craftContainer = 0x406766F0,
     
     # Stash a bunch of tools in here and let it rip. Serial of container.
-    toolContainer = 0x4042E100,
+    toolContainer = 0x4007BD18,
     
     # Serial of regular container / commodity deed box (not a special resource box like insaneuo).
     # Fill this with ingots, reagents, etc. Use the run_restocker() function to help fill it up.
@@ -1061,14 +1064,14 @@ run_craft_loop(
     # Plop a container down, secure it, grab the serial, and plug it into this array.
     # Script will attempt to move items that DO meet filters after every craft attempt.
     # This is slow and should be optimized later based on weight.
-    keepContainers = [0x4086CA21],
+    keepContainers = [0x400B9635],
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
     # Script will attempt to move items that do not meet filters after every craft attempt.
-    trashContainer = 0x401DEA04,
+    trashContainer = 0x402F043A,
     
     # (Optional) A number that marks the upper limit on crafted items.
     # Default is None which means keep crafting forever.

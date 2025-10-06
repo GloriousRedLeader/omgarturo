@@ -34,7 +34,7 @@ run_craft_loop(
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
     #recipeName = "leather leggings",
-    recipeName = "Gate Travel",
+    recipeName = "bola",
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
@@ -43,7 +43,7 @@ run_craft_loop(
     craftContainer = 0x406766F0,
     
     # Stash a bunch of tools in here and let it rip. Serial of container.
-    toolContainer = 0x4042E100,
+    toolContainer = 0x4007BD18,
     
     # Serial of regular container / commodity deed box (not a special resource box like insaneuo).
     # Fill this with ingots, reagents, etc. Use the run_restocker() function to help fill it up.
@@ -53,14 +53,14 @@ run_craft_loop(
     # Plop a container down, secure it, grab the serial, and plug it into this array.
     # Script will attempt to move items that DO meet filters after every craft attempt.
     # This is slow and should be optimized later based on weight.
-    keepContainers = [0x4086CA21],
+    keepContainers = [0x400B9635],
     
     # Serial of a container to dump trash in. This is where we put all
     # crafted items that are to be discarded (perhaps not enough resists, see filters).
     # I think you can use a trash bin. Maybe place on next to you.
     # "I wish to place a trash barrel"
     # Script will attempt to move items that do not meet filters after every craft attempt.
-    trashContainer = 0x401DEA04,
+    trashContainer = 0x402F043A,
     
     # (Optional) A number that marks the upper limit on crafted items.
     # Default is None which means keep crafting forever.

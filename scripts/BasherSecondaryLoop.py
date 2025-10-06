@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-06
 # Use at your own risk.
 
 # ##########################################################
@@ -872,7 +872,7 @@ run_dex_loop (
     
     # Bandage self. Requires healing skill and bandages in top level of pack.
     # 0 = Disabled, 1 = Enabled
-    useBandagesOnSelf = 1,
+    useBandagesOnSelf = 0,
     
     # Only heal things that are below this percent HP
     healThreshold = 0.95,

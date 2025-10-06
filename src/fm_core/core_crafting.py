@@ -21,6 +21,7 @@ from Scripts.omgarturo.src.fm_core.core_items import BOARD_STATIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import CLOTH_STATIC_ID 
 from Scripts.omgarturo.src.fm_core.core_items import LEATHER_STATIC_ID 
 from Scripts.omgarturo.src.fm_core.core_items import EMPTY_BOTTLE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import BOLA_BALLS_STATIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import BONE
 from Scripts.omgarturo.src.fm_core.core_items import UNMARKED_RUNE
 from Scripts.omgarturo.src.fm_core.core_items import GATE_SCROLL
@@ -326,6 +327,7 @@ class SmallBodResource:
         if self.resourceId in [STAR_SAPPHIRE, CITRINE, TURQUOISE, DIAMOND, AMBER, AMETHYST, SAPPHIRE, RUBY, EMERALD, TOURMALINE]:
             return self.amount * 50      
             
+        print("Returning omg ", self.amount)
         return self.amount
         
     def __str__(self):
@@ -650,7 +652,7 @@ RECIPES = [
     SmallBodRecipe(False, "sextant parts", CAT_TINKERING_PARTS, 30, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "barrel hoops", CAT_TINKERING_PARTS, 37, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 5)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "bola balls", CAT_TINKERING_PARTS, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID, 10)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 58, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 65, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_PARTS, 72, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
@@ -712,7 +714,7 @@ RECIPES = [
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 23, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 30, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 37, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
-    SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
+    SmallBodRecipe(False, "bola", CAT_TINKERING_ASSEMBLIES, 44, TINKERING_TOOL_STATIC_ID, [SmallBodResource(LEATHER_STATIC_ID, 3), SmallBodResource(BOLA_BALLS_STATIC_ID, 4)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 51, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 58, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),
     SmallBodRecipe(False, "00000000000", CAT_TINKERING_ASSEMBLIES, 65, TINKERING_TOOL_STATIC_ID, [SmallBodResource(INGOT_STATIC_ID)] ),

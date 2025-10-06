@@ -21,6 +21,7 @@ HOW_OFTEN_TO_PING_MS = 5000
 STRINGS_TO_LOOK_FOR = [
     "The Master of the Hunt has",
     "You sense a dark presence",
+    "headless horseman",
     #"a putrid steed",
     #"a venom steed",
     #"an inferno steed",
@@ -29,11 +30,6 @@ STRINGS_TO_LOOK_FOR = [
     #"a void steed",
     #"a glacial steed",
     #"an ice steed"
-    
-    
-    
-    
-    
 ]
 
 Timer.Create( 'journalAlertPingTimer', 1 )
