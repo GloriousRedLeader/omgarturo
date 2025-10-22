@@ -74,7 +74,7 @@ def cut_leather(scissors, leatherContainerSerial):
         Items.UseItem(scissors)
         Target.WaitForTarget(3000)
         Target.TargetExecute(hides)
-        Misc.Pause(650)
+        Misc.Pause(100)
 
 while True:
     skin = Items.Filter()

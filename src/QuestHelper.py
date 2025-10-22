@@ -125,6 +125,7 @@ def collector_quest(stop, interval):
             "a blackthorn juggernaut",
             "a gazer",
             "a giant beetle",
+            "a giant black widow",
             "a juggernaut",
             "a juka mage",
             "a juka warrior",
