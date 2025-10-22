@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-06
+#   2025-10-22
 # Use at your own risk.
 
 # ##########################################################
@@ -27,7 +27,7 @@ HOW_OFTEN_TO_PING_MS = 5000
 STRINGS_TO_LOOK_FOR = [
     "The Master of the Hunt has",
     "You sense a dark presence",
-    "headless horseman",
+    "Headless Horseman",
     #"a putrid steed",
     #"a venom steed",
     #"an inferno steed",

@@ -58,12 +58,12 @@ QUESTS = [
     [ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
     [ "The Puffy Shirt", "fancy shirt", FANCY_SHIRT_GRAPHIC_ID ],
     [ "Hâute Couture", "flower garland", FLOWER_GARLAND_GRAPHIC_ID ],
+    #[ "From the Gaultier Collection", "studded bustier", STUDDED_BUSTIER_GRAPHIC_ID ],
     
     # Bark Weaver
     [ "Stop Harping on Me", "lap harp", LAP_HARP_GRAPHIC_ID ],
     
     # Trinket weaver
-    [ "From the Gaultier Collection", "studded bustier", STUDDED_BUSTIER_GRAPHIC_ID ],
     [ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ],
     [ "Arch Support", "foot stool", FOOT_STOOL_GRAPHIC_ID ]
 ]

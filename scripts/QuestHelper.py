@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-24
+#   2025-10-22
 # Use at your own risk.
 
 # ##########################################################
@@ -223,6 +223,9 @@ def collector_quest(stop, interval):
             "a betrayer", 
             "a bogling",
             "a bog thing",
+            "a blackthorn juggernaut",
+            "a gazer",
+            "a giant beetle",
             "a juggernaut",
             "a juka mage",
             "a juka warrior",

@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-30
+#   2025-10-17
 # Use at your own risk.
 
 # ##########################################################
@@ -102,6 +102,8 @@ hythloth_3 = [[6093, 155], [6101, 155], [6106, 161], [6106, 170], [6096, 170], [
 hythloth_4 = []
 
 ilsh_gold_farm_2 = [[2176, 1230], [2176, 1229], [2175, 1230], [2176, 1229]]
+
+ilsh_gold_farm_outer_edge = [[2180, 1226], [2178, 1225], [2176, 1225], [2175, 1227], [2173, 1228], [2173, 1229], [2173, 1231], [2175, 1232], [2177, 1232], [2179, 1232], [2180, 1231], [2181, 1229], [2180, 1228], [2179, 1228]]
 
 new_haven_noob_dungeon = [[5918, 352], [5916, 344], [5912, 340], [5908, 336], [5909, 333], [5909, 322], [5909, 312], [5909, 307], [5909, 303], [5910, 299], [5913, 297], [5916, 290], [5916, 286], [5922, 283], [5928, 283], [5932, 283], [5932, 279], [5935, 279], [5939, 278], [5944, 278], [5954, 278], [5957, 277], [5962, 277], [5970, 278], [5976, 284], [5980, 283], [5986, 288], [5989, 296], [5993, 301], [5994, 310], [5992, 313], [5992, 317], [5993, 319], [5994, 323], [5994, 329], [5994, 338], [5991, 338], [5988, 342], [5988, 342], [5988, 352], [5978, 356], [5970, 359], [5970, 359], [5967, 362], [5959, 362], [5948, 362], [5943, 362], [5938, 362], [5934, 362], [5930, 357], [5924, 353], [5917, 353]]
 
@@ -285,7 +287,7 @@ def run_rail_loop(
 # #  inlined and should not be modified.                   #
 # ##########################################################
 
-Player.HeadMessage(48, "Starting Rail Loop 1")
+Player.HeadMessage(48, "Starting Rail Loop 2")
 
 # Runs a route based on a list of [x, y] coordinates. Will run it repeatadly.
 # It is recommended to make those routes a loop that start and end at or
@@ -300,7 +302,7 @@ run_rail_loop(
     # You can generate your own using the rails tool. Its easy. Just load up the script RailRecorder.py
     # and start adding points. Walk to a location, click add point. When youre done hit save. Open the file. It 
     # will contain a list of coordinates you can paste here. Your character will walk around like an idiot.
-    path = ilsh_gold_farm_2,
+    path = ilsh_gold_farm_outer_edge,
 
     # (Optional) Number of tiles to scan for nearby monsters. If you set this too high it will
     # try to find monsters through walls and in other maps and waste time.
@@ -312,12 +314,12 @@ run_rail_loop(
     
     # (Optional) Give a little extra time to loot when a monster dies. This is useful. A nice value
     # is about 2 seconds.
-    autoLootBufferMs = 2000,
+    autoLootBufferMs = 10000,
     
     # (Optional) When a mob is found, your character will move right on top of it. This value governs
     # whether you should stop tileOffset tiles before it. This is useful for casters or anyone who 
     # doesnt wish to be directly on top of a mobile.
     # A value of 0 (default) means land right on the target x, y. Positive value means stop 
     # short of the provided x, y by that many tiles. 
-    tileOffset = 0 
+    tileOffset = 5 
 )

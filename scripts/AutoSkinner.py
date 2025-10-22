@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-06
+#   2025-10-22
 # Use at your own risk.
 
 # ##########################################################
@@ -80,14 +80,14 @@ while True:
     skin = Items.Filter()
     skin.Enabled = True
     skin.RangeMin = 0
-    skin.RangeMax = 1
+    skin.RangeMax = 2
     skin.IsCorpse = True
     corpses = Items.ApplyFilter(skin)
     for corpse in corpses:
         Items.UseItem(dagger)
         Target.WaitForTarget(3000)
         Target.TargetExecute(corpse)
-        Misc.Pause(650)
+        Misc.Pause(100)
         hides = Items.FindByID(PILE_OF_HIDES_STATIC_ID, -1, corpse.Serial, 0)
         if hides is not None and hides.Hue != 0x0000:
             Items.Move(hides, leatherContainerSerial, hides.Amount)

@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-10-17
 # Use at your own risk.
 
 # ##########################################################
@@ -337,7 +337,7 @@ run_mining_loop(
     # you wish to discard. It will drop them at your feet. It is a common case where you may not care
     # about the basic iron ingots (RESOURCE_HUE_DEFAULT), so remove that from the list if you only
     # want special ingots.
-    keepItemHues = [RESOURCE_HUE_DULL_COPPER, RESOURCE_HUE_SHADOW_IRON, RESOURCE_HUE_COPPER, RESOURCE_HUE_BRONZE, RESOURCE_HUE_GOLD, RESOURCE_HUE_AGAPITE, RESOURCE_HUE_VERITE, RESOURCE_HUE_VALORITE],
+    keepItemHues = [RESOURCE_HUE_DEFAULT, RESOURCE_HUE_DULL_COPPER, RESOURCE_HUE_SHADOW_IRON, RESOURCE_HUE_COPPER, RESOURCE_HUE_BRONZE, RESOURCE_HUE_GOLD, RESOURCE_HUE_AGAPITE, RESOURCE_HUE_VERITE, RESOURCE_HUE_VALORITE],
 
     # (Optional) The mobile ID of your pack animal. NOT the Serial. Defaults to blue beetle.
     packAnimalMobileId = BLUE_BEETLE_MOBILE_ID,       
