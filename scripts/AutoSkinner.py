@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-22
+#   2025-10-23
 # Use at your own risk.
 
 # ##########################################################
@@ -72,7 +72,7 @@ def cut_leather(scissors, leatherContainerSerial):
     hides = Items.FindByID(PILE_OF_HIDES_STATIC_ID, -1, leatherContainerSerial, 0)
     if hides is not None:
         Items.UseItem(scissors)
-        Target.WaitForTarget(3000)
+        Target.WaitForTarget(1000)
         Target.TargetExecute(hides)
         Misc.Pause(100)
 
@@ -85,7 +85,7 @@ while True:
     corpses = Items.ApplyFilter(skin)
     for corpse in corpses:
         Items.UseItem(dagger)
-        Target.WaitForTarget(3000)
+        Target.WaitForTarget(1000)
         Target.TargetExecute(corpse)
         Misc.Pause(100)
         hides = Items.FindByID(PILE_OF_HIDES_STATIC_ID, -1, corpse.Serial, 0)

@@ -61,11 +61,11 @@ QUESTS = [
     #[ "From the Gaultier Collection", "studded bustier", STUDDED_BUSTIER_GRAPHIC_ID ],
     
     # Bark Weaver
-    [ "Stop Harping on Me", "lap harp", LAP_HARP_GRAPHIC_ID ],
+    #[ "Stop Harping on Me", "lap harp", LAP_HARP_GRAPHIC_ID ],
     
     # Trinket weaver
-    [ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ],
-    [ "Arch Support", "foot stool", FOOT_STOOL_GRAPHIC_ID ]
+    [ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ]
+    #[ "Arch Support", "foot stool", FOOT_STOOL_GRAPHIC_ID ]
 ]
 
 # Shouldnt have to touch this. This is crap like "Bob the builder" so
@@ -93,7 +93,11 @@ def get_quest_details(gumpText):
     
 # Extra parsing needed for the quantity of items to craft
 def get_quest_amount(gumpText):
-    pattern = r"(\d+)\s+{}s".format(re.escape(questItemName))
+    #print("*********")
+    #print(gumpText)
+    #print("*********")
+    #pattern = r"(\d+)\s+{}s".format(re.escape(questItemName))
+    pattern = r"(\d+)\s+{}s?".format(re.escape(questItemName))
     match = re.search(pattern, gumpText)
     if match:
         return int(match.groups()[0])
