@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-23
+#   2025-10-27
 # Use at your own risk.
 
 # ##########################################################
@@ -1121,28 +1121,33 @@ TOOL_CONTAINER_SERIAL = pets[0].Backpack.Serial
 
 # Configure quests you want to do. All quests in this list will be accepted.
 QUESTS = [
-    # Metal Weaver
+    # Metal Weaver - just need iron ingots
     [ "Cuts Both Ways", "broadsword", BROADSWORD_GRAPHIC_ID ],
     [ "The Bulwark", "heater shield", HEATER_SHIELD_GRAPHIC_ID ],
     [ "Nothing Fancy", "bascinet", BASCINET_GRAPHIC_ID ],
     
     # Cloth Weaver
-    [ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
-    [ "The Puffy Shirt", "fancy shirt", FANCY_SHIRT_GRAPHIC_ID ],
-    [ "Hâute Couture", "flower garland", FLOWER_GARLAND_GRAPHIC_ID ],
+    #[ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
+    #[ "The Puffy Shirt", "fancy shirt", FANCY_SHIRT_GRAPHIC_ID ],
+    #[ "Hâute Couture", "flower garland", FLOWER_GARLAND_GRAPHIC_ID ],
     #[ "From the Gaultier Collection", "studded bustier", STUDDED_BUSTIER_GRAPHIC_ID ],
     
     # Bark Weaver
     #[ "Stop Harping on Me", "lap harp", LAP_HARP_GRAPHIC_ID ],
     
     # Trinket weaver
-    [ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ]
+    #[ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ]
     #[ "Arch Support", "foot stool", FOOT_STOOL_GRAPHIC_ID ]
+    
+    # Grape Tender
+    # Message in a bottle quest doesnt craft anything. Just put a lot of bottles
+    # in your beetle.
+    #[ "Message in a Bottle", "empty bottle", EMPTY_BOTTLE_STATIC_ID ]
 ]
 
 # Shouldnt have to touch this. This is crap like "Bob the builder" so
 # the script knows which NPCs have heartwood quests.
-ALLOWED_SUFFIXES = ["metal weaver", "cloth weaver", "bark weaver", "trinket weaver"]
+ALLOWED_SUFFIXES = ["metal weaver", "cloth weaver", "bark weaver", "trinket weaver", "grape tender"]
 
 QUEST_GUMP_ID = 0x4c4c6db0
 
@@ -1209,50 +1214,96 @@ while True:
                     
                     Misc.Pause(3000)
                     
-                    craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
-                    amountToMake = amountNeeded - len(craftedItems) + 1
-                    print("Amount we already have in backpack: ", len(craftedItems))
-                    print("Net amount needed: ", amountToMake)
-                    if amountToMake > 0:
-                        run_craft_loop(
-                            recipeName = questItemName,
-                            craftContainer = CRAFT_CONTAINER_SERIAL,
-                            toolContainer = TOOL_CONTAINER_SERIAL, # Bag inside beetle
-                            resourceContainer = RESOURCE_CONTAINER_SERIAL, 
-                            keepContainers = [KEEP_CONTAINER_SERIAL],
-                            trashContainer = None,
-                            maxItemsToCraft = amountToMake, 
-                            specialMaterialHue = None,
-                            itemMoveDelayMs = 750,
-                            gumpDelayMs = 750,
-                            minPhysicalResist = None,
-                            maxPhysicalResist = None,
-                            minFireResist = None,
-                            maxFireResist = None,
-                            minColdResist = None,
-                            maxColdResist = None,
-                            minPoisonResist = None,
-                            maxPoisonResist = None,
-                            minEnergyResist = None,
-                            maxEnergyResist = None
-                        )
                     
+                    
+                    # Dont craft bottles, just turn them in.
+                    # Put a bunch in your beetle.
+                    if questItemGraphic == EMPTY_BOTTLE_STATIC_ID:
+                        print("bottlequest")
+                        
+                        Items.UseItem(RESOURCE_CONTAINER_SERIAL)
+                        Misc.Pause(650)
+                        Items.UseItem(KEEP_CONTAINER_SERIAL)
+                        Misc.Pause(650)
+                        Items.UseItem(CRAFT_CONTAINER_SERIAL)
+                        Misc.Pause(650)
+                        
+                        craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
+                        amountWeHave = sum(craftedItem.Amount for craftedItem in craftedItems)
+                        
+                        if amountWeHave < amountNeeded:
+                            emptyBottles = Items.FindByID(questItemGraphic,0,RESOURCE_CONTAINER_SERIAL,0)
+                            if emptyBottles is None:
+                                print("Not enough ", questItemName)
+                                sys.exit()
+                            Items.Move(emptyBottles,KEEP_CONTAINER_SERIAL, amountNeeded - amountWeHave)
+                            Misc.Pause(1500)
+                            
+                        print("Toggling quest items")
+                        Misc.WaitForContext(Player.Serial, 10000)
+                        Misc.ContextReply(Player.Serial, 7)
+                        finalAmountWeHave = 0
+                        craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
+                        for craftedItem in craftedItems:
+                            finalAmountWeHave = finalAmountWeHave + craftedItem.Amount
+                            Target.WaitForTarget(10000, False)
+                            Target.TargetExecute(craftedItem.Serial)
+                            Misc.Pause(250)
+                        Target.Cancel()
+                        
+                        if finalAmountWeHave < amountNeeded:
+                            print("Not enough ", questItemName)
+                            sys.exit()
+                        
+                    else:
+                    
+                    
+                    
+                        craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
+                        amountToMake = amountNeeded - len(craftedItems) + 1
+                        print("Amount we already have in backpack: ", len(craftedItems))
+                        print("Net amount needed: ", amountToMake)
+                        if amountToMake > 0:
+                            run_craft_loop(
+                                recipeName = questItemName,
+                                craftContainer = CRAFT_CONTAINER_SERIAL,
+                                toolContainer = TOOL_CONTAINER_SERIAL, # Bag inside beetle
+                                resourceContainer = RESOURCE_CONTAINER_SERIAL, 
+                                keepContainers = [KEEP_CONTAINER_SERIAL],
+                                trashContainer = None,
+                                maxItemsToCraft = amountToMake, 
+                                specialMaterialHue = None,
+                                itemMoveDelayMs = 750,
+                                gumpDelayMs = 750,
+                                minPhysicalResist = None,
+                                maxPhysicalResist = None,
+                                minFireResist = None,
+                                maxFireResist = None,
+                                minColdResist = None,
+                                maxColdResist = None,
+                                minPoisonResist = None,
+                                maxPoisonResist = None,
+                                minEnergyResist = None,
+                                maxEnergyResist = None
+                            )
+                        
 
-                    print("Toggling quest items")
-                    Misc.WaitForContext(0x000E0EDD, 10000)
-                    Misc.ContextReply(0x000E0EDD, 7)
-                    craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
-                    for craftedItem in craftedItems:
-                        Target.WaitForTarget(10000, False)
-                        Target.TargetExecute(craftedItem.Serial)
-                        Misc.Pause(250)
-                    Target.Cancel()
-                    
-                    craftedItems = Items.FindAllByID(questItemGraphic, QUEST_ITEM_HUE, KEEP_CONTAINER_SERIAL, 0)
-                    if len(craftedItems) < amountNeeded:
-                        print("We only have ", len(craftedItems), " but we need ", amountNeeded)
-                        sys.exit()
-                    
+                        # 0x000E0EDD
+                        print("Toggling quest items")
+                        Misc.WaitForContext(Player.Serial, 10000)
+                        Misc.ContextReply(Player.Serial, 7)
+                        craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
+                        for craftedItem in craftedItems:
+                            Target.WaitForTarget(10000, False)
+                            Target.TargetExecute(craftedItem.Serial)
+                            Misc.Pause(250)
+                        Target.Cancel()
+                        
+                        craftedItems = Items.FindAllByID(questItemGraphic, QUEST_ITEM_HUE, KEEP_CONTAINER_SERIAL, 0)
+                        if len(craftedItems) < amountNeeded:
+                            print("We only have ", len(craftedItems), " but we need ", amountNeeded)
+                            sys.exit()
+                        
                     print("Turning in quest")                
                     Misc.Pause(3000)
                     Mobiles.UseMobile(npc)

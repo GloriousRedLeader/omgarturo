@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-17
+#   2025-10-27
 # Use at your own risk.
 
 # ##########################################################
@@ -1045,7 +1045,7 @@ run_craft_loop(
     # array. Just grab the item name from that and plug it in here. If the recipe youre looking
     # for doesnt exist, then youre boned.
     #recipeName = "leather leggings",
-    recipeName = "Greater Heal potion",
+    recipeName = "bola",
 
     # Serial of container to do work in. This container must be placed in your backpack. 
     # Get its serial and fill it in here. You *could* use your backpack, but your risk losing
