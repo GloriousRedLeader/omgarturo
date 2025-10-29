@@ -20,6 +20,8 @@ from Scripts.omgarturo.src.fm_core.core_items import SPYGLASS_GRAPHIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import FOOT_STOOL_GRAPHIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import BROADSWORD_GRAPHIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import EMPTY_BOTTLE_STATIC_ID
+from System.Collections.Generic import List
+from System import Byte, Int32
 import re
 import sys
 
@@ -51,9 +53,9 @@ TOOL_CONTAINER_SERIAL = pets[0].Backpack.Serial
 # Configure quests you want to do. All quests in this list will be accepted.
 QUESTS = [
     # Metal Weaver - just need iron ingots
-    [ "Cuts Both Ways", "broadsword", BROADSWORD_GRAPHIC_ID ],
-    [ "The Bulwark", "heater shield", HEATER_SHIELD_GRAPHIC_ID ],
-    [ "Nothing Fancy", "bascinet", BASCINET_GRAPHIC_ID ],
+    #[ "Cuts Both Ways", "broadsword", BROADSWORD_GRAPHIC_ID ],
+    #[ "The Bulwark", "heater shield", HEATER_SHIELD_GRAPHIC_ID ],
+    #[ "Nothing Fancy", "bascinet", BASCINET_GRAPHIC_ID ],
     
     # Cloth Weaver
     #[ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
@@ -68,10 +70,10 @@ QUESTS = [
     #[ "The Far Eye", "spyglass", SPYGLASS_GRAPHIC_ID ]
     #[ "Arch Support", "foot stool", FOOT_STOOL_GRAPHIC_ID ]
     
-    # Grape Tender
+    # Grape Tender - Scrappers compendium, pendant of the magi
     # Message in a bottle quest doesnt craft anything. Just put a lot of bottles
     # in your beetle.
-    #[ "Message in a Bottle", "empty bottle", EMPTY_BOTTLE_STATIC_ID ]
+    [ "Message in a Bottle", "empty bottle", EMPTY_BOTTLE_STATIC_ID ]
 ]
 
 # Shouldnt have to touch this. This is crap like "Bob the builder" so
@@ -79,6 +81,7 @@ QUESTS = [
 ALLOWED_SUFFIXES = ["metal weaver", "cloth weaver", "bark weaver", "trinket weaver", "grape tender"]
 
 QUEST_GUMP_ID = 0x4c4c6db0
+
 
 QUEST_ITEM_HUE = 0x04EA
 
@@ -107,6 +110,37 @@ def get_quest_amount(gumpText):
     match = re.search(pattern, gumpText)
     if match:
         return int(match.groups()[0])
+        
+        
+# Cancel all quests that currently active
+Gumps.CloseGump(QUEST_GUMP_ID)
+Player.QuestButton()
+Gumps.WaitForGump(QUEST_GUMP_ID, 3500) 
+
+if Gumps.LastGumpTextExist("Quest Log"):
+    gumpText = Gumps.GetGumpText(QUEST_GUMP_ID)
+    
+    questButtonId = len(gumpText) + 10
+    for g in gumpText:
+        print("Checking ", questButtonId, " ", g)
+        for q in QUESTS:
+            if q[0] == g:
+                print("\tShould abandon quest ", q[0], g)
+                Gumps.SendAction(QUEST_GUMP_ID, questButtonId)
+                Gumps.WaitForGump(QUEST_GUMP_ID, 3500) 
+                Gumps.SendAction(QUEST_GUMP_ID, 3)
+                
+                # Confirm Quest Cancelleation
+                Gumps.WaitForGump(0x135b22a4, 3500) 
+                inSwitches = List[Int32]([1])
+                Gumps.SendAdvancedAction(0x135b22a4, 1, inSwitches)
+                Misc.Pause(1000)
+                
+                Gumps.WaitForGump(QUEST_GUMP_ID,3500)
+                 
+        questButtonId = questButtonId - 1
+    
+
 
 while True:
     npcs = get_yellows_in_range(range = 8)
@@ -138,6 +172,9 @@ while True:
                     print("Quest: ", questName)
                     print("Item: ", questItemName)
                     #amountToMake = int(match.groups()[0])
+                    
+                    
+                    
                     print("Amount: ", amountNeeded)
                     Gumps.SendAction(QUEST_GUMP_ID, 4)
                     
@@ -159,12 +196,15 @@ while True:
                         
                         craftedItems = Items.FindAllByID(questItemGraphic, 0, KEEP_CONTAINER_SERIAL, 0)
                         amountWeHave = sum(craftedItem.Amount for craftedItem in craftedItems)
+                        print("amountWeHave: ", amountWeHave)
+                        print("amountNeeded: ", amountNeeded)
                         
                         if amountWeHave < amountNeeded:
                             emptyBottles = Items.FindByID(questItemGraphic,0,RESOURCE_CONTAINER_SERIAL,0)
                             if emptyBottles is None:
                                 print("Not enough ", questItemName)
                                 sys.exit()
+                            print("transferring ", ( amountNeeded - amountWeHave))
                             Items.Move(emptyBottles,KEEP_CONTAINER_SERIAL, amountNeeded - amountWeHave)
                             Misc.Pause(1500)
                             
