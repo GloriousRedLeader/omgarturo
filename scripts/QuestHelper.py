@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-22
+#   2025-11-03
 # Use at your own risk.
 
 # ##########################################################
@@ -46,7 +46,8 @@ ANIMATE_DEAD_MOBILE_NAMES = [
     "a putrid undead gargoyle",
     "a blade spirit",
     "an energy vortex",
-    "a skeletal drake"
+    "a skeletal drake",
+    "a reaper"
 ]
 
 BOW_GRAPHIC_ID = 0x13B2

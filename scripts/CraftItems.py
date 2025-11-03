@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-27
+#   2025-11-03
 # Use at your own risk.
 
 # ##########################################################
@@ -719,15 +719,15 @@ RECIPES = [
     SmallBodRecipe(True,"cherry armoire", CAT_CARPENTRY_CONTAINERS, 128, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     
     SmallBodRecipe(True, "shepherd's crook", CAT_CARPENTRY_WEAPONS, 2, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ), #'
-    SmallBodRecipe(True, "quarter sta", CAT_CARPENTRY_WEAPONS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "gnarled sta", CAT_CARPENTRY_WEAPONS, 16, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "quarter staff", CAT_CARPENTRY_WEAPONS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "gnarled staff", CAT_CARPENTRY_WEAPONS, 16, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "bokuto", CAT_CARPENTRY_WEAPONS, 23, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
     SmallBodRecipe(True, "tetsubo", CAT_CARPENTRY_WEAPONS, 37, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "wild sta", CAT_CARPENTRY_WEAPONS, 44, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
-    SmallBodRecipe(True, "arcanist's wild sta", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # '
-    SmallBodRecipe(True, "ancient wild sta", CAT_CARPENTRY_WEAPONS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(PERFECT_EMERALD, 1) ] ),
-    SmallBodRecipe(True, "thorned wild sta", CAT_CARPENTRY_WEAPONS, 72, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(FIRE_RUBY, 1) ] ),
-    SmallBodRecipe(True, "hardened wild sta", CAT_CARPENTRY_WEAPONS, 79, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(TURQUOISE, 1) ] ),
+    SmallBodRecipe(True, "wild staff", CAT_CARPENTRY_WEAPONS, 44, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID)] ),
+    SmallBodRecipe(True, "arcanist's wild staff", CAT_CARPENTRY_WEAPONS, 58, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(WHITE_PEARL, 1)] ), # '
+    SmallBodRecipe(True, "ancient wild staff", CAT_CARPENTRY_WEAPONS, 65, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(PERFECT_EMERALD, 1) ] ),
+    SmallBodRecipe(True, "thorned wild staff", CAT_CARPENTRY_WEAPONS, 72, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(FIRE_RUBY, 1) ] ),
+    SmallBodRecipe(True, "hardened wild staff", CAT_CARPENTRY_WEAPONS, 79, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID), SmallBodResource(TURQUOISE, 1) ] ),
     
     SmallBodRecipe(True, "lap harp", CAT_CARPENTRY_INSTRUMENTS, 2, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID, 20), SmallBodResource(CLOTH_STATIC_ID, 10) ] ),
     SmallBodRecipe(True, "standing harp", CAT_CARPENTRY_INSTRUMENTS, 9, CARPENTRY_TOOL_STATIC_ID, [SmallBodResource(BOARD_STATIC_ID, 35), SmallBodResource(CLOTH_STATIC_ID, 15) ] ),

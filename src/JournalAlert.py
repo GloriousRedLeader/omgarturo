@@ -22,6 +22,7 @@ STRINGS_TO_LOOK_FOR = [
     "The Master of the Hunt has",
     "You sense a dark presence",
     "Headless Horseman",
+    "Coil",
     #"a putrid steed",
     #"a venom steed",
     #"an inferno steed",

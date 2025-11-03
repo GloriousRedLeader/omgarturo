@@ -35,7 +35,8 @@ ANIMATE_DEAD_MOBILE_NAMES = [
     "a putrid undead gargoyle",
     "a blade spirit",
     "an energy vortex",
-    "a skeletal drake"
+    "a skeletal drake",
+    "a reaper"
 ]
 
 # This was taken from the lumberjack script written by Credzba

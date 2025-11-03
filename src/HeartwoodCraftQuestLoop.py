@@ -172,15 +172,11 @@ while True:
                     print("Quest: ", questName)
                     print("Item: ", questItemName)
                     #amountToMake = int(match.groups()[0])
-                    
-                    
-                    
+
                     print("Amount: ", amountNeeded)
                     Gumps.SendAction(QUEST_GUMP_ID, 4)
                     
                     Misc.Pause(3000)
-                    
-                    
                     
                     # Dont craft bottles, just turn them in.
                     # Put a bunch in your beetle.

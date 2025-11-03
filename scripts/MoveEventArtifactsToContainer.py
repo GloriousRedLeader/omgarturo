@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-02
+#   2025-11-03
 # Use at your own risk.
 
 # ##########################################################
@@ -48,6 +48,7 @@ ITEMS_TO_MOVE = [
     [ "of doom", 0x40DC1238],
     [ "of minax", 0x4004BF76],
     [ "fellowship insignia", 0x400E1D0C],
+    [ "of the shogun", 0x4004BF75 ],
     
 ]
 
