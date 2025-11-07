@@ -327,7 +327,6 @@ class SmallBodResource:
         if self.resourceId in [STAR_SAPPHIRE, CITRINE, TURQUOISE, DIAMOND, AMBER, AMETHYST, SAPPHIRE, RUBY, EMERALD, TOURMALINE]:
             return self.amount * 50      
             
-        print("Returning omg ", self.amount)
         return self.amount
         
     def __str__(self):

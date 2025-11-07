@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-03
+#   2025-11-07
 # Use at your own risk.
 
 # ##########################################################
@@ -52,7 +52,7 @@ ANIMATE_DEAD_MOBILE_NAMES = [
 
 BOW_GRAPHIC_ID = 0x13B2
 
-CARRONADE_GRAPHIC_ID = 0x421D
+CARRONADE_GRAPHIC_ID = 0x421B
 
 DRYDOCK_SHIP_GRAPHIC_ID = 0x14F4
 
@@ -71,6 +71,8 @@ SERPENT_NEST_STATIC_ID = 0x2233
 SILVER_SERPENT_MOBILE_ID = 0x005C
 
 SNAKE_CHARMER_FLUTE_STATIC_ID = 0x2805
+
+SOME_CANNON_FILL_ME_IN_GRAPHIC_ID = 0x421D
 
 def get_corpses(range = 2):
     filter = Items.Filter()
@@ -91,7 +93,7 @@ def get_yellows_in_range(range = 8):
 
     return mobs
 
-CANNON_GRAPHIC_IDS = [CARRONADE_GRAPHIC_ID]
+CANNON_GRAPHIC_IDS = [CARRONADE_GRAPHIC_ID, SOME_CANNON_FILL_ME_IN_GRAPHIC_ID]
 
 def get_enemies(range = 10, serialsToExclude = []):
     fil = Mobiles.Filter()

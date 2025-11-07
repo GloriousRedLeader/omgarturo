@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-05
+#   2025-11-07
 # Use at your own risk.
 
 # ##########################################################
@@ -501,7 +501,6 @@ class SmallBodResource:
         if self.resourceId in [STAR_SAPPHIRE, CITRINE, TURQUOISE, DIAMOND, AMBER, AMETHYST, SAPPHIRE, RUBY, EMERALD, TOURMALINE]:
             return self.amount * 50      
             
-        print("Returning omg ", self.amount)
         return self.amount
         
     def __str__(self):

@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-03
+#   2025-11-07
 # Use at your own risk.
 
 # ##########################################################
@@ -1307,7 +1307,7 @@ run_mage_loop(
     
     # Will use shadow word death on eligible targets until they die. This is more of a toggle.
     # 0 = disabled, 1 = enabled
-    useWordOfDeath = 1,
+    useWordOfDeath = 0,
     
     # Whether to use this spell 0 = disabled, 1 = enabled
     useWildfire = 1,
