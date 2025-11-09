@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-03
+#   2025-11-08
 # Use at your own risk.
 
 # ##########################################################
@@ -251,6 +251,7 @@ TRASH_NAMES = [
     "Alchemist's Bauble", #'
     "Night's Kiss", #'
     "Bow of the Juka King",
+    "Essence of Wind",
 ]
 
 Timer.Create( 'pingTimer', 1 )

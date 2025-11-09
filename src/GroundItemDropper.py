@@ -72,6 +72,7 @@ TRASH_NAMES = [
     "Alchemist's Bauble", #'
     "Night's Kiss", #'
     "Bow of the Juka King",
+    "Essence of Wind",
 ]
 
 Timer.Create( 'pingTimer', 1 )
