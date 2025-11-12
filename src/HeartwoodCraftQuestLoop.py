@@ -58,7 +58,7 @@ QUESTS = [
     #[ "Nothing Fancy", "bascinet", BASCINET_GRAPHIC_ID ],
     
     # Cloth Weaver
-    #[ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
+    [ "The King of Clothing", "kilt", KILT_GRAPHIC_ID ],
     #[ "The Puffy Shirt", "fancy shirt", FANCY_SHIRT_GRAPHIC_ID ],
     #[ "Hâute Couture", "flower garland", FLOWER_GARLAND_GRAPHIC_ID ],
     #[ "From the Gaultier Collection", "studded bustier", STUDDED_BUSTIER_GRAPHIC_ID ],
@@ -73,7 +73,7 @@ QUESTS = [
     # Grape Tender - Scrappers compendium, pendant of the magi
     # Message in a bottle quest doesnt craft anything. Just put a lot of bottles
     # in your beetle.
-    [ "Message in a Bottle", "empty bottle", EMPTY_BOTTLE_STATIC_ID ]
+    #[ "Message in a Bottle", "empty bottle", EMPTY_BOTTLE_STATIC_ID ]
 ]
 
 # Shouldnt have to touch this. This is crap like "Bob the builder" so
