@@ -97,6 +97,7 @@ A [CraftItems](https://github.com/GloriousRedLeader/omgarturo/blob/master/script
 * [Move all items by type](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/MoveItemsByID.py) from their current container to another container (target item, target destination container)
 * [Move all items by type and color](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/MoveItemsByIDAndColor.py) from their current container to another container, you can use this turn in bods (target item, target destination container)
 * [Move all items](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/MoveAllItemsFromContainer.py) from one container to another container (target source container, target destination container)
+* [Move items from list](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/MoveItemsFromListToContainers.py) from your backpack (and pack animal) to a configured container. Use this to dump items after hunting or resource gathering to a chest on your porch, or a resource container in your workshop. 
 
 [Automated character movement](https://github.com/GloriousRedLeader/omgarturo/blob/master/scripts/RailLoop.py) script that uses the rails framework. Several default routes already established. You can easily add your own, it's just a list of x, y coordinates. Use this in conjunction with dexer / caster loops for maximum farming. For the love of all that is holy, use while you're at your machine supervising. You will get banned.
 
