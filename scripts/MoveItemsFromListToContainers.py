@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-12
+#   2025-11-17
 # Use at your own risk.
 
 # ##########################################################
@@ -97,6 +97,16 @@ ITEMS_TO_MOVE = [
     [ "bark fragment",          BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
     [ "blackrock",              BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
     [ "parasitic plant",        BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "crystal shards",         BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "ecru citrine",           BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "turquoise",              BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "fire ruby",              BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "dark sapphire",          BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "blue diamond",           BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "perfect emerald",        BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "white pearl",            BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "boards",                 BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "toxic venom sac",        BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
 ]
 
 PAUSE_DELAY = 750

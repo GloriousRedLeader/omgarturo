@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-08
+#   2025-11-17
 # Use at your own risk.
 
 # ##########################################################
@@ -231,7 +231,7 @@ TRASH_NAMES = [
     "Gold Bricks",
     "Lord Blackthorn's Exemplar", # '
     "Wrath of the Dryad",
-    "Jaana's Staf", #"
+    "Jaana's Staf", #'
     "Sentinel's Guard", #'
     "a map of the known world",
     "10th Anniversary Sculpture",
@@ -251,7 +251,7 @@ TRASH_NAMES = [
     "Alchemist's Bauble", #'
     "Night's Kiss", #'
     "Bow of the Juka King",
-    "Essence of Wind",
+    "Essence of Wind"
 ]
 
 Timer.Create( 'pingTimer', 1 )

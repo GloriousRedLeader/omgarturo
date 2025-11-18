@@ -12,6 +12,8 @@ from Scripts.omgarturo.src.fm_core.core_items import LEATHER_STATIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import PILE_OF_HIDES_STATIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import SCISSORS_GRAPHIC_ID
 from Scripts.omgarturo.src.fm_core.core_items import GATHERERS_PACK_GRAPHIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import HARVESTERS_BLADE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_rails import get_tile_in_front
 
 # Auto skinner
 # 
@@ -29,7 +31,7 @@ from Scripts.omgarturo.src.fm_core.core_items import GATHERERS_PACK_GRAPHIC_ID
 gatherersPack = Items.FindByID(GATHERERS_PACK_GRAPHIC_ID, -1, Player.Backpack.Serial, 0)
 leatherContainerSerial = gatherersPack.Serial if gatherersPack is not None else Player.Backpack.Serial
    
-dagger = Items.FindByID(DAGGER_STATIC_ID, 0, Player.Backpack.Serial, 0)
+dagger = Items.FindByID(HARVESTERS_BLADE_STATIC_ID, -1, Player.Backpack.Serial, 0)
 if dagger is None:
     print("You should get a dagger")
     sys.exit()
@@ -47,6 +49,11 @@ def cut_leather(scissors, leatherContainerSerial):
         Target.TargetExecute(hides)
         Misc.Pause(100)
 
+# Some extra stuff gets looted like meat
+JUNK_TO_DISCARD = [
+    "cut of raw ribs"
+]
+
 while True:
     skin = Items.Filter()
     skin.Enabled = True
@@ -58,7 +65,9 @@ while True:
         Items.UseItem(dagger)
         Target.WaitForTarget(1000)
         Target.TargetExecute(corpse)
-        Misc.Pause(100)
+        Misc.Pause(250)
+        
+        # Should only happen when using regular dagger
         hides = Items.FindByID(PILE_OF_HIDES_STATIC_ID, -1, corpse.Serial, 0)
         if hides is not None and hides.Hue != 0x0000:
             Items.Move(hides, leatherContainerSerial, hides.Amount)
@@ -67,4 +76,26 @@ while True:
 
     cut_leather(scissors, leatherContainerSerial)
     
+    # When using harvesters blade, leather gets autolooted and added to backpack.
+    # Here is where we can check if there is any cut leather in backpack and move it.
+    leathers = Items.FindAllByID(LEATHER_STATIC_ID, -1, Player.Backpack.Serial, 0)
+    for leather in leathers:
+        if leather.Hue != 0:
+            Items.Move(leather, leatherContainerSerial, leather.Amount)
+            Misc.Pause(650)
+        
+    for item in Player.Backpack.Contains:
+        for junkName in JUNK_TO_DISCARD:
+            if junkName.lower() in item.Name.lower():
+                print("Drop item {}".format(item.Name))
+                x, y, z = get_tile_in_front(distance = 1)
+                Items.MoveOnGround(item.Serial, item.Amount,x,y,z)
+                Misc.Pause(750)
+                break
+        if item.ItemID == LEATHER_STATIC_ID and item.Hue == 0:
+            print("Drop item {}".format(item.Name))
+            x, y, z = get_tile_in_front(distance = 1)
+            Items.MoveOnGround(item.Serial, item.Amount,x,y,z)
+            Misc.Pause(750)
+
     Misc.Pause(250)

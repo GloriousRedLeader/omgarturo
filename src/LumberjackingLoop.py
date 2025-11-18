@@ -26,7 +26,7 @@ run_lumberjacking_loop(
     # (Optional) Makes a square tileRange * tileRange and will search for trees inside of it. So,
     # all you have to do is place yourself near a bunch of trees and hit the hotkey that
     # runs this function.
-    tileRange = 30, 
+    tileRange = 25, 
     
     # (Optional) Flag that will convert the logs into boards. I think you need an axe.
     cutLogsToBoards = True, 
