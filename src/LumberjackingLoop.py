@@ -15,6 +15,9 @@ from Scripts.omgarturo.src.fm_core.core_items import TREE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_gathering import run_lumberjacking_loop
 from Scripts.omgarturo.src.fm_core.core_mobiles import FIRE_BEETLE_MOBILE_ID
 from Scripts.omgarturo.src.fm_core.core_mobiles import BLUE_BEETLE_MOBILE_ID
+from Scripts.omgarturo.src.fm_core.core_items import HARVESTERS_WAR_AXE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import BATTLE_AXE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import BUTCHERS_WAR_CLEAVER_STATIC_ID
 
 #run_lumberjacking_loop(tileRange = 12, weightLimit = 425, cutLogsToBoards = True, dropOnGround = False, packAnimalNames = ["one"])
 
@@ -26,7 +29,14 @@ run_lumberjacking_loop(
     # (Optional) Makes a square tileRange * tileRange and will search for trees inside of it. So,
     # all you have to do is place yourself near a bunch of trees and hit the hotkey that
     # runs this function.
-    tileRange = 25, 
+    tileRange = 15, 
+    
+    # (Optional) Array of GraphicIDs of the tool, this is typically an axe like:
+    # HARVESTERS_WAR_AXE_STATIC_ID (Insane UO)
+    # BUTCHERS_WAR_CLEAVER_STATIC_ID (UO Alive)
+    # BATTLE_AXE_STATIC_ID (regular axe)
+    # Order matters here.
+    toolItemIds = [ HARVESTERS_WAR_AXE_STATIC_ID, BATTLE_AXE_STATIC_ID ],
     
     # (Optional) Flag that will convert the logs into boards. I think you need an axe.
     cutLogsToBoards = True, 
@@ -43,6 +53,15 @@ run_lumberjacking_loop(
     # Ids of static tile graphics that we consider trees. May vary.
     # Default is all the trees I know about.
     treeStaticIds = TREE_STATIC_IDS,
+    
+    # Flag governs whether to abort a node early when a non-matching resource hue is found. 
+    # If a resource is produced whose color is not in keepItemHues, it is dropped to the ground.
+    # Useful if you play on a shard where nodes are pure, e.g. the whole vein is Iron (not Golen).
+    # It is therefore an optimization so you dont waste time on stuff youre just going to discard 
+    # anyway. Default beahavior is off. It will happily hack away.
+    # Note: This isnt sophisticated. It will scan for a resource in your backpack, if it finds one,
+    # then it aborts.
+    abortNodeEarly = True,
     
     # (Optional) Number of miliseconds between item moves typically from one pack to another.
     itemMoveDelayMs = 1000,

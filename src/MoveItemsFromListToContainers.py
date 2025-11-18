@@ -83,6 +83,7 @@ def move_items_from_container_recursive(container):
                         break    
             if foundAndMoved:
                 print(item.Name, " moved to ", destContainer.Name)
+                break
 
         if item.IsContainer:
             move_items_from_container_recursive(item)

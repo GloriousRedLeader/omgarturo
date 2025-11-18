@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-03
+#   2025-11-18
 # Use at your own risk.
 
 # ##########################################################
@@ -51,8 +51,6 @@ ANIMATE_DEAD_MOBILE_NAMES = [
     "a skeletal drake",
     "a reaper"
 ]
-
-AXE_STATIC_IDS = [0x0F49, 0x0F47]
 
 LOG_STATIC_IDS = [0x1BDD]
 

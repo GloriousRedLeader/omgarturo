@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-17
+#   2025-11-18
 # Use at your own risk.
 
 # ##########################################################
@@ -126,6 +126,7 @@ def move_items_from_container_recursive(container):
                         break    
             if foundAndMoved:
                 print(item.Name, " moved to ", destContainer.Name)
+                break
 
         if item.IsContainer:
             move_items_from_container_recursive(item)

@@ -7,7 +7,7 @@
 from Scripts.omgarturo.src.fm_core.core_mobiles import get_enemies
 
 from Scripts.omgarturo.src.fm_core.core_player import move_all_items_from_container
-from Scripts.omgarturo.src.fm_core.core_items import AXE_STATIC_IDS, LOG_STATIC_IDS, TREE_STATIC_IDS
+from Scripts.omgarturo.src.fm_core.core_items import LOG_STATIC_IDS, TREE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_player import find_in_container_by_id
 
 from Scripts.omgarturo.src.fm_core.core_player import move_item_to_container

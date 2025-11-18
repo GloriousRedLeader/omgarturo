@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-10-17
+#   2025-11-18
 # Use at your own risk.
 
 # ##########################################################
@@ -199,6 +199,7 @@ def should_move():
         return False    
 
 def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):    
+    droppedResources = False
     for itemStaticId in itemStaticIds:
         resources = find_all_in_container_by_id(itemStaticId, containerSerial = Player.Backpack.Serial)
         for resource in resources:
@@ -207,6 +208,8 @@ def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):
                 tileX, tileY, tileZ = get_tile_behind(2)
                 Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
                 Misc.Pause(itemMoveDelayMs)
+                droppedResources = True
+    return droppedResources
 
 def getMinerTool():
     for minerToolStaticID in MINER_TOOLS_STATIC_IDS:
@@ -230,16 +233,19 @@ def get_tile_in_front_serial():
             return item.Serial, tileX, tileY, tileZ 
     return None, tileX, tileY, tileZ 
 
-def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
+def move_items_to_pack_animal(itemIds, keepItemHues, packAnimalMobileId, itemMoveDelayMs):
     for itemId in itemIds:
         for item in Items.FindAllByID(itemId, -1, Player.Backpack.Serial, 0):
+            if item.Color not in keepItemHues:
+                continue
+                
             packAnimals = get_pets(range = 2, checkLineOfSight = True, mobileId = packAnimalMobileId)
             
             if len(packAnimals) == 0:
                 return
         
             for packAnimal in packAnimals:
-                if packAnimal.Backpack.Weight < 1350:
+                if packAnimal.Backpack.Weight + item.Weight < 1600:
                     print("Moving {} to {} (Weight: {})".format(item.Name, packAnimal.Name, packAnimal.Backpack.Weight))
                     Items.Move(item, packAnimal.Backpack.Serial, item.Amount)
                     Misc.Pause(itemMoveDelayMs)
@@ -290,7 +296,7 @@ def run_mining_loop(
     while True:
         drop_unwanted_resources(INGOT_STATIC_IDS + STONE_STATIC_IDS + ORE_STATIC_IDS, keepItemHues, itemMoveDelayMs) 
         smelt_ore(forgeAnimalMobileId, itemMoveDelayMs)
-        move_items_to_pack_animal(INGOT_STATIC_IDS + STONE_STATIC_IDS + SAND_STATIC_IDS, packAnimalMobileId, itemMoveDelayMs)
+        move_items_to_pack_animal(INGOT_STATIC_IDS + STONE_STATIC_IDS + SAND_STATIC_IDS, keepItemHues, packAnimalMobileId, itemMoveDelayMs)
         miningTool = getMinerTool()
         
         Journal.Clear()

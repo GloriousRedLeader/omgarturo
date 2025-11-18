@@ -22,7 +22,6 @@ from Scripts.omgarturo.src.fm_core.core_rails import go_to_tile
 from Scripts.omgarturo.src.fm_core.core_rails import get_tile_in_front
 from Scripts.omgarturo.src.fm_core.core_rails import get_tile_behind
 from Scripts.omgarturo.src.fm_core.core_items import get_corpses
-from Scripts.omgarturo.src.fm_core.core_items import AXE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import LOG_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import TREE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import DAGGER_STATIC_IDS
@@ -52,6 +51,9 @@ from Scripts.omgarturo.src.fm_core.core_items import RESOURCE_HUE_GOLD
 from Scripts.omgarturo.src.fm_core.core_items import RESOURCE_HUE_AGAPITE
 from Scripts.omgarturo.src.fm_core.core_items import RESOURCE_HUE_VERITE
 from Scripts.omgarturo.src.fm_core.core_items import RESOURCE_HUE_VALORITE
+from Scripts.omgarturo.src.fm_core.core_items import HARVESTERS_WAR_AXE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import BATTLE_AXE_STATIC_ID
+from Scripts.omgarturo.src.fm_core.core_items import BUTCHERS_WAR_CLEAVER_STATIC_ID
 from Scripts.omgarturo.src.fm_core.core_mobiles import FIRE_BEETLE_MOBILE_ID
 from Scripts.omgarturo.src.fm_core.core_mobiles import BLUE_BEETLE_MOBILE_ID
 from Scripts.omgarturo.src.fm_core.core_mobiles import get_friends_by_names
@@ -165,8 +167,12 @@ def run_lumberjacking_loop(
     # runs this function.
     tileRange = 10, 
     
-    # (Optional) If this limit is reached, the script just stops apparently.
-    #weightLimit = 500, 
+    # (Optional) Array of GraphicIDs of the tool, this is typically an axe like:
+    # HARVESTERS_WAR_AXE_STATIC_ID (Insane UO)
+    # BUTCHERS_WAR_CLEAVER_STATIC_ID (UO Alive)
+    # BATTLE_AXE_STATIC_ID (regular axe)
+    # Order matters here.
+    toolItemIds = [ HARVESTERS_WAR_AXE_STATIC_ID, BATTLE_AXE_STATIC_ID ],
     
     # (Optional) Flag that will convert the logs into boards. I think you need an axe.
     cutLogsToBoards = True, 
@@ -180,9 +186,18 @@ def run_lumberjacking_loop(
     # (Optional) The mobile ID of your pack animal. Defaults to blue beetle.
     packAnimalMobileId = BLUE_BEETLE_MOBILE_ID,
     
-    # Ids of static tile graphics that we consider trees. May vary.
+    # (Optional) Ids of static tile graphics that we consider trees. May vary.
     # Default is all the trees I know about.
     treeStaticIds = TREE_STATIC_IDS,
+    
+    # Flag governs whether to abort a node early when a non-matching resource hue is found. 
+    # If a resource is produced whose color is not in keepItemHues, it is dropped to the ground.
+    # Useful if you play on a shard where nodes are pure, e.g. the whole vein is Iron (not Golen).
+    # It is therefore an optimization so you dont waste time on stuff youre just going to discard 
+    # anyway. Default beahavior is off. It will happily hack away.
+    # Note: This isnt sophisticated. It will scan for a resource in your backpack, if it finds one,
+    # then it aborts.
+    abortNodeEarly = False,
     
     # (Optional) Number of miliseconds between item moves typically from one pack to another.
     itemMoveDelayMs = 1000,
@@ -192,13 +207,13 @@ def run_lumberjacking_loop(
     cutDelayMs = 2000
 ):
 
-    axe = find_first_in_hands_by_ids(AXE_STATIC_IDS)
+    axe = find_first_in_hands_by_ids(toolItemIds)
     if axe is None:
         print("Equipping axe")
-        axe = find_first_in_container_by_ids(AXE_STATIC_IDS)
+        axe = find_first_in_container_by_ids(toolItemIds)
         equip_weapon(axe)
         
-    axe = find_first_in_hands_by_ids(AXE_STATIC_IDS)
+    axe = find_first_in_hands_by_ids(toolItemIds)
     if axe is None:
         print("Could not find axe!")
         return
@@ -214,19 +229,23 @@ def run_lumberjacking_loop(
         if cutLogsToBoards:
             cut_logs_to_boards(axe, itemMoveDelayMs)
         
-        move_items_to_pack_animal(BOARD_STATIC_IDS, packAnimalMobileId, itemMoveDelayMs)
+        move_items_to_pack_animal(BOARD_STATIC_IDS, keepItemHues, packAnimalMobileId, itemMoveDelayMs)
         
         go_to_tile(tree.x - 1, tree.y - 1, 10.0)
         
         #cut_tree(tree, axe, cutDelayMs)
         while cut_tree(tree, axe, cutDelayMs) == True:
-            drop_unwanted_resources(BOARD_STATIC_IDS + LOG_STATIC_IDS, keepItemHues, itemMoveDelayMs) 
+            droppedResources = drop_unwanted_resources(BOARD_STATIC_IDS + LOG_STATIC_IDS, keepItemHues, itemMoveDelayMs) 
 
             if cutLogsToBoards:
                 cut_logs_to_boards(axe, itemMoveDelayMs)
         
-            move_items_to_pack_animal(BOARD_STATIC_IDS, packAnimalMobileId, itemMoveDelayMs)
+            move_items_to_pack_animal(BOARD_STATIC_IDS, keepItemHues, packAnimalMobileId, itemMoveDelayMs)
             
+            # Abort early if we found a non desirable resource
+            if abortNodeEarly and droppedResources:
+                print("Aborting node early")
+                break
         
         Misc.Pause(int(itemMoveDelayMs / 3))
 
@@ -237,7 +256,7 @@ def run_lumberjacking_loop(
     if cutLogsToBoards:
         cut_logs_to_boards(axe, itemMoveDelayMs)
     
-    move_items_to_pack_animal(BOARD_STATIC_IDS, packAnimalMobileId, itemMoveDelayMs)    
+    move_items_to_pack_animal(BOARD_STATIC_IDS, keepItemHues, packAnimalMobileId, itemMoveDelayMs)    
     
     print("All done")
             
@@ -278,22 +297,26 @@ def run_kindling_loop(
     
 # Internal helper to move resource items from backpack to a pack animal
 # Used for both mining and lumberjacking   
-def move_items_to_pack_animal(itemIds, packAnimalMobileId, itemMoveDelayMs):
+def move_items_to_pack_animal(itemIds, keepItemHues, packAnimalMobileId, itemMoveDelayMs):
     for itemId in itemIds:
         for item in Items.FindAllByID(itemId, -1, Player.Backpack.Serial, 0):
+            if item.Color not in keepItemHues:
+                continue
+                
             packAnimals = get_pets(range = 2, checkLineOfSight = True, mobileId = packAnimalMobileId)
             
             if len(packAnimals) == 0:
                 return
         
             for packAnimal in packAnimals:
-                if packAnimal.Backpack.Weight < 1350:
+                if packAnimal.Backpack.Weight + item.Weight < 1600:
                     print("Moving {} to {} (Weight: {})".format(item.Name, packAnimal.Name, packAnimal.Backpack.Weight))
                     Items.Move(item, packAnimal.Backpack.Serial, item.Amount)
                     Misc.Pause(itemMoveDelayMs)
                     
 # Internal helper  method to discard logs/ingots not in our list
 def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):    
+    droppedResources = False
     for itemStaticId in itemStaticIds:
         resources = find_all_in_container_by_id(itemStaticId, containerSerial = Player.Backpack.Serial)
         for resource in resources:
@@ -302,6 +325,8 @@ def drop_unwanted_resources(itemStaticIds, keepItemHues, itemMoveDelayMs):
                 tileX, tileY, tileZ = get_tile_behind(2)
                 Items.MoveOnGround(resource, resource.Amount, tileX, tileY, tileZ)
                 Misc.Pause(itemMoveDelayMs)
+                droppedResources = True
+    return droppedResources
 
 ################## ################## ################## ##################
 #
@@ -399,7 +424,7 @@ def run_mining_loop(
     while True:
         drop_unwanted_resources(INGOT_STATIC_IDS + STONE_STATIC_IDS + ORE_STATIC_IDS, keepItemHues, itemMoveDelayMs) 
         smelt_ore(forgeAnimalMobileId, itemMoveDelayMs)
-        move_items_to_pack_animal(INGOT_STATIC_IDS + STONE_STATIC_IDS + SAND_STATIC_IDS, packAnimalMobileId, itemMoveDelayMs)
+        move_items_to_pack_animal(INGOT_STATIC_IDS + STONE_STATIC_IDS + SAND_STATIC_IDS, keepItemHues, packAnimalMobileId, itemMoveDelayMs)
         miningTool = getMinerTool()
         
         Journal.Clear()

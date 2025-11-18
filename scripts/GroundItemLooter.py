@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-09-19
+#   2025-11-18
 # Use at your own risk.
 
 # ##########################################################
@@ -22,8 +22,6 @@ from ctypes import wintypes
 import ctypes
 import sys
 import time
-
-AXE_STATIC_IDS = [0x0F49, 0x0F47]
 
 BLUE_BEETLE_ITEM_ID = 0x260F
 

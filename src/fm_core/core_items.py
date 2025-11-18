@@ -61,10 +61,18 @@ CANNON_GRAPHIC_IDS = [CARRONADE_GRAPHIC_ID, SOME_CANNON_FILL_ME_IN_GRAPHIC_ID]
 # This might be UO Alive specific. Allows some bonus to harvesting, perhaps fish.
 BUTCHERS_WAR_CLEAVER_STATIC_ID = 0x2D2F
 
+# Insane UO Specific adds bonus resources
+HARVESTERS_WAR_AXE_STATIC_ID = 0x1443
+
+# Regular Axe 
+BATTLE_AXE_STATIC_ID = 0x0F47
+
+#AXE_STATIC_IDS = [HARVESTERS_WAR_AXE_STATIC_ID, 0x0F49, BATTLE_AXE_STATIC_ID]
+
 # This might be Insane UO specific. Lets you do someting special when skinning i guess.
 HARVESTERS_BLADE_STATIC_ID = 0x2D20
 
-AXE_STATIC_IDS = [0x0F49, 0x0F47]
+
 
 LOG_STATIC_IDS = [0x1BDD]
 

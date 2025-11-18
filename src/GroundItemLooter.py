@@ -19,7 +19,6 @@ from Scripts.omgarturo.src.fm_core.core_mobiles import get_pets
 from Scripts.omgarturo.src.fm_core.core_rails import move
 from Scripts.omgarturo.src.fm_core.core_rails import go_to_tile
 from Scripts.omgarturo.src.fm_core.core_rails import get_tile_in_front
-from Scripts.omgarturo.src.fm_core.core_items import AXE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import LOG_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import TREE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import DAGGER_STATIC_IDS
