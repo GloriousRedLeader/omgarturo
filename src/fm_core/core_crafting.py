@@ -5,7 +5,6 @@
 # Use at your own risk. 
 
 import sys
-from Scripts.omgarturo.src.fm_core.core_items import AXE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import LOG_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import TREE_STATIC_IDS
 from Scripts.omgarturo.src.fm_core.core_items import DAGGER_STATIC_IDS
