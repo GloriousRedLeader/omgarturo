@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-18
+#   2025-11-21
 # Use at your own risk.
 
 # ##########################################################
@@ -107,6 +107,8 @@ ITEMS_TO_MOVE = [
     [ "white pearl",            BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
     [ "boards",                 BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
     [ "toxic venom sac",        BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    [ "slith's eye",            BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER], # '
+    [ "slith tongue",           BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
 ]
 
 PAUSE_DELAY = 750
