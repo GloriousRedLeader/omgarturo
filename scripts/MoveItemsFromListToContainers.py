@@ -1,7 +1,7 @@
 # Razor Enhanced Scripts for Ultima Online by
 #   GRL  
 #   https://github.com/GloriousRedLeader/omgarturo
-#   2025-11-21
+#   2025-12-24
 # Use at your own risk.
 
 # ##########################################################
@@ -109,6 +109,9 @@ ITEMS_TO_MOVE = [
     [ "toxic venom sac",        BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
     [ "slith's eye",            BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER], # '
     [ "slith tongue",           BARREL_IN_FRONT_OF_HOUSE, RESOURCE_CONTAINER],
+    
+    # Quest crap
+    [ "tattered remnants of an ancient scroll",        0x40067901],
 ]
 
 PAUSE_DELAY = 750
