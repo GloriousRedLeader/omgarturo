@@ -32,6 +32,9 @@ ITEMS_TO_MOVE = [
     [ "of minax",               0x4004BF76],
     [ "fellowship insignia",    0x400E1D0C],
     [ "of the shogun",          0x4004BF75 ],
+    [ "of ice",                 0x40A7D154 ],
+    [ "of demonic forces",      0x403F9E43 ],
+    [ "of fey wrath",           0x40D097D0 ],
     
     # Hunting
     [ "gold coin",              BARREL_IN_FRONT_OF_HOUSE],      
