@@ -35,6 +35,7 @@ ITEMS_TO_MOVE = [
     [ "of ice",                 0x40A7D154 ],
     [ "of demonic forces",      0x403F9E43 ],
     [ "of fey wrath",           0x40D097D0 ],
+    [ "of the shattered sanctum",           0x410FC127 ],
     
     # Hunting
     [ "gold coin",              BARREL_IN_FRONT_OF_HOUSE],      

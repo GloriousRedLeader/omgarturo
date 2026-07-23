@@ -144,7 +144,7 @@ run_mage_loop(
     
     # This is Insane UO Specific. That means there is no target reticle. Wont work
     # on other servers.
-    useAnimateDead = 0,
+    useAnimateDead = 1,
     
     # Cast it this often
     animateDeadDelayMs = 25000,
